@@ -135,23 +135,23 @@ const CommandList = ({
         <div
           id="slash-command"
           ref={commandListContainer}
-          className="z-50 h-auto max-h-[330px] w-72 overflow-y-auto rounded-md border border-stone-200 bg-white px-1 py-2 shadow-md transition-all"
+          className="z-50 max-h-80 w-64 overflow-y-auto rounded-lg border bg-white p-1 shadow-lg scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
         >
           {items.map((item: EditorCommand, index: number) => (
             <button
               type="button"
-              className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 ${
-                index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''
+              className={`flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left transition-colors ${
+                index === selectedIndex ? 'bg-gray-100' : 'hover:bg-gray-50'
               }`}
               key={item.key}
               onClick={() => selectItem(index)}
             >
-              <div className="flex size-10 min-w-10 items-center justify-center rounded-md border border-stone-200 bg-white">
-                <item.icon className="size-5" />
+              <div className="flex size-6 items-center justify-center rounded bg-gray-50">
+                <item.icon className="size-3.5 text-gray-600" />
               </div>
-              <div>
-                <p className="font-medium">{item.name}</p>
-                <p className="text-xs text-stone-500">{item.description}</p>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-900 truncate">{item.name}</p>
+                <p className="text-xs text-gray-500 truncate">{item.description}</p>
               </div>
             </button>
           ))}

@@ -31,80 +31,88 @@ export const PageSettings = ({ page, role }: PageSettingsProps) => {
     <Fragment>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Settings className="size-4 cursor-pointer text-muted-foreground hover:text-foreground" />
+          <button className="p-1 rounded hover:bg-gray-100 transition-colors">
+            <Settings className="size-4 text-gray-500 hover:text-gray-700" />
+          </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent side="bottom" className="mr-2 w-80">
-          <DropdownMenuLabel>{page.attributes.name}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => {
-              if (!canEdit) {
-                return;
-              }
-
-              setShowUpdateDialog(true);
-            }}
-            disabled={!canEdit}
-          >
-            <LetterText className="size-4" />
-            Rename
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="flex items-center gap-2 cursor-pointer"
-            disabled={!canEdit}
-            onClick={() => {
-              if (!canEdit) {
-                return;
-              }
-
-              setShowUpdateDialog(true);
-            }}
-          >
-            <Image className="size-4" />
-            Update icon
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="flex items-center gap-2 cursor-pointer"
-            disabled
-          >
-            <Copy className="size-4" />
-            Duplicate
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => {
-              if (!canDelete) {
-                return;
-              }
-
-              setShowDeleteModal(true);
-            }}
-            disabled={!canDelete}
-          >
-            <Trash2 className="size-4" />
-            Delete
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuLabel>Created by</DropdownMenuLabel>
-          <DropdownMenuItem>
-            <NodeCollaboratorAudit
-              collaboratorId={page.createdBy}
-              date={page.createdAt}
-            />
-          </DropdownMenuItem>
-          {page.updatedBy && page.updatedAt && (
-            <Fragment>
-              <DropdownMenuSeparator />
-              <DropdownMenuLabel>Last updated by</DropdownMenuLabel>
-              <DropdownMenuItem>
-                <NodeCollaboratorAudit
-                  collaboratorId={page.updatedBy}
-                  date={page.updatedAt}
-                />
-              </DropdownMenuItem>
-            </Fragment>
-          )}
+        <DropdownMenuContent side="bottom" className="w-72 rounded-lg border shadow-lg">
+          <div className="px-3 py-2 border-b">
+            <p className="text-sm font-medium text-gray-900 truncate">
+              {page.attributes.name}
+            </p>
+          </div>
+          <div className="p-1">
+            <DropdownMenuItem
+              className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${
+                canEdit ? 'cursor-pointer hover:bg-gray-50' : 'opacity-50 cursor-not-allowed'
+              }`}
+              onClick={() => {
+                if (!canEdit) return;
+                setShowUpdateDialog(true);
+              }}
+              disabled={!canEdit}
+            >
+              <LetterText className="size-4 text-gray-600" />
+              <span>Rename</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${
+                canEdit ? 'cursor-pointer hover:bg-gray-50' : 'opacity-50 cursor-not-allowed'
+              }`}
+              disabled={!canEdit}
+              onClick={() => {
+                if (!canEdit) return;
+                setShowUpdateDialog(true);
+              }}
+            >
+              <Image className="size-4 text-gray-600" />
+              <span>Update icon</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm opacity-50 cursor-not-allowed"
+              disabled
+            >
+              <Copy className="size-4 text-gray-600" />
+              <span>Duplicate</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${
+                canDelete ? 'cursor-pointer hover:bg-red-50 text-red-700' : 'opacity-50 cursor-not-allowed'
+              }`}
+              onClick={() => {
+                if (!canDelete) return;
+                setShowDeleteModal(true);
+              }}
+              disabled={!canDelete}
+            >
+              <Trash2 className={`size-4 ${canDelete ? 'text-red-600' : 'text-gray-600'}`} />
+              <span>Delete</span>
+            </DropdownMenuItem>
+          </div>
+          <div className="border-t pt-2">
+            <div className="px-3 pb-1">
+              <p className="text-xs font-medium text-gray-500">Created by</p>
+            </div>
+            <div className="px-3 pb-2">
+              <NodeCollaboratorAudit
+                collaboratorId={page.createdBy}
+                date={page.createdAt}
+              />
+            </div>
+            {page.updatedBy && page.updatedAt && (
+              <>
+                <div className="px-3 pb-1">
+                  <p className="text-xs font-medium text-gray-500">Last updated by</p>
+                </div>
+                <div className="px-3 pb-2">
+                  <NodeCollaboratorAudit
+                    collaboratorId={page.updatedBy}
+                    date={page.updatedAt}
+                  />
+                </div>
+              </>
+            )}
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
       <PageDeleteDialog

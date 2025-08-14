@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 
 import { SpecialContainerTabPath } from '@colanode/client/types';
-import { SidebarHeader } from '@colanode/ui/components/layouts/sidebars/sidebar-header';
 import { SidebarSettingsItem } from '@colanode/ui/components/layouts/sidebars/sidebar-settings-item';
 import { Separator } from '@colanode/ui/components/ui/separator';
 import { useApp } from '@colanode/ui/contexts/app';
@@ -33,7 +32,6 @@ export const SidebarSettings = () => {
   return (
     <div className="flex flex-col gap-4 h-full px-2 group/sidebar">
       <div className="flex w-full min-w-0 flex-col gap-1">
-        <SidebarHeader title="Workspace settings" />
         <SidebarSettingsItem
           title="General"
           icon={Settings}
@@ -69,7 +67,6 @@ export const SidebarSettings = () => {
         )}
       </div>
       <div className="flex w-full min-w-0 flex-col gap-1">
-        <SidebarHeader title="Account settings" />
         <SidebarSettingsItem
           title="General"
           icon={Settings}

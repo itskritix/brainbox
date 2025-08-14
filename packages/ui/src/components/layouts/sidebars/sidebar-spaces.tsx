@@ -1,8 +1,7 @@
-import { SidebarHeader } from '@colanode/ui/components/layouts/sidebars/sidebar-header';
-import { SpaceCreateButton } from '@colanode/ui/components/spaces/space-create-button';
 import { SpaceSidebarItem } from '@colanode/ui/components/spaces/space-sidebar-item';
 import { useWorkspace } from '@colanode/ui/contexts/workspace';
 import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { SidebarMenuHeader } from '@colanode/ui/components/layouts/sidebars/sidebar-menu-header';
 
 export const SidebarSpaces = () => {
   const workspace = useWorkspace();
@@ -22,10 +21,9 @@ export const SidebarSpaces = () => {
 
   return (
     <div className="flex flex-col group/sidebar h-full px-2">
-      <SidebarHeader
-        title="Spaces"
-        actions={canCreateSpace && <SpaceCreateButton />}
-      />
+      <div className="flex items-center justify-between h-12 px-0 border-b app-drag-region">
+      <SidebarMenuHeader />
+    </div>
       <div className="flex w-full min-w-0 flex-col gap-1">
         {spaces.map((space) => (
           <SpaceSidebarItem space={space} key={space.id} />
