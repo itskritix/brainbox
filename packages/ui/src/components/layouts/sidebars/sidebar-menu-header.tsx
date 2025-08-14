@@ -41,18 +41,16 @@ export const SidebarMenuHeader = () => {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <button className="flex w-full items-center justify-center relative cursor-pointer outline-none">
+        <button className="text-sm font-medium text-gray-900 leading-7">
           <Avatar
             id={workspace.id}
-            avatar={workspace.avatar}
             name={workspace.name}
-            className="size-10 rounded-lg shadow-md"
+            avatar={workspace.avatar}
+            size="small"
           />
-          <UnreadBadge
-            count={unreadCount}
-            unread={hasUnread}
-            className="absolute -top-1 right-0"
-          />
+          <span className='ml-1'>
+            {workspace.name}
+         </span>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -75,14 +73,14 @@ export const SidebarMenuHeader = () => {
                 account.openWorkspace(workspaceItem.id);
               }}
             >
-              <div className="w-full flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+              <div className="w-full flex items-center gap-2 px-2 py-1.5 text-left text-sm">
                 <Avatar
-                  className="h-8 w-8 rounded-lg"
                   id={workspaceItem.id}
                   name={workspaceItem.name}
                   avatar={workspaceItem.avatar}
+                  size="small"
                 />
-                <p className="flex-1 text-left text-sm leading-tight truncate font-normal">
+                <p className="flex-1 text-left text-sm font-normal text-gray-900 leading-7 truncate">
                   {workspaceItem.name}
                 </p>
                 {workspaceItem.id === workspace.id ? (

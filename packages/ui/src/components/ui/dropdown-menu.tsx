@@ -149,15 +149,18 @@ function DropdownMenuLabel({
   inset?: boolean;
 }) {
   return (
-    <DropdownMenuPrimitive.Label
-      data-slot="dropdown-menu-label"
-      data-inset={inset}
-      className={cn(
-        'px-2 py-1.5 text-sm font-medium data-[inset]:pl-8',
-        className
-      )}
-      {...props}
-    />
+    <div className='border-b border-gray-200 dark:border-gray-700'>
+      <DropdownMenuPrimitive.Label
+        data-slot="dropdown-menu-label"
+        data-inset={inset}
+        className={cn(
+          'px-2 py-1.5 text-sm font-medium data-[inset]:pl-8',
+          className
+        )}
+       
+        {...props}
+      />
+    </div>
   );
 }
 
