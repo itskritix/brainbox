@@ -4,6 +4,7 @@ import { ContainerTab, SpecialContainerTabPath } from '@colanode/client/types';
 import { getIdType, IdType } from '@colanode/core';
 import { AccountLogout } from '@colanode/ui/components/accounts/account-logout';
 import { AccountSettings } from '@colanode/ui/components/accounts/account-settings';
+import { AllSettings } from '@colanode/ui/components/settings/all-settings';
 import { ChannelContainer } from '@colanode/ui/components/channels/channel-container';
 import { ChatContainer } from '@colanode/ui/components/chats/chat-container';
 import { DatabaseContainer } from '@colanode/ui/components/databases/database-container';
@@ -51,6 +52,10 @@ const getContainerTabContentBody = (tab: ContainerTab) => {
 
   if (tab.path === SpecialContainerTabPath.WorkspaceDownloads) {
     return <WorkspaceDownloads />;
+  }
+
+  if (tab.path === SpecialContainerTabPath.AllSettings) {
+    return <AllSettings />;
   }
 
   return match(getIdType(tab.path))

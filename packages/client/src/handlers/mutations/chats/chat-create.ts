@@ -38,12 +38,17 @@ export class ChatCreateMutationHandler
     }
 
     const id = generateId(IdType.Chat);
+    
+    // For self-chat, only add the user once
+    const collaborators: Record<string, string> = {};
+    collaborators[input.userId] = 'admin';
+    if (input.userId !== workspace.userId) {
+      collaborators[workspace.userId] = 'admin';
+    }
+    
     const attributes: ChatAttributes = {
       type: 'chat',
-      collaborators: {
-        [input.userId]: 'admin',
-        [workspace.userId]: 'admin',
-      },
+      collaborators,
     };
 
     await workspace.nodes.createNode({

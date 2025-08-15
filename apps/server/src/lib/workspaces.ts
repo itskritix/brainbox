@@ -135,6 +135,21 @@ export const createWorkspace = async (
       userId: userId,
       workspaceId: workspaceId,
     });
+
+    // Create self-chat for the user by default
+    const selfChatId = generateId(IdType.Chat);
+    await createNode({
+      nodeId: selfChatId,
+      rootId: selfChatId, // Chat is its own root
+      attributes: {
+        type: 'chat',
+        collaborators: {
+          [userId]: 'admin',
+        },
+      },
+      userId: userId,
+      workspaceId: workspaceId,
+    });
   }
 
   eventBus.publish({

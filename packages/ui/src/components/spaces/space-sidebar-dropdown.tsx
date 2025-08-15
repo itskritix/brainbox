@@ -2,7 +2,7 @@ import {
   Database,
   Ellipsis,
   Folder,
-  MessageCircle,
+  Hash,
   Plus,
   Settings,
   StickyNote,
@@ -62,7 +62,7 @@ export const SpaceSidebarDropdown = ({ space }: SpaceSidebarDropdownProps) => {
               onSelect={() => setOpenCreateChannel(true)}
               className="flex items-center gap-2 px-2 py-1.5 cursor-pointer hover:bg-gray-50"
             >
-              <MessageCircle className="size-4 text-gray-600" />
+              <Hash className="size-4 text-gray-600" />
               <span className="text-sm">Add channel</span>
             </DropdownMenuItem>
             <DropdownMenuItem
@@ -98,13 +98,6 @@ export const SpaceSidebarDropdown = ({ space }: SpaceSidebarDropdownProps) => {
           </div>
         </DropdownMenuContent>
       </DropdownMenu>
-      {openCreateChannel && (
-        <ChannelCreateDialog
-          spaceId={space.id}
-          open={openCreateChannel}
-          onOpenChange={setOpenCreateChannel}
-        />
-      )}
       {openCreatePage && (
         <PageCreateDialog
           spaceId={space.id}
@@ -117,6 +110,13 @@ export const SpaceSidebarDropdown = ({ space }: SpaceSidebarDropdownProps) => {
           spaceId={space.id}
           open={openCreateDatabase}
           onOpenChange={setOpenCreateDatabase}
+        />
+      )}
+      {openCreateChannel && (
+        <ChannelCreateDialog
+          spaceId={space.id}
+          open={openCreateChannel}
+          onOpenChange={setOpenCreateChannel}
         />
       )}
       {openCreateFolder && (

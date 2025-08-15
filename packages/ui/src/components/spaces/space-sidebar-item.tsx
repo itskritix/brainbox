@@ -5,7 +5,6 @@ import { toast } from 'sonner';
 
 import { LocalSpaceNode } from '@colanode/client/types';
 import { extractNodeRole } from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
 import { SidebarItem } from '@colanode/ui/components/layouts/sidebars/sidebar-item';
 import { SpaceSidebarDropdown } from '@colanode/ui/components/spaces/space-sidebar-dropdown';
 import {
@@ -37,7 +36,7 @@ export const SpaceSidebarItem = ({ space }: SpaceSidebarItemProps) => {
     nodeId: space.id,
     accountId: workspace.accountId,
     workspaceId: workspace.id,
-    types: ['page', 'channel', 'database', 'folder'],
+    types: ['page', 'database', 'folder'],
   });
 
   const [dropMonitor, dropRef] = useDrop({

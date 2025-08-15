@@ -16,6 +16,7 @@ import { database } from '@colanode/server/data/database';
 import { SelectAccount } from '@colanode/server/data/schema';
 import { config } from '@colanode/server/lib/config';
 import { eventBus } from '@colanode/server/lib/event-bus';
+import { createNode } from '@colanode/server/lib/nodes';
 import { getNameFromEmail } from '@colanode/server/lib/utils';
 
 export const usersCreateRoute: FastifyPluginCallbackZod = (
@@ -123,6 +124,21 @@ export const usersCreateRoute: FastifyPluginCallbackZod = (
           });
           continue;
         }
+
+        // Create self-chat for the new user
+        const selfChatId = generateId(IdType.Chat);
+        await createNode({
+          nodeId: selfChatId,
+          rootId: selfChatId, // Chat is its own root
+          attributes: {
+            type: 'chat',
+            collaborators: {
+              [userId]: 'admin',
+            },
+          },
+          userId: userId,
+          workspaceId: workspaceId,
+        });
 
         eventBus.publish({
           type: 'user.created',
