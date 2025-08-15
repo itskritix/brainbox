@@ -76,7 +76,7 @@ export const ContainerTabContent = ({ tab }: ContainerTabContentProps) => {
     <TabsContent
       value={tab.path}
       key={tab.path}
-      className="h-full min-h-full w-full min-w-full m-0 pt-2"
+      className="h-full min-h-full w-full min-w-full m-0"
     >
       {content}
     </TabsContent>

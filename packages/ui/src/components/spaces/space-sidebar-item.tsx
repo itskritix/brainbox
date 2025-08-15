@@ -106,8 +106,9 @@ export const SpaceSidebarItem = ({ space }: SpaceSidebarItemProps) => {
                 type: 'page.create',
                 accountId: workspace.accountId,
                 workspaceId: workspace.id,
-                spaceId: space.id,
+                parentId: space.id,
                 name: 'New Page',
+                after: null,
               },
               onSuccess(page) {
                 layout.open(page.id);
@@ -128,8 +129,12 @@ export const SpaceSidebarItem = ({ space }: SpaceSidebarItemProps) => {
           {children.map((child) => (
             <li
               key={child.id}
-              onClick={() => {
-                layout.preview(child.id);
+              onClick={(e) => {
+                if (e.ctrlKey || e.metaKey) {
+                  layout.openLeft(child.id);
+                } else {
+                  layout.preview(child.id);
+                }
               }}
               onDoubleClick={() => {
                 layout.open(child.id);
