@@ -2,6 +2,7 @@ import { Hash, MessageCircle, Plus, User } from 'lucide-react';
 import { useState, useMemo, useEffect } from 'react';
 import { toast } from 'sonner';
 
+import { LocalChannelNode } from '@colanode/client/types';
 import { ChannelCreateDialog } from '@colanode/ui/components/channels/channel-create-dialog';
 import { ChannelSidebarItem } from '@colanode/ui/components/channels/channel-sidebar-item';
 import { ChatCreatePopover } from '@colanode/ui/components/chats/chat-create-popover';
@@ -25,22 +26,10 @@ export const RightSidebar = () => {
   const radar = useRadar();
   const { mutate } = useMutation();
 
-  // Get spaces first
-  const spaceListQuery = useLiveQuery({
-    type: 'space.list',
-    accountId: accountId,
-    workspaceId: workspaceId,
-    parentId: workspaceId,
-    page: 0,
-    count: 100,
-  });
-
-  const spaces = spaceListQuery.data ?? [];
-
-  // Get channels from the first space only (to avoid conditional hooks)
+  // Get channels directly from workspace
   const channelsQuery = useLiveQuery({
     type: 'node.children.get',
-    nodeId: spaces.length > 0 ? spaces[0].id : workspaceId,
+    nodeId: workspaceId,
     accountId: accountId,
     workspaceId: workspaceId,
     types: ['channel'],
@@ -141,25 +130,29 @@ export const RightSidebar = () => {
                   </div>
                 ) : (
                   <div className="space-y-0.5">
-                    {channels.map((channel) => (
-                      <button
-                        key={channel.id}
-                        className={cn(
-                          'w-full p-2 text-left rounded-md hover:bg-gray-50 transition-colors',
-                          layout.activeTab === channel.id && 'bg-blue-50 border border-blue-200'
-                        )}
-                        onClick={(e) => {
-                          if (e.ctrlKey || e.metaKey) {
-                            layout.openLeft(channel.id);
-                          } else {
-                            layout.open(channel.id);
-                          }
-                        }}
-                        onDoubleClick={() => layout.open(channel.id)}
-                      >
-                        <ChannelSidebarItem channel={channel} />
-                      </button>
-                    ))}
+                    {channels.map((channel) => {
+                      // Type assertion since we know these are channels from the query filter
+                      const typedChannel = channel as LocalChannelNode;
+                      return (
+                        <button
+                          key={channel.id}
+                          className={cn(
+                            'w-full p-2 text-left rounded-md hover:bg-gray-50 transition-colors',
+                            layout.activeTab === channel.id && 'bg-blue-50 border border-blue-200'
+                          )}
+                          onClick={(e) => {
+                            if (e.ctrlKey || e.metaKey) {
+                              layout.openLeft(channel.id);
+                            } else {
+                              layout.open(channel.id);
+                            }
+                          }}
+                          onDoubleClick={() => layout.open(channel.id)}
+                        >
+                          <ChannelSidebarItem channel={typedChannel} />
+                        </button>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -305,9 +298,8 @@ export const RightSidebar = () => {
       </div>
 
       {/* Channel Create Dialog */}
-      {showChannelCreateDialog && spaces.length > 0 && (
+      {showChannelCreateDialog && (
         <ChannelCreateDialog
-          spaceId={spaces[0].id}
           open={showChannelCreateDialog}
           onOpenChange={setShowChannelCreateDialog}
         />

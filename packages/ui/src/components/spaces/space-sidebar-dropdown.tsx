@@ -114,7 +114,6 @@ export const SpaceSidebarDropdown = ({ space }: SpaceSidebarDropdownProps) => {
       )}
       {openCreateChannel && (
         <ChannelCreateDialog
-          spaceId={space.id}
           open={openCreateChannel}
           onOpenChange={setOpenCreateChannel}
         />

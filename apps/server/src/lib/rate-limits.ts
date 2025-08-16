@@ -16,6 +16,11 @@ const isRateLimited = async (
   key: string,
   config: RateLimitConfig = defaultConfig
 ): Promise<boolean> => {
+  // Disable rate limiting in development mode
+  if (process.env.NODE_ENV === 'development') {
+    return false;
+  }
+
   const redisKey = `rt:${key}`;
   const attempts = await redis.incr(redisKey);
 

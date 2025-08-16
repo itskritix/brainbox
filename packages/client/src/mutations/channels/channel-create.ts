@@ -2,7 +2,6 @@ export type ChannelCreateMutationInput = {
   type: 'channel.create';
   accountId: string;
   workspaceId: string;
-  spaceId: string;
   name: string;
   avatar?: string | null;
 };
