@@ -10,6 +10,12 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
   },
+  server: {
+    headers: {
+      'Cross-Origin-Embedder-Policy': 'require-corp',
+      'Cross-Origin-Opener-Policy': 'same-origin',
+    },
+  },
   resolve: {
     alias: {
       '@colanode/web': resolve(__dirname, './src'),
@@ -25,11 +31,11 @@ export default defineConfig({
   plugins: [
     viteReact(),
     VitePWA({
-      mode: 'development',
+      mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
       base: '/',
       includeAssets: ['favicon.ico'],
       devOptions: {
-        enabled: true,
+        enabled: false, // Disable in development to reduce worker warnings
         type: 'module',
       },
       srcDir: 'src/workers',
@@ -38,7 +44,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectManifest: {
         minify: false,
-        enableWorkboxModulesLogs: true,
+        enableWorkboxModulesLogs: false, // Reduce logging
         maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10MB
       },
     }),

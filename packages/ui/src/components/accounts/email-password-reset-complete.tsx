@@ -16,7 +16,7 @@ import {
 import { Input } from '@colanode/ui/components/ui/input';
 import { Label } from '@colanode/ui/components/ui/label';
 import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useServer } from '@colanode/ui/contexts/server';
+import { getServerDomain } from '@colanode/ui/lib/server-config';
 import { useCountdown } from '@colanode/ui/hooks/use-countdown';
 import { useMutation } from '@colanode/ui/hooks/use-mutation';
 
@@ -50,7 +50,6 @@ export const EmailPasswordResetComplete = ({
   expiresAt,
   onBack,
 }: EmailPasswordResetCompleteProps) => {
-  const server = useServer();
   const { mutate, isPending } = useMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -76,7 +75,7 @@ export const EmailPasswordResetComplete = ({
         type: 'email.password.reset.complete',
         otp: values.otp,
         password: values.password,
-        server: server.domain,
+        server: getServerDomain(),
         id: id,
       },
       onSuccess() {
