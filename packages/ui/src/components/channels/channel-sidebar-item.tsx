@@ -1,3 +1,4 @@
+import { Pin, PinOff } from 'lucide-react';
 import { InView } from 'react-intersection-observer';
 
 import { LocalChannelNode } from '@colanode/client/types';
@@ -6,6 +7,7 @@ import { UnreadBadge } from '@colanode/ui/components/ui/unread-badge';
 import { useLayout } from '@colanode/ui/contexts/layout';
 import { useRadar } from '@colanode/ui/contexts/radar';
 import { useWorkspace } from '@colanode/ui/contexts/workspace';
+import { usePinnedItems } from '@colanode/ui/hooks/use-pinned-items';
 import { cn } from '@colanode/ui/lib/utils';
 
 interface ChannelSidebarItemProps {
@@ -16,6 +18,7 @@ export const ChannelSidebarItem = ({ channel }: ChannelSidebarItemProps) => {
   const workspace = useWorkspace();
   const layout = useLayout();
   const radar = useRadar();
+  const { isChannelPinned, toggleChannelPin } = usePinnedItems();
 
   const isActive = layout.activeTab === channel.id;
   const unreadState = radar.getNodeState(
@@ -23,6 +26,7 @@ export const ChannelSidebarItem = ({ channel }: ChannelSidebarItemProps) => {
     workspace.id,
     channel.id
   );
+  const isPinned = isChannelPinned(channel.id);
 
   return (
     <InView
@@ -33,7 +37,7 @@ export const ChannelSidebarItem = ({ channel }: ChannelSidebarItemProps) => {
         }
       }}
       className={cn(
-        'flex w-full items-center cursor-pointer',
+        'flex w-full items-center cursor-pointer group',
         isActive && 'bg-sidebar-accent'
       )}
     >
@@ -51,12 +55,28 @@ export const ChannelSidebarItem = ({ channel }: ChannelSidebarItemProps) => {
       >
         {channel.attributes.name ?? 'Unnamed'}
       </span>
-      {!isActive && (
-        <UnreadBadge
-          count={unreadState.unreadCount}
-          unread={unreadState.hasUnread}
-        />
-      )}
+      <div className="flex items-center gap-1">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleChannelPin(channel.id);
+          }}
+          className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-gray-100 rounded transition-opacity"
+          title={isPinned ? 'Unpin channel' : 'Pin channel'}
+        >
+          {isPinned ? (
+            <PinOff className="h-3 w-3 text-gray-500" />
+          ) : (
+            <Pin className="h-3 w-3 text-gray-500" />
+          )}
+        </button>
+        {!isActive && (
+          <UnreadBadge
+            count={unreadState.unreadCount}
+            unread={unreadState.hasUnread}
+          />
+        )}
+      </div>
     </InView>
   );
 };
