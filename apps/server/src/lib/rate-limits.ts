@@ -16,7 +16,9 @@ const isRateLimited = async (
   key: string,
   config: RateLimitConfig = defaultConfig
 ): Promise<boolean> => {
-  // Disable rate limiting in development mode
+  // SECURITY: Disable rate limiting in development mode for easier testing
+  // WARNING: Ensure this environment check never reaches production as it
+  // completely bypasses DoS protection mechanisms
   if (process.env.NODE_ENV === 'development') {
     return false;
   }

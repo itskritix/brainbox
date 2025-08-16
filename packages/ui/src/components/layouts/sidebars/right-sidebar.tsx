@@ -35,7 +35,9 @@ export const RightSidebar = () => {
     types: ['channel'],
   });
 
-  const channels = channelsQuery.data ?? [];
+  const channels = (channelsQuery.data ?? []).filter(
+    (node): node is LocalChannelNode => node.type === 'channel'
+  );
 
   // Get chats
   const chatListQuery = useLiveQuery({
@@ -130,29 +132,25 @@ export const RightSidebar = () => {
                   </div>
                 ) : (
                   <div className="space-y-0.5">
-                    {channels.map((channel) => {
-                      // Type assertion since we know these are channels from the query filter
-                      const typedChannel = channel as LocalChannelNode;
-                      return (
-                        <button
-                          key={channel.id}
-                          className={cn(
-                            'w-full p-2 text-left rounded-md hover:bg-gray-50 transition-colors',
-                            layout.activeTab === channel.id && 'bg-blue-50 border border-blue-200'
-                          )}
-                          onClick={(e) => {
-                            if (e.ctrlKey || e.metaKey) {
-                              layout.openLeft(channel.id);
-                            } else {
-                              layout.open(channel.id);
-                            }
-                          }}
-                          onDoubleClick={() => layout.open(channel.id)}
-                        >
-                          <ChannelSidebarItem channel={typedChannel} />
-                        </button>
-                      );
-                    })}
+                    {channels.map((channel) => (
+                      <button
+                        key={channel.id}
+                        className={cn(
+                          'w-full p-2 text-left rounded-md hover:bg-gray-50 transition-colors',
+                          layout.activeTab === channel.id && 'bg-blue-50 border border-blue-200'
+                        )}
+                        onClick={(e) => {
+                          if (e.ctrlKey || e.metaKey) {
+                            layout.openLeft(channel.id);
+                          } else {
+                            layout.open(channel.id);
+                          }
+                        }}
+                        onDoubleClick={() => layout.open(channel.id)}
+                      >
+                        <ChannelSidebarItem channel={channel} />
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>
