@@ -125,15 +125,15 @@ const CommandList = ({
     <FloatingPortal>
       <div ref={refs.setFloating} style={floatingStyles}>
         <div
-          id="slash-command"
+          id="mention-command"
           ref={commandListContainer}
-          className="z-50 h-auto max-h-[330px] w-72 overflow-y-auto rounded-md border border-stone-200 bg-white px-1 py-2 shadow-md transition-all"
+          className="z-50 max-h-80 w-64 overflow-y-auto rounded-lg border bg-white p-1 shadow-lg"
         >
           {items.map((item: User, index: number) => (
             <button
               type="button"
-              className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 ${
-                index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''
+              className={`flex w-full items-center gap-2 rounded-md px-2 py-2 text-left transition-colors ${
+                index === selectedIndex ? 'bg-gray-100' : 'hover:bg-gray-50'
               }`}
               key={item.id}
               onClick={() => selectItem(index)}
@@ -144,9 +144,9 @@ const CommandList = ({
                 avatar={item.avatar}
                 className="size-8"
               />
-              <div>
-                <p className="font-medium">{item.name}</p>
-                <p className="text-xs text-stone-500">{item.email}</p>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-900 truncate">{item.name}</p>
+                <p className="text-xs text-gray-500 truncate">{item.email}</p>
               </div>
             </button>
           ))}

@@ -23,11 +23,19 @@ export const chatModel: NodeModel = {
     }
 
     const collaborators = context.attributes.collaborators;
-    if (Object.keys(collaborators).length !== 2) {
+    const collaboratorIds = Object.keys(collaborators);
+    
+    // Allow 1 collaborator (self-chat) or 2 collaborators (regular chat)
+    if (collaboratorIds.length < 1 || collaboratorIds.length > 2) {
       return false;
     }
 
     if (!collaborators[context.user.id]) {
+      return false;
+    }
+
+    // For self-chat (1 collaborator), ensure it's the user themselves
+    if (collaboratorIds.length === 1 && collaboratorIds[0] !== context.user.id) {
       return false;
     }
 

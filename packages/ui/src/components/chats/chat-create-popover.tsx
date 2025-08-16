@@ -1,4 +1,4 @@
-import { SquarePen } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -22,7 +22,7 @@ export const ChatCreatePopover = () => {
   return (
     <Popover open={open} onOpenChange={setOpen} modal={true}>
       <PopoverTrigger asChild>
-        <SquarePen className="size-4 cursor-pointer" />
+        <Plus className="size-4 cursor-pointer" />
       </PopoverTrigger>
       <PopoverContent className="w-96 p-1">
         <UserSearch
@@ -38,7 +38,7 @@ export const ChatCreatePopover = () => {
                 userId: user.id,
               },
               onSuccess(output) {
-                layout.openLeft(output.id);
+                layout.open(output.id);
                 setOpen(false);
               },
               onError(error) {

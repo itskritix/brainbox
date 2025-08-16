@@ -3,6 +3,7 @@ import { Resizable } from 're-resizable';
 import { ContainerBlank } from '@colanode/ui/components/layouts/containers/container-blank';
 import { ContainerTabs } from '@colanode/ui/components/layouts/containers/container-tabs';
 import { Sidebar } from '@colanode/ui/components/layouts/sidebars/sidebar';
+import { RightSidebar } from '@colanode/ui/components/layouts/sidebars/right-sidebar';
 import { ServerUpgradeRequired } from '@colanode/ui/components/servers/server-upgrade-required';
 import { LayoutContext } from '@colanode/ui/contexts/layout';
 import { useServer } from '@colanode/ui/contexts/server';
@@ -158,6 +159,8 @@ export const Layout = () => {
           <ContainerBlank />
         )}
         {server.isOutdated && <ServerUpgradeRequired />}
+        
+        {!server.isOutdated && <RightSidebar />}
       </div>
     </LayoutContext.Provider>
   );

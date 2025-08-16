@@ -7,7 +7,7 @@
   "description": "Colanode desktop application",
   "main": ".vite/build/main.js",
   "scripts": {
-    "dev": "DEBUG=colanode:* electron-forge start",
+    "dev": "set DEBUG=colanode:* & electron-forge start",
     "dev:win": "set DEBUG=colanode:* & electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",

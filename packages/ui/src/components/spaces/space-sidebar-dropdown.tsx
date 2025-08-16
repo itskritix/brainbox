@@ -2,7 +2,7 @@ import {
   Database,
   Ellipsis,
   Folder,
-  MessageCircle,
+  Hash,
   Plus,
   Settings,
   StickyNote,
@@ -40,67 +40,64 @@ export const SpaceSidebarDropdown = ({ space }: SpaceSidebarDropdownProps) => {
     <Fragment>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="text-muted-foreground opacity-0 transition-opacity group-hover/sidebar-space:opacity-100 flex items-center justify-center p-0 mr-1 size-4 focus-visible:outline-none focus-visible:ring-0 cursor-pointer">
-            <Ellipsis />
+          <button className="opacity-0 group-hover/sidebar-space:opacity-100 flex items-center justify-center p-1 rounded hover:bg-gray-100 transition-all focus-visible:outline-none cursor-pointer">
+            <Ellipsis className="size-3 text-gray-500" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="ml-1 w-72">
-          <DropdownMenuLabel>
-            {space.attributes.name ?? 'Unnamed'}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onSelect={() => setOpenCreatePage(true)}
-            className="flex flex-row items-center gap-2 cursor-pointer"
-          >
-            <StickyNote className="size-4" />
-            <span>Add page</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onSelect={() => setOpenCreateChannel(true)}
-            className="flex flex-row items-center gap-2 cursor-pointer"
-          >
-            <MessageCircle className="size-4" />
-            <span>Add channel</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onSelect={() => setOpenCreateDatabase(true)}
-            className="flex flex-row items-center gap-2 cursor-pointer"
-          >
-            <Database className="size-4" />
-            <span>Add database</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onSelect={() => setOpenCreateFolder(true)}
-            className="flex flex-row items-center gap-2 cursor-pointer"
-          >
-            <Folder className="size-4" />
-            <span>Add folder</span>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => layout.previewLeft(space.id)}
-            className="flex flex-row items-center gap-2 cursor-pointer"
-          >
-            <Settings className="size-4" />
-            <span>Settings</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => layout.previewLeft(space.id)}
-            className="flex flex-row items-center gap-2 cursor-pointer"
-          >
-            <Plus className="size-4" />
-            <span>Add collaborators</span>
-          </DropdownMenuItem>
+        <DropdownMenuContent className="w-56 rounded-lg border shadow-lg">
+          <div className="px-2 py-1.5">
+            <p className="text-sm font-medium text-gray-900 truncate">
+              {space.attributes.name ?? 'Unnamed'}
+            </p>
+          </div>
+          <div className="border-t">
+            <DropdownMenuItem
+              onSelect={() => setOpenCreatePage(true)}
+              className="flex items-center gap-2 px-2 py-1.5 cursor-pointer hover:bg-gray-50"
+            >
+              <StickyNote className="size-4 text-gray-600" />
+              <span className="text-sm">Add page</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => setOpenCreateChannel(true)}
+              className="flex items-center gap-2 px-2 py-1.5 cursor-pointer hover:bg-gray-50"
+            >
+              <Hash className="size-4 text-gray-600" />
+              <span className="text-sm">Add channel</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => setOpenCreateDatabase(true)}
+              className="flex items-center gap-2 px-2 py-1.5 cursor-pointer hover:bg-gray-50"
+            >
+              <Database className="size-4 text-gray-600" />
+              <span className="text-sm">Add database</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => setOpenCreateFolder(true)}
+              className="flex items-center gap-2 px-2 py-1.5 cursor-pointer hover:bg-gray-50"
+            >
+              <Folder className="size-4 text-gray-600" />
+              <span className="text-sm">Add folder</span>
+            </DropdownMenuItem>
+          </div>
+          <div className="border-t">
+            <DropdownMenuItem
+              onClick={() => layout.previewLeft(space.id)}
+              className="flex items-center gap-2 px-2 py-1.5 cursor-pointer hover:bg-gray-50"
+            >
+              <Settings className="size-4 text-gray-600" />
+              <span className="text-sm">Settings</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => layout.previewLeft(space.id)}
+              className="flex items-center gap-2 px-2 py-1.5 cursor-pointer hover:bg-gray-50"
+            >
+              <Plus className="size-4 text-gray-600" />
+              <span className="text-sm">Add collaborators</span>
+            </DropdownMenuItem>
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
-      {openCreateChannel && (
-        <ChannelCreateDialog
-          spaceId={space.id}
-          open={openCreateChannel}
-          onOpenChange={setOpenCreateChannel}
-        />
-      )}
       {openCreatePage && (
         <PageCreateDialog
           spaceId={space.id}
@@ -113,6 +110,13 @@ export const SpaceSidebarDropdown = ({ space }: SpaceSidebarDropdownProps) => {
           spaceId={space.id}
           open={openCreateDatabase}
           onOpenChange={setOpenCreateDatabase}
+        />
+      )}
+      {openCreateChannel && (
+        <ChannelCreateDialog
+          spaceId={space.id}
+          open={openCreateChannel}
+          onOpenChange={setOpenCreateChannel}
         />
       )}
       {openCreateFolder && (

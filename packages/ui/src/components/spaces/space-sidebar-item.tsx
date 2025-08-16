@@ -1,11 +1,10 @@
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Plus } from 'lucide-react';
 import { RefAttributes, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { toast } from 'sonner';
 
 import { LocalSpaceNode } from '@colanode/client/types';
 import { extractNodeRole } from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
 import { SidebarItem } from '@colanode/ui/components/layouts/sidebars/sidebar-item';
 import { SpaceSidebarDropdown } from '@colanode/ui/components/spaces/space-sidebar-dropdown';
 import {
@@ -37,7 +36,7 @@ export const SpaceSidebarItem = ({ space }: SpaceSidebarItemProps) => {
     nodeId: space.id,
     accountId: workspace.accountId,
     workspaceId: workspace.id,
-    types: ['page', 'channel', 'database', 'folder'],
+    types: ['page', 'database', 'folder'],
   });
 
   const [dropMonitor, dropRef] = useDrop({
@@ -80,7 +79,7 @@ export const SpaceSidebarItem = ({ space }: SpaceSidebarItemProps) => {
     >
       <div
         className={cn(
-          'flex w-full min-w-0 flex-row items-center hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8',
+          'flex w-full min-w-0 flex-row items-center hover:bg-blue-50 rounded-md transition-colors h-8 group/space-hover',
           dropMonitor.isOver &&
             dropMonitor.canDrop &&
             'border-b-2 border-blue-300'
@@ -88,26 +87,53 @@ export const SpaceSidebarItem = ({ space }: SpaceSidebarItemProps) => {
         ref={dropDivRef as RefAttributes<HTMLDivElement>['ref']}
       >
         <CollapsibleTrigger asChild>
-          <button className="group/space-button flex items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm flex-1 cursor-pointer">
-            <Avatar
+          <button className="group/space-button flex items-center gap-2 overflow-hidden px-2 py-1.5 text-left text-sm flex-1 cursor-pointer">
+            {/* <Avatar
               id={space.id}
               avatar={space.attributes.avatar}
               name={space.attributes.name}
-              className="size-4 group-hover/space-button:hidden"
-            />
-            <ChevronRight className="hidden size-4 transition-transform duration-200 group-hover/space-button:block group-data-[state=open]/sidebar-space:rotate-90" />
-            <span>{space.attributes.name}</span>
+              className="size-4"
+            /> */}
+            {/* <ChevronRight className="size-3 text-gray-400 transition-transform duration-200 group-data-[state=open]/sidebar-space:rotate-90" /> */}
+            <span className="text-xs font-medium text-gray-900 truncate">{space.attributes.name}</span>
           </button>
         </CollapsibleTrigger>
+        <button
+          onClick={() => {
+            mutation.mutate({
+              input: {
+                type: 'page.create',
+                accountId: workspace.accountId,
+                workspaceId: workspace.id,
+                parentId: space.id,
+                name: 'New Page',
+                after: null,
+              },
+              onSuccess(page) {
+                layout.open(page.id);
+              },
+              onError(error) {
+                toast.error(error.message);
+              },
+            });
+          }}
+          className="opacity-0 group-hover/sidebar-space:opacity-100 p-1 rounded hover:bg-gray-100 transition-all mr-1"
+        >
+          <Plus className="size-3 text-gray-500" />
+        </button>
         <SpaceSidebarDropdown space={space} />
       </div>
       <CollapsibleContent>
-        <ul className="mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-sidebar-border px-2.5 py-0.5 mr-0 pr-0">
+        <ul className="ml-1 flex min-w-0 flex-col gap-1  py-0.5 mr-0 pr-0">
           {children.map((child) => (
             <li
               key={child.id}
-              onClick={() => {
-                layout.preview(child.id);
+              onClick={(e) => {
+                if (e.ctrlKey || e.metaKey) {
+                  layout.openLeft(child.id);
+                } else {
+                  layout.preview(child.id);
+                }
               }}
               onDoubleClick={() => {
                 layout.open(child.id);

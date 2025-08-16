@@ -18,10 +18,13 @@ export const ChatSidebarItem = ({ chat }: ChatSidebarItemProps) => {
   const layout = useLayout();
   const radar = useRadar();
 
-  const userId =
-    Object.keys(chat.attributes.collaborators).find(
-      (id) => id !== workspace.userId
-    ) ?? '';
+  // Determine if this is a self-chat and get the appropriate user ID
+  const collaborators = Object.keys(chat.attributes.collaborators);
+  const isSelfChat = collaborators.length === 1 && collaborators[0] === workspace.userId;
+  
+  const userId = isSelfChat 
+    ? workspace.userId // For self-chat, use current user
+    : (collaborators.find((id) => id !== workspace.userId) ?? ''); // For regular chat, find the other user
 
   const userGetQuery = useLiveQuery({
     type: 'user.get',
@@ -67,7 +70,7 @@ export const ChatSidebarItem = ({ chat }: ChatSidebarItemProps) => {
           !isActive && unreadState.hasUnread && 'font-semibold'
         )}
       >
-        {user.name ?? 'Unnamed'}
+        {isSelfChat ? `${user.name ?? 'Unnamed'} (me)` : (user.name ?? 'Unnamed')}
       </span>
       {!isActive && (
         <UnreadBadge

@@ -1,4 +1,4 @@
-import { Check, Plus } from 'lucide-react';
+import { Check, ChevronDown, Plus } from 'lucide-react';
 import { useState } from 'react';
 
 import { Avatar } from '@colanode/ui/components/avatars/avatar';
@@ -41,27 +41,28 @@ export const SidebarMenuHeader = () => {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <button className="flex w-full items-center justify-center relative cursor-pointer outline-none">
+        <button className="flex items-center gap-2 w-full p-1 rounded-md hover:bg-gray-50 transition-colors group">
           <Avatar
             id={workspace.id}
-            avatar={workspace.avatar}
             name={workspace.name}
-            className="size-10 rounded-lg shadow-md"
+            avatar={workspace.avatar}
+            size="small"
           />
-          <UnreadBadge
-            count={unreadCount}
-            unread={hasUnread}
-            className="absolute -top-1 right-0"
-          />
+          <span className="flex-1 text-sm font-medium text-gray-900 truncate text-left">
+            {workspace.name}
+          </span>
+          {hasUnread && <div className="size-1.5 bg-blue-500 rounded-full" />}
+          <svg className={`size-4 text-gray-400 group-hover:text-gray-600 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="min-w-80 rounded-lg"
+        className="w-64 rounded-lg border shadow-lg"
         align="start"
         side="right"
         sideOffset={4}
       >
-        <DropdownMenuLabel className="mb-1">Workspaces</DropdownMenuLabel>
         {workspaces.map((workspaceItem) => {
           const workspaceUnreadState = radar.getWorkspaceState(
             workspaceItem.accountId,
@@ -70,42 +71,39 @@ export const SidebarMenuHeader = () => {
           return (
             <DropdownMenuItem
               key={workspaceItem.id}
-              className="p-0 cursor-pointer"
+              className="cursor-pointer p-2 focus:bg-gray-50"
               onClick={() => {
                 account.openWorkspace(workspaceItem.id);
               }}
             >
-              <div className="w-full flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar
-                  className="h-8 w-8 rounded-lg"
-                  id={workspaceItem.id}
-                  name={workspaceItem.name}
-                  avatar={workspaceItem.avatar}
+              <Avatar
+                id={workspaceItem.id}
+                name={workspaceItem.name}
+                avatar={workspaceItem.avatar}
+                size="small"
+              />
+              <span className="flex-1 text-sm font-medium truncate">
+                {workspaceItem.name}
+              </span>
+              {workspaceItem.id === workspace.id ? (
+                <Check className="size-4 text-green-600" />
+              ) : (
+                <UnreadBadge
+                  count={workspaceUnreadState.state.unreadCount}
+                  unread={workspaceUnreadState.state.hasUnread}
                 />
-                <p className="flex-1 text-left text-sm leading-tight truncate font-normal">
-                  {workspaceItem.name}
-                </p>
-                {workspaceItem.id === workspace.id ? (
-                  <Check className="size-4" />
-                ) : (
-                  <UnreadBadge
-                    count={workspaceUnreadState.state.unreadCount}
-                    unread={workspaceUnreadState.state.hasUnread}
-                  />
-                )}
-              </div>
+              )}
             </DropdownMenuItem>
           );
         })}
-        <DropdownMenuSeparator className="my-1" />
         <DropdownMenuItem
-          className="gap-2 p-2 text-muted-foreground hover:text-foreground cursor-pointer"
+          className="cursor-pointer p-2 text-gray-600 hover:text-gray-900 focus:bg-gray-50 border-t mt-1"
           onClick={() => {
             account.openWorkspaceCreate();
           }}
         >
           <Plus className="size-4" />
-          <p className="font-medium">Create workspace</p>
+          <span className="font-medium">Create workspace</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

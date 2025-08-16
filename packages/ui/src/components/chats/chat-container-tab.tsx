@@ -25,10 +25,16 @@ export const ChatContainerTab = ({
   });
 
   const chat = nodeGetQuery.data as LocalChatNode;
+  
+  // Determine if this is a self-chat and get the appropriate user ID
+  const collaborators = chat ? Object.keys(chat.attributes.collaborators) : [];
+  const isSelfChat = collaborators.length === 1 && collaborators[0] === workspace.userId;
+  
   const userId = chat
-    ? (Object.keys(chat.attributes.collaborators).find(
-        (id) => id !== workspace.userId
-      ) ?? '')
+    ? (isSelfChat 
+        ? workspace.userId // For self-chat, use current user
+        : (collaborators.find((id) => id !== workspace.userId) ?? '') // For regular chat, find the other user
+      )
     : '';
 
   const userGetQuery = useLiveQuery({
@@ -57,7 +63,7 @@ export const ChatContainerTab = ({
   return (
     <div className="flex items-center space-x-2">
       <Avatar size="small" id={user.id} name={user.name} avatar={user.avatar} />
-      <span>{user.name}</span>
+      <span>{isSelfChat ? `${user.name} (me)` : user.name}</span>
       {!isActive && (
         <UnreadBadge
           count={unreadState.unreadCount}
