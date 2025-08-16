@@ -19,6 +19,7 @@ export const RightSidebar = () => {
   const [activePanel, setActivePanel] = useState<'channels' | 'chats' | null>(null);
   const [showChannelCreateDialog, setShowChannelCreateDialog] = useState(false);
   const workspace = useWorkspace();
+  const { accountId, id: workspaceId, userId } = workspace;
   const account = useAccount();
   const layout = useLayout();
   const radar = useRadar();
@@ -27,9 +28,9 @@ export const RightSidebar = () => {
   // Get spaces first
   const spaceListQuery = useLiveQuery({
     type: 'space.list',
-    accountId: workspace.accountId,
-    workspaceId: workspace.id,
-    parentId: workspace.id,
+    accountId: accountId,
+    workspaceId: workspaceId,
+    parentId: workspaceId,
     page: 0,
     count: 100,
   });
@@ -39,9 +40,9 @@ export const RightSidebar = () => {
   // Get channels from the first space only (to avoid conditional hooks)
   const channelsQuery = useLiveQuery({
     type: 'node.children.get',
-    nodeId: spaces.length > 0 ? spaces[0].id : workspace.id,
-    accountId: workspace.accountId,
-    workspaceId: workspace.id,
+    nodeId: spaces.length > 0 ? spaces[0].id : workspaceId,
+    accountId: accountId,
+    workspaceId: workspaceId,
     types: ['channel'],
   });
 
@@ -50,8 +51,8 @@ export const RightSidebar = () => {
   // Get chats
   const chatListQuery = useLiveQuery({
     type: 'chat.list',
-    accountId: workspace.accountId,
-    workspaceId: workspace.id,
+    accountId: accountId,
+    workspaceId: workspaceId,
     page: 0,
     count: 100,
   });
@@ -63,18 +64,18 @@ export const RightSidebar = () => {
     return chats.find(chat => {
       const collaborators = Object.keys(chat.attributes.collaborators);
       // Self chat: exactly one collaborator and it's the current user
-      return collaborators.length === 1 && collaborators[0] === workspace.userId;
+      return collaborators.length === 1 && collaborators[0] === userId;
     });
-  }, [chats, workspace.userId]);
+  }, [chats, userId]);
 
   // Other chats (excluding self-chat)
   const otherChats = useMemo(() => {
     return chats.filter(chat => {
       const collaborators = Object.keys(chat.attributes.collaborators);
       // Filter out self-chats - exclude chats with exactly one collaborator who is the current user
-      return !(collaborators.length === 1 && collaborators[0] === workspace.userId);
+      return !(collaborators.length === 1 && collaborators[0] === userId);
     });
-  }, [chats, workspace.userId]);
+  }, [chats, userId]);
 
   // Create self-chat for user if it doesn't exist (covers existing users)
   useEffect(() => {
@@ -83,16 +84,16 @@ export const RightSidebar = () => {
       mutate({
         input: {
           type: 'chat.create',
-          accountId: workspace.accountId,
-          workspaceId: workspace.id,
-          userId: workspace.userId,
+          accountId: accountId,
+          workspaceId: workspaceId,
+          userId: userId,
         },
         onError(error) {
           console.error('Failed to create self-chat:', error.message);
         },
       });
     }
-  }, [chatListQuery.isLoading, selfChat, workspace, mutate]);
+  }, [chatListQuery.isLoading, selfChat, accountId, workspaceId, userId, mutate]);
 
 
   const handleIconClick = (panel: 'channels' | 'chats') => {
@@ -203,9 +204,9 @@ export const RightSidebar = () => {
                           mutate({
                             input: {
                               type: 'chat.create',
-                              accountId: workspace.accountId,
-                              workspaceId: workspace.id,
-                              userId: workspace.userId,
+                              accountId: accountId,
+                              workspaceId: workspaceId,
+                              userId: userId,
                             },
                             onSuccess(result) {
                               layout.open(result.id);
@@ -231,8 +232,8 @@ export const RightSidebar = () => {
                       </div>
                       {selfChat && (() => {
                         const unreadState = radar.getNodeState(
-                          workspace.accountId,
-                          workspace.id,
+                          accountId,
+                          workspaceId,
                           selfChat.id
                         );
                         return unreadState.hasUnread ? (
