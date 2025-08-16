@@ -1,4 +1,4 @@
-import { Pin, PinOff } from 'lucide-react';
+import { Pin, PinOff, Loader2 } from 'lucide-react';
 import { InView } from 'react-intersection-observer';
 
 import { LocalChannelNode } from '@colanode/client/types';
@@ -18,7 +18,7 @@ export const ChannelSidebarItem = ({ channel }: ChannelSidebarItemProps) => {
   const workspace = useWorkspace();
   const layout = useLayout();
   const radar = useRadar();
-  const { isChannelPinned, toggleChannelPin } = usePinnedItems();
+  const { isChannelPinned, toggleChannelPin, isItemLoading } = usePinnedItems();
 
   const isActive = layout.activeTab === channel.id;
   const unreadState = radar.getNodeState(
@@ -27,6 +27,7 @@ export const ChannelSidebarItem = ({ channel }: ChannelSidebarItemProps) => {
     channel.id
   );
   const isPinned = isChannelPinned(channel.id);
+  const isLoading = isItemLoading(channel.id);
 
   return (
     <InView
@@ -59,12 +60,20 @@ export const ChannelSidebarItem = ({ channel }: ChannelSidebarItemProps) => {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            toggleChannelPin(channel.id);
+            if (!isLoading) {
+              toggleChannelPin(channel.id);
+            }
           }}
-          className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-gray-100 rounded transition-opacity"
-          title={isPinned ? 'Unpin channel' : 'Pin channel'}
+          disabled={isLoading}
+          className={cn(
+            "opacity-0 group-hover:opacity-100 p-0.5 hover:bg-gray-100 rounded transition-opacity",
+            isLoading && "cursor-not-allowed opacity-50"
+          )}
+          title={isLoading ? 'Updating...' : (isPinned ? 'Unpin channel' : 'Pin channel')}
         >
-          {isPinned ? (
+          {isLoading ? (
+            <Loader2 className="h-3 w-3 text-gray-500 animate-spin" />
+          ) : isPinned ? (
             <PinOff className="h-3 w-3 text-gray-500" />
           ) : (
             <Pin className="h-3 w-3 text-gray-500" />

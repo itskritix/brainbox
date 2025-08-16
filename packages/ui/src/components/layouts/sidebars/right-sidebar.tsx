@@ -1,5 +1,5 @@
 import { Hash, MessageCircle, Plus, User } from 'lucide-react';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
 
 import { LocalChannelNode } from '@colanode/client/types';
@@ -16,6 +16,12 @@ import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
 import { useMutation } from '@colanode/ui/hooks/use-mutation';
 import { usePinnedItems } from '@colanode/ui/hooks/use-pinned-items';
 import { cn } from '@colanode/ui/lib/utils';
+
+// Helper function for safe date parsing
+const parseDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+  return isNaN(date.getTime()) ? new Date(0) : date;
+};
 
 export const RightSidebar = () => {
   const [activePanel, setActivePanel] = useState<'channels' | 'chats' | null>(null);
@@ -91,7 +97,7 @@ export const RightSidebar = () => {
         // Sort by updatedAt (most recent first), fallback to createdAt if updatedAt is null
         const aTime = a.updatedAt || a.createdAt;
         const bTime = b.updatedAt || b.createdAt;
-        return new Date(bTime).getTime() - new Date(aTime).getTime();
+        return parseDate(bTime).getTime() - parseDate(aTime).getTime();
       });
   }, [otherChats, pinnedItems.pinnedChats]);
 
@@ -198,7 +204,7 @@ export const RightSidebar = () => {
                     
                     {/* Separator between pinned and unpinned */}
                     {pinnedChannels.length > 0 && unpinnedChannels.length > 0 && (
-                      <div className="border-t border-gray-200 my-2"></div>
+                      <div className="border-t border-gray-100 my-2"></div>
                     )}
                     
                     {/* Unpinned Channels */}

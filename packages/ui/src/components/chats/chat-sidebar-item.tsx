@@ -1,4 +1,4 @@
-import { Pin, PinOff } from 'lucide-react';
+import { Pin, PinOff, Loader2 } from 'lucide-react';
 import { InView } from 'react-intersection-observer';
 
 import { LocalChatNode } from '@colanode/client/types';
@@ -19,7 +19,7 @@ export const ChatSidebarItem = ({ chat }: ChatSidebarItemProps) => {
   const workspace = useWorkspace();
   const layout = useLayout();
   const radar = useRadar();
-  const { isChatPinned, toggleChatPin } = usePinnedItems();
+  const { isChatPinned, toggleChatPin, isItemLoading } = usePinnedItems();
 
   // Determine if this is a self-chat and get the appropriate user ID
   const collaborators = Object.keys(chat.attributes.collaborators);
@@ -48,6 +48,7 @@ export const ChatSidebarItem = ({ chat }: ChatSidebarItemProps) => {
   );
   const isActive = layout.activeTab === chat.id;
   const isPinned = isChatPinned(chat.id);
+  const isLoading = isItemLoading(chat.id);
 
   return (
     <InView
@@ -80,12 +81,20 @@ export const ChatSidebarItem = ({ chat }: ChatSidebarItemProps) => {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            toggleChatPin(chat.id);
+            if (!isLoading) {
+              toggleChatPin(chat.id);
+            }
           }}
-          className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-gray-100 rounded transition-opacity"
-          title={isPinned ? 'Unpin chat' : 'Pin chat'}
+          disabled={isLoading}
+          className={cn(
+            "opacity-0 group-hover:opacity-100 p-0.5 hover:bg-gray-100 rounded transition-opacity",
+            isLoading && "cursor-not-allowed opacity-50"
+          )}
+          title={isLoading ? 'Updating...' : (isPinned ? 'Unpin chat' : 'Pin chat')}
         >
-          {isPinned ? (
+          {isLoading ? (
+            <Loader2 className="h-3 w-3 text-gray-500 animate-spin" />
+          ) : isPinned ? (
             <PinOff className="h-3 w-3 text-gray-500" />
           ) : (
             <Pin className="h-3 w-3 text-gray-500" />
