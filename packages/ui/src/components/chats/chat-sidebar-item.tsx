@@ -1,3 +1,4 @@
+import { Pin, PinOff, Loader2 } from 'lucide-react';
 import { InView } from 'react-intersection-observer';
 
 import { LocalChatNode } from '@colanode/client/types';
@@ -7,6 +8,7 @@ import { useLayout } from '@colanode/ui/contexts/layout';
 import { useRadar } from '@colanode/ui/contexts/radar';
 import { useWorkspace } from '@colanode/ui/contexts/workspace';
 import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { usePinnedItems } from '@colanode/ui/hooks/use-pinned-items';
 import { cn } from '@colanode/ui/lib/utils';
 
 interface ChatSidebarItemProps {
@@ -17,6 +19,7 @@ export const ChatSidebarItem = ({ chat }: ChatSidebarItemProps) => {
   const workspace = useWorkspace();
   const layout = useLayout();
   const radar = useRadar();
+  const { isChatPinned, toggleChatPin, isItemLoading } = usePinnedItems();
 
   // Determine if this is a self-chat and get the appropriate user ID
   const collaborators = Object.keys(chat.attributes.collaborators);
@@ -44,6 +47,8 @@ export const ChatSidebarItem = ({ chat }: ChatSidebarItemProps) => {
     chat.id
   );
   const isActive = layout.activeTab === chat.id;
+  const isPinned = isChatPinned(chat.id);
+  const isLoading = isItemLoading(chat.id);
 
   return (
     <InView
@@ -54,7 +59,7 @@ export const ChatSidebarItem = ({ chat }: ChatSidebarItemProps) => {
         }
       }}
       className={cn(
-        'flex w-full items-center cursor-pointer',
+        'flex w-full items-center cursor-pointer group',
         isActive && 'bg-sidebar-accent'
       )}
     >
@@ -72,12 +77,36 @@ export const ChatSidebarItem = ({ chat }: ChatSidebarItemProps) => {
       >
         {isSelfChat ? `${user.name ?? 'Unnamed'} (me)` : (user.name ?? 'Unnamed')}
       </span>
-      {!isActive && (
-        <UnreadBadge
-          count={unreadState.unreadCount}
-          unread={unreadState.hasUnread}
-        />
-      )}
+      <div className="flex items-center gap-1">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            if (!isLoading) {
+              toggleChatPin(chat.id);
+            }
+          }}
+          disabled={isLoading}
+          className={cn(
+            "opacity-0 group-hover:opacity-100 p-0.5 hover:bg-gray-100 rounded transition-opacity",
+            isLoading && "cursor-not-allowed opacity-50"
+          )}
+          title={isLoading ? 'Updating...' : (isPinned ? 'Unpin chat' : 'Pin chat')}
+        >
+          {isLoading ? (
+            <Loader2 className="h-3 w-3 text-gray-500 animate-spin" />
+          ) : isPinned ? (
+            <PinOff className="h-3 w-3 text-gray-500" />
+          ) : (
+            <Pin className="h-3 w-3 text-gray-500" />
+          )}
+        </button>
+        {!isActive && (
+          <UnreadBadge
+            count={unreadState.unreadCount}
+            unread={unreadState.hasUnread}
+          />
+        )}
+      </div>
     </InView>
   );
 };

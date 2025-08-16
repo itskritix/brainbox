@@ -1,5 +1,5 @@
 import { Hash, MessageCircle, Plus, User } from 'lucide-react';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
 
 import { LocalChannelNode } from '@colanode/client/types';
@@ -14,7 +14,14 @@ import { useRadar } from '@colanode/ui/contexts/radar';
 import { useWorkspace } from '@colanode/ui/contexts/workspace';
 import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
 import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { usePinnedItems } from '@colanode/ui/hooks/use-pinned-items';
 import { cn } from '@colanode/ui/lib/utils';
+
+// Helper function for safe date parsing
+const parseDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+  return isNaN(date.getTime()) ? new Date(0) : date;
+};
 
 export const RightSidebar = () => {
   const [activePanel, setActivePanel] = useState<'channels' | 'chats' | null>(null);
@@ -25,6 +32,7 @@ export const RightSidebar = () => {
   const layout = useLayout();
   const radar = useRadar();
   const { mutate } = useMutation();
+  const { pinnedItems } = usePinnedItems();
 
   // Get channels directly from workspace
   const channelsQuery = useLiveQuery({
@@ -38,6 +46,15 @@ export const RightSidebar = () => {
   const channels = (channelsQuery.data ?? []).filter(
     (node): node is LocalChannelNode => node.type === 'channel'
   );
+
+  // Separate pinned and unpinned channels
+  const pinnedChannels = useMemo(() => {
+    return channels.filter(channel => pinnedItems.pinnedChannels.includes(channel.id));
+  }, [channels, pinnedItems.pinnedChannels]);
+
+  const unpinnedChannels = useMemo(() => {
+    return channels.filter(channel => !pinnedItems.pinnedChannels.includes(channel.id));
+  }, [channels, pinnedItems.pinnedChannels]);
 
   // Get chats
   const chatListQuery = useLiveQuery({
@@ -67,6 +84,38 @@ export const RightSidebar = () => {
       return !(collaborators.length === 1 && collaborators[0] === userId);
     });
   }, [chats, userId]);
+
+  // Separate pinned and unpinned chats (excluding self-chat)
+  const pinnedChats = useMemo(() => {
+    return otherChats.filter(chat => pinnedItems.pinnedChats.includes(chat.id));
+  }, [otherChats, pinnedItems.pinnedChats]);
+
+  const unpinnedChats = useMemo(() => {
+    return otherChats
+      .filter(chat => !pinnedItems.pinnedChats.includes(chat.id))
+      .sort((a, b) => {
+        // Sort by updatedAt (most recent first), fallback to createdAt if updatedAt is null
+        const aTime = a.updatedAt || a.createdAt;
+        const bTime = b.updatedAt || b.createdAt;
+        return parseDate(bTime).getTime() - parseDate(aTime).getTime();
+      });
+  }, [otherChats, pinnedItems.pinnedChats]);
+
+  // Check for unread notifications in channels
+  const hasUnreadChannels = useMemo(() => {
+    return channels.some(channel => {
+      const unreadState = radar.getNodeState(accountId, workspaceId, channel.id);
+      return unreadState.hasUnread;
+    });
+  }, [channels, radar, accountId, workspaceId]);
+
+  // Check for unread notifications in chats
+  const hasUnreadChats = useMemo(() => {
+    return chats.some(chat => {
+      const unreadState = radar.getNodeState(accountId, workspaceId, chat.id);
+      return unreadState.hasUnread;
+    });
+  }, [chats, radar, accountId, workspaceId]);
 
   // Create self-chat for user if it doesn't exist (covers existing users)
   useEffect(() => {
@@ -99,7 +148,7 @@ export const RightSidebar = () => {
     <div className="flex h-full">
       {/* Content Panel - LEFT of icon bar */}
       {activePanel && (
-        <div className="w-72 bg-white border-l border-gray-200">
+        <div className="w-54 bg-white border-l border-gray-200">
           {activePanel === 'channels' && (
             <div className="h-full flex flex-col">
               {/* Header */}
@@ -132,7 +181,34 @@ export const RightSidebar = () => {
                   </div>
                 ) : (
                   <div className="space-y-0.5">
-                    {channels.map((channel) => (
+                    {/* Pinned Channels */}
+                    {pinnedChannels.map((channel) => (
+                      <button
+                        key={channel.id}
+                        className={cn(
+                          'w-full p-2 text-left rounded-md hover:bg-gray-50 transition-colors',
+                          layout.activeTab === channel.id && 'bg-blue-50 border border-blue-200'
+                        )}
+                        onClick={(e) => {
+                          if (e.ctrlKey || e.metaKey) {
+                            layout.openLeft(channel.id);
+                          } else {
+                            layout.open(channel.id);
+                          }
+                        }}
+                        onDoubleClick={() => layout.open(channel.id)}
+                      >
+                        <ChannelSidebarItem channel={channel} />
+                      </button>
+                    ))}
+                    
+                    {/* Separator between pinned and unpinned */}
+                    {pinnedChannels.length > 0 && unpinnedChannels.length > 0 && (
+                      <div className="border-t border-gray-100 my-2"></div>
+                    )}
+                    
+                    {/* Unpinned Channels */}
+                    {unpinnedChannels.map((channel) => (
                       <button
                         key={channel.id}
                         className={cn(
@@ -180,7 +256,7 @@ export const RightSidebar = () => {
                   <div>
                     <button
                       className={cn(
-                        'w-full p-2 text-left rounded-md hover:bg-gray-50 transition-colors flex items-center gap-2 border-b border-gray-100 mb-1',
+                        'w-full p-2 text-left rounded-md hover:bg-gray-50 transition-colors flex items-center gap-2',
                         selfChat && layout.activeTab === selfChat.id && 'bg-blue-50 border border-blue-200'
                       )}
                       onClick={(e) => {
@@ -234,6 +310,11 @@ export const RightSidebar = () => {
                     </button>
                   </div>
 
+                  {/* Bottom border after self chat if no pinned chats but there are unpinned chats */}
+                  {selfChat && pinnedChats.length === 0 && unpinnedChats.length > 0 && (
+                    <div className="border-b border-gray-100 my-2"></div>
+                  )}
+
                   {/* Other chats */}
                   {otherChats.length === 0 ? (
                     selfChat ? null : (
@@ -243,25 +324,54 @@ export const RightSidebar = () => {
                       </div>
                     )
                   ) : (
-                    otherChats.map((chat) => (
-                      <button
-                        key={chat.id}
-                        className={cn(
-                          'w-full p-2 text-left rounded-md hover:bg-gray-50 transition-colors',
-                          layout.activeTab === chat.id && 'bg-blue-50 border border-blue-200'
-                        )}
-                        onClick={(e) => {
-                          if (e.ctrlKey || e.metaKey) {
-                            layout.openLeft(chat.id);
-                          } else {
-                            layout.open(chat.id);
-                          }
-                        }}
-                        onDoubleClick={() => layout.open(chat.id)}
-                      >
-                        <ChatSidebarItem chat={chat} />
-                      </button>
-                    ))
+                    <>
+                      {/* Pinned Chats */}
+                      {pinnedChats.map((chat) => (
+                        <button
+                          key={chat.id}
+                          className={cn(
+                            'w-full p-2 text-left rounded-md hover:bg-gray-50 transition-colors',
+                            layout.activeTab === chat.id && 'bg-blue-50 border border-blue-200'
+                          )}
+                          onClick={(e) => {
+                            if (e.ctrlKey || e.metaKey) {
+                              layout.openLeft(chat.id);
+                            } else {
+                              layout.open(chat.id);
+                            }
+                          }}
+                          onDoubleClick={() => layout.open(chat.id)}
+                        >
+                          <ChatSidebarItem chat={chat} />
+                        </button>
+                      ))}
+                      
+                      {/* Bottom border after pinned section if there are unpinned chats */}
+                      {pinnedChats.length > 0 && unpinnedChats.length > 0 && (
+                        <div className="border-b border-gray-100 my-2"></div>
+                      )}
+                      
+                      {/* Unpinned Chats */}
+                      {unpinnedChats.map((chat) => (
+                        <button
+                          key={chat.id}
+                          className={cn(
+                            'w-full p-2 text-left rounded-md hover:bg-gray-50 transition-colors',
+                            layout.activeTab === chat.id && 'bg-blue-50 border border-blue-200'
+                          )}
+                          onClick={(e) => {
+                            if (e.ctrlKey || e.metaKey) {
+                              layout.openLeft(chat.id);
+                            } else {
+                              layout.open(chat.id);
+                            }
+                          }}
+                          onDoubleClick={() => layout.open(chat.id)}
+                        >
+                          <ChatSidebarItem chat={chat} />
+                        </button>
+                      ))}
+                    </>
                   )}
                 </div>
               </div>
@@ -272,27 +382,37 @@ export const RightSidebar = () => {
 
       {/* Icon Bar - RIGHT side */}
       <div className="w-10 bg-gray-100 border-l border-gray-200 flex flex-col items-center py-2 gap-2">
-        <button
-          onClick={() => handleIconClick('channels')}
-          className={cn(
-            'p-1.5 rounded-md transition-colors hover:bg-gray-200',
-            activePanel === 'channels' ? 'bg-gray-900 text-white' : 'text-gray-600'
+        <div className="relative">
+          <button
+            onClick={() => handleIconClick('channels')}
+            className={cn(
+              'w-8 h-8 rounded-md transition-colors hover:bg-gray-300 flex items-center justify-center',
+              activePanel === 'channels' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-600'
+            )}
+            title="Channels"
+          >
+            <Hash className="h-5 w-5" />
+          </button>
+          {hasUnreadChannels && activePanel !== 'channels' && (
+            <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-red-500 rounded-full"></div>
           )}
-          title="Channels"
-        >
-          <Hash className="h-5 w-5" />
-        </button>
+        </div>
         
-        <button
-          onClick={() => handleIconClick('chats')}
-          className={cn(
-            'p-1.5 rounded-md transition-colors hover:bg-gray-200',
-            activePanel === 'chats' ? 'bg-gray-900 text-white' : 'text-gray-600'
+        <div className="relative">
+          <button
+            onClick={() => handleIconClick('chats')}
+            className={cn(
+              'w-8 h-8 rounded-md transition-colors hover:bg-gray-300 flex items-center justify-center',
+              activePanel === 'chats' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-600'
+            )}
+            title="Direct Messages"
+          >
+            <MessageCircle className="h-5 w-5" />
+          </button>
+          {hasUnreadChats && activePanel !== 'chats' && (
+            <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-red-500 rounded-full"></div>
           )}
-          title="Direct Messages"
-        >
-          <MessageCircle className="h-5 w-5" />
-        </button>
+        </div>
       </div>
 
       {/* Channel Create Dialog */}

@@ -30,6 +30,11 @@ export type SidebarMetadata = {
   width: number;
 };
 
+export type PinnedItemsMetadata = {
+  pinnedChats: string[];
+  pinnedChannels: string[];
+};
+
 export type WorkspaceSidebarMetadata = {
   key: 'sidebar';
   value: SidebarMetadata;
@@ -51,10 +56,18 @@ export type WorkspaceRightContainerMetadata = {
   updatedAt: string | null;
 };
 
+export type WorkspacePinnedItemsMetadata = {
+  key: 'pinned.items';
+  value: PinnedItemsMetadata;
+  createdAt: string;
+  updatedAt: string | null;
+};
+
 export type WorkspaceMetadata =
   | WorkspaceSidebarMetadata
   | WorkspaceRightContainerMetadata
-  | WorkspaceLeftContainerMetadata;
+  | WorkspaceLeftContainerMetadata
+  | WorkspacePinnedItemsMetadata;
 
 export type WorkspaceMetadataKey = WorkspaceMetadata['key'];
 
@@ -62,6 +75,7 @@ export type WorkspaceMetadataMap = {
   sidebar: WorkspaceSidebarMetadata;
   'container.right': WorkspaceRightContainerMetadata;
   'container.left': WorkspaceLeftContainerMetadata;
+  'pinned.items': WorkspacePinnedItemsMetadata;
 };
 
 export enum SpecialContainerTabPath {
