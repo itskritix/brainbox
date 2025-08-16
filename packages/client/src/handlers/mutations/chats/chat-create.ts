@@ -6,7 +6,7 @@ import {
   ChatCreateMutationInput,
   ChatCreateMutationOutput,
 } from '@colanode/client/mutations/chats/chat-create';
-import { ChatAttributes, generateId, IdType } from '@colanode/core';
+import { ChatAttributes, generateId, IdType, NodeRole } from '@colanode/core';
 
 interface ChatRow {
   id: string;
@@ -40,7 +40,7 @@ export class ChatCreateMutationHandler
     const id = generateId(IdType.Chat);
     
     // For self-chat, only add the user once
-    const collaborators: Record<string, string> = {};
+    const collaborators: Record<string, NodeRole> = {};
     collaborators[input.userId] = 'admin';
     if (input.userId !== workspace.userId) {
       collaborators[workspace.userId] = 'admin';

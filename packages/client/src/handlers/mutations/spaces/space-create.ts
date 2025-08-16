@@ -71,6 +71,9 @@ export class SpaceCreateMutationHandler
       type: 'channel',
       name: 'Discussions',
       parentId: spaceId,
+      collaborators: {
+        [workspace.userId]: 'admin',
+      },
     };
 
     await workspace.nodes.createNode({

@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Upload } from 'lucide-react';
+import { LogOut, Upload } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod/v4';
@@ -38,6 +38,7 @@ export const AllSettings = () => {
   const { mutate: uploadAvatar, isPending: isUploadingAvatar } = useMutation();
   const { mutate: updateAccount, isPending: isUpdatingAccount } = useMutation();
   const { mutate: updateWorkspace, isPending: isUpdatingWorkspace } = useMutation();
+  const { mutate: logout, isPending: isLoggingOut } = useMutation();
   const canEditWorkspace = workspace.role === 'owner';
 
   const form = useForm({
@@ -144,6 +145,18 @@ export const AllSettings = () => {
       },
       onSuccess() {
         toast.success('Workspace updated');
+      },
+      onError(error) {
+        toast.error(error.message);
+      },
+    });
+  };
+
+  const handleLogout = () => {
+    logout({
+      input: {
+        type: 'account.logout',
+        accountId: account.id,
       },
       onError(error) {
         toast.error(error.message);
@@ -302,6 +315,27 @@ export const AllSettings = () => {
                     Save
                   </Button>
                 </div>
+              </div>
+            </div>
+
+            {/* Logout */}
+            <div>
+              <div className="flex items-center justify-between">
+                <h3 className="font-medium">Log out</h3>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  disabled={isLoggingOut}
+                  className="flex items-center gap-2"
+                >
+                  {isLoggingOut ? (
+                    <Spinner className="h-4 w-4" />
+                  ) : (
+                    <LogOut className="h-4 w-4" />
+                  )}
+                  {isLoggingOut ? 'Logging out...' : 'Log out'}
+                </Button>
               </div>
             </div>
 

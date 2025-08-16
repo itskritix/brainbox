@@ -112,11 +112,14 @@ export const createWorkspace = async (
     const channelId = generateId(IdType.Channel);
     await createNode({
       nodeId: channelId,
-      rootId: spaceId,
+      rootId: channelId,
       attributes: {
         type: 'channel',
         name: 'Discussions',
-        parentId: spaceId,
+        parentId: workspaceId,
+        collaborators: {
+          [userId]: 'admin',
+        },
       },
       userId: userId,
       workspaceId: workspaceId,

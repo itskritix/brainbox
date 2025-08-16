@@ -2,6 +2,7 @@ import { Hash, MessageCircle, Plus, User } from 'lucide-react';
 import { useState, useMemo, useEffect } from 'react';
 import { toast } from 'sonner';
 
+import { LocalChannelNode } from '@colanode/client/types';
 import { ChannelCreateDialog } from '@colanode/ui/components/channels/channel-create-dialog';
 import { ChannelSidebarItem } from '@colanode/ui/components/channels/channel-sidebar-item';
 import { ChatCreatePopover } from '@colanode/ui/components/chats/chat-create-popover';
@@ -25,28 +26,18 @@ export const RightSidebar = () => {
   const radar = useRadar();
   const { mutate } = useMutation();
 
-  // Get spaces first
-  const spaceListQuery = useLiveQuery({
-    type: 'space.list',
-    accountId: accountId,
-    workspaceId: workspaceId,
-    parentId: workspaceId,
-    page: 0,
-    count: 100,
-  });
-
-  const spaces = spaceListQuery.data ?? [];
-
-  // Get channels from the first space only (to avoid conditional hooks)
+  // Get channels directly from workspace
   const channelsQuery = useLiveQuery({
     type: 'node.children.get',
-    nodeId: spaces.length > 0 ? spaces[0].id : workspaceId,
+    nodeId: workspaceId,
     accountId: accountId,
     workspaceId: workspaceId,
     types: ['channel'],
   });
 
-  const channels = channelsQuery.data ?? [];
+  const channels = (channelsQuery.data ?? []).filter(
+    (node): node is LocalChannelNode => node.type === 'channel'
+  );
 
   // Get chats
   const chatListQuery = useLiveQuery({
@@ -305,9 +296,8 @@ export const RightSidebar = () => {
       </div>
 
       {/* Channel Create Dialog */}
-      {showChannelCreateDialog && spaces.length > 0 && (
+      {showChannelCreateDialog && (
         <ChannelCreateDialog
-          spaceId={spaces[0].id}
           open={showChannelCreateDialog}
           onOpenChange={setShowChannelCreateDialog}
         />

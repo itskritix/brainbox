@@ -119,14 +119,17 @@ export class NodeGenerator {
 
   private buildChannel(name: string, parentId: string, avatar: string) {
     const channelId = generateId(IdType.Channel);
+    const user = this.getMainUser();
     const channelAttributes: NodeAttributes = {
       type: 'channel',
       name,
       parentId,
       avatar,
+      collaborators: {
+        [user.id]: 'admin',
+      },
     };
 
-    const user = this.getMainUser();
     const createChannelMutation = this.buildCreateNodeMutation(
       channelId,
       channelAttributes,

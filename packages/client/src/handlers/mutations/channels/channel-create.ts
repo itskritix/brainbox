@@ -16,31 +16,21 @@ export class ChannelCreateMutationHandler
   ): Promise<ChannelCreateMutationOutput> {
     const workspace = this.getWorkspace(input.accountId, input.workspaceId);
 
-    const space = await workspace.database
-      .selectFrom('nodes')
-      .selectAll()
-      .where('id', '=', input.spaceId)
-      .executeTakeFirst();
-
-    if (!space) {
-      throw new MutationError(
-        MutationErrorCode.SpaceNotFound,
-        'Space not found or has been deleted.'
-      );
-    }
-
     const id = generateId(IdType.Channel);
     const attributes: ChannelAttributes = {
       type: 'channel',
       name: input.name,
       avatar: input.avatar,
-      parentId: input.spaceId,
+      parentId: input.workspaceId,
+      collaborators: {
+        [workspace.userId]: 'admin',
+      },
     };
 
     await workspace.nodes.createNode({
       id,
       attributes,
-      parentId: input.spaceId,
+      parentId: input.workspaceId,
     });
 
     return {
