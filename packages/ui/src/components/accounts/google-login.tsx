@@ -66,7 +66,11 @@ export const GoogleLogin = ({ context, onSuccess }: GoogleLoginProps) => {
   const config = server?.attributes.account?.google;
 
   if (serverListQuery.isPending) {
-    return null;
+    return (
+      <div className="flex justify-center">
+        <Spinner className="size-4" />
+      </div>
+    );
   }
 
   if (app.type === 'web' && config && config.enabled && config.clientId) {
