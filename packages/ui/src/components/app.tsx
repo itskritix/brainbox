@@ -9,6 +9,7 @@ import { ServerProvider } from '@colanode/ui/components/servers/server-provider'
 import { DelayedComponent } from '@colanode/ui/components/ui/delayed-component';
 import { AppContext } from '@colanode/ui/contexts/app';
 import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { getServerUrl } from '@colanode/ui/lib/server-config';
 
 interface AppProps {
   type: AppType;
@@ -26,16 +27,31 @@ export const App = ({ type }: AppProps) => {
     type: 'account.list',
   });
 
+  const serverListQuery = useLiveQuery({
+    type: 'server.list',
+  });
+
   useEffect(() => {
     window.colanode.init().then(() => {
       setInitialized(true);
     });
   }, []);
 
+  // Auto-create default server if none exists
+  useEffect(() => {
+    if (initialized && serverListQuery.data && serverListQuery.data.length === 0) {
+      window.colanode.executeMutation({
+        type: 'server.create',
+        url: getServerUrl(),
+      });
+    }
+  }, [initialized, serverListQuery.data]);
+
   if (
     !initialized ||
     appMetadataListQuery.isPending ||
-    accountListQuery.isPending
+    accountListQuery.isPending ||
+    serverListQuery.isPending
   ) {
     return (
       <DelayedComponent>

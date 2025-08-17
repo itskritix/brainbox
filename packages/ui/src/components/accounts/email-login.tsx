@@ -17,8 +17,8 @@ import {
 import { Input } from '@colanode/ui/components/ui/input';
 import { Label } from '@colanode/ui/components/ui/label';
 import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useServer } from '@colanode/ui/contexts/server';
 import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { getServerDomain } from '@colanode/ui/lib/server-config';
 
 const formSchema = z.object({
   email: z.string().min(2).email(),
@@ -36,7 +36,6 @@ export const EmailLogin = ({
   onForgotPassword,
   onRegister,
 }: EmailLoginProps) => {
-  const server = useServer();
   const { mutate, isPending } = useMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -53,7 +52,7 @@ export const EmailLogin = ({
         type: 'email.login',
         email: values.email,
         password: values.password,
-        server: server.domain,
+        server: getServerDomain(),
       },
       onSuccess(output) {
         onSuccess(output);

@@ -16,7 +16,7 @@ import {
 import { Input } from '@colanode/ui/components/ui/input';
 import { Label } from '@colanode/ui/components/ui/label';
 import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useServer } from '@colanode/ui/contexts/server';
+import { getServerDomain } from '@colanode/ui/lib/server-config';
 import { useMutation } from '@colanode/ui/hooks/use-mutation';
 
 const formSchema = z.object({
@@ -32,7 +32,6 @@ export const EmailPasswordResetInit = ({
   onSuccess,
   onBack,
 }: EmailPasswordResetInitProps) => {
-  const server = useServer();
   const { mutate, isPending } = useMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -47,7 +46,7 @@ export const EmailPasswordResetInit = ({
       input: {
         type: 'email.password.reset.init',
         email: values.email,
-        server: server.domain,
+        server: getServerDomain(),
       },
       onSuccess(output) {
         onSuccess(output);

@@ -16,7 +16,7 @@ import {
 import { Input } from '@colanode/ui/components/ui/input';
 import { Label } from '@colanode/ui/components/ui/label';
 import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useServer } from '@colanode/ui/contexts/server';
+import { getServerDomain } from '@colanode/ui/lib/server-config';
 import { useCountdown } from '@colanode/ui/hooks/use-countdown';
 import { useMutation } from '@colanode/ui/hooks/use-mutation';
 
@@ -37,7 +37,6 @@ export const EmailVerify = ({
   onSuccess,
   onBack,
 }: EmailVerifyProps) => {
-  const server = useServer();
   const { mutate, isPending } = useMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -59,7 +58,7 @@ export const EmailVerify = ({
       input: {
         type: 'email.verify',
         otp: values.otp,
-        server: server.domain,
+        server: getServerDomain(),
         id,
       },
       onSuccess(output) {

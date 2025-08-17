@@ -6,8 +6,9 @@ import { Button } from '@colanode/ui/components/ui/button';
 import { GoogleIcon } from '@colanode/ui/components/ui/icons';
 import { Spinner } from '@colanode/ui/components/ui/spinner';
 import { useApp } from '@colanode/ui/contexts/app';
-import { useServer } from '@colanode/ui/contexts/server';
 import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { getServerDomain } from '@colanode/ui/lib/server-config';
 
 interface GoogleLoginProps {
   context: 'login' | 'register';
@@ -15,7 +16,6 @@ interface GoogleLoginProps {
 }
 
 const GoogleLoginButton = ({ context, onSuccess }: GoogleLoginProps) => {
-  const server = useServer();
   const { mutate, isPending } = useMutation();
 
   const login = useGoogleLogin({
@@ -24,7 +24,7 @@ const GoogleLoginButton = ({ context, onSuccess }: GoogleLoginProps) => {
         input: {
           type: 'google.login',
           code: response.code,
-          server: server.domain,
+          server: getServerDomain(),
         },
         onSuccess(output) {
           onSuccess(output);
@@ -57,8 +57,21 @@ const GoogleLoginButton = ({ context, onSuccess }: GoogleLoginProps) => {
 
 export const GoogleLogin = ({ context, onSuccess }: GoogleLoginProps) => {
   const app = useApp();
-  const server = useServer();
-  const config = server.attributes.account?.google;
+  
+  const serverListQuery = useLiveQuery({
+    type: 'server.list',
+  });
+
+  const server = serverListQuery.data?.[0]; // Get the first (and only) server
+  const config = server?.attributes.account?.google;
+
+  if (serverListQuery.isPending) {
+    return (
+      <div className="flex justify-center">
+        <Spinner className="size-4" />
+      </div>
+    );
+  }
 
   if (app.type === 'web' && config && config.enabled && config.clientId) {
     return (
