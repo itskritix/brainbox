@@ -2,7 +2,6 @@ import {
   Database,
   Ellipsis,
   Folder,
-  Hash,
   Plus,
   Settings,
   StickyNote,
@@ -10,7 +9,6 @@ import {
 import { Fragment, useState } from 'react';
 
 import { LocalSpaceNode } from '@colanode/client/types';
-import { ChannelCreateDialog } from '@colanode/ui/components/channels/channel-create-dialog';
 import { DatabaseCreateDialog } from '@colanode/ui/components/databases/database-create-dialog';
 import { FolderCreateDialog } from '@colanode/ui/components/folders/folder-create-dialog';
 import { PageCreateDialog } from '@colanode/ui/components/pages/page-create-dialog';
@@ -32,7 +30,6 @@ export const SpaceSidebarDropdown = ({ space }: SpaceSidebarDropdownProps) => {
   const layout = useLayout();
 
   const [openCreatePage, setOpenCreatePage] = useState(false);
-  const [openCreateChannel, setOpenCreateChannel] = useState(false);
   const [openCreateDatabase, setOpenCreateDatabase] = useState(false);
   const [openCreateFolder, setOpenCreateFolder] = useState(false);
 
@@ -57,13 +54,6 @@ export const SpaceSidebarDropdown = ({ space }: SpaceSidebarDropdownProps) => {
             >
               <StickyNote className="size-4 text-gray-600" />
               <span className="text-sm">Add page</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onSelect={() => setOpenCreateChannel(true)}
-              className="flex items-center gap-2 px-2 py-1.5 cursor-pointer hover:bg-gray-50"
-            >
-              <Hash className="size-4 text-gray-600" />
-              <span className="text-sm">Add channel</span>
             </DropdownMenuItem>
             <DropdownMenuItem
               onSelect={() => setOpenCreateDatabase(true)}
@@ -110,12 +100,6 @@ export const SpaceSidebarDropdown = ({ space }: SpaceSidebarDropdownProps) => {
           spaceId={space.id}
           open={openCreateDatabase}
           onOpenChange={setOpenCreateDatabase}
-        />
-      )}
-      {openCreateChannel && (
-        <ChannelCreateDialog
-          open={openCreateChannel}
-          onOpenChange={setOpenCreateChannel}
         />
       )}
       {openCreateFolder && (

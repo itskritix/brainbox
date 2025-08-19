@@ -1,16 +1,9 @@
-import { Info, Trash2, Users } from 'lucide-react';
-
 import { LocalSpaceNode } from '@colanode/client/types';
 import { NodeRole, hasNodeRole } from '@colanode/core';
 import { NodeCollaborators } from '@colanode/ui/components/collaborators/node-collaborators';
 import { SpaceDeleteForm } from '@colanode/ui/components/spaces/space-delete-form';
 import { SpaceGeneralTab } from '@colanode/ui/components/spaces/space-general-tab';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@colanode/ui/components/ui/tabs';
+import { Separator } from '@colanode/ui/components/ui/separator';
 import { useLayout } from '@colanode/ui/contexts/layout';
 
 interface SpaceBodyProps {
@@ -24,68 +17,47 @@ export const SpaceBody = ({ space, role }: SpaceBodyProps) => {
   const canDelete = hasNodeRole(role, 'admin');
 
   return (
-    <Tabs
-      defaultValue="general"
-      className="grid h-full max-h-full grid-cols-[200px_minmax(0,1fr)] overflow-hidden gap-4"
-    >
-      <TabsList className="flex w-full flex-col items-start justify-start gap-1 rounded-none bg-white">
-        <TabsTrigger
-          key={`tab-trigger-general`}
-          className="w-full justify-start p-2 hover:bg-gray-50 cursor-pointer"
-          value="general"
-        >
-          <Info className="mr-2 size-4" />
-          General
-        </TabsTrigger>
-        <TabsTrigger
-          key={`tab-trigger-collaborators`}
-          className="w-full justify-start p-2 hover:bg-gray-50 cursor-pointer"
-          value="collaborators"
-        >
-          <Users className="mr-2 size-4" />
-          Collaborators
-        </TabsTrigger>
-        {canDelete && (
-          <TabsTrigger
-            key={`tab-trigger-delete`}
-            className="w-full justify-start p-2 hover:bg-gray-50 cursor-pointer"
-            value="delete"
-          >
-            <Trash2 className="mr-2 size-4" />
-            Delete
-          </TabsTrigger>
-        )}
-      </TabsList>
-      <div className="overflow-auto pl-1 max-w-[50rem]">
-        <TabsContent
-          key="tab-content-info"
-          className="focus-visible:ring-0 focus-visible:ring-offset-0"
-          value="general"
-        >
+    <div className="h-full overflow-auto px-6 py-4">
+      <div className="max-w-4xl mx-auto space-y-8">
+        {/* General Settings Section */}
+        <div className="space-y-4">
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900">General Settings</h2>
+            <p className="text-sm text-gray-600">Manage your space name, avatar, and description</p>
+          </div>
           <SpaceGeneralTab space={space} readonly={!canEdit} />
-        </TabsContent>
-        <TabsContent
-          key="tab-content-collaborators"
-          className="focus-visible:ring-0 focus-visible:ring-offset-0"
-          value="collaborators"
-        >
+        </div>
+
+        <Separator />
+
+        {/* Collaborators Section */}
+        <div className="space-y-4">
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900">Collaborators</h2>
+            <p className="text-sm text-gray-600">Manage who has access to this space and their permissions</p>
+          </div>
           <NodeCollaborators node={space} nodes={[space]} role={role} />
-        </TabsContent>
+        </div>
+
+        {/* Delete Section */}
         {canDelete && (
-          <TabsContent
-            key="tab-content-delete"
-            className="focus-visible:ring-0 focus-visible:ring-offset-0"
-            value="delete"
-          >
-            <SpaceDeleteForm
-              id={space.id}
-              onDeleted={() => {
-                layout.close(space.id);
-              }}
-            />
-          </TabsContent>
+          <>
+            <Separator />
+            <div className="space-y-4">
+              <div>
+                <h2 className="text-lg font-semibold text-red-600">Delete Space</h2>
+                <p className="text-sm text-gray-600">Permanently delete this space and all its contents</p>
+              </div>
+              <SpaceDeleteForm
+                id={space.id}
+                onDeleted={() => {
+                  layout.close(space.id);
+                }}
+              />
+            </div>
+          </>
         )}
       </div>
-    </Tabs>
+    </div>
   );
 };
