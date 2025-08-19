@@ -4,7 +4,7 @@ import { InView } from 'react-intersection-observer';
 import { UserListQueryInput } from '@colanode/client/queries';
 import { WorkspaceRole } from '@colanode/core';
 import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { Container, ContainerBody } from '@colanode/ui/components/ui/container';
+import { Container } from '@colanode/ui/components/ui/container';
 import { Separator } from '@colanode/ui/components/ui/separator';
 import { Spinner } from '@colanode/ui/components/ui/spinner';
 import { WorkspaceUserInvite } from '@colanode/ui/components/workspaces/workspace-user-invite';
@@ -36,7 +36,8 @@ export const WorkspaceUsers = () => {
 
   return (
     <Container>
-      <ContainerBody className="max-w-4xl space-y-8">
+      <div className="h-full overflow-auto px-6 py-4">
+        <div className="max-w-4xl mx-auto space-y-8">
         {canEditUsers && (
           <div className="space-y-6">
             <div>
@@ -94,7 +95,8 @@ export const WorkspaceUsers = () => {
             />
           </div>
         </div>
-      </ContainerBody>
+        </div>
+      </div>
     </Container>
   );
 };
