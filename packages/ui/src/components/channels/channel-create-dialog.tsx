@@ -46,7 +46,7 @@ export const ChannelCreateDialog = ({
           </DialogDescription>
         </DialogHeader>
         
-        <div className="space-y-6">
+        <div className="space-y-4">
           <ChannelForm
             id={generateId(IdType.Channel)}
             values={{
@@ -123,10 +123,10 @@ export const ChannelCreateDialog = ({
         />
         
         {/* Collaborators Section */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           <Separator />
-          <div className="space-y-3">
-            <Label className="text-sm font-medium">Invite Collaborators (Optional)</Label>
+          <div className="space-y-2">
+            <Label className="text-xs font-medium">Invite Collaborators (Optional)</Label>
             <NodeCollaboratorSearch
               value={collaborators}
               onChange={setCollaborators}
@@ -134,7 +134,7 @@ export const ChannelCreateDialog = ({
             />
             {collaborators.length > 0 && (
               <div className="flex items-center gap-2">
-                <Label className="text-sm">Default role:</Label>
+                <Label className="text-xs">Default role:</Label>
                 <NodeCollaboratorRoleDropdown
                   value={defaultRole}
                   onChange={setDefaultRole}

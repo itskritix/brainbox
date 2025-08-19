@@ -33,11 +33,10 @@ export const DatabaseSettings = ({ database, role }: DatabaseSettingsProps) => {
         <DropdownMenuTrigger asChild>
           <Settings className="size-4 cursor-pointer text-muted-foreground hover:text-foreground" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent side="bottom" className="mr-2 w-80">
+        <DropdownMenuContent side="bottom" className="mr-2 w-64">
           <DropdownMenuLabel>{database.attributes.name}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
           <DropdownMenuItem
-            className="flex items-center gap-2 cursor-pointer"
+            className="cursor-pointer"
             onClick={() => {
               if (!canEdit) {
                 return;
@@ -47,11 +46,11 @@ export const DatabaseSettings = ({ database, role }: DatabaseSettingsProps) => {
             }}
             disabled={!canEdit}
           >
-            <LetterText className="size-4" />
+            <LetterText />
             Rename
           </DropdownMenuItem>
           <DropdownMenuItem
-            className="flex items-center gap-2 cursor-pointer"
+            className="cursor-pointer"
             disabled={!canEdit}
             onClick={() => {
               if (!canEdit) {
@@ -61,18 +60,17 @@ export const DatabaseSettings = ({ database, role }: DatabaseSettingsProps) => {
               setShowUpdateDialog(true);
             }}
           >
-            <Image className="size-4" />
+            <Image />
             Update icon
           </DropdownMenuItem>
           <DropdownMenuItem
-            className="flex items-center gap-2 cursor-pointer"
+            className="cursor-pointer"
             disabled
           >
-            <Copy className="size-4" />
+            <Copy />
             Duplicate
           </DropdownMenuItem>
           <DropdownMenuItem
-            className="flex items-center gap-2"
             onClick={() => {
               if (!canDelete) {
                 return;
@@ -81,8 +79,9 @@ export const DatabaseSettings = ({ database, role }: DatabaseSettingsProps) => {
               setShowDeleteModal(true);
             }}
             disabled={!canDelete}
+            variant="destructive"
           >
-            <Trash2 className="size-4" />
+            <Trash2 />
             Delete
           </DropdownMenuItem>
           <DropdownMenuSeparator />

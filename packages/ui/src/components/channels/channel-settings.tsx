@@ -57,7 +57,6 @@ export const ChannelSettings = ({ channel, role }: ChannelSettingsProps) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent side="bottom" className="mr-2 w-80">
           <DropdownMenuLabel>{channel.attributes.name}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
           <DropdownMenuItem
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => {

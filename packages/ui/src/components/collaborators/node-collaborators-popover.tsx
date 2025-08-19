@@ -19,6 +19,14 @@ export const NodeCollaboratorsPopover = ({
   nodes,
   role,
 }: NodeCollaboratorsPopoverProps) => {
+  // Hide collaborators popover for DMs between exactly 2 people
+  if (node.type === 'chat') {
+    const collaboratorCount = Object.keys(node.attributes.collaborators || {}).length;
+    if (collaboratorCount <= 2) {
+      return null;
+    }
+  }
+
   return (
     <Popover>
       <PopoverTrigger asChild>
