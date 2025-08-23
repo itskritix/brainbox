@@ -3,21 +3,21 @@ import { RefAttributes, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { toast } from 'sonner';
 
-import { LocalSpaceNode } from '@colanode/client/types';
-import { extractNodeRole } from '@colanode/core';
-import { SidebarItem } from '@colanode/ui/components/layouts/sidebars/sidebar-item';
-import { SpaceSidebarDropdown } from '@colanode/ui/components/spaces/space-sidebar-dropdown';
+import { LocalSpaceNode } from '@brainbox/client/types';
+import { extractNodeRole } from '@brainbox/core';
+import { SidebarItem } from '@brainbox/ui/components/layouts/sidebars/sidebar-item';
+import { SpaceSidebarDropdown } from '@brainbox/ui/components/spaces/space-sidebar-dropdown';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '@colanode/ui/components/ui/collapsible';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
-import { sortSpaceChildren } from '@colanode/ui/lib/spaces';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/collapsible';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
+import { sortSpaceChildren } from '@brainbox/ui/lib/spaces';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface SpaceSidebarItemProps {
   space: LocalSpaceNode;

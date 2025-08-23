@@ -3,8 +3,8 @@ import { Transaction } from 'kysely';
 import {
   WorkspaceDatabaseSchema,
   SelectNodeReference,
-} from '@colanode/client/databases/workspace/schema';
-import { Mention } from '@colanode/core';
+} from '@brainbox/client/databases/workspace/schema';
+import { Mention } from '@brainbox/core';
 
 type MentionChangeResult = {
   addedMentions: Mention[];

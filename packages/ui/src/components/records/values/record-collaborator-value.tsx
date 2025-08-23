@@ -1,20 +1,20 @@
 import { X } from 'lucide-react';
 import { useState } from 'react';
 
-import { User } from '@colanode/client/types';
-import { CollaboratorFieldAttributes } from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { Badge } from '@colanode/ui/components/ui/badge';
+import { User } from '@brainbox/client/types';
+import { CollaboratorFieldAttributes } from '@brainbox/core';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { Badge } from '@brainbox/ui/components/ui/badge';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { UserSearch } from '@colanode/ui/components/users/user-search';
-import { useRecord } from '@colanode/ui/contexts/record';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQueries } from '@colanode/ui/hooks/use-live-queries';
+} from '@brainbox/ui/components/ui/popover';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { UserSearch } from '@brainbox/ui/components/users/user-search';
+import { useRecord } from '@brainbox/ui/contexts/record';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQueries } from '@brainbox/ui/hooks/use-live-queries';
 
 interface RecordCollaboratorValueProps {
   field: CollaboratorFieldAttributes;

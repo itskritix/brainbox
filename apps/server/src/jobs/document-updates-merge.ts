@@ -1,13 +1,13 @@
 import ms from 'ms';
 
-import { UpdateMergeMetadata } from '@colanode/core';
-import { mergeUpdates } from '@colanode/crdt';
-import { database } from '@colanode/server/data/database';
-import { SelectDocumentUpdate } from '@colanode/server/data/schema';
-import { JobHandler } from '@colanode/server/jobs';
-import { config } from '@colanode/server/lib/config';
-import { fetchCounter, setCounter } from '@colanode/server/lib/counters';
-import { createLogger } from '@colanode/server/lib/logger';
+import { UpdateMergeMetadata } from '@brainbox/core';
+import { mergeUpdates } from '@brainbox/crdt';
+import { database } from '@brainbox/server/data/database';
+import { SelectDocumentUpdate } from '@brainbox/server/data/schema';
+import { JobHandler } from '@brainbox/server/jobs';
+import { config } from '@brainbox/server/lib/config';
+import { fetchCounter, setCounter } from '@brainbox/server/lib/counters';
+import { createLogger } from '@brainbox/server/lib/logger';
 
 const logger = createLogger('server:job:document-updates-merge');
 
@@ -15,7 +15,7 @@ export type DocumentUpdatesMergeInput = {
   type: 'document.updates.merge';
 };
 
-declare module '@colanode/server/jobs' {
+declare module '@brainbox/server/jobs' {
   interface JobMap {
     'document.updates.merge': {
       input: DocumentUpdatesMergeInput;

@@ -4,10 +4,10 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod/v4';
 
-import { FieldType } from '@colanode/core';
-import { DatabaseSelect } from '@colanode/ui/components/databases/database-select';
-import { FieldTypeSelect } from '@colanode/ui/components/databases/fields/field-type-select';
-import { Button } from '@colanode/ui/components/ui/button';
+import { FieldType } from '@brainbox/core';
+import { DatabaseSelect } from '@brainbox/ui/components/databases/database-select';
+import { FieldTypeSelect } from '@brainbox/ui/components/databases/fields/field-type-select';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Form,
   FormControl,
@@ -15,17 +15,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@colanode/ui/components/ui/form';
-import { Input } from '@colanode/ui/components/ui/input';
+} from '@brainbox/ui/components/ui/form';
+import { Input } from '@brainbox/ui/components/ui/input';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+} from '@brainbox/ui/components/ui/popover';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 const formSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),

@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { match } from 'ts-pattern';
 
-import { FileListQueryInput } from '@colanode/client/queries';
-import { FolderLayoutType } from '@colanode/client/types';
-import { GalleryLayout } from '@colanode/ui/components/folders/galleries/gallery-layout';
-import { GridLayout } from '@colanode/ui/components/folders/grids/grid-layout';
-import { ListLayout } from '@colanode/ui/components/folders/lists/list-layout';
-import { FolderContext } from '@colanode/ui/contexts/folder';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQueries } from '@colanode/ui/hooks/use-live-queries';
+import { FileListQueryInput } from '@brainbox/client/queries';
+import { FolderLayoutType } from '@brainbox/client/types';
+import { GalleryLayout } from '@brainbox/ui/components/folders/galleries/gallery-layout';
+import { GridLayout } from '@brainbox/ui/components/folders/grids/grid-layout';
+import { ListLayout } from '@brainbox/ui/components/folders/lists/list-layout';
+import { FolderContext } from '@brainbox/ui/contexts/folder';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQueries } from '@brainbox/ui/hooks/use-live-queries';
 
 const FILES_PER_PAGE = 100;
 

@@ -18,7 +18,7 @@ export const smtpConfigSchema = z.discriminatedUnion('enabled', [
       email: z.string({
         error: 'SMTP_EMAIL_FROM is required when SMTP is enabled',
       }),
-      name: z.string().default('Colanode'),
+      name: z.string().default('Brainbox'),
     }),
   }),
   z.object({

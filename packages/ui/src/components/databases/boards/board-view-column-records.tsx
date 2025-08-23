@@ -1,12 +1,12 @@
-import { extractNodeRole, DatabaseViewFilterAttributes } from '@colanode/core';
-import { BoardViewRecordCard } from '@colanode/ui/components/databases/boards/board-view-record-card';
-import { BoardViewRecordCreateCard } from '@colanode/ui/components/databases/boards/board-view-record-create-card';
-import { RecordProvider } from '@colanode/ui/components/records/record-provider';
-import { useBoardView } from '@colanode/ui/contexts/board-view';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useRecordsQuery } from '@colanode/ui/hooks/use-records-query';
+import { extractNodeRole, DatabaseViewFilterAttributes } from '@brainbox/core';
+import { BoardViewRecordCard } from '@brainbox/ui/components/databases/boards/board-view-record-card';
+import { BoardViewRecordCreateCard } from '@brainbox/ui/components/databases/boards/board-view-record-create-card';
+import { RecordProvider } from '@brainbox/ui/components/records/record-provider';
+import { useBoardView } from '@brainbox/ui/contexts/board-view';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useRecordsQuery } from '@brainbox/ui/hooks/use-records-query';
 
 export const BoardViewColumnRecords = () => {
   const workspace = useWorkspace();

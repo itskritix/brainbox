@@ -5,10 +5,10 @@ import {
   JobHandler,
   JobOutput,
   JobConcurrencyConfig,
-} from '@colanode/client/jobs';
-import { parseApiError } from '@colanode/client/lib/ky';
-import { AppService } from '@colanode/client/services/app-service';
-import { ApiErrorCode } from '@colanode/core';
+} from '@brainbox/client/jobs';
+import { parseApiError } from '@brainbox/client/lib/ky';
+import { AppService } from '@brainbox/client/services/app-service';
+import { ApiErrorCode } from '@brainbox/core';
 
 export type TokenDeleteInput = {
   type: 'token.delete';
@@ -16,7 +16,7 @@ export type TokenDeleteInput = {
   server: string;
 };
 
-declare module '@colanode/client/jobs' {
+declare module '@brainbox/client/jobs' {
   interface JobMap {
     'token.delete': {
       input: TokenDeleteInput;

@@ -1,19 +1,19 @@
 import { Ellipsis, Trash2 } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { SelectOptionAttributes } from '@colanode/core';
-import { SelectOptionDeleteDialog } from '@colanode/ui/components/databases/fields/select-option-delete-dialog';
-import { Label } from '@colanode/ui/components/ui/label';
+import { SelectOptionAttributes } from '@brainbox/core';
+import { SelectOptionDeleteDialog } from '@brainbox/ui/components/databases/fields/select-option-delete-dialog';
+import { Label } from '@brainbox/ui/components/ui/label';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { SmartTextInput } from '@colanode/ui/components/ui/smart-text-input';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { selectOptionColors } from '@colanode/ui/lib/databases';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/popover';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { SmartTextInput } from '@brainbox/ui/components/ui/smart-text-input';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { selectOptionColors } from '@brainbox/ui/lib/databases';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface SelectOptionSettingsPopoverProps {
   fieldId: string;

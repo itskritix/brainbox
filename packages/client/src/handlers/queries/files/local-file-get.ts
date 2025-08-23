@@ -1,12 +1,12 @@
-import { WorkspaceQueryHandlerBase } from '@colanode/client/handlers/queries/workspace-query-handler-base';
-import { mapDownload, mapLocalFile } from '@colanode/client/lib/mappers';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
+import { WorkspaceQueryHandlerBase } from '@brainbox/client/handlers/queries/workspace-query-handler-base';
+import { mapDownload, mapLocalFile } from '@brainbox/client/lib/mappers';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
 import {
   LocalFileGetQueryInput,
   LocalFileGetQueryOutput,
-} from '@colanode/client/queries';
-import { Event } from '@colanode/client/types/events';
-import { DownloadType } from '@colanode/client/types/files';
+} from '@brainbox/client/queries';
+import { Event } from '@brainbox/client/types/events';
+import { DownloadType } from '@brainbox/client/types/files';
 
 export class LocalFileGetQueryHandler
   extends WorkspaceQueryHandlerBase

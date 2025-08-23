@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { InView } from 'react-intersection-observer';
 
-import { NodeRole, hasNodeRole } from '@colanode/core';
+import { NodeRole, hasNodeRole } from '@brainbox/core';
 import {
   MessageCreate,
   MessageCreateRefProps,
-} from '@colanode/ui/components/messages/message-create';
-import { MessageList } from '@colanode/ui/components/messages/message-list';
-import { ScrollArea } from '@colanode/ui/components/ui/scroll-area';
-import { ConversationContext } from '@colanode/ui/contexts/conversation';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
+} from '@brainbox/ui/components/messages/message-create';
+import { MessageList } from '@brainbox/ui/components/messages/message-list';
+import { ScrollArea } from '@brainbox/ui/components/ui/scroll-area';
+import { ConversationContext } from '@brainbox/ui/contexts/conversation';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
 
 interface ConversationProps {
   conversationId: string;

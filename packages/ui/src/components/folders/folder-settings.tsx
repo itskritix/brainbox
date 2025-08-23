@@ -1,11 +1,11 @@
 import { Copy, Image, LetterText, Settings, Trash2 } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { LocalFolderNode } from '@colanode/client/types';
-import { NodeRole, hasNodeRole } from '@colanode/core';
-import { NodeCollaboratorAudit } from '@colanode/ui/components/collaborators/node-collaborator-audit';
-import { FolderDeleteDialog } from '@colanode/ui/components/folders/folder-delete-dialog';
-import { FolderUpdateDialog } from '@colanode/ui/components/folders/folder-update-dialog';
+import { LocalFolderNode } from '@brainbox/client/types';
+import { NodeRole, hasNodeRole } from '@brainbox/core';
+import { NodeCollaboratorAudit } from '@brainbox/ui/components/collaborators/node-collaborator-audit';
+import { FolderDeleteDialog } from '@brainbox/ui/components/folders/folder-delete-dialog';
+import { FolderUpdateDialog } from '@brainbox/ui/components/folders/folder-update-dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +13,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
+} from '@brainbox/ui/components/ui/dropdown-menu';
 
 interface FolderSettingsProps {
   folder: LocalFolderNode;

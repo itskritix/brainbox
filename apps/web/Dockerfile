@@ -30,11 +30,11 @@ COPY ../../apps/web apps/web
 COPY ../../tsconfig.base.json ./
 
 # Build packages
-RUN npm run build -w @colanode/core && \
-    npm run build -w @colanode/crdt && \
-    npm run build -w @colanode/client && \
-    npm run build -w @colanode/ui && \
-    npm run build -w @colanode/web && \
+RUN npm run build -w @brainbox/core && \
+    npm run build -w @brainbox/crdt && \
+    npm run build -w @brainbox/client && \
+    npm run build -w @brainbox/ui && \
+    npm run build -w @brainbox/web && \
     npm prune --production
 
 

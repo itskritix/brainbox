@@ -1,4 +1,4 @@
-import { FileSubtype } from '@colanode/core';
+import { FileSubtype } from '@brainbox/core';
 
 export type OpenFileDialogOptions = {
   accept?: string;

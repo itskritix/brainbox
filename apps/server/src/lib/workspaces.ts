@@ -5,17 +5,17 @@ import {
   WorkspaceOutput,
   WorkspaceStatus,
   UserStatus,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { SelectAccount } from '@colanode/server/data/schema';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { SelectAccount } from '@brainbox/server/data/schema';
 import {
   generateInitialMessageBlocks,
   generateWelcomePageBlocks,
-} from '@colanode/server/lib/blocks';
-import { config } from '@colanode/server/lib/config';
-import { createDocument } from '@colanode/server/lib/documents';
-import { eventBus } from '@colanode/server/lib/event-bus';
-import { createNode } from '@colanode/server/lib/nodes';
+} from '@brainbox/server/lib/blocks';
+import { config } from '@brainbox/server/lib/config';
+import { createDocument } from '@brainbox/server/lib/documents';
+import { eventBus } from '@brainbox/server/lib/event-bus';
+import { createNode } from '@brainbox/server/lib/nodes';
 
 export const createWorkspace = async (
   account: SelectAccount,

@@ -1,21 +1,21 @@
 import ms from 'ms';
 
-import { SelectDownload, UpdateDownload } from '@colanode/client/databases';
+import { SelectDownload, UpdateDownload } from '@brainbox/client/databases';
 import {
   JobHandler,
   JobOutput,
   JobConcurrencyConfig,
-} from '@colanode/client/jobs';
+} from '@brainbox/client/jobs';
 import {
   eventBus,
   mapDownload,
   mapLocalFile,
   mapNode,
-} from '@colanode/client/lib';
-import { AppService } from '@colanode/client/services/app-service';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
-import { DownloadStatus, LocalFileNode } from '@colanode/client/types';
-import { FileStatus } from '@colanode/core';
+} from '@brainbox/client/lib';
+import { AppService } from '@brainbox/client/services/app-service';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
+import { DownloadStatus, LocalFileNode } from '@brainbox/client/types';
+import { FileStatus } from '@brainbox/core';
 
 export type FileDownloadInput = {
   type: 'file.download';
@@ -24,7 +24,7 @@ export type FileDownloadInput = {
   downloadId: string;
 };
 
-declare module '@colanode/client/jobs' {
+declare module '@brainbox/client/jobs' {
   interface JobMap {
     'file.download': {
       input: FileDownloadInput;

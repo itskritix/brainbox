@@ -1,16 +1,16 @@
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { mapNode } from '@colanode/client/lib/mappers';
-import { MutationHandler } from '@colanode/client/lib/types';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { mapNode } from '@brainbox/client/lib/mappers';
+import { MutationHandler } from '@brainbox/client/lib/types';
 import {
   ViewCreateMutationInput,
   ViewCreateMutationOutput,
-} from '@colanode/client/mutations/databases/view-create';
+} from '@brainbox/client/mutations/databases/view-create';
 import {
   generateId,
   generateFractionalIndex,
   IdType,
   DatabaseViewAttributes,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 export class ViewCreateMutationHandler
   extends WorkspaceMutationHandlerBase

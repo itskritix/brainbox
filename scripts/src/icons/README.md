@@ -1,6 +1,6 @@
-# Colanode icon generator script
+# Brainbox icon generator script
 
-This directory contains a script that automatically downloads, processes, and stores various icon sets for **Colanode**. These icons are used across the Colanode platform where users assign them as icons for their entries: channels, pages, databases, records, folders, etc.
+This directory contains a script that automatically downloads, processes, and stores various icon sets for **Brainbox**. These icons are used across the Brainbox platform where users assign them as icons for their entries: channels, pages, databases, records, folders, etc.
 
 By consolidating icons from [Remix Icon](https://github.com/Remix-Design/RemixIcon) and [Simple Icons](https://github.com/simple-icons/simple-icons), we provide a robust collection of icons—both general-purpose (Remix Icon) and brand-specific (Simple Icons)—for an optimal user experience.
 
@@ -49,7 +49,7 @@ By consolidating icons from [Remix Icon](https://github.com/Remix-Design/RemixIc
    **Additional Processing**:
 
    - Organizes icons into categories (e.g., "System" categories from Remix Icon and a "Logos" category for all Simple Icons).
-   - Merges any existing data so as not to overwrite or lose previously assigned IDs. This ensures icons already in use retain consistent IDs in the Colanode app.
+   - Merges any existing data so as not to overwrite or lose previously assigned IDs. This ensures icons already in use retain consistent IDs in the Brainbox app.
    - Maintains a full-text search (`icon_search`) table for easy querying by name or tags.
 
 4. **Clean Up**
@@ -78,7 +78,7 @@ Once the script completes, you'll have:
 
 ## Notes on Licensing
 
-While **Colanode** is open source under its own [license terms](../../../LICENSE) in the root of the monorepo, the icons downloaded from **Remix Icon** and **Simple Icons** are subject to their respective licenses. Please review their repositories for details:
+While **Brainbox** is open source under its own [license terms](../../../LICENSE) in the root of the monorepo, the icons downloaded from **Remix Icon** and **Simple Icons** are subject to their respective licenses. Please review their repositories for details:
 
 - [Remix Icon](https://github.com/Remix-Design/RemixIcon)
 - [Simple Icons](https://github.com/simple-icons/simple-icons)

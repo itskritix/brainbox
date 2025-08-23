@@ -1,11 +1,11 @@
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   SpaceAvatarUpdateMutationInput,
   SpaceAvatarUpdateMutationOutput,
-} from '@colanode/client/mutations/spaces/space-avatar-update';
-import { SpaceAttributes } from '@colanode/core';
+} from '@brainbox/client/mutations/spaces/space-avatar-update';
+import { SpaceAttributes } from '@brainbox/core';
 
 export class SpaceAvatarUpdateMutationHandler
   extends WorkspaceMutationHandlerBase

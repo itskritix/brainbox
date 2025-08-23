@@ -1,6 +1,6 @@
 import { z } from 'zod/v4';
 
-import { ZodText } from '@colanode/core/registry/zod';
+import { ZodText } from '@brainbox/core/registry/zod';
 
 export const blockLeafSchema = z.object({
   type: z.string(),

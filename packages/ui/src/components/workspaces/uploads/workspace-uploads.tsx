@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { InView } from 'react-intersection-observer';
 
-import { UploadListQueryInput } from '@colanode/client/queries';
-import { Container, ContainerBody } from '@colanode/ui/components/ui/container';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { WorkspaceUploadFile } from '@colanode/ui/components/workspaces/uploads/workspace-upload-file';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQueries } from '@colanode/ui/hooks/use-live-queries';
+import { UploadListQueryInput } from '@brainbox/client/queries';
+import { Container, ContainerBody } from '@brainbox/ui/components/ui/container';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { WorkspaceUploadFile } from '@brainbox/ui/components/workspaces/uploads/workspace-upload-file';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQueries } from '@brainbox/ui/hooks/use-live-queries';
 
 const UPLOADS_PER_PAGE = 100;
 

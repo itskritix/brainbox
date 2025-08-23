@@ -2,8 +2,8 @@ import {
   JobHandler,
   JobOutput,
   JobConcurrencyConfig,
-} from '@colanode/client/jobs';
-import { AppService } from '@colanode/client/services/app-service';
+} from '@brainbox/client/jobs';
+import { AppService } from '@brainbox/client/services/app-service';
 
 export type WorkspaceFilesCleanInput = {
   type: 'workspace.files.clean';
@@ -11,7 +11,7 @@ export type WorkspaceFilesCleanInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/jobs' {
+declare module '@brainbox/client/jobs' {
   interface JobMap {
     'workspace.files.clean': {
       input: WorkspaceFilesCleanInput;

@@ -1,11 +1,11 @@
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { mapWorkspaceMetadata } from '@colanode/client/lib/mappers';
-import { MutationHandler } from '@colanode/client/lib/types';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { mapWorkspaceMetadata } from '@brainbox/client/lib/mappers';
+import { MutationHandler } from '@brainbox/client/lib/types';
 import {
   WorkspaceMetadataDeleteMutationInput,
   WorkspaceMetadataDeleteMutationOutput,
-} from '@colanode/client/mutations/workspaces/workspace-metadata-delete';
+} from '@brainbox/client/mutations/workspaces/workspace-metadata-delete';
 
 export class WorkspaceMetadataDeleteMutationHandler
   extends WorkspaceMutationHandlerBase

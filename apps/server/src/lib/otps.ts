@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 
-import { redis } from '@colanode/server/data/redis';
-import { Otp } from '@colanode/server/types/otps';
+import { redis } from '@brainbox/server/data/redis';
+import { Otp } from '@brainbox/server/types/otps';
 
 const OTP_DIGITS = '0123456789';
 const OTP_LENGTH = 6;

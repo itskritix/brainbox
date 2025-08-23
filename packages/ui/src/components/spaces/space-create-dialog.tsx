@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod/v4';
 
-import { Button } from '@colanode/ui/components/ui/button';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -11,7 +11,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@colanode/ui/components/ui/dialog';
+} from '@brainbox/ui/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -19,12 +19,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@colanode/ui/components/ui/form';
-import { Input } from '@colanode/ui/components/ui/input';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { Textarea } from '@colanode/ui/components/ui/textarea';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+} from '@brainbox/ui/components/ui/form';
+import { Input } from '@brainbox/ui/components/ui/input';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { Textarea } from '@brainbox/ui/components/ui/textarea';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 const formSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters long.'),

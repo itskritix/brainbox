@@ -1,8 +1,8 @@
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { AvatarGetQueryInput } from '@colanode/client/queries/avatars/avatar-get';
-import { AppService } from '@colanode/client/services/app-service';
-import { Avatar } from '@colanode/client/types/avatars';
-import { Event } from '@colanode/client/types/events';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { AvatarGetQueryInput } from '@brainbox/client/queries/avatars/avatar-get';
+import { AppService } from '@brainbox/client/services/app-service';
+import { Avatar } from '@brainbox/client/types/avatars';
+import { Event } from '@brainbox/client/types/events';
 
 export class AvatarGetQueryHandler
   implements QueryHandler<AvatarGetQueryInput>

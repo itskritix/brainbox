@@ -45,7 +45,7 @@ jobs:
           };
           EOF
 
-      - name: Build and push Colanode web image
+      - name: Build and push Brainbox web image
         uses: docker/build-push-action@v5
         with:
           context: .

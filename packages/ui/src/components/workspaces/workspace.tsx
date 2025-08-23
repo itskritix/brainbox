@@ -2,11 +2,11 @@ import {
   WorkspaceMetadataKey,
   WorkspaceMetadataMap,
   Workspace as WorkspaceType,
-} from '@colanode/client/types';
-import { Layout } from '@colanode/ui/components/layouts/layout';
-import { useAccount } from '@colanode/ui/contexts/account';
-import { WorkspaceContext } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+} from '@brainbox/client/types';
+import { Layout } from '@brainbox/ui/components/layouts/layout';
+import { useAccount } from '@brainbox/ui/contexts/account';
+import { WorkspaceContext } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface WorkspaceProps {
   workspace: WorkspaceType;
@@ -47,7 +47,7 @@ export const Workspace = ({ workspace }: WorkspaceProps) => {
           key: K,
           value: WorkspaceMetadataMap[K]['value']
         ) {
-          window.colanode.executeMutation({
+          window.brainbox.executeMutation({
             type: 'workspace.metadata.update',
             accountId: account.id,
             workspaceId: workspace.id,
@@ -56,7 +56,7 @@ export const Workspace = ({ workspace }: WorkspaceProps) => {
           });
         },
         deleteMetadata(key: string) {
-          window.colanode.executeMutation({
+          window.brainbox.executeMutation({
             type: 'workspace.metadata.delete',
             accountId: account.id,
             workspaceId: workspace.id,

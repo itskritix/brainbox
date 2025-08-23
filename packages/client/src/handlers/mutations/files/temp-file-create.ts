@@ -1,9 +1,9 @@
-import { MutationHandler } from '@colanode/client/lib/types';
+import { MutationHandler } from '@brainbox/client/lib/types';
 import {
   TempFileCreateMutationInput,
   TempFileCreateMutationOutput,
-} from '@colanode/client/mutations';
-import { AppService } from '@colanode/client/services/app-service';
+} from '@brainbox/client/mutations';
+import { AppService } from '@brainbox/client/services/app-service';
 
 export class TempFileCreateMutationHandler
   implements MutationHandler<TempFileCreateMutationInput>

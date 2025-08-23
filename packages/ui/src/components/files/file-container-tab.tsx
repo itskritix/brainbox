@@ -1,7 +1,7 @@
-import { LocalFileNode } from '@colanode/client/types';
-import { FileThumbnail } from '@colanode/ui/components/files/file-thumbnail';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { LocalFileNode } from '@brainbox/client/types';
+import { FileThumbnail } from '@brainbox/ui/components/files/file-thumbnail';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface FileContainerTabProps {
   fileId: string;

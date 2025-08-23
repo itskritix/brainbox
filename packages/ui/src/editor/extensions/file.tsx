@@ -3,8 +3,8 @@ import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { ReactNodeViewRenderer } from '@tiptap/react';
 import { toast } from 'sonner';
 
-import { EditorContext, TempFile } from '@colanode/client/types';
-import { FileNodeView } from '@colanode/ui/editor/views';
+import { EditorContext, TempFile } from '@brainbox/client/types';
+import { FileNodeView } from '@brainbox/ui/editor/views';
 
 interface FileNodeOptions {
   context: EditorContext;
@@ -48,7 +48,7 @@ export const FileNode = Node.create<FileNodeOptions>({
       addFile: (tempFile: TempFile) => {
         return ({ editor, tr }) => {
           (async () => {
-            const fileCreateResult = await window.colanode.executeMutation({
+            const fileCreateResult = await window.brainbox.executeMutation({
               type: 'file.create',
               tempFileId: tempFile.id,
               accountId: options.context.accountId,
@@ -100,7 +100,7 @@ export const FileNode = Node.create<FileNodeOptions>({
 
             (async () => {
               for (const file of files) {
-                const tempFile = await window.colanode.saveTempFile(file);
+                const tempFile = await window.brainbox.saveTempFile(file);
                 editor.commands.addFile(tempFile);
               }
             })();
@@ -120,7 +120,7 @@ export const FileNode = Node.create<FileNodeOptions>({
 
             (async () => {
               for (const file of files) {
-                const tempFile = await window.colanode.saveTempFile(file);
+                const tempFile = await window.brainbox.saveTempFile(file);
                 editor.commands.addFile(tempFile);
               }
             })();

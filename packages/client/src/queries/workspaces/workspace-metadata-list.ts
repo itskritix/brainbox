@@ -1,4 +1,4 @@
-import { WorkspaceMetadata } from '@colanode/client/types/workspaces';
+import { WorkspaceMetadata } from '@brainbox/client/types/workspaces';
 
 export type WorkspaceMetadataListQueryInput = {
   type: 'workspace.metadata.list';
@@ -6,7 +6,7 @@ export type WorkspaceMetadataListQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'workspace.metadata.list': {
       input: WorkspaceMetadataListQueryInput;

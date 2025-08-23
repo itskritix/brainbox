@@ -1,4 +1,4 @@
-import { FieldValue } from '@colanode/core';
+import { FieldValue } from '@brainbox/core';
 
 export type RecordFieldValueSetMutationInput = {
   type: 'record.field.value.set';
@@ -13,7 +13,7 @@ export type RecordFieldValueSetMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'record.field.value.set': {
       input: RecordFieldValueSetMutationInput;

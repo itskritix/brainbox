@@ -1,5 +1,5 @@
 {
-  "name": "@colanode/web",
+  "name": "@brainbox/web",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,8 +10,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@colanode/client": "*",
-    "@colanode/ui": "*",
+    "@brainbox/client": "*",
+    "@brainbox/ui": "*",
     "@sqlite.org/sqlite-wasm": "^3.50.3-build1",
     "comlink": "^4.4.2",
     "lightningcss": "^1.30.1"

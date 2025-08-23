@@ -1,13 +1,13 @@
 import * as Comlink from 'comlink';
 import { createRoot } from 'react-dom/client';
 
-import { eventBus } from '@colanode/client/lib';
-import { BrowserNotSupported } from '@colanode/web/components/browser-not-supported';
-import { MobileNotSupported } from '@colanode/web/components/mobile-not-supported';
-import { ColanodeWorkerApi } from '@colanode/web/lib/types';
-import { isMobileDevice, isOpfsSupported } from '@colanode/web/lib/utils';
-import { Root } from '@colanode/web/root';
-import DedicatedWorker from '@colanode/web/workers/dedicated?worker';
+import { eventBus } from '@brainbox/client/lib';
+import { BrowserNotSupported } from '@brainbox/web/components/browser-not-supported';
+import { MobileNotSupported } from '@brainbox/web/components/mobile-not-supported';
+import { ColanodeWorkerApi } from '@brainbox/web/lib/types';
+import { isMobileDevice, isOpfsSupported } from '@brainbox/web/lib/utils';
+import { Root } from '@brainbox/web/root';
+import DedicatedWorker from '@brainbox/web/workers/dedicated?worker';
 
 const initializeApp = async () => {
   const isMobile = isMobileDevice();
@@ -27,7 +27,7 @@ const initializeApp = async () => {
   const worker = new DedicatedWorker();
   const workerApi = Comlink.wrap<ColanodeWorkerApi>(worker);
 
-  window.colanode = {
+  window.brainbox = {
     init: async () => {
       await workerApi.init();
     },

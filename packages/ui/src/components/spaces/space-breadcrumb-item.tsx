@@ -1,5 +1,5 @@
-import { LocalSpaceNode } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
+import { LocalSpaceNode } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
 
 interface SpaceBreadcrumbItemProps {
   space: LocalSpaceNode;

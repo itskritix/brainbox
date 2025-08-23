@@ -1,10 +1,10 @@
-import { SelectNode } from '@colanode/client/databases/workspace';
-import { WorkspaceQueryHandlerBase } from '@colanode/client/handlers/queries/workspace-query-handler-base';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib';
-import { mapNode } from '@colanode/client/lib/mappers';
-import { SpaceListQueryInput } from '@colanode/client/queries/spaces/space-list';
-import { Event } from '@colanode/client/types/events';
-import { LocalSpaceNode } from '@colanode/client/types/nodes';
+import { SelectNode } from '@brainbox/client/databases/workspace';
+import { WorkspaceQueryHandlerBase } from '@brainbox/client/handlers/queries/workspace-query-handler-base';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib';
+import { mapNode } from '@brainbox/client/lib/mappers';
+import { SpaceListQueryInput } from '@brainbox/client/queries/spaces/space-list';
+import { Event } from '@brainbox/client/types/events';
+import { LocalSpaceNode } from '@brainbox/client/types/nodes';
 
 export class SpaceListQueryHandler
   extends WorkspaceQueryHandlerBase

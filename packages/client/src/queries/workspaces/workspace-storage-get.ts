@@ -1,4 +1,4 @@
-import { WorkspaceStorageGetOutput } from '@colanode/core';
+import { WorkspaceStorageGetOutput } from '@brainbox/core';
 
 export type WorkspaceStorageGetQueryInput = {
   type: 'workspace.storage.get';
@@ -6,7 +6,7 @@ export type WorkspaceStorageGetQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'workspace.storage.get': {
       input: WorkspaceStorageGetQueryInput;

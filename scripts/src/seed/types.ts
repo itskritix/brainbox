@@ -1,4 +1,4 @@
-import { LoginSuccessOutput, Mutation } from '@colanode/core';
+import { LoginSuccessOutput, Mutation } from '@brainbox/core';
 
 export type FakerAccount = {
   name: string;

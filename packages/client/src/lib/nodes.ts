@@ -1,4 +1,4 @@
-import { LocalNode } from '@colanode/client/types/nodes';
+import { LocalNode } from '@brainbox/client/types/nodes';
 
 export const isNodeSynced = (node: LocalNode): boolean => {
   if (typeof node.serverRevision === 'string') {

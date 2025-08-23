@@ -1,10 +1,10 @@
 import { type NodeViewProps } from '@tiptap/core';
 import { NodeViewWrapper } from '@tiptap/react';
 
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { defaultClasses } from '@colanode/ui/editor/classes';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { defaultClasses } from '@brainbox/ui/editor/classes';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 export const MentionNodeView = ({ node }: NodeViewProps) => {
   const workspace = useWorkspace();

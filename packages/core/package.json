@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@colanode/core",
+  "name": "@brainbox/core",
   "version": "1.0.0",
   "type": "module",
   "types": "./src/index.ts",

@@ -1,6 +1,6 @@
 import { z } from 'zod/v4';
 
-import { blockSchema } from '@colanode/core/registry/block';
+import { blockSchema } from '@brainbox/core/registry/block';
 
 export const richTextContentSchema = z.object({
   type: z.literal('rich_text'),

@@ -1,4 +1,4 @@
-import { User } from '@colanode/client/types/users';
+import { User } from '@brainbox/client/types/users';
 
 export type UserGetQueryInput = {
   type: 'user.get';
@@ -7,7 +7,7 @@ export type UserGetQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'user.get': {
       input: UserGetQueryInput;

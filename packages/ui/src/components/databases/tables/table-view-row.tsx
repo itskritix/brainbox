@@ -1,11 +1,11 @@
-import { LocalRecordNode } from '@colanode/client/types';
-import { extractNodeRole } from '@colanode/core';
-import { TableViewNameCell } from '@colanode/ui/components/databases/tables/table-view-name-cell';
-import { RecordFieldValue } from '@colanode/ui/components/records/record-field-value';
-import { RecordProvider } from '@colanode/ui/components/records/record-provider';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
+import { LocalRecordNode } from '@brainbox/client/types';
+import { extractNodeRole } from '@brainbox/core';
+import { TableViewNameCell } from '@brainbox/ui/components/databases/tables/table-view-name-cell';
+import { RecordFieldValue } from '@brainbox/ui/components/records/record-field-value';
+import { RecordProvider } from '@brainbox/ui/components/records/record-provider';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
 
 interface TableViewRowProps {
   index: number;

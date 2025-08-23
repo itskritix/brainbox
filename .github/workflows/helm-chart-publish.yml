@@ -1,4 +1,4 @@
-name: Hosting - Publish Helm chart to static.colanode.com
+name: Hosting - Publish Helm chart to static.brainbox.com
 
 on:
   push:
@@ -44,7 +44,7 @@ jobs:
         working-directory: dist
         run: |
           helm repo index . \
-            --url "https://static.colanode.com/hosting/kubernetes/chart" \
+            --url "https://static.brainbox.com/hosting/kubernetes/chart" \
             $(test -f index.yaml && echo "--merge index.yaml")
 
       - name: Upload chart and index to S3

@@ -1,12 +1,12 @@
-import { JobHandler } from '@colanode/server/jobs';
-import { sendEmailPasswordResetEmail } from '@colanode/server/lib/accounts';
+import { JobHandler } from '@brainbox/server/jobs';
+import { sendEmailPasswordResetEmail } from '@brainbox/server/lib/accounts';
 
 export type EmailPasswordResetSendInput = {
   type: 'email.password.reset.send';
   otpId: string;
 };
 
-declare module '@colanode/server/jobs' {
+declare module '@brainbox/server/jobs' {
   interface JobMap {
     'email.password.reset.send': {
       input: EmailPasswordResetSendInput;

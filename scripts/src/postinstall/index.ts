@@ -61,28 +61,28 @@ const execute = () => {
   ]);
 
   copyFile(
-    path.resolve(IMAGES_DIR, 'colanode-logo-black-192.png'),
-    path.resolve(WEB_ASSETS_DIR, 'colanode-logo-black-192.png')
+    path.resolve(IMAGES_DIR, 'brainbox-logo-black-192.png'),
+    path.resolve(WEB_ASSETS_DIR, 'brainbox-logo-black-192.png')
   );
 
   copyFile(
-    path.resolve(IMAGES_DIR, 'colanode-logo-black-512.png'),
-    path.resolve(WEB_ASSETS_DIR, 'colanode-logo-black-512.png')
+    path.resolve(IMAGES_DIR, 'brainbox-logo-black-512.png'),
+    path.resolve(WEB_ASSETS_DIR, 'brainbox-logo-black-512.png')
   );
 
   copyFile(
-    path.resolve(IMAGES_DIR, 'colanode-logo-black.png'),
-    path.resolve(DESKTOP_ASSETS_DIR, 'colanode-logo-black.png')
+    path.resolve(IMAGES_DIR, 'brainbox-logo-black.png'),
+    path.resolve(DESKTOP_ASSETS_DIR, 'brainbox-logo-black.png')
   );
 
   copyFile(
-    path.resolve(IMAGES_DIR, 'colanode-logo-black.ico'),
-    path.resolve(DESKTOP_ASSETS_DIR, 'colanode-logo-black.ico')
+    path.resolve(IMAGES_DIR, 'brainbox-logo-black.ico'),
+    path.resolve(DESKTOP_ASSETS_DIR, 'brainbox-logo-black.ico')
   );
 
   copyFile(
-    path.resolve(IMAGES_DIR, 'colanode-logo-black.icns'),
-    path.resolve(DESKTOP_ASSETS_DIR, 'colanode-logo-black.icns')
+    path.resolve(IMAGES_DIR, 'brainbox-logo-black.icns'),
+    path.resolve(DESKTOP_ASSETS_DIR, 'brainbox-logo-black.icns')
   );
 };
 

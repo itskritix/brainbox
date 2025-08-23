@@ -1,7 +1,7 @@
-import { RecordFieldValue } from '@colanode/ui/components/records/record-field-value';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useRecord } from '@colanode/ui/contexts/record';
+import { RecordFieldValue } from '@brainbox/ui/components/records/record-field-value';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useRecord } from '@brainbox/ui/contexts/record';
 
 export const CalendarViewRecordCard = () => {
   const layout = useLayout();

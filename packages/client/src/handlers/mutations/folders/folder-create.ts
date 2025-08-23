@@ -1,10 +1,10 @@
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { MutationHandler } from '@colanode/client/lib/types';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { MutationHandler } from '@brainbox/client/lib/types';
 import {
   FolderCreateMutationInput,
   FolderCreateMutationOutput,
-} from '@colanode/client/mutations';
-import { FolderAttributes, generateId, IdType } from '@colanode/core';
+} from '@brainbox/client/mutations';
+import { FolderAttributes, generateId, IdType } from '@brainbox/core';
 
 export class FolderCreateMutationHandler
   extends WorkspaceMutationHandlerBase

@@ -1,4 +1,4 @@
-import { LoginOutput } from '@colanode/core';
+import { LoginOutput } from '@brainbox/core';
 
 export type EmailLoginMutationInput = {
   type: 'email.login';
@@ -7,7 +7,7 @@ export type EmailLoginMutationInput = {
   password: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'email.login': {
       input: EmailLoginMutationInput;

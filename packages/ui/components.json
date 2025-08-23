@@ -11,10 +11,10 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@colanode/ui/components",
-    "utils": "@colanode/ui/lib/utils",
-    "hooks": "@colanode/ui/hooks",
-    "lib": "@colanode/ui/lib"
+    "components": "@brainbox/ui/components",
+    "utils": "@brainbox/ui/lib/utils",
+    "hooks": "@brainbox/ui/hooks",
+    "lib": "@brainbox/ui/lib"
   },
   "iconLibrary": "lucide"
 }

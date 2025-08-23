@@ -2,13 +2,13 @@ import { type NodeViewProps } from '@tiptap/core';
 import { NodeViewWrapper } from '@tiptap/react';
 import { X } from 'lucide-react';
 
-import { TempFile } from '@colanode/client/types';
-import { FileNoPreview } from '@colanode/ui/components/files/file-no-preview';
-import { FilePreviewAudio } from '@colanode/ui/components/files/previews/file-preview-audio';
-import { FilePreviewImage } from '@colanode/ui/components/files/previews/file-preview-image';
-import { FilePreviewVideo } from '@colanode/ui/components/files/previews/file-preview-video';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { canPreviewFile } from '@colanode/ui/lib/files';
+import { TempFile } from '@brainbox/client/types';
+import { FileNoPreview } from '@brainbox/ui/components/files/file-no-preview';
+import { FilePreviewAudio } from '@brainbox/ui/components/files/previews/file-preview-audio';
+import { FilePreviewImage } from '@brainbox/ui/components/files/previews/file-preview-image';
+import { FilePreviewVideo } from '@brainbox/ui/components/files/previews/file-preview-video';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { canPreviewFile } from '@brainbox/ui/lib/files';
 
 const TempFilePreview = ({ file }: { file: TempFile }) => {
   if (file.subtype === 'image') {

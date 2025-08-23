@@ -6,7 +6,7 @@ import {
   MutationErrorData,
   MutationInput,
   MutationMap,
-} from '@colanode/client/mutations';
+} from '@brainbox/client/mutations';
 
 interface MutationOptions<T extends MutationInput> {
   input: T;
@@ -21,7 +21,7 @@ export const useMutation = () => {
     async <T extends MutationInput>(options: MutationOptions<T>) => {
       setIsPending(true);
       try {
-        const result = await window.colanode.executeMutation(options.input);
+        const result = await window.brainbox.executeMutation(options.input);
         if (result.success) {
           options.onSuccess?.(result.output);
           return;

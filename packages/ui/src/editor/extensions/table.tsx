@@ -1,7 +1,7 @@
 import { Table } from '@tiptap/extension-table/table';
 import { ReactNodeViewRenderer } from '@tiptap/react';
 
-import { TableNodeView } from '@colanode/ui/editor/views/table';
+import { TableNodeView } from '@brainbox/ui/editor/views/table';
 
 export const TableNode = Table.configure({
   allowTableNodeSelection: true,

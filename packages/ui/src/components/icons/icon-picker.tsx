@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { Icon } from '@colanode/client/types';
-import { IconBrowser } from '@colanode/ui/components/icons/icon-browser';
-import { IconSearch } from '@colanode/ui/components/icons/icon-search';
-import { IconPickerContext } from '@colanode/ui/contexts/icon-picker';
+import { Icon } from '@brainbox/client/types';
+import { IconBrowser } from '@brainbox/ui/components/icons/icon-browser';
+import { IconSearch } from '@brainbox/ui/components/icons/icon-search';
+import { IconPickerContext } from '@brainbox/ui/contexts/icon-picker';
 
 interface IconPickerProps {
   onPick: (icon: Icon) => void;

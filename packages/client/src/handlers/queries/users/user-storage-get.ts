@@ -1,13 +1,13 @@
 import { sql } from 'kysely';
 
-import { WorkspaceQueryHandlerBase } from '@colanode/client/handlers/queries/workspace-query-handler-base';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib';
+import { WorkspaceQueryHandlerBase } from '@brainbox/client/handlers/queries/workspace-query-handler-base';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib';
 import {
   UserStorageGetQueryInput,
   UserStorageGetQueryOutput,
-} from '@colanode/client/queries/users/user-storage-get';
-import { Event } from '@colanode/client/types/events';
-import { FileStatus, FileSubtype } from '@colanode/core';
+} from '@brainbox/client/queries/users/user-storage-get';
+import { Event } from '@brainbox/client/types/events';
+import { FileStatus, FileSubtype } from '@brainbox/core';
 
 interface UserStorageAggregateRow {
   subtype: string;

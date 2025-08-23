@@ -1,8 +1,8 @@
-import { MessageAttributes } from '@colanode/core';
-import { redis } from '@colanode/server/data/redis';
-import { SelectNode } from '@colanode/server/data/schema';
-import { config } from '@colanode/server/lib/config';
-import { jobService } from '@colanode/server/services/job-service';
+import { MessageAttributes } from '@brainbox/core';
+import { redis } from '@brainbox/server/data/redis';
+import { SelectNode } from '@brainbox/server/data/schema';
+import { config } from '@brainbox/server/lib/config';
+import { jobService } from '@brainbox/server/services/job-service';
 
 export const fetchEmbeddingCursor = async (
   cursorId: string

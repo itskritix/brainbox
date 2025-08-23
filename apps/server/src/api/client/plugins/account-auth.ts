@@ -1,10 +1,10 @@
 import { FastifyPluginCallback } from 'fastify';
 import fp from 'fastify-plugin';
 
-import { ApiErrorCode } from '@colanode/core';
-import { isDeviceApiRateLimited } from '@colanode/server/lib/rate-limits';
-import { parseToken, verifyToken } from '@colanode/server/lib/tokens';
-import { RequestAccount } from '@colanode/server/types/api';
+import { ApiErrorCode } from '@brainbox/core';
+import { isDeviceApiRateLimited } from '@brainbox/server/lib/rate-limits';
+import { parseToken, verifyToken } from '@brainbox/server/lib/tokens';
+import { RequestAccount } from '@brainbox/server/types/api';
 
 declare module 'fastify' {
   interface FastifyRequest {

@@ -1,14 +1,14 @@
-import { LocalSpaceNode } from '@colanode/client/types';
-import { ContainerBreadcrumb } from '@colanode/ui/components/layouts/containers/container-breadrumb';
-import { SpaceBody } from '@colanode/ui/components/spaces/space-body';
-import { SpaceNotFound } from '@colanode/ui/components/spaces/space-not-found';
+import { LocalSpaceNode } from '@brainbox/client/types';
+import { ContainerBreadcrumb } from '@brainbox/ui/components/layouts/containers/container-breadrumb';
+import { SpaceBody } from '@brainbox/ui/components/spaces/space-body';
+import { SpaceNotFound } from '@brainbox/ui/components/spaces/space-not-found';
 import {
   Container,
   ContainerBody,
   ContainerHeader,
-} from '@colanode/ui/components/ui/container';
-import { useNodeContainer } from '@colanode/ui/hooks/use-node-container';
-import { useNodeRadar } from '@colanode/ui/hooks/use-node-radar';
+} from '@brainbox/ui/components/ui/container';
+import { useNodeContainer } from '@brainbox/ui/hooks/use-node-container';
+import { useNodeRadar } from '@brainbox/ui/hooks/use-node-radar';
 
 interface SpaceContainerProps {
   spaceId: string;

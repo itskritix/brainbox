@@ -4,7 +4,7 @@ import path from 'path';
 import SQLite from 'better-sqlite3';
 import { Kysely, SqliteDialect } from 'kysely';
 
-import { KyselyBuildOptions, KyselyService } from '@colanode/client/services';
+import { KyselyBuildOptions, KyselyService } from '@brainbox/client/services';
 
 export class DesktopKyselyService implements KyselyService {
   build<T>(options: KyselyBuildOptions): Kysely<T> {

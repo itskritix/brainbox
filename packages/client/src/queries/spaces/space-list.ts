@@ -1,4 +1,4 @@
-import { LocalSpaceNode } from '@colanode/client/types/nodes';
+import { LocalSpaceNode } from '@brainbox/client/types/nodes';
 
 export type SpaceListQueryInput = {
   type: 'space.list';
@@ -8,7 +8,7 @@ export type SpaceListQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'space.list': {
       input: SpaceListQueryInput;

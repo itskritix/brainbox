@@ -1,5 +1,5 @@
-import { Block } from '@colanode/core/registry/block';
-import { Mention } from '@colanode/core/types/mentions';
+import { Block } from '@brainbox/core/registry/block';
+import { Mention } from '@brainbox/core/types/mentions';
 
 export const extractBlocksMentions = (
   nodeId: string,

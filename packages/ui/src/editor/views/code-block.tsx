@@ -1,4 +1,4 @@
-import '@colanode/ui/styles/highlight.css';
+import '@brainbox/ui/styles/highlight.css';
 
 import { type NodeViewProps } from '@tiptap/core';
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/react';
@@ -12,15 +12,15 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@colanode/ui/components/ui/command';
+} from '@brainbox/ui/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { defaultClasses } from '@colanode/ui/editor/classes';
-import { languages } from '@colanode/ui/lib/lowlight';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/popover';
+import { defaultClasses } from '@brainbox/ui/editor/classes';
+import { languages } from '@brainbox/ui/lib/lowlight';
+import { cn } from '@brainbox/ui/lib/utils';
 
 export const CodeBlockNodeView = ({
   node,

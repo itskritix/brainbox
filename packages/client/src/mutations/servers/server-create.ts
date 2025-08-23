@@ -1,4 +1,4 @@
-import { Server } from '@colanode/client/types/servers';
+import { Server } from '@brainbox/client/types/servers';
 
 export type ServerCreateMutationInput = {
   type: 'server.create';
@@ -9,7 +9,7 @@ export type ServerCreateMutationOutput = {
   server: Server;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'server.create': {
       input: ServerCreateMutationInput;

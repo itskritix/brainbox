@@ -5,22 +5,22 @@ import {
   MutationStatus,
   Mutation,
   syncMutationsInputSchema,
-} from '@colanode/core';
-import { SelectUser } from '@colanode/server/data/schema';
-import { updateDocumentFromMutation } from '@colanode/server/lib/documents';
+} from '@brainbox/core';
+import { SelectUser } from '@brainbox/server/data/schema';
+import { updateDocumentFromMutation } from '@brainbox/server/lib/documents';
 import {
   markNodeAsOpened,
   markNodeAsSeen,
-} from '@colanode/server/lib/node-interactions';
+} from '@brainbox/server/lib/node-interactions';
 import {
   createNodeReaction,
   deleteNodeReaction,
-} from '@colanode/server/lib/node-reactions';
+} from '@brainbox/server/lib/node-reactions';
 import {
   createNodeFromMutation,
   updateNodeFromMutation,
   deleteNodeFromMutation,
-} from '@colanode/server/lib/nodes';
+} from '@brainbox/server/lib/nodes';
 
 export const mutationsSyncRoute: FastifyPluginCallbackZod = (
   instance,

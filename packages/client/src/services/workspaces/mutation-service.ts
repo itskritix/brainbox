@@ -1,12 +1,12 @@
-import { mapMutation } from '@colanode/client/lib/mappers';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
+import { mapMutation } from '@brainbox/client/lib/mappers';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
 import {
   createDebugger,
   Mutation,
   MutationStatus,
   SyncMutationsInput,
   SyncMutationsOutput,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 const READ_SIZE = 500;
 const BATCH_SIZE = 50;

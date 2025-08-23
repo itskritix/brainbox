@@ -1,12 +1,12 @@
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
 import {
   Event,
   NodeCounterUpdatedEvent,
   NodeCounterDeletedEvent,
-} from '@colanode/client/types/events';
-import { NodeCounterType } from '@colanode/client/types/nodes';
-import { WorkspaceRadarData } from '@colanode/client/types/radars';
+} from '@brainbox/client/types/events';
+import { NodeCounterType } from '@brainbox/client/types/nodes';
+import { WorkspaceRadarData } from '@brainbox/client/types/radars';
 
 export class RadarService {
   private readonly workspace: WorkspaceService;

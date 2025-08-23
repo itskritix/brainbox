@@ -1,9 +1,9 @@
 import { FocusPosition } from '@tiptap/core';
 
-import { LocalNode } from '@colanode/client/types';
-import { DocumentEditor } from '@colanode/ui/components/documents/document-editor';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { LocalNode } from '@brainbox/client/types';
+import { DocumentEditor } from '@brainbox/ui/components/documents/document-editor';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface DocumentProps {
   node: LocalNode;

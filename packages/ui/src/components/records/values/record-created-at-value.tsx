@@ -1,5 +1,5 @@
-import { CreatedAtFieldAttributes } from '@colanode/core';
-import { useRecord } from '@colanode/ui/contexts/record';
+import { CreatedAtFieldAttributes } from '@brainbox/core';
+import { useRecord } from '@brainbox/ui/contexts/record';
 
 interface RecordCreatedAtValueProps {
   field: CreatedAtFieldAttributes;

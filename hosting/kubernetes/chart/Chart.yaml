@@ -1,6 +1,6 @@
 apiVersion: v2
-name: colanode
-description: A Helm chart for Colanode - open-source & local-first collaboration workspace
+name: brainbox
+description: A Helm chart for Brainbox - open-source & local-first collaboration workspace
 type: application
 version: 0.1.0
 appVersion: '1.0.0'

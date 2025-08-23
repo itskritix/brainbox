@@ -1,4 +1,4 @@
-import { Spinner } from '@colanode/ui/components/ui/spinner';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
 
 export const AppLoader = () => {
   return (

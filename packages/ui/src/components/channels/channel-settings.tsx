@@ -1,12 +1,12 @@
 import { Copy, Image, LetterText, Settings, Trash2, UserRoundPlus } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { LocalChannelNode } from '@colanode/client/types';
-import { NodeRole, hasNodeRole } from '@colanode/core';
-import { ChannelDeleteDialog } from '@colanode/ui/components/channels/channel-delete-dialog';
-import { ChannelUpdateDialog } from '@colanode/ui/components/channels/channel-update-dialog';
-import { NodeCollaboratorAudit } from '@colanode/ui/components/collaborators/node-collaborator-audit';
-import { NodeCollaborators } from '@colanode/ui/components/collaborators/node-collaborators';
+import { LocalChannelNode } from '@brainbox/client/types';
+import { NodeRole, hasNodeRole } from '@brainbox/core';
+import { ChannelDeleteDialog } from '@brainbox/ui/components/channels/channel-delete-dialog';
+import { ChannelUpdateDialog } from '@brainbox/ui/components/channels/channel-update-dialog';
+import { NodeCollaboratorAudit } from '@brainbox/ui/components/collaborators/node-collaborator-audit';
+import { NodeCollaborators } from '@brainbox/ui/components/collaborators/node-collaborators';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,15 +14,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
+} from '@brainbox/ui/components/ui/dropdown-menu';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@colanode/ui/components/ui/dialog';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+} from '@brainbox/ui/components/ui/dialog';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface ChannelSettingsProps {
   channel: LocalChannelNode;

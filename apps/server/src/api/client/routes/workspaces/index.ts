@@ -1,7 +1,7 @@
 import { FastifyPluginCallback } from 'fastify';
 
-import { accountAuthenticator } from '@colanode/server/api/client/plugins/account-auth';
-import { workspaceAuthenticator } from '@colanode/server/api/client/plugins/workspace-auth';
+import { accountAuthenticator } from '@brainbox/server/api/client/plugins/account-auth';
+import { workspaceAuthenticator } from '@brainbox/server/api/client/plugins/workspace-auth';
 
 import { fileRoutes } from './files';
 import { mutationsRoutes } from './mutations';

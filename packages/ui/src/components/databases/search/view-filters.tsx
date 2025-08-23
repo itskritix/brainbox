@@ -1,25 +1,25 @@
 import { Plus } from 'lucide-react';
 
-import { SpecialId } from '@colanode/core';
-import { ViewBooleanFieldFilter } from '@colanode/ui/components/databases/search/view-boolean-field-filter';
-import { ViewCollaboratorFieldFilter } from '@colanode/ui/components/databases/search/view-collaborator-field-filter';
-import { ViewCreatedAtFieldFilter } from '@colanode/ui/components/databases/search/view-created-at-field-fitler';
-import { ViewCreatedByFieldFilter } from '@colanode/ui/components/databases/search/view-created-by-field-filter';
-import { ViewDateFieldFilter } from '@colanode/ui/components/databases/search/view-date-field-filter';
-import { ViewEmailFieldFilter } from '@colanode/ui/components/databases/search/view-email-field-filter';
-import { ViewFilterAddPopover } from '@colanode/ui/components/databases/search/view-filter-add-popover';
-import { ViewMultiSelectFieldFilter } from '@colanode/ui/components/databases/search/view-multi-select-field-filter';
-import { ViewNameFieldFilter } from '@colanode/ui/components/databases/search/view-name-field-filter';
-import { ViewNumberFieldFilter } from '@colanode/ui/components/databases/search/view-number-field-filter';
-import { ViewPhoneFieldFilter } from '@colanode/ui/components/databases/search/view-phone-field-filter';
-import { ViewRelationFieldFilter } from '@colanode/ui/components/databases/search/view-relation-field-filter';
-import { ViewSelectFieldFilter } from '@colanode/ui/components/databases/search/view-select-field-filter';
-import { ViewTextFieldFilter } from '@colanode/ui/components/databases/search/view-text-field-filter';
-import { ViewUpdatedAtFieldFilter } from '@colanode/ui/components/databases/search/view-updated-at-field-filter';
-import { ViewUpdatedByFieldFilter } from '@colanode/ui/components/databases/search/view-updated-by-field-filter';
-import { ViewUrlFieldFilter } from '@colanode/ui/components/databases/search/view-url-field-filter';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
+import { SpecialId } from '@brainbox/core';
+import { ViewBooleanFieldFilter } from '@brainbox/ui/components/databases/search/view-boolean-field-filter';
+import { ViewCollaboratorFieldFilter } from '@brainbox/ui/components/databases/search/view-collaborator-field-filter';
+import { ViewCreatedAtFieldFilter } from '@brainbox/ui/components/databases/search/view-created-at-field-fitler';
+import { ViewCreatedByFieldFilter } from '@brainbox/ui/components/databases/search/view-created-by-field-filter';
+import { ViewDateFieldFilter } from '@brainbox/ui/components/databases/search/view-date-field-filter';
+import { ViewEmailFieldFilter } from '@brainbox/ui/components/databases/search/view-email-field-filter';
+import { ViewFilterAddPopover } from '@brainbox/ui/components/databases/search/view-filter-add-popover';
+import { ViewMultiSelectFieldFilter } from '@brainbox/ui/components/databases/search/view-multi-select-field-filter';
+import { ViewNameFieldFilter } from '@brainbox/ui/components/databases/search/view-name-field-filter';
+import { ViewNumberFieldFilter } from '@brainbox/ui/components/databases/search/view-number-field-filter';
+import { ViewPhoneFieldFilter } from '@brainbox/ui/components/databases/search/view-phone-field-filter';
+import { ViewRelationFieldFilter } from '@brainbox/ui/components/databases/search/view-relation-field-filter';
+import { ViewSelectFieldFilter } from '@brainbox/ui/components/databases/search/view-select-field-filter';
+import { ViewTextFieldFilter } from '@brainbox/ui/components/databases/search/view-text-field-filter';
+import { ViewUpdatedAtFieldFilter } from '@brainbox/ui/components/databases/search/view-updated-at-field-filter';
+import { ViewUpdatedByFieldFilter } from '@brainbox/ui/components/databases/search/view-updated-by-field-filter';
+import { ViewUrlFieldFilter } from '@brainbox/ui/components/databases/search/view-url-field-filter';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
 
 export const ViewFilters = () => {
   const database = useDatabase();

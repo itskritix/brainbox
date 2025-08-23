@@ -1,7 +1,7 @@
-import { LocalFileNode } from '@colanode/client/types';
-import { FileContextMenu } from '@colanode/ui/components/files/file-context-menu';
-import { FileThumbnail } from '@colanode/ui/components/files/file-thumbnail';
-import { GridItem } from '@colanode/ui/components/folders/grids/grid-item';
+import { LocalFileNode } from '@brainbox/client/types';
+import { FileContextMenu } from '@brainbox/ui/components/files/file-context-menu';
+import { FileThumbnail } from '@brainbox/ui/components/files/file-thumbnail';
+import { GridItem } from '@brainbox/ui/components/folders/grids/grid-item';
 
 interface GridFileProps {
   file: LocalFileNode;

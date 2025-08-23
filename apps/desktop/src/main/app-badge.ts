@@ -1,7 +1,7 @@
 import { app as electronApp } from 'electron';
 
-import { eventBus } from '@colanode/client/lib';
-import { AppService } from '@colanode/client/services';
+import { eventBus } from '@brainbox/client/lib';
+import { AppService } from '@brainbox/client/services';
 
 export class AppBadge {
   private readonly app: AppService;

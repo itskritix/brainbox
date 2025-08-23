@@ -4,24 +4,24 @@ import ms from 'ms';
 import {
   SelectDownload,
   SelectNode,
-} from '@colanode/client/databases/workspace';
-import { eventBus } from '@colanode/client/lib/event-bus';
+} from '@brainbox/client/databases/workspace';
+import { eventBus } from '@brainbox/client/lib/event-bus';
 import {
   mapDownload,
   mapLocalFile,
   mapNode,
   mapUpload,
-} from '@colanode/client/lib/mappers';
-import { fetchNode, fetchUserStorageUsed } from '@colanode/client/lib/utils';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
-import { AppService } from '@colanode/client/services/app-service';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
+} from '@brainbox/client/lib/mappers';
+import { fetchNode, fetchUserStorageUsed } from '@brainbox/client/lib/utils';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
+import { AppService } from '@brainbox/client/services/app-service';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
 import {
   DownloadStatus,
   DownloadType,
   UploadStatus,
-} from '@colanode/client/types/files';
-import { LocalFileNode } from '@colanode/client/types/nodes';
+} from '@brainbox/client/types/files';
+import { LocalFileNode } from '@brainbox/client/types/nodes';
 import {
   FileAttributes,
   FileStatus,
@@ -30,7 +30,7 @@ import {
   extractFileSubtype,
   generateId,
   formatBytes,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 const debug = createDebugger('desktop:service:file');
 

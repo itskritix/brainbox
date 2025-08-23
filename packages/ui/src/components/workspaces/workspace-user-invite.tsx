@@ -2,11 +2,11 @@ import { X } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { Workspace } from '@colanode/client/types';
-import { isValidEmail } from '@colanode/core';
-import { Button } from '@colanode/ui/components/ui/button';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { Workspace } from '@brainbox/client/types';
+import { isValidEmail } from '@brainbox/core';
+import { Button } from '@brainbox/ui/components/ui/button';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface WorkspaceUserInviteProps {
   workspace: Workspace;

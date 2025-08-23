@@ -1,34 +1,34 @@
 import { ChevronDown, Trash2, X } from 'lucide-react';
 
-import { User } from '@colanode/client/types';
+import { User } from '@brainbox/client/types';
 import {
   DatabaseViewFieldFilterAttributes,
   CollaboratorFieldAttributes,
-} from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { FieldIcon } from '@colanode/ui/components/databases/fields/field-icon';
-import { Badge } from '@colanode/ui/components/ui/badge';
-import { Button } from '@colanode/ui/components/ui/button';
+} from '@brainbox/core';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { FieldIcon } from '@brainbox/ui/components/databases/fields/field-icon';
+import { Badge } from '@brainbox/ui/components/ui/badge';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
+} from '@brainbox/ui/components/ui/dropdown-menu';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { UserSearch } from '@colanode/ui/components/users/user-search';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQueries } from '@colanode/ui/hooks/use-live-queries';
+} from '@brainbox/ui/components/ui/popover';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { UserSearch } from '@brainbox/ui/components/users/user-search';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQueries } from '@brainbox/ui/hooks/use-live-queries';
 import {
   collaboratorFieldFilterOperators,
   createdByFieldFilterOperators,
-} from '@colanode/ui/lib/databases';
+} from '@brainbox/ui/lib/databases';
 
 interface ViewCollaboratorFieldFilterProps {
   field: CollaboratorFieldAttributes;

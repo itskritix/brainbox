@@ -12,7 +12,7 @@ export type FolderCreateMutationOutput = {
   id: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'folder.create': {
       input: FolderCreateMutationInput;

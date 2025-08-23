@@ -1,10 +1,10 @@
-import { SelectNode } from '@colanode/client/databases';
-import { WorkspaceQueryHandlerBase } from '@colanode/client/handlers/queries/workspace-query-handler-base';
-import { mapNode } from '@colanode/client/lib';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { NodeGetQueryInput } from '@colanode/client/queries/nodes/node-get';
-import { Event } from '@colanode/client/types/events';
-import { LocalNode } from '@colanode/client/types/nodes';
+import { SelectNode } from '@brainbox/client/databases';
+import { WorkspaceQueryHandlerBase } from '@brainbox/client/handlers/queries/workspace-query-handler-base';
+import { mapNode } from '@brainbox/client/lib';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { NodeGetQueryInput } from '@brainbox/client/queries/nodes/node-get';
+import { Event } from '@brainbox/client/types/events';
+import { LocalNode } from '@brainbox/client/types/nodes';
 
 export class NodeGetQueryHandler
   extends WorkspaceQueryHandlerBase

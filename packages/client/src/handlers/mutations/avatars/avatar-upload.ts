@@ -1,10 +1,10 @@
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   AvatarUploadMutationInput,
   AvatarUploadMutationOutput,
-} from '@colanode/client/mutations/avatars/avatar-upload';
-import { AppService } from '@colanode/client/services/app-service';
+} from '@brainbox/client/mutations/avatars/avatar-upload';
+import { AppService } from '@brainbox/client/services/app-service';
 
 interface AvatarUploadResponse {
   id: string;

@@ -10,7 +10,7 @@ export type FileCreateMutationOutput = {
   id: string | null;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'file.create': {
       input: FileCreateMutationInput;

@@ -1,9 +1,9 @@
 import { z } from 'zod/v4';
 
 export enum ApiHeader {
-  ClientType = 'colanode-client-type',
-  ClientPlatform = 'colanode-client-platform',
-  ClientVersion = 'colanode-client-version',
+  ClientType = 'brainbox-client-type',
+  ClientPlatform = 'brainbox-client-platform',
+  ClientVersion = 'brainbox-client-version',
 }
 
 export enum ApiErrorCode {

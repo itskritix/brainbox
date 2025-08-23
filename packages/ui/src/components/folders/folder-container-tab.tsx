@@ -1,7 +1,7 @@
-import { LocalFolderNode } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { LocalFolderNode } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface FolderContainerTabProps {
   folderId: string;

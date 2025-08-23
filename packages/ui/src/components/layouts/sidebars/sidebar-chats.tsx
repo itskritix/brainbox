@@ -1,10 +1,10 @@
-import { ChatCreatePopover } from '@colanode/ui/components/chats/chat-create-popover';
-import { ChatSidebarItem } from '@colanode/ui/components/chats/chat-sidebar-item';
-import { SidebarHeader } from '@colanode/ui/components/layouts/sidebars/sidebar-header';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { cn } from '@colanode/ui/lib/utils';
+import { ChatCreatePopover } from '@brainbox/ui/components/chats/chat-create-popover';
+import { ChatSidebarItem } from '@brainbox/ui/components/chats/chat-sidebar-item';
+import { SidebarHeader } from '@brainbox/ui/components/layouts/sidebars/sidebar-header';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { cn } from '@brainbox/ui/lib/utils';
 
 export const SidebarChats = () => {
   const workspace = useWorkspace();

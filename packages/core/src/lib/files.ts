@@ -1,4 +1,4 @@
-import { FileSubtype } from '@colanode/core/types/files';
+import { FileSubtype } from '@brainbox/core/types/files';
 
 export const extractFileSubtype = (mimeType: string): FileSubtype => {
   if (mimeType.startsWith('image/')) {

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { User } from '@colanode/client/types';
-import { NodeRole } from '@colanode/core';
-import { NodeCollaboratorRoleDropdown } from '@colanode/ui/components/collaborators/node-collaborator-role-dropdown';
-import { NodeCollaboratorSearch } from '@colanode/ui/components/collaborators/node-collaborator-search';
-import { Button } from '@colanode/ui/components/ui/button';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { User } from '@brainbox/client/types';
+import { NodeRole } from '@brainbox/core';
+import { NodeCollaboratorRoleDropdown } from '@brainbox/ui/components/collaborators/node-collaborator-role-dropdown';
+import { NodeCollaboratorSearch } from '@brainbox/ui/components/collaborators/node-collaborator-search';
+import { Button } from '@brainbox/ui/components/ui/button';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface NodeCollaboratorCreateProps {
   nodeId: string;

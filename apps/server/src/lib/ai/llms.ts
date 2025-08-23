@@ -3,7 +3,7 @@ import { StringOutputParser } from '@langchain/core/output_parsers';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { ChatOpenAI } from '@langchain/openai';
 
-import { NodeType, RecordNode } from '@colanode/core';
+import { NodeType, RecordNode } from '@brainbox/core';
 import {
   queryRewritePrompt,
   summarizationPrompt,
@@ -13,8 +13,8 @@ import {
   noContextPrompt,
   databaseFilterPrompt,
   chunkSummarizationPrompt,
-} from '@colanode/server/lib/ai/prompts';
-import { config } from '@colanode/server/lib/config';
+} from '@brainbox/server/lib/ai/prompts';
+import { config } from '@brainbox/server/lib/config';
 import {
   rerankedDocumentsSchema,
   RerankedDocuments,
@@ -24,7 +24,7 @@ import {
   DatabaseFilterResult,
   RewrittenQuery,
   rewrittenQuerySchema,
-} from '@colanode/server/types/llm';
+} from '@brainbox/server/types/llm';
 
 const getChatModel = (task: string): ChatOpenAI | ChatGoogleGenerativeAI => {
   if (!config.ai.enabled) {

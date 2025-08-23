@@ -17,17 +17,17 @@ export const createServersTable: Migration = {
       .insertInto('servers')
       .values([
         {
-          domain: 'eu.colanode.com',
-          name: 'Colanode Cloud (EU)',
-          avatar: 'https://colanode.com/assets/flags/eu.svg',
+          domain: 'eu.brainbox.com',
+          name: 'Brainbox Cloud (EU)',
+          avatar: 'https://brainbox.com/assets/flags/eu.svg',
           attributes: '{}',
           version: '0.2.0',
           created_at: new Date().toISOString(),
         },
         {
-          domain: 'us.colanode.com',
-          name: 'Colanode Cloud (US)',
-          avatar: 'https://colanode.com/assets/flags/us.svg',
+          domain: 'us.brainbox.com',
+          name: 'Brainbox Cloud (US)',
+          avatar: 'https://brainbox.com/assets/flags/us.svg',
           attributes: '{}',
           version: '0.2.0',
           created_at: new Date().toISOString(),

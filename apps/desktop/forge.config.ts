@@ -10,10 +10,10 @@ import type { ForgeConfig } from '@electron-forge/shared-types';
 
 const config: ForgeConfig = {
   packagerConfig: {
-    name: 'Colanode',
-    executableName: process.platform === 'linux' ? 'colanode' : 'Colanode',
-    icon: 'assets/colanode-logo-black',
-    appBundleId: 'com.colanode.desktop',
+    name: 'Brainbox',
+    executableName: process.platform === 'linux' ? 'brainbox' : 'Brainbox',
+    icon: 'assets/brainbox-logo-black',
+    appBundleId: 'com.brainbox.desktop',
     ...(process.platform === 'win32' && {
       certificateFile: process.env.CERTIFICATE_PATH,
       certificatePassword: process.env.CERTIFICATE_PASSWORD,
@@ -70,15 +70,15 @@ const config: ForgeConfig = {
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({
-      name: 'Colanode',
+      name: 'Brainbox',
       ...(process.platform === 'win32' && {
         certificateFile: process.env.CERTIFICATE_PATH,
         certificatePassword: process.env.CERTIFICATE_PASSWORD,
       }),
     }),
     new MakerDMG({
-      icon: 'assets/colanode-logo-black.png',
-      title: 'Colanode',
+      icon: 'assets/brainbox-logo-black.png',
+      title: 'Brainbox',
     }),
     {
       name: '@electron-forge/maker-zip',
@@ -91,8 +91,8 @@ const config: ForgeConfig = {
       name: '@electron-forge/publisher-github',
       config: {
         repository: {
-          owner: 'colanode',
-          name: 'colanode',
+          owner: 'brainbox',
+          name: 'brainbox',
         },
         prerelease: false,
         draft: true,

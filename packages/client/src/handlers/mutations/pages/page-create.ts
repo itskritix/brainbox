@@ -1,11 +1,11 @@
-import { SelectNode } from '@colanode/client/databases';
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { MutationHandler } from '@colanode/client/lib/types';
+import { SelectNode } from '@brainbox/client/databases';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { MutationHandler } from '@brainbox/client/lib/types';
 import {
   PageCreateMutationInput,
   PageCreateMutationOutput,
-} from '@colanode/client/mutations/pages/page-create';
-import { generateId, IdType, PageAttributes, SpaceAttributes, compareString, generateFractionalIndex } from '@colanode/core';
+} from '@brainbox/client/mutations/pages/page-create';
+import { generateId, IdType, PageAttributes, SpaceAttributes, compareString, generateFractionalIndex } from '@brainbox/core';
 
 export class PageCreateMutationHandler
   extends WorkspaceMutationHandlerBase

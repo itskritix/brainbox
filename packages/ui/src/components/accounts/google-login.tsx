@@ -1,14 +1,14 @@
 import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import { toast } from 'sonner';
 
-import { LoginOutput } from '@colanode/core';
-import { Button } from '@colanode/ui/components/ui/button';
-import { GoogleIcon } from '@colanode/ui/components/ui/icons';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useApp } from '@colanode/ui/contexts/app';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { getServerDomain } from '@colanode/ui/lib/server-config';
+import { LoginOutput } from '@brainbox/core';
+import { Button } from '@brainbox/ui/components/ui/button';
+import { GoogleIcon } from '@brainbox/ui/components/ui/icons';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useApp } from '@brainbox/ui/contexts/app';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { getServerDomain } from '@brainbox/ui/lib/server-config';
 
 interface GoogleLoginProps {
   context: 'login' | 'register';

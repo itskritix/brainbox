@@ -6,9 +6,9 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { editorColors } from '@colanode/ui/lib/editor';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/popover';
+import { editorColors } from '@brainbox/ui/lib/editor';
+import { cn } from '@brainbox/ui/lib/utils';
 
 export const ColorButton = ({
   editor,

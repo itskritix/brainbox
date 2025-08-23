@@ -1,8 +1,8 @@
 import { z } from 'zod/v4';
 
-import { extractNodeRole } from '@colanode/core/lib/nodes';
-import { hasNodeRole } from '@colanode/core/lib/permissions';
-import { NodeModel } from '@colanode/core/registry/nodes/core';
+import { extractNodeRole } from '@brainbox/core/lib/nodes';
+import { hasNodeRole } from '@brainbox/core/lib/permissions';
+import { NodeModel } from '@brainbox/core/registry/nodes/core';
 
 export const folderAttributesSchema = z.object({
   type: z.literal('folder'),

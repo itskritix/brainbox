@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-import { EmojiElement } from '@colanode/ui/components/emojis/emoji-element';
+import { EmojiElement } from '@brainbox/ui/components/emojis/emoji-element';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { defaultEmojis } from '@colanode/ui/lib/assets';
+} from '@brainbox/ui/components/ui/popover';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { defaultEmojis } from '@brainbox/ui/lib/assets';
 
 interface EmojiSkinToneSelectorProps {
   skinTone: number;

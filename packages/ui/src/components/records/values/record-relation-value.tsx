@@ -1,20 +1,20 @@
 import { X } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { LocalRecordNode } from '@colanode/client/types';
-import { RelationFieldAttributes } from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { RecordSearch } from '@colanode/ui/components/records/record-search';
-import { Badge } from '@colanode/ui/components/ui/badge';
+import { LocalRecordNode } from '@brainbox/client/types';
+import { RelationFieldAttributes } from '@brainbox/core';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { RecordSearch } from '@brainbox/ui/components/records/record-search';
+import { Badge } from '@brainbox/ui/components/ui/badge';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { useRecord } from '@colanode/ui/contexts/record';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQueries } from '@colanode/ui/hooks/use-live-queries';
+} from '@brainbox/ui/components/ui/popover';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { useRecord } from '@brainbox/ui/contexts/record';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQueries } from '@brainbox/ui/hooks/use-live-queries';
 
 interface RecordRelationValueProps {
   field: RelationFieldAttributes;

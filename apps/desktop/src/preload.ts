@@ -3,15 +3,15 @@
 
 import { contextBridge, ipcRenderer } from 'electron';
 
-import { eventBus } from '@colanode/client/lib';
-import { MutationInput, MutationMap } from '@colanode/client/mutations';
-import { QueryInput, QueryMap } from '@colanode/client/queries';
-import { Event, TempFile } from '@colanode/client/types';
-import { generateId, IdType } from '@colanode/core';
+import { eventBus } from '@brainbox/client/lib';
+import { MutationInput, MutationMap } from '@brainbox/client/mutations';
+import { QueryInput, QueryMap } from '@brainbox/client/queries';
+import { Event, TempFile } from '@brainbox/client/types';
+import { generateId, IdType } from '@brainbox/core';
 
 const windowId = generateId(IdType.Window);
 
-contextBridge.exposeInMainWorld('colanode', {
+contextBridge.exposeInMainWorld('brainbox', {
   init: () => ipcRenderer.invoke('init'),
 
   executeMutation: <T extends MutationInput>(

@@ -1,16 +1,16 @@
 import { Fragment } from 'react';
 
-import { CalendarViewGrid } from '@colanode/ui/components/databases/calendars/calendar-view-grid';
-import { CalendarViewNoGroup } from '@colanode/ui/components/databases/calendars/calendar-view-no-group';
-import { CalendarViewNoValueCount } from '@colanode/ui/components/databases/calendars/calendar-view-no-value-count';
-import { CalendarViewSettings } from '@colanode/ui/components/databases/calendars/calendar-view-settings';
-import { ViewFilterButton } from '@colanode/ui/components/databases/search/view-filter-button';
-import { ViewSearchBar } from '@colanode/ui/components/databases/search/view-search-bar';
-import { ViewSortButton } from '@colanode/ui/components/databases/search/view-sort-button';
-import { ViewFullscreenButton } from '@colanode/ui/components/databases/view-fullscreen-button';
-import { ViewTabs } from '@colanode/ui/components/databases/view-tabs';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
+import { CalendarViewGrid } from '@brainbox/ui/components/databases/calendars/calendar-view-grid';
+import { CalendarViewNoGroup } from '@brainbox/ui/components/databases/calendars/calendar-view-no-group';
+import { CalendarViewNoValueCount } from '@brainbox/ui/components/databases/calendars/calendar-view-no-value-count';
+import { CalendarViewSettings } from '@brainbox/ui/components/databases/calendars/calendar-view-settings';
+import { ViewFilterButton } from '@brainbox/ui/components/databases/search/view-filter-button';
+import { ViewSearchBar } from '@brainbox/ui/components/databases/search/view-search-bar';
+import { ViewSortButton } from '@brainbox/ui/components/databases/search/view-sort-button';
+import { ViewFullscreenButton } from '@brainbox/ui/components/databases/view-fullscreen-button';
+import { ViewTabs } from '@brainbox/ui/components/databases/view-tabs';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
 
 export const CalendarView = () => {
   const database = useDatabase();

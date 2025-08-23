@@ -1,7 +1,7 @@
 import { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
 
-import { ServerConfig, serverConfigSchema } from '@colanode/core';
-import { config } from '@colanode/server/lib/config';
+import { ServerConfig, serverConfigSchema } from '@brainbox/core';
+import { config } from '@brainbox/server/lib/config';
 
 export const configGetRoute: FastifyPluginCallbackZod = (instance, _, done) => {
   instance.route({

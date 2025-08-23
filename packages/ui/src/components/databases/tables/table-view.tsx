@@ -1,14 +1,14 @@
 import { Fragment } from 'react';
 
-import { ViewFilterButton } from '@colanode/ui/components/databases/search/view-filter-button';
-import { ViewSearchBar } from '@colanode/ui/components/databases/search/view-search-bar';
-import { ViewSortButton } from '@colanode/ui/components/databases/search/view-sort-button';
-import { TableViewBody } from '@colanode/ui/components/databases/tables/table-view-body';
-import { TableViewHeader } from '@colanode/ui/components/databases/tables/table-view-header';
-import { TableViewRecordCreateRow } from '@colanode/ui/components/databases/tables/table-view-record-create-row';
-import { TableViewSettings } from '@colanode/ui/components/databases/tables/table-view-settings';
-import { ViewFullscreenButton } from '@colanode/ui/components/databases/view-fullscreen-button';
-import { ViewTabs } from '@colanode/ui/components/databases/view-tabs';
+import { ViewFilterButton } from '@brainbox/ui/components/databases/search/view-filter-button';
+import { ViewSearchBar } from '@brainbox/ui/components/databases/search/view-search-bar';
+import { ViewSortButton } from '@brainbox/ui/components/databases/search/view-sort-button';
+import { TableViewBody } from '@brainbox/ui/components/databases/tables/table-view-body';
+import { TableViewHeader } from '@brainbox/ui/components/databases/tables/table-view-header';
+import { TableViewRecordCreateRow } from '@brainbox/ui/components/databases/tables/table-view-record-create-row';
+import { TableViewSettings } from '@brainbox/ui/components/databases/tables/table-view-settings';
+import { ViewFullscreenButton } from '@brainbox/ui/components/databases/view-fullscreen-button';
+import { ViewTabs } from '@brainbox/ui/components/databases/view-tabs';
 
 export const TableView = () => {
   return (

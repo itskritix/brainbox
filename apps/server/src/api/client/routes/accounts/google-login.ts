@@ -11,16 +11,16 @@ import {
   apiErrorOutputSchema,
   loginOutputSchema,
   googleLoginInputSchema,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { UpdateAccount } from '@colanode/server/data/schema';
-import { s3Client } from '@colanode/server/data/storage';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { UpdateAccount } from '@brainbox/server/data/schema';
+import { s3Client } from '@brainbox/server/data/storage';
 import {
   buildLoginSuccessOutput,
   buildLoginVerifyOutput,
-} from '@colanode/server/lib/accounts';
-import { config } from '@colanode/server/lib/config';
-import { AccountAttributes } from '@colanode/server/types/accounts';
+} from '@brainbox/server/lib/accounts';
+import { config } from '@brainbox/server/lib/config';
+import { AccountAttributes } from '@brainbox/server/types/accounts';
 
 const GoogleUserInfoUrl = 'https://www.googleapis.com/oauth2/v1/userinfo';
 const GoogleTokenUrl = 'https://oauth2.googleapis.com/token';

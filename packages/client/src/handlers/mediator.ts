@@ -3,27 +3,27 @@ import { isEqual } from 'lodash-es';
 import {
   buildMutationHandlerMap,
   MutationHandlerMap,
-} from '@colanode/client/handlers/mutations';
+} from '@brainbox/client/handlers/mutations';
 import {
   buildQueryHandlerMap,
   QueryHandlerMap,
-} from '@colanode/client/handlers/queries';
-import { eventBus } from '@colanode/client/lib/event-bus';
+} from '@brainbox/client/handlers/queries';
+import { eventBus } from '@brainbox/client/lib/event-bus';
 import {
   MutationHandler,
   QueryHandler,
   SubscribedQuery,
-} from '@colanode/client/lib/types';
+} from '@brainbox/client/lib/types';
 import {
   MutationError,
   MutationErrorCode,
   MutationInput,
   MutationResult,
-} from '@colanode/client/mutations';
-import { QueryInput, QueryMap } from '@colanode/client/queries';
-import { AppService } from '@colanode/client/services/app-service';
-import { Event } from '@colanode/client/types/events';
-import { createDebugger } from '@colanode/core';
+} from '@brainbox/client/mutations';
+import { QueryInput, QueryMap } from '@brainbox/client/queries';
+import { AppService } from '@brainbox/client/services/app-service';
+import { Event } from '@brainbox/client/types/events';
+import { createDebugger } from '@brainbox/core';
 
 const debug = createDebugger('desktop:mediator');
 

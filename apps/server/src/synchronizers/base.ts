@@ -1,6 +1,6 @@
-import { SynchronizerInput, SynchronizerOutputMessage } from '@colanode/core';
-import { Event } from '@colanode/server/types/events';
-import { ConnectedUser } from '@colanode/server/types/users';
+import { SynchronizerInput, SynchronizerOutputMessage } from '@brainbox/core';
+import { Event } from '@brainbox/server/types/events';
+import { ConnectedUser } from '@brainbox/server/types/users';
 
 export type SynchronizerStatus = 'pending' | 'fetching';
 

@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { User } from '@colanode/client/types';
-import { generateId, IdType, NodeRole } from '@colanode/core';
-import { ChannelForm } from '@colanode/ui/components/channels/channel-form';
-import { NodeCollaboratorRoleDropdown } from '@colanode/ui/components/collaborators/node-collaborator-role-dropdown';
-import { NodeCollaboratorSearch } from '@colanode/ui/components/collaborators/node-collaborator-search';
+import { User } from '@brainbox/client/types';
+import { generateId, IdType, NodeRole } from '@brainbox/core';
+import { ChannelForm } from '@brainbox/ui/components/channels/channel-form';
+import { NodeCollaboratorRoleDropdown } from '@brainbox/ui/components/collaborators/node-collaborator-role-dropdown';
+import { NodeCollaboratorSearch } from '@brainbox/ui/components/collaborators/node-collaborator-search';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@colanode/ui/components/ui/dialog';
-import { Label } from '@colanode/ui/components/ui/label';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+} from '@brainbox/ui/components/ui/dialog';
+import { Label } from '@brainbox/ui/components/ui/label';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface ChannelCreateDialogProps {
   open: boolean;

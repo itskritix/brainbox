@@ -5,10 +5,10 @@ import {
   ApiErrorCode,
   apiErrorOutputSchema,
   workspaceOutputSchema,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { eventBus } from '@colanode/server/lib/event-bus';
-import { jobService } from '@colanode/server/services/job-service';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { eventBus } from '@brainbox/server/lib/event-bus';
+import { jobService } from '@brainbox/server/services/job-service';
 
 export const workspaceDeleteRoute: FastifyPluginCallbackZod = (
   instance,

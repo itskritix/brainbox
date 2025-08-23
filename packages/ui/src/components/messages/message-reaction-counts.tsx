@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { LocalMessageNode } from '@colanode/client/types';
-import { EmojiElement } from '@colanode/ui/components/emojis/emoji-element';
-import { MessageReactionCountTooltip } from '@colanode/ui/components/messages/message-reaction-count-tooltip';
-import { MessageReactionCountsDialog } from '@colanode/ui/components/messages/message-reaction-counts-dialog';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
-import { cn } from '@colanode/ui/lib/utils';
+import { LocalMessageNode } from '@brainbox/client/types';
+import { EmojiElement } from '@brainbox/ui/components/emojis/emoji-element';
+import { MessageReactionCountTooltip } from '@brainbox/ui/components/messages/message-reaction-count-tooltip';
+import { MessageReactionCountsDialog } from '@brainbox/ui/components/messages/message-reaction-counts-dialog';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface MessageReactionCountsProps {
   message: LocalMessageNode;

@@ -1,6 +1,6 @@
 import { z } from 'zod/v4';
 
-import { workspaceOutputSchema } from '@colanode/core/types/workspaces';
+import { workspaceOutputSchema } from '@brainbox/core/types/workspaces';
 
 export enum AccountStatus {
   Pending = 0,

@@ -1,7 +1,7 @@
 import { Plus } from 'lucide-react';
 
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
 
 export const TableViewRecordCreateRow = () => {
   const database = useDatabase();

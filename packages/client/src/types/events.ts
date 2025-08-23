@@ -1,31 +1,31 @@
-import { Account, AccountMetadata } from '@colanode/client/types/accounts';
-import { AppMetadata } from '@colanode/client/types/apps';
-import { Avatar } from '@colanode/client/types/avatars';
+import { Account, AccountMetadata } from '@brainbox/client/types/accounts';
+import { AppMetadata } from '@brainbox/client/types/apps';
+import { Avatar } from '@brainbox/client/types/avatars';
 import {
   Document,
   DocumentState,
   DocumentUpdate,
-} from '@colanode/client/types/documents';
+} from '@brainbox/client/types/documents';
 import {
   LocalFile,
   Upload,
   Download,
   TempFile,
-} from '@colanode/client/types/files';
+} from '@brainbox/client/types/files';
 import {
   LocalNode,
   NodeCounter,
   NodeInteraction,
   NodeReaction,
   NodeReference,
-} from '@colanode/client/types/nodes';
-import { Server } from '@colanode/client/types/servers';
-import { User } from '@colanode/client/types/users';
+} from '@brainbox/client/types/nodes';
+import { Server } from '@brainbox/client/types/servers';
+import { User } from '@brainbox/client/types/users';
 import {
   Workspace,
   WorkspaceMetadata,
-} from '@colanode/client/types/workspaces';
-import { Message } from '@colanode/core';
+} from '@brainbox/client/types/workspaces';
+import { Message } from '@brainbox/core';
 
 export type UserCreatedEvent = {
   type: 'user.created';

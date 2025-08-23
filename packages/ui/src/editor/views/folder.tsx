@@ -1,11 +1,11 @@
 import { type NodeViewProps } from '@tiptap/core';
 import { NodeViewWrapper } from '@tiptap/react';
 
-import { LocalFolderNode } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { LocalFolderNode } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 export const FolderNodeView = ({ node }: NodeViewProps) => {
   const workspace = useWorkspace();

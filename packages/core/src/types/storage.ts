@@ -1,6 +1,6 @@
 import { z } from 'zod/v4';
 
-import { fileSubtypeSchema } from '@colanode/core/types/files';
+import { fileSubtypeSchema } from '@brainbox/core/types/files';
 
 export const workspaceStorageFileSubtypeSchema = z.object({
   subtype: fileSubtypeSchema,

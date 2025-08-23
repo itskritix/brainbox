@@ -2,7 +2,7 @@ import cors from '@fastify/cors';
 import { FastifyPluginCallback } from 'fastify';
 import fp from 'fastify-plugin';
 
-import { config } from '@colanode/server/lib/config';
+import { config } from '@brainbox/server/lib/config';
 
 const corsCallback: FastifyPluginCallback = (fastify, _, done) => {
   const origin = config.server.cors.origin.includes(',')

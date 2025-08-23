@@ -3,10 +3,10 @@ import { BubbleMenu, type BubbleMenuProps } from '@tiptap/react/menus';
 import { Bold, Code, Italic, Strikethrough, Underline } from 'lucide-react';
 import { useState } from 'react';
 
-import { ColorButton } from '@colanode/ui/editor/menus/color-button';
-import { HighlightButton } from '@colanode/ui/editor/menus/highlight-button';
-import { LinkButton } from '@colanode/ui/editor/menus/link-button';
-import { MarkButton } from '@colanode/ui/editor/menus/mark-button';
+import { ColorButton } from '@brainbox/ui/editor/menus/color-button';
+import { HighlightButton } from '@brainbox/ui/editor/menus/highlight-button';
+import { LinkButton } from '@brainbox/ui/editor/menus/link-button';
+import { MarkButton } from '@brainbox/ui/editor/menus/mark-button';
 
 interface ToolbarMenuProps extends Omit<BubbleMenuProps, 'children'> {
   editor: Editor;

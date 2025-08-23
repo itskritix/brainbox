@@ -1,12 +1,12 @@
-# Colanode Kubernetes Deployment
+# Brainbox Kubernetes Deployment
 
-A Helm chart for deploying [Colanode](https://github.com/colanode/colanode) on Kubernetes.
+A Helm chart for deploying [Brainbox](https://github.com/brainbox/brainbox) on Kubernetes.
 
 ## Overview
 
-This chart deploys a complete Colanode instance with all required dependencies:
+This chart deploys a complete Brainbox instance with all required dependencies:
 
-- **Colanode Server**: The main application server
+- **Brainbox Server**: The main application server
 - **PostgreSQL**: Database with pgvector extension for vector operations
 - **Redis/Valkey**: Message queue and caching
 - **MinIO**: S3-compatible object storage for files and avatars
@@ -23,22 +23,22 @@ This chart deploys a complete Colanode instance with all required dependencies:
 
 ```bash
 # Add the chart repository (if publishing to a Helm repo)
-helm repo add colanode https://static.colanode.com/hosting/kubernetes/chart
+helm repo add brainbox https://static.brainbox.com/hosting/kubernetes/chart
 
 # Install with default values
-helm install my-colanode colanode/colanode
+helm install my-brainbox brainbox/brainbox
 
 # Or install from local chart
-helm install my-colanode ./hosting/kubernetes/chart
+helm install my-brainbox ./hosting/kubernetes/chart
 ```
 
 ### Custom Installation
 
 ```bash
 # Install with custom values
-helm install my-colanode ./hosting/kubernetes/chart \
-  --set colanode.ingress.hosts[0].host=colanode.example.com \
-  --set colanode.config.SERVER_NAME="My Colanode Instance"
+helm install my-brainbox ./hosting/kubernetes/chart \
+  --set brainbox.ingress.hosts[0].host=brainbox.example.com \
+  --set brainbox.config.SERVER_NAME="My Brainbox Instance"
 ```
 
 ## Configuration
@@ -47,18 +47,18 @@ helm install my-colanode ./hosting/kubernetes/chart \
 
 | Parameter                     | Description                 | Default                   |
 | ----------------------------- | --------------------------- | ------------------------- |
-| `colanode.replicaCount`       | Number of Colanode replicas | `1`                       |
-| `colanode.image.repository`   | Colanode image repository   | `ghcr.io/colanode/server` |
-| `colanode.image.tag`          | Colanode image tag          | `latest`                  |
-| `colanode.config.SERVER_NAME` | Server display name         | `Colanode K8s`            |
+| `brainbox.replicaCount`       | Number of Brainbox replicas | `1`                       |
+| `brainbox.image.repository`   | Brainbox image repository   | `ghcr.io/brainbox/server` |
+| `brainbox.image.tag`          | Brainbox image tag          | `latest`                  |
+| `brainbox.config.SERVER_NAME` | Server display name         | `Brainbox K8s`            |
 
 ### Ingress Configuration
 
 | Parameter                        | Description              | Default               |
 | -------------------------------- | ------------------------ | --------------------- |
-| `colanode.ingress.enabled`       | Enable ingress           | `true`                |
-| `colanode.ingress.hosts[0].host` | Hostname for the ingress | `chart-example.local` |
-| `colanode.ingress.className`     | Ingress class name       | `""`                  |
+| `brainbox.ingress.enabled`       | Enable ingress           | `true`                |
+| `brainbox.ingress.hosts[0].host` | Hostname for the ingress | `chart-example.local` |
+| `brainbox.ingress.className`     | Ingress class name       | `""`                  |
 
 ### Dependencies
 
@@ -84,18 +84,18 @@ By default, the chart configures persistent storage for:
 
 Adjust these values based on your requirements.
 
-## Accessing Colanode
+## Accessing Brainbox
 
-After installation, you can access Colanode through:
+After installation, you can access Brainbox through:
 
 1. **Ingress** (recommended): Configure your ingress host and access via HTTP/HTTPS
-2. **Port forwarding**: `kubectl port-forward svc/my-colanode 3000:3000`
+2. **Port forwarding**: `kubectl port-forward svc/my-brainbox 3000:3000`
 3. **LoadBalancer**: Change service type to LoadBalancer if supported by your cluster
 
 ## Uninstall
 
 ```bash
-helm uninstall my-colanode
+helm uninstall my-brainbox
 ```
 
 ## Development

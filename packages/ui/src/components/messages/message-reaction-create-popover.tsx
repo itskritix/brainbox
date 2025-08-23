@@ -1,12 +1,12 @@
 import { SmilePlus } from 'lucide-react';
 import { useState } from 'react';
 
-import { EmojiPicker } from '@colanode/ui/components/emojis/emoji-picker';
+import { EmojiPicker } from '@brainbox/ui/components/emojis/emoji-picker';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
+} from '@brainbox/ui/components/ui/popover';
 
 interface MessageReactionProps {
   onReactionClick: (reaction: string) => void;

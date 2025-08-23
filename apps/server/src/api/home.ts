@@ -1,8 +1,8 @@
 import { FastifyPluginCallback } from 'fastify';
 
-import { config } from '@colanode/server/lib/config';
-import { generateUrl } from '@colanode/server/lib/fastify';
-import { homeTemplate } from '@colanode/server/templates';
+import { config } from '@brainbox/server/lib/config';
+import { generateUrl } from '@brainbox/server/lib/fastify';
+import { homeTemplate } from '@brainbox/server/templates';
 
 export const homeRoute: FastifyPluginCallback = (instance, _, done) => {
   instance.route({

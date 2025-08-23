@@ -1,3 +1,3 @@
 export const isColanodeServer = (domain: string) => {
-  return domain.endsWith('.colanode.com');
+  return domain.endsWith('.brainbox.com');
 };

@@ -9,17 +9,17 @@ import {
   FileStatus,
   generateId,
   IdType,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { redis } from '@colanode/server/data/redis';
-import { s3Config } from '@colanode/server/data/storage';
-import { config } from '@colanode/server/lib/config';
-import { fetchCounter } from '@colanode/server/lib/counters';
-import { generateUrl } from '@colanode/server/lib/fastify';
-import { buildFilePath, deleteFile } from '@colanode/server/lib/files';
-import { mapNode, updateNode } from '@colanode/server/lib/nodes';
-import { RedisKvStore } from '@colanode/server/lib/tus/redis-kv';
-import { RedisLocker } from '@colanode/server/lib/tus/redis-locker';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { redis } from '@brainbox/server/data/redis';
+import { s3Config } from '@brainbox/server/data/storage';
+import { config } from '@brainbox/server/lib/config';
+import { fetchCounter } from '@brainbox/server/lib/counters';
+import { generateUrl } from '@brainbox/server/lib/fastify';
+import { buildFilePath, deleteFile } from '@brainbox/server/lib/files';
+import { mapNode, updateNode } from '@brainbox/server/lib/nodes';
+import { RedisKvStore } from '@brainbox/server/lib/tus/redis-kv';
+import { RedisLocker } from '@brainbox/server/lib/tus/redis-locker';
 
 const s3Store = new S3Store({
   partSize: FILE_UPLOAD_PART_SIZE,

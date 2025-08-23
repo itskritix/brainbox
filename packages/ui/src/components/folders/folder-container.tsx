@@ -1,16 +1,16 @@
-import { LocalFolderNode } from '@colanode/client/types';
-import { FolderBody } from '@colanode/ui/components/folders/folder-body';
-import { FolderNotFound } from '@colanode/ui/components/folders/folder-not-found';
-import { FolderSettings } from '@colanode/ui/components/folders/folder-settings';
-import { ContainerBreadcrumb } from '@colanode/ui/components/layouts/containers/container-breadrumb';
+import { LocalFolderNode } from '@brainbox/client/types';
+import { FolderBody } from '@brainbox/ui/components/folders/folder-body';
+import { FolderNotFound } from '@brainbox/ui/components/folders/folder-not-found';
+import { FolderSettings } from '@brainbox/ui/components/folders/folder-settings';
+import { ContainerBreadcrumb } from '@brainbox/ui/components/layouts/containers/container-breadrumb';
 import {
   Container,
   ContainerBody,
   ContainerHeader,
   ContainerSettings,
-} from '@colanode/ui/components/ui/container';
-import { useNodeContainer } from '@colanode/ui/hooks/use-node-container';
-import { useNodeRadar } from '@colanode/ui/hooks/use-node-radar';
+} from '@brainbox/ui/components/ui/container';
+import { useNodeContainer } from '@brainbox/ui/hooks/use-node-container';
+import { useNodeRadar } from '@brainbox/ui/hooks/use-node-radar';
 
 interface FolderContainerProps {
   folderId: string;

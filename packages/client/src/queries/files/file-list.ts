@@ -1,4 +1,4 @@
-import { LocalFileNode } from '@colanode/client/types/nodes';
+import { LocalFileNode } from '@brainbox/client/types/nodes';
 
 export type FileListQueryInput = {
   type: 'file.list';
@@ -9,7 +9,7 @@ export type FileListQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'file.list': {
       input: FileListQueryInput;

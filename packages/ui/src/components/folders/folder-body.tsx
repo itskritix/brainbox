@@ -9,10 +9,10 @@ import {
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { LocalFolderNode, FolderLayoutType } from '@colanode/client/types';
-import { NodeRole } from '@colanode/core';
-import { FolderFiles } from '@colanode/ui/components/folders/folder-files';
-import { Button } from '@colanode/ui/components/ui/button';
+import { LocalFolderNode, FolderLayoutType } from '@brainbox/client/types';
+import { NodeRole } from '@brainbox/core';
+import { FolderFiles } from '@brainbox/ui/components/folders/folder-files';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,11 +20,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
-import { Dropzone } from '@colanode/ui/components/ui/dropzone';
-import { ScrollArea } from '@colanode/ui/components/ui/scroll-area';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { openFileDialog } from '@colanode/ui/lib/files';
+} from '@brainbox/ui/components/ui/dropdown-menu';
+import { Dropzone } from '@brainbox/ui/components/ui/dropzone';
+import { ScrollArea } from '@brainbox/ui/components/ui/scroll-area';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { openFileDialog } from '@brainbox/ui/lib/files';
 
 export type FolderLayoutOption = {
   value: FolderLayoutType;
@@ -76,7 +76,7 @@ export const FolderBody = ({ folder }: FolderBodyProps) => {
 
     if (result.type === 'success') {
       result.files.forEach((tempFile) => {
-        window.colanode
+        window.brainbox
           .executeMutation({
             type: 'file.create',
             accountId: workspace.accountId,

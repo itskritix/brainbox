@@ -1,7 +1,7 @@
 import { JSONContent } from '@tiptap/core';
 import { Fragment } from 'react';
 
-import { NodeRenderer } from '@colanode/ui/editor/renderers/node';
+import { NodeRenderer } from '@brainbox/ui/editor/renderers/node';
 
 interface NodeChildrenRendererProps {
   node: JSONContent;

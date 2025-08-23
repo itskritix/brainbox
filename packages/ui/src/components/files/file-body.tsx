@@ -1,9 +1,9 @@
-import { LocalFileNode } from '@colanode/client/types';
-import { FileNoPreview } from '@colanode/ui/components/files/file-no-preview';
-import { FilePreview } from '@colanode/ui/components/files/file-preview';
-import { FileSaveButton } from '@colanode/ui/components/files/file-save-button';
-import { FileSidebar } from '@colanode/ui/components/files/file-sidebar';
-import { canPreviewFile } from '@colanode/ui/lib/files';
+import { LocalFileNode } from '@brainbox/client/types';
+import { FileNoPreview } from '@brainbox/ui/components/files/file-no-preview';
+import { FilePreview } from '@brainbox/ui/components/files/file-preview';
+import { FileSaveButton } from '@brainbox/ui/components/files/file-save-button';
+import { FileSidebar } from '@brainbox/ui/components/files/file-sidebar';
+import { canPreviewFile } from '@brainbox/ui/lib/files';
 
 interface FileBodyProps {
   file: LocalFileNode;

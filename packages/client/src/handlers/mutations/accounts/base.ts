@@ -1,9 +1,9 @@
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { mapAccount, mapWorkspace } from '@colanode/client/lib/mappers';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
-import { AppService } from '@colanode/client/services/app-service';
-import { ServerService } from '@colanode/client/services/server-service';
-import { LoginSuccessOutput } from '@colanode/core';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { mapAccount, mapWorkspace } from '@brainbox/client/lib/mappers';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
+import { AppService } from '@brainbox/client/services/app-service';
+import { ServerService } from '@brainbox/client/services/server-service';
+import { LoginSuccessOutput } from '@brainbox/core';
 
 export abstract class AccountMutationHandlerBase {
   protected readonly app: AppService;

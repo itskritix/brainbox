@@ -1,9 +1,9 @@
-import { mapTempFile } from '@colanode/client/lib';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { TempFileGetQueryInput } from '@colanode/client/queries';
-import { AppService } from '@colanode/client/services';
-import { Event } from '@colanode/client/types/events';
-import { TempFile } from '@colanode/client/types/files';
+import { mapTempFile } from '@brainbox/client/lib';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { TempFileGetQueryInput } from '@brainbox/client/queries';
+import { AppService } from '@brainbox/client/services';
+import { Event } from '@brainbox/client/types/events';
+import { TempFile } from '@brainbox/client/types/files';
 
 export class TempFileGetQueryHandler
   implements QueryHandler<TempFileGetQueryInput>

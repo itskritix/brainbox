@@ -1,4 +1,4 @@
-import { Upload } from '@colanode/client/types/files';
+import { Upload } from '@brainbox/client/types/files';
 
 export type UploadListPendingQueryInput = {
   type: 'upload.list.pending';
@@ -8,7 +8,7 @@ export type UploadListPendingQueryInput = {
   count: number;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'upload.list.pending': {
       input: UploadListPendingQueryInput;

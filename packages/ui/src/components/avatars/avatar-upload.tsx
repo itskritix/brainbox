@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { Button } from '@colanode/ui/components/ui/button';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useAccount } from '@colanode/ui/contexts/account';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
-import { openFileDialog } from '@colanode/ui/lib/files';
+import { Button } from '@brainbox/ui/components/ui/button';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useAccount } from '@brainbox/ui/contexts/account';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
+import { openFileDialog } from '@brainbox/ui/lib/files';
 
 interface AvatarUploadProps {
   onUpload: (id: string) => void;

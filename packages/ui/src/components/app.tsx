@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 
-import { AppType } from '@colanode/client/types';
-import { Account } from '@colanode/ui/components/accounts/account';
-import { Login } from '@colanode/ui/components/accounts/login';
-import { AppLoader } from '@colanode/ui/components/app-loader';
-import { RadarProvider } from '@colanode/ui/components/radar-provider';
-import { ServerProvider } from '@colanode/ui/components/servers/server-provider';
-import { DelayedComponent } from '@colanode/ui/components/ui/delayed-component';
-import { AppContext } from '@colanode/ui/contexts/app';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { getServerUrl } from '@colanode/ui/lib/server-config';
+import { AppType } from '@brainbox/client/types';
+import { Account } from '@brainbox/ui/components/accounts/account';
+import { Login } from '@brainbox/ui/components/accounts/login';
+import { AppLoader } from '@brainbox/ui/components/app-loader';
+import { RadarProvider } from '@brainbox/ui/components/radar-provider';
+import { ServerProvider } from '@brainbox/ui/components/servers/server-provider';
+import { DelayedComponent } from '@brainbox/ui/components/ui/delayed-component';
+import { AppContext } from '@brainbox/ui/contexts/app';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { getServerUrl } from '@brainbox/ui/lib/server-config';
 
 interface AppProps {
   type: AppType;
@@ -32,7 +32,7 @@ export const App = ({ type }: AppProps) => {
   });
 
   useEffect(() => {
-    window.colanode.init().then(() => {
+    window.brainbox.init().then(() => {
       setInitialized(true);
     });
   }, []);
@@ -40,7 +40,7 @@ export const App = ({ type }: AppProps) => {
   // Auto-create default server if none exists
   useEffect(() => {
     if (initialized && serverListQuery.data && serverListQuery.data.length === 0) {
-      window.colanode.executeMutation({
+      window.brainbox.executeMutation({
         type: 'server.create',
         url: getServerUrl(),
       });
@@ -79,14 +79,14 @@ export const App = ({ type }: AppProps) => {
           )?.value;
         },
         setMetadata: (key, value) => {
-          window.colanode.executeMutation({
+          window.brainbox.executeMutation({
             type: 'app.metadata.update',
             key,
             value,
           });
         },
         deleteMetadata: (key: string) => {
-          window.colanode.executeMutation({
+          window.brainbox.executeMutation({
             type: 'app.metadata.delete',
             key,
           });
@@ -95,7 +95,7 @@ export const App = ({ type }: AppProps) => {
         closeLogin: () => setOpenLogin(false),
         openAccount: (id: string) => {
           setOpenLogin(false);
-          window.colanode.executeMutation({
+          window.brainbox.executeMutation({
             type: 'app.metadata.update',
             key: 'account',
             value: id,

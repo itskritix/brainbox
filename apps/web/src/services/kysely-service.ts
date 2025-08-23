@@ -16,8 +16,8 @@ import {
   SqliteQueryCompiler,
 } from 'kysely';
 
-import { KyselyBuildOptions, KyselyService } from '@colanode/client/services';
-import { WebFileSystem } from '@colanode/web/services/file-system';
+import { KyselyBuildOptions, KyselyService } from '@brainbox/client/services';
+import { WebFileSystem } from '@brainbox/web/services/file-system';
 
 export class WebKyselyService implements KyselyService {
   private readonly pools: Map<string, SAHPoolUtil> = new Map();

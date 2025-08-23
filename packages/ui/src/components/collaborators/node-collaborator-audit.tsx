@@ -1,7 +1,7 @@
-import { timeAgo } from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { timeAgo } from '@brainbox/core';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface NodeCollaboratorAuditProps {
   collaboratorId: string;

@@ -4,7 +4,7 @@ import {
   Workspace,
   WorkspaceMetadataKey,
   WorkspaceMetadataMap,
-} from '@colanode/client/types';
+} from '@brainbox/client/types';
 
 interface WorkspaceContext extends Workspace {
   getMetadata: <K extends WorkspaceMetadataKey>(

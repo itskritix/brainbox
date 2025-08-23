@@ -1,8 +1,8 @@
 import { toast } from 'sonner';
 
-import { WorkspaceForm } from '@colanode/ui/components/workspaces/workspace-form';
-import { useAccount } from '@colanode/ui/contexts/account';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { WorkspaceForm } from '@brainbox/ui/components/workspaces/workspace-form';
+import { useAccount } from '@brainbox/ui/contexts/account';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface WorkspaceCreateProps {
   onSuccess: (id: string) => void;

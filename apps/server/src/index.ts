@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
 
-import { initApp } from '@colanode/server/app';
-import { migrate } from '@colanode/server/data/database';
-import { initRedis } from '@colanode/server/data/redis';
-import { eventBus } from '@colanode/server/lib/event-bus';
-import { emailService } from '@colanode/server/services/email-service';
-import { jobService } from '@colanode/server/services/job-service';
+import { initApp } from '@brainbox/server/app';
+import { migrate } from '@brainbox/server/data/database';
+import { initRedis } from '@brainbox/server/data/redis';
+import { eventBus } from '@brainbox/server/lib/event-bus';
+import { emailService } from '@brainbox/server/services/email-service';
+import { jobService } from '@brainbox/server/services/job-service';
 
 dotenv.config({
   quiet: true,

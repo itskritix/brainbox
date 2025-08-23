@@ -1,13 +1,13 @@
 import { LayoutGrid, MessageCircle, Settings } from 'lucide-react';
 
-import { SidebarMenuType } from '@colanode/client/types';
-import { SidebarMenuFooter } from '@colanode/ui/components/layouts/sidebars/sidebar-menu-footer';
-import { SidebarMenuHeader } from '@colanode/ui/components/layouts/sidebars/sidebar-menu-header';
-import { SidebarMenuIcon } from '@colanode/ui/components/layouts/sidebars/sidebar-menu-icon';
-import { useApp } from '@colanode/ui/contexts/app';
-import { useRadar } from '@colanode/ui/contexts/radar';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { SidebarMenuType } from '@brainbox/client/types';
+import { SidebarMenuFooter } from '@brainbox/ui/components/layouts/sidebars/sidebar-menu-footer';
+import { SidebarMenuHeader } from '@brainbox/ui/components/layouts/sidebars/sidebar-menu-header';
+import { SidebarMenuIcon } from '@brainbox/ui/components/layouts/sidebars/sidebar-menu-icon';
+import { useApp } from '@brainbox/ui/contexts/app';
+import { useRadar } from '@brainbox/ui/contexts/radar';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface SidebarMenuProps {
   value: SidebarMenuType;

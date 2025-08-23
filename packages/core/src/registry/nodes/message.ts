@@ -1,11 +1,11 @@
 import { z } from 'zod/v4';
 
-import { extractBlocksMentions } from '@colanode/core/lib/mentions';
-import { extractNodeRole } from '@colanode/core/lib/nodes';
-import { hasNodeRole } from '@colanode/core/lib/permissions';
-import { extractBlockTexts } from '@colanode/core/lib/texts';
-import { blockSchema } from '@colanode/core/registry/block';
-import { NodeModel } from '@colanode/core/registry/nodes/core';
+import { extractBlocksMentions } from '@brainbox/core/lib/mentions';
+import { extractNodeRole } from '@brainbox/core/lib/nodes';
+import { hasNodeRole } from '@brainbox/core/lib/permissions';
+import { extractBlockTexts } from '@brainbox/core/lib/texts';
+import { blockSchema } from '@brainbox/core/registry/block';
+import { NodeModel } from '@brainbox/core/registry/nodes/core';
 
 export const messageAttributesSchema = z.object({
   type: z.literal('message'),

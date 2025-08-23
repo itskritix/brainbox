@@ -1,7 +1,7 @@
 import {
   AccountMetadataKey,
   AccountMetadataMap,
-} from '@colanode/client/types/accounts';
+} from '@brainbox/client/types/accounts';
 
 export type AccountMetadataUpdateMutationInput = {
   type: 'account.metadata.update';
@@ -14,7 +14,7 @@ export type AccountMetadataUpdateMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'account.metadata.update': {
       input: AccountMetadataUpdateMutationInput;

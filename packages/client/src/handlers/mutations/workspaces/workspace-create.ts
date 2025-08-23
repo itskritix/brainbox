@@ -1,14 +1,14 @@
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { parseApiError } from '@colanode/client/lib/ky';
-import { mapWorkspace } from '@colanode/client/lib/mappers';
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { parseApiError } from '@brainbox/client/lib/ky';
+import { mapWorkspace } from '@brainbox/client/lib/mappers';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   WorkspaceCreateMutationInput,
   WorkspaceCreateMutationOutput,
-} from '@colanode/client/mutations/workspaces/workspace-create';
-import { AppService } from '@colanode/client/services/app-service';
-import { WorkspaceCreateInput, WorkspaceOutput } from '@colanode/core';
+} from '@brainbox/client/mutations/workspaces/workspace-create';
+import { AppService } from '@brainbox/client/services/app-service';
+import { WorkspaceCreateInput, WorkspaceOutput } from '@brainbox/core';
 
 export class WorkspaceCreateMutationHandler
   implements MutationHandler<WorkspaceCreateMutationInput>

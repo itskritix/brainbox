@@ -4,10 +4,10 @@ import {
   ContainerMetadata,
   SidebarMenuType,
   SidebarMetadata,
-} from '@colanode/client/types';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useWindowSize } from '@colanode/ui/hooks/use-window-size';
-import { percentToNumber } from '@colanode/ui/lib/utils';
+} from '@brainbox/client/types';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useWindowSize } from '@brainbox/ui/hooks/use-window-size';
+import { percentToNumber } from '@brainbox/ui/lib/utils';
 
 export const useLayoutState = () => {
   const workspace = useWorkspace();

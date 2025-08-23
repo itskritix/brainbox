@@ -5,24 +5,24 @@ import {
   SelectLocalFile,
   SelectUpload,
   UpdateUpload,
-} from '@colanode/client/databases';
+} from '@brainbox/client/databases';
 import {
   JobHandler,
   JobOutput,
   JobConcurrencyConfig,
-} from '@colanode/client/jobs';
-import { eventBus, mapNode, mapUpload } from '@colanode/client/lib';
-import { isNodeSynced } from '@colanode/client/lib/nodes';
-import { AccountService } from '@colanode/client/services/accounts/account-service';
-import { AppService } from '@colanode/client/services/app-service';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
-import { LocalFileNode, UploadStatus } from '@colanode/client/types';
+} from '@brainbox/client/jobs';
+import { eventBus, mapNode, mapUpload } from '@brainbox/client/lib';
+import { isNodeSynced } from '@brainbox/client/lib/nodes';
+import { AccountService } from '@brainbox/client/services/accounts/account-service';
+import { AppService } from '@brainbox/client/services/app-service';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
+import { LocalFileNode, UploadStatus } from '@brainbox/client/types';
 import {
   ApiHeader,
   build,
   calculatePercentage,
   FILE_UPLOAD_PART_SIZE,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 export type FileUploadInput = {
   type: 'file.upload';
@@ -31,7 +31,7 @@ export type FileUploadInput = {
   fileId: string;
 };
 
-declare module '@colanode/client/jobs' {
+declare module '@brainbox/client/jobs' {
   interface JobMap {
     'file.upload': {
       input: FileUploadInput;

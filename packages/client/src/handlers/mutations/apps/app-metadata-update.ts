@@ -1,11 +1,11 @@
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { mapAppMetadata } from '@colanode/client/lib/mappers';
-import { MutationHandler } from '@colanode/client/lib/types';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { mapAppMetadata } from '@brainbox/client/lib/mappers';
+import { MutationHandler } from '@brainbox/client/lib/types';
 import {
   AppMetadataUpdateMutationInput,
   AppMetadataUpdateMutationOutput,
-} from '@colanode/client/mutations/apps/app-metadata-update';
-import { AppService } from '@colanode/client/services/app-service';
+} from '@brainbox/client/mutations/apps/app-metadata-update';
+import { AppService } from '@brainbox/client/services/app-service';
 
 export class AppMetadataUpdateMutationHandler
   implements MutationHandler<AppMetadataUpdateMutationInput>

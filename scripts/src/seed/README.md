@@ -1,6 +1,6 @@
-# Colanode seed script
+# Brainbox seed script
 
-This directory contains a script that automatically creates a set of **dummy data** for **Colanode**, which can be used for testing, demos, or local development. Specifically, it provisions multiple user accounts, a primary workspace, and a variety of example content including pages, databases, channels, chats, and messages, all in a few automated steps.
+This directory contains a script that automatically creates a set of **dummy data** for **Brainbox**, which can be used for testing, demos, or local development. Specifically, it provisions multiple user accounts, a primary workspace, and a variety of example content including pages, databases, channels, chats, and messages, all in a few automated steps.
 
 ## How It Works
 
@@ -8,7 +8,7 @@ This directory contains a script that automatically creates a set of **dummy dat
    The script reads `accounts.json` for a list of sample accounts, each with a name, email, password, and avatar. It then:
 
    - Creates the **main** account (first in the JSON list).
-   - Sets up a new workspace named “Colanode” for this main account.
+   - Sets up a new workspace named “Brainbox” for this main account.
    - Uploads a workspace avatar image and assigns it to the workspace.
 
 2. **Invite & Create Additional Accounts**  
@@ -41,7 +41,7 @@ This directory contains a script that automatically creates a set of **dummy dat
    ```bash
    npm run seed
    ```
-   This command reads `accounts.json`, creates each account, sets up the workspace, and populates it with sample data. Once complete, you’ll have a fully seeded development instance of **Colanode** to explore.
+   This command reads `accounts.json`, creates each account, sets up the workspace, and populates it with sample data. Once complete, you’ll have a fully seeded development instance of **Brainbox** to explore.
 
 ## Notes
 

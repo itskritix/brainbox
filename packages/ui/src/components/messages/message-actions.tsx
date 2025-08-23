@@ -2,15 +2,15 @@ import { MessagesSquare, Reply } from 'lucide-react';
 import { useCallback } from 'react';
 import { toast } from 'sonner';
 
-import { LocalMessageNode } from '@colanode/client/types';
-import { MessageDeleteButton } from '@colanode/ui/components/messages/message-delete-button';
-import { MessageQuickReaction } from '@colanode/ui/components/messages/message-quick-reaction';
-import { MessageReactionCreatePopover } from '@colanode/ui/components/messages/message-reaction-create-popover';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { useConversation } from '@colanode/ui/contexts/conversation';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
-import { defaultEmojis } from '@colanode/ui/lib/assets';
+import { LocalMessageNode } from '@brainbox/client/types';
+import { MessageDeleteButton } from '@brainbox/ui/components/messages/message-delete-button';
+import { MessageQuickReaction } from '@brainbox/ui/components/messages/message-quick-reaction';
+import { MessageReactionCreatePopover } from '@brainbox/ui/components/messages/message-reaction-create-popover';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { useConversation } from '@brainbox/ui/contexts/conversation';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
+import { defaultEmojis } from '@brainbox/ui/lib/assets';
 
 const MessageAction = ({ children }: { children: React.ReactNode }) => {
   return (

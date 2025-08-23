@@ -1,6 +1,6 @@
-import { MutationHandler } from '@colanode/client/lib';
-import { MutationMap } from '@colanode/client/mutations';
-import { AppService } from '@colanode/client/services';
+import { MutationHandler } from '@brainbox/client/lib';
+import { MutationMap } from '@brainbox/client/mutations';
+import { AppService } from '@brainbox/client/services';
 
 import { AccountLogoutMutationHandler } from './accounts/account-logout';
 import { AccountMetadataDeleteMutationHandler } from './accounts/account-metadata-delete';

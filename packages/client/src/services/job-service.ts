@@ -1,6 +1,6 @@
 import AsyncLock from 'async-lock';
 
-import { SelectJob, SelectJobSchedule } from '@colanode/client/databases/app';
+import { SelectJob, SelectJobSchedule } from '@brainbox/client/databases/app';
 import {
   Job,
   JobHandler,
@@ -10,20 +10,20 @@ import {
   JobScheduleOptions,
   JobScheduleStatus,
   JobStatus,
-} from '@colanode/client/jobs';
-import { AccountSyncJobHandler } from '@colanode/client/jobs/account-sync';
-import { AvatarDownloadJobHandler } from '@colanode/client/jobs/avatar-download';
-import { AvatarsCleanJobHandler } from '@colanode/client/jobs/avatars-clean';
-import { FileDownloadJobHandler } from '@colanode/client/jobs/file-download';
-import { FileUploadJobHandler } from '@colanode/client/jobs/file-upload';
-import { MutationsSyncJobHandler } from '@colanode/client/jobs/mutations-sync';
-import { ServerSyncJobHandler } from '@colanode/client/jobs/server-sync';
-import { TempFilesCleanJobHandler } from '@colanode/client/jobs/temp-files-clean';
-import { TokenDeleteJobHandler } from '@colanode/client/jobs/token-delete';
-import { WorkspaceFilesCleanJobHandler } from '@colanode/client/jobs/workspace-files-clean';
-import { SleepScheduler } from '@colanode/client/lib/sleep-scheduler';
-import { AppService } from '@colanode/client/services/app-service';
-import { generateId, IdType } from '@colanode/core';
+} from '@brainbox/client/jobs';
+import { AccountSyncJobHandler } from '@brainbox/client/jobs/account-sync';
+import { AvatarDownloadJobHandler } from '@brainbox/client/jobs/avatar-download';
+import { AvatarsCleanJobHandler } from '@brainbox/client/jobs/avatars-clean';
+import { FileDownloadJobHandler } from '@brainbox/client/jobs/file-download';
+import { FileUploadJobHandler } from '@brainbox/client/jobs/file-upload';
+import { MutationsSyncJobHandler } from '@brainbox/client/jobs/mutations-sync';
+import { ServerSyncJobHandler } from '@brainbox/client/jobs/server-sync';
+import { TempFilesCleanJobHandler } from '@brainbox/client/jobs/temp-files-clean';
+import { TokenDeleteJobHandler } from '@brainbox/client/jobs/token-delete';
+import { WorkspaceFilesCleanJobHandler } from '@brainbox/client/jobs/workspace-files-clean';
+import { SleepScheduler } from '@brainbox/client/lib/sleep-scheduler';
+import { AppService } from '@brainbox/client/services/app-service';
+import { generateId, IdType } from '@brainbox/core';
 
 const MAX_CONCURRENCY = 5;
 const JOBS_MAX_TIMEOUT = 30000;

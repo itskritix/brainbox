@@ -1,6 +1,6 @@
 import { Link } from '@tiptap/extension-link';
 
-import { defaultClasses } from '@colanode/ui/editor/classes';
+import { defaultClasses } from '@brainbox/ui/editor/classes';
 
 export const LinkMark = Link.extend({
   inclusive: false,

@@ -1,8 +1,8 @@
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { IconCategoryListQueryInput } from '@colanode/client/queries/icons/icon-category-list';
-import { AppService } from '@colanode/client/services/app-service';
-import { Event } from '@colanode/client/types/events';
-import { IconCategory } from '@colanode/client/types/icons';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { IconCategoryListQueryInput } from '@brainbox/client/queries/icons/icon-category-list';
+import { AppService } from '@brainbox/client/services/app-service';
+import { Event } from '@brainbox/client/types/events';
+import { IconCategory } from '@brainbox/client/types/icons';
 
 export class IconCategoryListQueryHandler
   implements QueryHandler<IconCategoryListQueryInput>

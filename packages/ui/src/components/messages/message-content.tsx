@@ -1,6 +1,6 @@
-import { mapBlocksToContents } from '@colanode/client/lib';
-import { LocalMessageNode } from '@colanode/client/types';
-import { NodeRenderer } from '@colanode/ui/editor/renderers/node';
+import { mapBlocksToContents } from '@brainbox/client/lib';
+import { LocalMessageNode } from '@brainbox/client/types';
+import { NodeRenderer } from '@brainbox/ui/editor/renderers/node';
 
 interface MessageContentProps {
   message: LocalMessageNode;

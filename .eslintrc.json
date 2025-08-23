@@ -36,7 +36,7 @@
         ],
         "pathGroups": [
           {
-            "pattern": "@colanode/**",
+            "pattern": "@brainbox/**",
             "group": "internal",
             "position": "after"
           }

@@ -2,21 +2,21 @@ import {
   CreateNodeReference,
   SelectNode,
   SelectNodeReference,
-} from '@colanode/client/databases/workspace';
-import { eventBus } from '@colanode/client/lib/event-bus';
+} from '@brainbox/client/databases/workspace';
+import { eventBus } from '@brainbox/client/lib/event-bus';
 import {
   mapDownload,
   mapNode,
   mapNodeReference,
   mapUpload,
-} from '@colanode/client/lib/mappers';
+} from '@brainbox/client/lib/mappers';
 import {
   applyMentionUpdates,
   checkMentionChanges,
-} from '@colanode/client/lib/mentions';
-import { deleteNodeRelations, fetchNodeTree } from '@colanode/client/lib/utils';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
-import { DownloadStatus } from '@colanode/client/types';
+} from '@brainbox/client/lib/mentions';
+import { deleteNodeRelations, fetchNodeTree } from '@brainbox/client/lib/utils';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
+import { DownloadStatus } from '@brainbox/client/types';
 import {
   generateId,
   IdType,
@@ -31,8 +31,8 @@ import {
   CanCreateNodeContext,
   CanUpdateAttributesContext,
   CanDeleteNodeContext,
-} from '@colanode/core';
-import { decodeState, encodeState, YDoc } from '@colanode/crdt';
+} from '@brainbox/core';
+import { decodeState, encodeState, YDoc } from '@brainbox/crdt';
 
 const UPDATE_RETRIES_LIMIT = 20;
 

@@ -4,9 +4,9 @@ import { GetObjectCommand } from '@aws-sdk/client-s3';
 import { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
 import { z } from 'zod/v4';
 
-import { ApiErrorCode } from '@colanode/core';
-import { s3Client } from '@colanode/server/data/storage';
-import { config } from '@colanode/server/lib/config';
+import { ApiErrorCode } from '@brainbox/core';
+import { s3Client } from '@brainbox/server/data/storage';
+import { config } from '@brainbox/server/lib/config';
 
 export const avatarDownloadRoute: FastifyPluginCallbackZod = (
   instance,

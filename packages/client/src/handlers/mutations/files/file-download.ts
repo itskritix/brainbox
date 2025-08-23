@@ -1,9 +1,9 @@
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { MutationHandler } from '@colanode/client/lib/types';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { MutationHandler } from '@brainbox/client/lib/types';
 import {
   FileDownloadMutationInput,
   FileDownloadMutationOutput,
-} from '@colanode/client/mutations';
+} from '@brainbox/client/mutations';
 
 export class FileDownloadMutationHandler
   extends WorkspaceMutationHandlerBase

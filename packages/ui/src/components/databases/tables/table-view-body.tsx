@@ -1,9 +1,9 @@
 import { InView } from 'react-intersection-observer';
 
-import { TableViewEmptyPlaceholder } from '@colanode/ui/components/databases/tables/table-view-empty-placeholder';
-import { TableViewRow } from '@colanode/ui/components/databases/tables/table-view-row';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { useRecordsQuery } from '@colanode/ui/hooks/use-records-query';
+import { TableViewEmptyPlaceholder } from '@brainbox/ui/components/databases/tables/table-view-empty-placeholder';
+import { TableViewRow } from '@brainbox/ui/components/databases/tables/table-view-row';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { useRecordsQuery } from '@brainbox/ui/hooks/use-records-query';
 
 export const TableViewBody = () => {
   const view = useDatabaseView();

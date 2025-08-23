@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod/v4';
 
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { Button } from '@colanode/ui/components/ui/button';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Form,
   FormControl,
@@ -13,13 +13,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@colanode/ui/components/ui/form';
-import { Input } from '@colanode/ui/components/ui/input';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useAccount } from '@colanode/ui/contexts/account';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
-import { openFileDialog } from '@colanode/ui/lib/files';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/form';
+import { Input } from '@brainbox/ui/components/ui/input';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useAccount } from '@brainbox/ui/contexts/account';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
+import { openFileDialog } from '@brainbox/ui/lib/files';
+import { cn } from '@brainbox/ui/lib/utils';
 
 const formSchema = z.object({
   accountName: z.string().min(3, 'Name must be at least 3 characters long.'),

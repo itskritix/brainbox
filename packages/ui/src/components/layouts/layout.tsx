@@ -1,15 +1,15 @@
 import { Resizable } from 're-resizable';
 
-import { ContainerBlank } from '@colanode/ui/components/layouts/containers/container-blank';
-import { ContainerTabs } from '@colanode/ui/components/layouts/containers/container-tabs';
-import { Sidebar } from '@colanode/ui/components/layouts/sidebars/sidebar';
-import { RightSidebar } from '@colanode/ui/components/layouts/sidebars/right-sidebar';
-import { ServerUpgradeRequired } from '@colanode/ui/components/servers/server-upgrade-required';
-import { LayoutContext } from '@colanode/ui/contexts/layout';
-import { useServer } from '@colanode/ui/contexts/server';
-import { useLayoutState } from '@colanode/ui/hooks/use-layout-state';
-import { useWindowSize } from '@colanode/ui/hooks/use-window-size';
-import { percentToNumber } from '@colanode/ui/lib/utils';
+import { ContainerBlank } from '@brainbox/ui/components/layouts/containers/container-blank';
+import { ContainerTabs } from '@brainbox/ui/components/layouts/containers/container-tabs';
+import { Sidebar } from '@brainbox/ui/components/layouts/sidebars/sidebar';
+import { RightSidebar } from '@brainbox/ui/components/layouts/sidebars/right-sidebar';
+import { ServerUpgradeRequired } from '@brainbox/ui/components/servers/server-upgrade-required';
+import { LayoutContext } from '@brainbox/ui/contexts/layout';
+import { useServer } from '@brainbox/ui/contexts/server';
+import { useLayoutState } from '@brainbox/ui/hooks/use-layout-state';
+import { useWindowSize } from '@brainbox/ui/hooks/use-window-size';
+import { percentToNumber } from '@brainbox/ui/lib/utils';
 
 export const Layout = () => {
   const server = useServer();

@@ -1,24 +1,24 @@
 import { TrashIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import { ServerDetails } from '@colanode/client/types';
-import { formatDate, isColanodeServer, timeAgo } from '@colanode/core';
-import { ServerAvatar } from '@colanode/ui/components/servers/server-avatar';
-import { Badge } from '@colanode/ui/components/ui/badge';
-import { Button } from '@colanode/ui/components/ui/button';
+import { ServerDetails } from '@brainbox/client/types';
+import { formatDate, isColanodeServer, timeAgo } from '@brainbox/core';
+import { ServerAvatar } from '@brainbox/ui/components/servers/server-avatar';
+import { Badge } from '@brainbox/ui/components/ui/badge';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from '@colanode/ui/components/ui/dialog';
+} from '@brainbox/ui/components/ui/dialog';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@colanode/ui/components/ui/tooltip';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/tooltip';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface ServerSettingsDialogProps {
   open: boolean;

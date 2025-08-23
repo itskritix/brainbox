@@ -1,9 +1,9 @@
-import { LocalChatNode } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { UnreadBadge } from '@colanode/ui/components/ui/unread-badge';
-import { useRadar } from '@colanode/ui/contexts/radar';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { LocalChatNode } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { UnreadBadge } from '@brainbox/ui/components/ui/unread-badge';
+import { useRadar } from '@brainbox/ui/contexts/radar';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface ChatContainerTabProps {
   chatId: string;

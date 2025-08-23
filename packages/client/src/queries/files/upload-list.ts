@@ -1,4 +1,4 @@
-import { Upload } from '@colanode/client/types/files';
+import { Upload } from '@brainbox/client/types/files';
 
 export type UploadListQueryInput = {
   type: 'upload.list';
@@ -8,7 +8,7 @@ export type UploadListQueryInput = {
   count: number;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'upload.list': {
       input: UploadListQueryInput;

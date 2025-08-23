@@ -6,15 +6,15 @@ import {
   ApiErrorCode,
   apiErrorOutputSchema,
   loginOutputSchema,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
 import {
   buildLoginSuccessOutput,
   buildLoginVerifyOutput,
   verifyPassword,
-} from '@colanode/server/lib/accounts';
-import { config } from '@colanode/server/lib/config';
-import { isAuthEmailRateLimited } from '@colanode/server/lib/rate-limits';
+} from '@brainbox/server/lib/accounts';
+import { config } from '@brainbox/server/lib/config';
+import { isAuthEmailRateLimited } from '@brainbox/server/lib/rate-limits';
 
 export const emailLoginRoute: FastifyPluginCallbackZod = (
   instance,

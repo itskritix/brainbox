@@ -10,7 +10,7 @@ export type ChannelCreateMutationOutput = {
   id: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'channel.create': {
       input: ChannelCreateMutationInput;

@@ -1,11 +1,11 @@
-import { SelectNode } from '@colanode/client/databases/workspace';
-import { WorkspaceQueryHandlerBase } from '@colanode/client/handlers/queries/workspace-query-handler-base';
-import { mapNode } from '@colanode/client/lib/mappers';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { DatabaseListQueryInput } from '@colanode/client/queries/databases/database-list';
-import { Event } from '@colanode/client/types/events';
-import { LocalDatabaseNode } from '@colanode/client/types/nodes';
-import { compareString } from '@colanode/core';
+import { SelectNode } from '@brainbox/client/databases/workspace';
+import { WorkspaceQueryHandlerBase } from '@brainbox/client/handlers/queries/workspace-query-handler-base';
+import { mapNode } from '@brainbox/client/lib/mappers';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { DatabaseListQueryInput } from '@brainbox/client/queries/databases/database-list';
+import { Event } from '@brainbox/client/types/events';
+import { LocalDatabaseNode } from '@brainbox/client/types/nodes';
+import { compareString } from '@brainbox/core';
 
 export class DatabaseListQueryHandler
   extends WorkspaceQueryHandlerBase

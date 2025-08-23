@@ -12,7 +12,7 @@ export type PageCreateMutationOutput = {
   id: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'page.create': {
       input: PageCreateMutationInput;

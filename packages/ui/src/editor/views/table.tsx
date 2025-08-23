@@ -6,8 +6,8 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from '@colanode/ui/components/ui/tooltip';
-import { defaultClasses } from '@colanode/ui/editor/classes';
+} from '@brainbox/ui/components/ui/tooltip';
+import { defaultClasses } from '@brainbox/ui/editor/classes';
 
 export const TableNodeView = ({ editor, getPos }: NodeViewProps) => {
   const [isSideHovered, setIsSideHovered] = useState(false);

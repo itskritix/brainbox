@@ -3,7 +3,7 @@ import { z } from 'zod/v4';
 import {
   SynchronizerInput,
   SynchronizerMap,
-} from '@colanode/core/synchronizers';
+} from '@brainbox/core/synchronizers';
 
 export const socketInitOutputSchema = z.object({
   id: z.string(),

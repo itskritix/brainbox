@@ -1,8 +1,8 @@
-import { LocalDatabaseNode } from '@colanode/client/types';
-import { NodeRole } from '@colanode/core';
-import { Database } from '@colanode/ui/components/databases/database';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { LocalDatabaseNode } from '@brainbox/client/types';
+import { NodeRole } from '@brainbox/core';
+import { Database } from '@brainbox/ui/components/databases/database';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface RecordDatabaseProps {
   id: string;

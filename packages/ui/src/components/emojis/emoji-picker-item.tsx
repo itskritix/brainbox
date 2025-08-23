@@ -1,6 +1,6 @@
-import { Emoji } from '@colanode/client/types';
-import { EmojiElement } from '@colanode/ui/components/emojis/emoji-element';
-import { useEmojiPicker } from '@colanode/ui/contexts/emoji-picker';
+import { Emoji } from '@brainbox/client/types';
+import { EmojiElement } from '@brainbox/ui/components/emojis/emoji-element';
+import { useEmojiPicker } from '@brainbox/ui/contexts/emoji-picker';
 
 interface EmojiPickerItemProps {
   emoji: Emoji;

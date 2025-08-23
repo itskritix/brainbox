@@ -5,9 +5,9 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod/v4';
 
-import { WorkspaceStorageUser } from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { Button } from '@colanode/ui/components/ui/button';
+import { WorkspaceStorageUser } from '@brainbox/core';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -15,13 +15,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@colanode/ui/components/ui/dialog';
+} from '@brainbox/ui/components/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
+} from '@brainbox/ui/components/ui/dropdown-menu';
 import {
   Form,
   FormControl,
@@ -29,12 +29,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@colanode/ui/components/ui/form';
-import { Input } from '@colanode/ui/components/ui/input';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
-import { useQuery } from '@colanode/ui/hooks/use-query';
+} from '@brainbox/ui/components/ui/form';
+import { Input } from '@brainbox/ui/components/ui/input';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
+import { useQuery } from '@brainbox/ui/hooks/use-query';
 
 const UNITS = [
   { label: 'TB', value: 'TB', bytes: 1024 ** 4 },

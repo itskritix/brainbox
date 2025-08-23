@@ -9,7 +9,7 @@ export type NodeInteractionOpenedMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'node.interaction.opened': {
       input: NodeInteractionOpenedMutationInput;

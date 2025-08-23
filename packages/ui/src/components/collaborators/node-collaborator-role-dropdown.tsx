@@ -1,12 +1,12 @@
 import { Check, ChevronDown } from 'lucide-react';
 
-import { NodeRole } from '@colanode/core';
+import { NodeRole } from '@brainbox/core';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
+} from '@brainbox/ui/components/ui/dropdown-menu';
 
 interface NodeCollaboratorRole {
   name: string;

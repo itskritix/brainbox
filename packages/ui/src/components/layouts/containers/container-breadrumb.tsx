@@ -1,21 +1,21 @@
 import { Fragment } from 'react';
 
-import { LocalNode } from '@colanode/client/types';
-import { ContainerBreadcrumbItem } from '@colanode/ui/components/layouts/containers/container-breadcrumb-item';
+import { LocalNode } from '@brainbox/client/types';
+import { ContainerBreadcrumbItem } from '@brainbox/ui/components/layouts/containers/container-breadcrumb-item';
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbSeparator,
-} from '@colanode/ui/components/ui/breadcrumb';
+} from '@brainbox/ui/components/ui/breadcrumb';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
-import { useLayout } from '@colanode/ui/contexts/layout';
+} from '@brainbox/ui/components/ui/dropdown-menu';
+import { useLayout } from '@brainbox/ui/contexts/layout';
 
 interface ContainerBreadcrumbProps {
   breadcrumb: LocalNode[];

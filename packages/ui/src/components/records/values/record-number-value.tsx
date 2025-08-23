@@ -1,6 +1,6 @@
-import { type NumberFieldAttributes } from '@colanode/core';
-import { SmartNumberInput } from '@colanode/ui/components/ui/smart-number-input';
-import { useRecord } from '@colanode/ui/contexts/record';
+import { type NumberFieldAttributes } from '@brainbox/core';
+import { SmartNumberInput } from '@brainbox/ui/components/ui/smart-number-input';
+import { useRecord } from '@brainbox/ui/contexts/record';
 
 interface RecordNumberValueProps {
   field: NumberFieldAttributes;

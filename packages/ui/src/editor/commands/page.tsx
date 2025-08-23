@@ -1,6 +1,6 @@
 import { FileText } from 'lucide-react';
 
-import { EditorCommand } from '@colanode/client/types';
+import { EditorCommand } from '@brainbox/client/types';
 
 export const PageCommand: EditorCommand = {
   key: 'page',
@@ -15,7 +15,7 @@ export const PageCommand: EditorCommand = {
     }
 
     const { accountId, workspaceId, documentId } = context;
-    const output = await window.colanode.executeMutation({
+    const output = await window.brainbox.executeMutation({
       type: 'page.create',
       name: 'Untitled',
       accountId,

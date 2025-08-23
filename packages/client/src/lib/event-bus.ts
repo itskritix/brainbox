@@ -1,4 +1,4 @@
-import { Event } from '@colanode/client/types/events';
+import { Event } from '@brainbox/client/types/events';
 
 export interface Subscription {
   id: string;

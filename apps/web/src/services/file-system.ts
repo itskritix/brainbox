@@ -1,4 +1,4 @@
-import { FileReadStream, FileSystem } from '@colanode/client/services';
+import { FileReadStream, FileSystem } from '@brainbox/client/services';
 
 export class WebFileSystem implements FileSystem {
   private root: FileSystemDirectoryHandle | null = null;

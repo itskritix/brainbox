@@ -1,6 +1,6 @@
 import { Database } from 'lucide-react';
 
-import { EditorCommand } from '@colanode/client/types';
+import { EditorCommand } from '@brainbox/client/types';
 
 export const DatabaseCommand: EditorCommand = {
   key: 'database',
@@ -15,7 +15,7 @@ export const DatabaseCommand: EditorCommand = {
     }
 
     const { accountId, workspaceId, documentId } = context;
-    const output = await window.colanode.executeMutation({
+    const output = await window.brainbox.executeMutation({
       type: 'database.create',
       name: 'Untitled',
       accountId,

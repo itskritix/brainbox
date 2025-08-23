@@ -1,5 +1,5 @@
-import { LocalFileNode } from '@colanode/client/types';
-import { FileThumbnail } from '@colanode/ui/components/files/file-thumbnail';
+import { LocalFileNode } from '@brainbox/client/types';
+import { FileThumbnail } from '@brainbox/ui/components/files/file-thumbnail';
 
 interface FileBreadcrumbItemProps {
   file: LocalFileNode;

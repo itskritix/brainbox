@@ -9,7 +9,7 @@ export type PageDeleteMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'page.delete': {
       input: PageDeleteMutationInput;

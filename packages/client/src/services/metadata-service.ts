@@ -1,12 +1,12 @@
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { mapAppMetadata } from '@colanode/client/lib/mappers';
-import { AppService } from '@colanode/client/services/app-service';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { mapAppMetadata } from '@brainbox/client/lib/mappers';
+import { AppService } from '@brainbox/client/services/app-service';
 import {
   AppMetadata,
   AppMetadataKey,
   AppMetadataMap,
-} from '@colanode/client/types/apps';
-import { createDebugger } from '@colanode/core';
+} from '@brainbox/client/types/apps';
+import { createDebugger } from '@brainbox/core';
 
 const debug = createDebugger('desktop:service:metadata');
 

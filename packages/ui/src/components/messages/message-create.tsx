@@ -9,24 +9,24 @@ import {
 } from 'react';
 import { toast } from 'sonner';
 
-import { editorHasContent } from '@colanode/client/lib';
-import { LocalMessageNode } from '@colanode/client/types';
+import { editorHasContent } from '@brainbox/client/lib';
+import { LocalMessageNode } from '@brainbox/client/types';
 import {
   MessageEditor,
   MessageEditorRefProps,
-} from '@colanode/ui/components/messages/message-editor';
-import { MessageReplyBanner } from '@colanode/ui/components/messages/message-reply-banner';
+} from '@brainbox/ui/components/messages/message-editor';
+import { MessageReplyBanner } from '@brainbox/ui/components/messages/message-reply-banner';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useConversation } from '@colanode/ui/contexts/conversation';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
-import { openFileDialog } from '@colanode/ui/lib/files';
+} from '@brainbox/ui/components/ui/dropdown-menu';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useConversation } from '@brainbox/ui/contexts/conversation';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
+import { openFileDialog } from '@brainbox/ui/lib/files';
 
 export interface MessageCreateRefProps {
   setReplyTo: (replyTo: LocalMessageNode) => void;

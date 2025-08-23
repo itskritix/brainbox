@@ -1,7 +1,7 @@
 import { type NodeViewProps } from '@tiptap/core';
 import { NodeViewWrapper } from '@tiptap/react';
 
-import { FileBlock } from '@colanode/ui/components/files/file-block';
+import { FileBlock } from '@brainbox/ui/components/files/file-block';
 
 export const FileNodeView = ({ node }: NodeViewProps) => {
   const id = node.attrs.id;

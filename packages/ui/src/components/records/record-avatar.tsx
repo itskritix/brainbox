@@ -1,11 +1,11 @@
 import { toast } from 'sonner';
 
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { AvatarPopover } from '@colanode/ui/components/avatars/avatar-popover';
-import { Button } from '@colanode/ui/components/ui/button';
-import { useRecord } from '@colanode/ui/contexts/record';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { AvatarPopover } from '@brainbox/ui/components/avatars/avatar-popover';
+import { Button } from '@brainbox/ui/components/ui/button';
+import { useRecord } from '@brainbox/ui/contexts/record';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 export const RecordAvatar = () => {
   const workspace = useWorkspace();

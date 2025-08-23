@@ -1,8 +1,8 @@
-import { FieldAttributes } from '@colanode/core';
-import { BoardViewColumnsCollaborator } from '@colanode/ui/components/databases/boards/board-view-columns-collaborator';
-import { BoardViewColumnsCreatedBy } from '@colanode/ui/components/databases/boards/board-view-columns-created-by';
-import { BoardViewColumnsMultiSelect } from '@colanode/ui/components/databases/boards/board-view-columns-multi-select';
-import { BoardViewColumnsSelect } from '@colanode/ui/components/databases/boards/board-view-columns-select';
+import { FieldAttributes } from '@brainbox/core';
+import { BoardViewColumnsCollaborator } from '@brainbox/ui/components/databases/boards/board-view-columns-collaborator';
+import { BoardViewColumnsCreatedBy } from '@brainbox/ui/components/databases/boards/board-view-columns-created-by';
+import { BoardViewColumnsMultiSelect } from '@brainbox/ui/components/databases/boards/board-view-columns-multi-select';
+import { BoardViewColumnsSelect } from '@brainbox/ui/components/databases/boards/board-view-columns-select';
 
 interface BoardViewColumnsProps {
   field: FieldAttributes;

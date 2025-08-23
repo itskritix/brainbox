@@ -2,15 +2,15 @@ import {
   SelectAccountMetadata,
   SelectAvatar,
   SelectWorkspace,
-} from '@colanode/client/databases/account';
+} from '@brainbox/client/databases/account';
 import {
   SelectAccount,
   SelectAppMetadata,
   SelectServer,
   SelectTempFile,
-} from '@colanode/client/databases/app';
-import { SelectEmoji } from '@colanode/client/databases/emojis';
-import { SelectIcon } from '@colanode/client/databases/icons';
+} from '@brainbox/client/databases/app';
+import { SelectEmoji } from '@brainbox/client/databases/emojis';
+import { SelectIcon } from '@brainbox/client/databases/icons';
 import {
   SelectMutation,
   SelectNode,
@@ -25,41 +25,41 @@ import {
   SelectLocalFile,
   SelectDownload,
   SelectUpload,
-} from '@colanode/client/databases/workspace';
+} from '@brainbox/client/databases/workspace';
 import {
   Account,
   AccountMetadata,
   AccountMetadataKey,
-} from '@colanode/client/types/accounts';
-import { AppMetadata, AppMetadataKey } from '@colanode/client/types/apps';
-import { Avatar } from '@colanode/client/types/avatars';
+} from '@brainbox/client/types/accounts';
+import { AppMetadata, AppMetadataKey } from '@brainbox/client/types/apps';
+import { Avatar } from '@brainbox/client/types/avatars';
 import {
   Document,
   DocumentState,
   DocumentUpdate,
-} from '@colanode/client/types/documents';
-import { Emoji } from '@colanode/client/types/emojis';
+} from '@brainbox/client/types/documents';
+import { Emoji } from '@brainbox/client/types/emojis';
 import {
   LocalFile,
   Download,
   Upload,
   TempFile,
-} from '@colanode/client/types/files';
-import { Icon } from '@colanode/client/types/icons';
+} from '@brainbox/client/types/files';
+import { Icon } from '@brainbox/client/types/icons';
 import {
   LocalNode,
   NodeInteraction,
   NodeReaction,
   NodeReference,
-} from '@colanode/client/types/nodes';
-import { Server } from '@colanode/client/types/servers';
-import { User } from '@colanode/client/types/users';
+} from '@brainbox/client/types/nodes';
+import { Server } from '@brainbox/client/types/servers';
+import { User } from '@brainbox/client/types/users';
 import {
   Workspace,
   WorkspaceMetadata,
   WorkspaceMetadataKey,
-} from '@colanode/client/types/workspaces';
-import { Mutation } from '@colanode/core';
+} from '@brainbox/client/types/workspaces';
+import { Mutation } from '@brainbox/core';
 
 export const mapUser = (row: SelectUser): User => {
   return {

@@ -1,4 +1,4 @@
-import { FileSubtype } from '@colanode/core';
+import { FileSubtype } from '@brainbox/core';
 
 export type UserStorageGetQueryInput = {
   type: 'user.storage.get';
@@ -15,7 +15,7 @@ export type UserStorageGetQueryOutput = {
   }[];
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'user.storage.get': {
       input: UserStorageGetQueryInput;

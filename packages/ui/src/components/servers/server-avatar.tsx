@@ -1,5 +1,5 @@
-import { getColorForId } from '@colanode/ui/lib/avatars';
-import { cn } from '@colanode/ui/lib/utils';
+import { getColorForId } from '@brainbox/ui/lib/avatars';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface ServerAvatarProps {
   url: string | null;

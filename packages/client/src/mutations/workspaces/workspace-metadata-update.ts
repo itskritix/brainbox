@@ -1,7 +1,7 @@
 import {
   WorkspaceMetadataMap,
   WorkspaceMetadataKey,
-} from '@colanode/client/types/workspaces';
+} from '@brainbox/client/types/workspaces';
 
 export type WorkspaceMetadataUpdateMutationInput = {
   type: 'workspace.metadata.update';
@@ -15,7 +15,7 @@ export type WorkspaceMetadataUpdateMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'workspace.metadata.update': {
       input: WorkspaceMetadataUpdateMutationInput;

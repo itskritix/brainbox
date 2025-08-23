@@ -7,10 +7,10 @@ export const MobileNotSupported = () => {
         <Smartphone className="h-10 w-10 text-gray-800" />
         <h2 className="text-4xl text-gray-800">Mobile not supported</h2>
         <p className="text-sm text-gray-500">
-          Hey there! Thanks for checking out Colanode.
+          Hey there! Thanks for checking out Brainbox.
         </p>
         <p className="text-sm text-gray-500">
-          Right now, Colanode is not quite ready for mobile devices just yet.
+          Right now, Brainbox is not quite ready for mobile devices just yet.
           For the best experience, please hop onto a desktop or laptop. We're
           working hard to bring you an awesome mobile experience soon.
         </p>

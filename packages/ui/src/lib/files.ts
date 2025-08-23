@@ -1,5 +1,5 @@
-import { TempFile } from '@colanode/client/types';
-import { FileSubtype } from '@colanode/core';
+import { TempFile } from '@brainbox/client/types';
+import { FileSubtype } from '@brainbox/core';
 
 export interface FileDialogOptions {
   accept?: string;
@@ -57,7 +57,7 @@ export const openFileDialog = (
       try {
         const files = Array.from(input.files);
         const fileNames = await Promise.all(
-          files.map((file) => window.colanode.saveTempFile(file))
+          files.map((file) => window.brainbox.saveTempFile(file))
         );
         resolve({ type: 'success', files: fileNames });
       } catch (error) {

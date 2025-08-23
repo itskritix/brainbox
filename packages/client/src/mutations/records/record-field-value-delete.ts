@@ -10,7 +10,7 @@ export type RecordFieldValueDeleteMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'record.field.value.delete': {
       input: RecordFieldValueDeleteMutationInput;

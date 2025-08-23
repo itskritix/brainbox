@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { match } from 'ts-pattern';
 
-import { LocalDatabaseViewNode, ViewField } from '@colanode/client/types';
+import { LocalDatabaseViewNode, ViewField } from '@brainbox/client/types';
 import {
   compareString,
   SortDirection,
@@ -10,14 +10,14 @@ import {
   DatabaseViewFilterAttributes,
   DatabaseViewSortAttributes,
   SpecialId,
-} from '@colanode/core';
-import { BoardView } from '@colanode/ui/components/databases/boards/board-view';
-import { CalendarView } from '@colanode/ui/components/databases/calendars/calendar-view';
-import { TableView } from '@colanode/ui/components/databases/tables/table-view';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { DatabaseViewContext } from '@colanode/ui/contexts/database-view';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
+} from '@brainbox/core';
+import { BoardView } from '@brainbox/ui/components/databases/boards/board-view';
+import { CalendarView } from '@brainbox/ui/components/databases/calendars/calendar-view';
+import { TableView } from '@brainbox/ui/components/databases/tables/table-view';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { DatabaseViewContext } from '@brainbox/ui/contexts/database-view';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
 import {
   generateFieldValuesFromFilters,
   generateViewFieldIndex,
@@ -25,7 +25,7 @@ import {
   getDefaultNameWidth,
   getDefaultViewFieldDisplay,
   getFieldFilterOperators,
-} from '@colanode/ui/lib/databases';
+} from '@brainbox/ui/lib/databases';
 
 interface ViewProps {
   view: LocalDatabaseViewNode;
@@ -76,7 +76,7 @@ export const View = ({ view }: ViewProps) => {
           const viewAttributes = { ...view.attributes };
           viewAttributes.name = name;
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -94,7 +94,7 @@ export const View = ({ view }: ViewProps) => {
           const viewAttributes = { ...view.attributes };
           viewAttributes.avatar = avatar;
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -123,7 +123,7 @@ export const View = ({ view }: ViewProps) => {
             viewAttributes.fields[id].display = display;
           }
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -156,7 +156,7 @@ export const View = ({ view }: ViewProps) => {
             viewAttributes.fields[id].width = width;
           }
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -180,7 +180,7 @@ export const View = ({ view }: ViewProps) => {
           const viewAttributes = { ...view.attributes };
           viewAttributes.nameWidth = width;
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -200,7 +200,7 @@ export const View = ({ view }: ViewProps) => {
           const viewAttributes = { ...view.attributes };
           viewAttributes.groupBy = fieldId;
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -238,7 +238,7 @@ export const View = ({ view }: ViewProps) => {
             viewAttributes.fields[id].index = newIndex;
           }
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -292,7 +292,7 @@ export const View = ({ view }: ViewProps) => {
             viewAttributes.filters[fieldId] = filter;
           }
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -322,7 +322,7 @@ export const View = ({ view }: ViewProps) => {
           viewAttributes.filters = viewAttributes.filters ?? {};
           viewAttributes.filters[id] = filter;
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -349,7 +349,7 @@ export const View = ({ view }: ViewProps) => {
           viewAttributes.filters = viewAttributes.filters ?? {};
           delete viewAttributes.filters[id];
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -399,7 +399,7 @@ export const View = ({ view }: ViewProps) => {
             viewAttributes.sorts[fieldId] = sort;
           }
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -427,7 +427,7 @@ export const View = ({ view }: ViewProps) => {
           viewAttributes.sorts = viewAttributes.sorts ?? {};
           viewAttributes.sorts[id] = sort;
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -455,7 +455,7 @@ export const View = ({ view }: ViewProps) => {
           viewAttributes.sorts = viewAttributes.sorts ?? {};
           delete viewAttributes.sorts[id];
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'view.update',
             accountId: workspace.accountId,
             workspaceId: workspace.id,
@@ -500,7 +500,7 @@ export const View = ({ view }: ViewProps) => {
             workspace.userId
           );
 
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'record.create',
             databaseId: database.id,
             accountId: workspace.accountId,

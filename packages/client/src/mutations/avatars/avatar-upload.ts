@@ -1,4 +1,4 @@
-import { TempFile } from '@colanode/client/types';
+import { TempFile } from '@brainbox/client/types';
 
 export type AvatarUploadMutationInput = {
   type: 'avatar.upload';
@@ -10,7 +10,7 @@ export type AvatarUploadMutationOutput = {
   id: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'avatar.upload': {
       input: AvatarUploadMutationInput;

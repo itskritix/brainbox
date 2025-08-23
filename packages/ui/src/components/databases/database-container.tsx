@@ -1,17 +1,17 @@
-import { LocalDatabaseNode } from '@colanode/client/types';
-import { Database } from '@colanode/ui/components/databases/database';
-import { DatabaseNotFound } from '@colanode/ui/components/databases/database-not-found';
-import { DatabaseSettings } from '@colanode/ui/components/databases/database-settings';
-import { DatabaseViews } from '@colanode/ui/components/databases/database-views';
-import { ContainerBreadcrumb } from '@colanode/ui/components/layouts/containers/container-breadrumb';
+import { LocalDatabaseNode } from '@brainbox/client/types';
+import { Database } from '@brainbox/ui/components/databases/database';
+import { DatabaseNotFound } from '@brainbox/ui/components/databases/database-not-found';
+import { DatabaseSettings } from '@brainbox/ui/components/databases/database-settings';
+import { DatabaseViews } from '@brainbox/ui/components/databases/database-views';
+import { ContainerBreadcrumb } from '@brainbox/ui/components/layouts/containers/container-breadrumb';
 import {
   Container,
   ContainerBody,
   ContainerHeader,
   ContainerSettings,
-} from '@colanode/ui/components/ui/container';
-import { useNodeContainer } from '@colanode/ui/hooks/use-node-container';
-import { useNodeRadar } from '@colanode/ui/hooks/use-node-radar';
+} from '@brainbox/ui/components/ui/container';
+import { useNodeContainer } from '@brainbox/ui/hooks/use-node-container';
+import { useNodeRadar } from '@brainbox/ui/hooks/use-node-radar';
 
 interface DatabaseContainerProps {
   databaseId: string;

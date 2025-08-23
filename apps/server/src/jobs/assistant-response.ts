@@ -4,14 +4,14 @@ import {
   generateFractionalIndex,
   getNodeModel,
   MessageAttributes,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { SelectNode } from '@colanode/server/data/schema';
-import { JobHandler } from '@colanode/server/jobs';
-import { runAssistantResponseChain } from '@colanode/server/lib/ai/assistants';
-import { config } from '@colanode/server/lib/config';
-import { fetchNode, createNode } from '@colanode/server/lib/nodes';
-import { Citation } from '@colanode/server/types/assistant';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { SelectNode } from '@brainbox/server/data/schema';
+import { JobHandler } from '@brainbox/server/jobs';
+import { runAssistantResponseChain } from '@brainbox/server/lib/ai/assistants';
+import { config } from '@brainbox/server/lib/config';
+import { fetchNode, createNode } from '@brainbox/server/lib/nodes';
+import { Citation } from '@brainbox/server/types/assistant';
 
 export type AssistantRespondInput = {
   type: 'assistant.respond';
@@ -20,7 +20,7 @@ export type AssistantRespondInput = {
   selectedContextNodeIds?: string[];
 };
 
-declare module '@colanode/server/jobs' {
+declare module '@brainbox/server/jobs' {
   interface JobMap {
     'assistant.respond': {
       input: AssistantRespondInput;

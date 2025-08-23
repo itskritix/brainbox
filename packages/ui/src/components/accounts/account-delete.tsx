@@ -1,4 +1,4 @@
-import { Button } from '@colanode/ui/components/ui/button';
+import { Button } from '@brainbox/ui/components/ui/button';
 
 export const AccountDelete = () => {
   return (

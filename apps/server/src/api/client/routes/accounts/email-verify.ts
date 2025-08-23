@@ -6,12 +6,12 @@ import {
   apiErrorOutputSchema,
   emailVerifyInputSchema,
   loginOutputSchema,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
 import {
   buildLoginSuccessOutput,
   verifyOtpCode,
-} from '@colanode/server/lib/accounts';
+} from '@brainbox/server/lib/accounts';
 
 export const emailVerifyRoute: FastifyPluginCallbackZod = (
   instance,

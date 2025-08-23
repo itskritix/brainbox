@@ -1,11 +1,11 @@
 import { Copy, Image, LetterText, Settings, Trash2 } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { LocalPageNode } from '@colanode/client/types';
-import { NodeRole, hasNodeRole } from '@colanode/core';
-import { NodeCollaboratorAudit } from '@colanode/ui/components/collaborators/node-collaborator-audit';
-import { PageDeleteDialog } from '@colanode/ui/components/pages/page-delete-dialog';
-import { PageUpdateDialog } from '@colanode/ui/components/pages/page-update-dialog';
+import { LocalPageNode } from '@brainbox/client/types';
+import { NodeRole, hasNodeRole } from '@brainbox/core';
+import { NodeCollaboratorAudit } from '@brainbox/ui/components/collaborators/node-collaborator-audit';
+import { PageDeleteDialog } from '@brainbox/ui/components/pages/page-delete-dialog';
+import { PageUpdateDialog } from '@brainbox/ui/components/pages/page-update-dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +13,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
+} from '@brainbox/ui/components/ui/dropdown-menu';
 
 interface PageSettingsProps {
   page: LocalPageNode;

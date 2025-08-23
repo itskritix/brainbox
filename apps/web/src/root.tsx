@@ -3,7 +3,7 @@ import '../../../packages/ui/src/styles/globals.css';
 
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
-import { RootProvider } from '@colanode/ui';
+import { RootProvider } from '@brainbox/ui';
 
 export const Root = () => {
   useRegisterSW({

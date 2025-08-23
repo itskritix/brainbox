@@ -3,18 +3,18 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
 
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { AvatarPopover } from '@colanode/ui/components/avatars/avatar-popover';
-import { Button } from '@colanode/ui/components/ui/button';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { AvatarPopover } from '@brainbox/ui/components/avatars/avatar-popover';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from '@colanode/ui/components/ui/form';
-import { Input } from '@colanode/ui/components/ui/input';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
+} from '@brainbox/ui/components/ui/form';
+import { Input } from '@brainbox/ui/components/ui/input';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
 
 const formSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters long.'),

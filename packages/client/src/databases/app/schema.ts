@@ -1,7 +1,7 @@
 import { ColumnType, Insertable, Selectable, Updateable } from 'kysely';
 
-import { JobScheduleStatus, JobStatus } from '@colanode/client/jobs';
-import { FileSubtype } from '@colanode/core';
+import { JobScheduleStatus, JobStatus } from '@brainbox/client/jobs';
+import { FileSubtype } from '@brainbox/core';
 
 interface ServerTable {
   domain: ColumnType<string, string, never>;

@@ -6,9 +6,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@colanode/ui/components/ui/alert-dialog';
-import { Button } from '@colanode/ui/components/ui/button';
-import { useDatabase } from '@colanode/ui/contexts/database';
+} from '@brainbox/ui/components/ui/alert-dialog';
+import { Button } from '@brainbox/ui/components/ui/button';
+import { useDatabase } from '@brainbox/ui/contexts/database';
 
 interface SelectOptionDeleteDialogProps {
   fieldId: string;

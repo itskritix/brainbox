@@ -6,10 +6,10 @@ import {
   DatabaseAttributes,
   getNodeModel,
   RecordAttributes,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { SelectNode } from '@colanode/server/data/schema';
-import { retrieveDocuments } from '@colanode/server/lib/ai/document-retrievals';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { SelectNode } from '@brainbox/server/data/schema';
+import { retrieveDocuments } from '@brainbox/server/lib/ai/document-retrievals';
 import {
   rewriteQuery,
   assessUserIntent,
@@ -17,18 +17,18 @@ import {
   rerankDocuments,
   generateFinalAnswer,
   generateDatabaseFilters,
-} from '@colanode/server/lib/ai/llms';
-import { fetchMetadataForContextItems } from '@colanode/server/lib/ai/metadata';
-import { retrieveNodes } from '@colanode/server/lib/ai/node-retrievals';
+} from '@brainbox/server/lib/ai/llms';
+import { fetchMetadataForContextItems } from '@brainbox/server/lib/ai/metadata';
+import { retrieveNodes } from '@brainbox/server/lib/ai/node-retrievals';
 import {
   formatChatHistory,
   formatContextDocuments,
   selectTopContext,
   formatMetadataForPrompt,
-} from '@colanode/server/lib/ai/utils';
-import { config } from '@colanode/server/lib/config';
-import { fetchNode, fetchNodeDescendants } from '@colanode/server/lib/nodes';
-import { retrieveByFilters } from '@colanode/server/lib/records';
+} from '@brainbox/server/lib/ai/utils';
+import { config } from '@brainbox/server/lib/config';
+import { fetchNode, fetchNodeDescendants } from '@brainbox/server/lib/nodes';
+import { retrieveByFilters } from '@brainbox/server/lib/records';
 import {
   AssistantChainState,
   ResponseState,
@@ -36,7 +36,7 @@ import {
   DatabaseContextItem,
   AssistantResponse,
   AssistantInput,
-} from '@colanode/server/types/assistant';
+} from '@brainbox/server/types/assistant';
 
 const generateRewrittenQuery = async (state: AssistantChainState) => {
   const rewrittenQuery = await rewriteQuery(state.userInput);
@@ -144,7 +144,7 @@ const fetchChatHistory = async (state: AssistantChainState) => {
         type: 'message',
         createdAt: message.created_at,
         author: message.created_by,
-        authorName: isAI ? 'Colanode AI' : 'User',
+        authorName: isAI ? 'Brainbox AI' : 'User',
       },
     });
   });

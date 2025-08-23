@@ -1,4 +1,4 @@
-import { cn } from '@colanode/ui/lib/utils';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface MarkButtonProps {
   isActive: boolean;

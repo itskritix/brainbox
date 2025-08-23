@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import { useDrop } from 'react-dnd';
 
-import { BoardViewColumnRecords } from '@colanode/ui/components/databases/boards/board-view-column-records';
-import { useBoardView } from '@colanode/ui/contexts/board-view';
-import { cn } from '@colanode/ui/lib/utils';
+import { BoardViewColumnRecords } from '@brainbox/ui/components/databases/boards/board-view-column-records';
+import { useBoardView } from '@brainbox/ui/contexts/board-view';
+import { cn } from '@brainbox/ui/lib/utils';
 
 export const BoardViewColumn = () => {
   const boardView = useBoardView();

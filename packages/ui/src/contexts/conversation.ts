@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
-import { LocalMessageNode } from '@colanode/client/types';
-import { NodeRole } from '@colanode/core';
+import { LocalMessageNode } from '@brainbox/client/types';
+import { NodeRole } from '@brainbox/core';
 
 interface ConversationContext {
   id: string;

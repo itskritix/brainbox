@@ -6,22 +6,22 @@ import semver from 'semver';
 import {
   AppDatabaseSchema,
   appDatabaseMigrations,
-} from '@colanode/client/databases/app';
-import { Mediator } from '@colanode/client/handlers';
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { mapServer, mapAccount } from '@colanode/client/lib/mappers';
-import { AccountService } from '@colanode/client/services/accounts/account-service';
-import { AppMeta } from '@colanode/client/services/app-meta';
-import { AssetService } from '@colanode/client/services/asset-service';
-import { FileSystem } from '@colanode/client/services/file-system';
-import { JobService } from '@colanode/client/services/job-service';
-import { KyselyService } from '@colanode/client/services/kysely-service';
-import { MetadataService } from '@colanode/client/services/metadata-service';
-import { PathService } from '@colanode/client/services/path-service';
-import { ServerService } from '@colanode/client/services/server-service';
-import { Account } from '@colanode/client/types/accounts';
-import { Server, ServerAttributes } from '@colanode/client/types/servers';
-import { ApiHeader, build, createDebugger } from '@colanode/core';
+} from '@brainbox/client/databases/app';
+import { Mediator } from '@brainbox/client/handlers';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { mapServer, mapAccount } from '@brainbox/client/lib/mappers';
+import { AccountService } from '@brainbox/client/services/accounts/account-service';
+import { AppMeta } from '@brainbox/client/services/app-meta';
+import { AssetService } from '@brainbox/client/services/asset-service';
+import { FileSystem } from '@brainbox/client/services/file-system';
+import { JobService } from '@brainbox/client/services/job-service';
+import { KyselyService } from '@brainbox/client/services/kysely-service';
+import { MetadataService } from '@brainbox/client/services/metadata-service';
+import { PathService } from '@brainbox/client/services/path-service';
+import { ServerService } from '@brainbox/client/services/server-service';
+import { Account } from '@brainbox/client/types/accounts';
+import { Server, ServerAttributes } from '@brainbox/client/types/servers';
+import { ApiHeader, build, createDebugger } from '@brainbox/core';
 
 const debug = createDebugger('desktop:service:app');
 

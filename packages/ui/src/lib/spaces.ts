@@ -1,5 +1,5 @@
-import { LocalNode, LocalSpaceNode } from '@colanode/client/types';
-import { compareString, generateFractionalIndex } from '@colanode/core';
+import { LocalNode, LocalSpaceNode } from '@brainbox/client/types';
+import { compareString, generateFractionalIndex } from '@brainbox/core';
 
 export const sortSpaceChildren = (
   space: LocalSpaceNode,

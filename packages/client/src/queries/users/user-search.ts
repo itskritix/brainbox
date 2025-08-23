@@ -1,4 +1,4 @@
-import { User } from '@colanode/client/types/users';
+import { User } from '@brainbox/client/types/users';
 
 export type UserSearchQueryInput = {
   type: 'user.search';
@@ -8,7 +8,7 @@ export type UserSearchQueryInput = {
   exclude?: string[];
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'user.search': {
       input: UserSearchQueryInput;

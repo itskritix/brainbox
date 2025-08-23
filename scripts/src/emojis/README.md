@@ -1,6 +1,6 @@
-# Colanode emoji generator script
+# Brainbox emoji generator script
 
-This directory contains a script that automatically downloads, processes, and packages emoji metadata and SVG files for **Colanode**. These emojis can then be used across the Colanode platform in two primary ways:
+This directory contains a script that automatically downloads, processes, and packages emoji metadata and SVG files for **Brainbox**. These emojis can then be used across the Brainbox platform in two primary ways:
 
 1. **Reactions to Messages** – Users can react to messages in chats or channels with these emojis.
 2. **Icons** – Users can assign emojis as icons for their entries: channels, pages, databases, records, folders, etc.
@@ -51,7 +51,7 @@ By consolidating emojis from [Emoji Mart](https://github.com/missive/emoji-mart)
 
    **Additional Processing**:
 
-   - Merges any existing data so as not to overwrite or lose previously assigned IDs. This ensures emojis already in use retain consistent IDs in the Colanode app.
+   - Merges any existing data so as not to overwrite or lose previously assigned IDs. This ensures emojis already in use retain consistent IDs in the Brainbox app.
    - Maintains a full-text search (`emoji_search`) table for easy querying by name or tags.
 
 4. **Cleanup**
@@ -80,7 +80,7 @@ Once the script completes, you'll have:
 
 ## Notes on Licensing
 
-While **Colanode** is open source under its own [license terms](../../../LICENSE) (in the root of the monorepo), the emojis retrieved from **Emoji Mart** and **Twemoji** are subject to their respective licenses. Please review their repositories for details:
+While **Brainbox** is open source under its own [license terms](../../../LICENSE) (in the root of the monorepo), the emojis retrieved from **Emoji Mart** and **Twemoji** are subject to their respective licenses. Please review their repositories for details:
 
 - [missive/emoji-mart](https://github.com/missive/emoji-mart)
 - [jdecked/twemoji (originally Twitter's Twemoji)](https://github.com/jdecked/twemoji)

@@ -1,18 +1,18 @@
 import { Folder } from 'lucide-react';
 
-import { LocalFileNode, Download } from '@colanode/client/types';
-import { formatBytes, timeAgo } from '@colanode/core';
-import { FileIcon } from '@colanode/ui/components/files/file-icon';
-import { FileThumbnail } from '@colanode/ui/components/files/file-thumbnail';
+import { LocalFileNode, Download } from '@brainbox/client/types';
+import { formatBytes, timeAgo } from '@brainbox/core';
+import { FileIcon } from '@brainbox/ui/components/files/file-icon';
+import { FileThumbnail } from '@brainbox/ui/components/files/file-thumbnail';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@colanode/ui/components/ui/tooltip';
-import { WorkspaceDownloadStatus } from '@colanode/ui/components/workspaces/downloads/workspace-download-status';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+} from '@brainbox/ui/components/ui/tooltip';
+import { WorkspaceDownloadStatus } from '@brainbox/ui/components/workspaces/downloads/workspace-download-status';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface WorkspaceDownloadFileProps {
   download: Download;
@@ -63,7 +63,7 @@ export const WorkspaceDownloadFile = ({
               className="text-xs text-muted-foreground flex items-center gap-2 cursor-pointer hover:text-primary"
               onClick={(e) => {
                 e.stopPropagation();
-                window.colanode.showItemInFolder(download.path);
+                window.brainbox.showItemInFolder(download.path);
               }}
             >
               <Folder className="size-4" />

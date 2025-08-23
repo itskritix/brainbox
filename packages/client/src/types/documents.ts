@@ -1,4 +1,4 @@
-import { DocumentContent } from '@colanode/core';
+import { DocumentContent } from '@brainbox/core';
 
 export type Document = {
   id: string;

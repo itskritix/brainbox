@@ -3,21 +3,21 @@ Thank you for installing {{ .Chart.Name }}!
 Your release is named {{ .Release.Name }}.
 
 ═══════════════════════════════════════════════════════════════
-ACCESSING COLANODE
+ACCESSING BRAINBOX
 ═══════════════════════════════════════════════════════════════
 
-{{- if .Values.colanode.ingress.enabled }}
-Your Colanode instance will be available at:
-{{- range .Values.colanode.ingress.hosts }}
+{{- if .Values.brainbox.ingress.enabled }}
+Your Brainbox instance will be available at:
+{{- range .Values.brainbox.ingress.hosts }}
   {{- range .paths }}
-  http{{ if $.Values.colanode.ingress.tls }}s{{ end }}://{{ .host }}{{ if ne .path "/" }}{{ .path }}{{ end }}
+  http{{ if $.Values.brainbox.ingress.tls }}s{{ end }}://{{ .host }}{{ if ne .path "/" }}{{ .path }}{{ end }}
   {{- end }}
 {{- end }}
 
 Note: Make sure your ingress controller is configured and DNS is pointing to your cluster.
 {{- else }}
-To access Colanode, run:
-  kubectl port-forward svc/{{ include "colanode.fullname" . }} 3000:3000 -n {{ .Release.Namespace }}
+To access Brainbox, run:
+  kubectl port-forward svc/{{ include "brainbox.fullname" . }} 3000:3000 -n {{ .Release.Namespace }}
 
 Then visit: http://localhost:3000
 {{- end }}
@@ -26,7 +26,7 @@ Then visit: http://localhost:3000
 DESKTOP APPLICATION
 ═══════════════════════════════════════════════════════════════
 
-Download the Colanode desktop app from: https://colanode.com/downloads
+Download the Brainbox desktop app from: https://brainbox.com/downloads
 Use the server URL above when connecting.
 
 ═══════════════════════════════════════════════════════════════
@@ -37,21 +37,21 @@ Check deployment status:
   kubectl get pods -n {{ .Release.Namespace }} -l app.kubernetes.io/instance={{ .Release.Name }}
 
 View application logs:
-  kubectl logs -n {{ .Release.Namespace }} -l app.kubernetes.io/name={{ include "colanode.name" . }} -f
+  kubectl logs -n {{ .Release.Namespace }} -l app.kubernetes.io/name={{ include "brainbox.name" . }} -f
 
 ═══════════════════════════════════════════════════════════════
 SERVICES INFORMATION
 ═══════════════════════════════════════════════════════════════
 
 {{- if .Values.postgresql.enabled }}
-📊 PostgreSQL (with pgvector): {{ include "colanode.postgresql.hostname" . }}:5432
+📊 PostgreSQL (with pgvector): {{ include "brainbox.postgresql.hostname" . }}:5432
 {{- end }}
 {{- if .Values.redis.enabled }}
-🔄 Redis/Valkey: {{ include "colanode.redis.hostname" . }}:6379
+🔄 Redis/Valkey: {{ include "brainbox.redis.hostname" . }}:6379
 {{- end }}
 {{- if .Values.minio.enabled }}
-💾 MinIO Storage: {{ include "colanode.minio.hostname" . }}:9000
-   Console: {{ include "colanode.minio.hostname" . }}:9001
+💾 MinIO Storage: {{ include "brainbox.minio.hostname" . }}:9000
+   Console: {{ include "brainbox.minio.hostname" . }}:9001
 {{- end }}
 
 All service credentials are auto-generated and stored in Kubernetes secrets.
@@ -59,5 +59,5 @@ To retrieve them: kubectl get secrets -n {{ .Release.Namespace }}
 
 ═══════════════════════════════════════════════════════════════
 
-For more information, visit: https://github.com/colanode/colanode
-For support, create an issue at: https://github.com/colanode/colanode/issues
+For more information, visit: https://github.com/brainbox/brainbox
+For support, create an issue at: https://github.com/brainbox/brainbox/issues

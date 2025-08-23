@@ -1,8 +1,8 @@
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { EmojiCategoryListQueryInput } from '@colanode/client/queries/emojis/emoji-category-list';
-import { AppService } from '@colanode/client/services/app-service';
-import { EmojiCategory } from '@colanode/client/types/emojis';
-import { Event } from '@colanode/client/types/events';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { EmojiCategoryListQueryInput } from '@brainbox/client/queries/emojis/emoji-category-list';
+import { AppService } from '@brainbox/client/services/app-service';
+import { EmojiCategory } from '@brainbox/client/types/emojis';
+import { Event } from '@brainbox/client/types/events';
 
 export class EmojiCategoryListQueryHandler
   implements QueryHandler<EmojiCategoryListQueryInput>

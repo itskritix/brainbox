@@ -1,13 +1,13 @@
 import { useCallback, useState } from 'react';
 
-import { RecordListQueryInput } from '@colanode/client/queries';
+import { RecordListQueryInput } from '@brainbox/client/queries';
 import {
   DatabaseViewFilterAttributes,
   DatabaseViewSortAttributes,
-} from '@colanode/core';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQueries } from '@colanode/ui/hooks/use-live-queries';
+} from '@brainbox/core';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQueries } from '@brainbox/ui/hooks/use-live-queries';
 
 const RECORDS_PER_PAGE = 50;
 

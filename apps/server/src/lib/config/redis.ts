@@ -5,11 +5,11 @@ export const redisConfigSchema = z.object({
   db: z.coerce.number().default(0),
   jobs: z.object({
     name: z.string().optional().default('jobs'),
-    prefix: z.string().optional().default('colanode'),
+    prefix: z.string().optional().default('brainbox'),
   }),
   tus: z.object({
-    lockPrefix: z.string().optional().default('colanode:tus:lock'),
-    kvPrefix: z.string().optional().default('colanode:tus:kv'),
+    lockPrefix: z.string().optional().default('brainbox:tus:lock'),
+    kvPrefix: z.string().optional().default('brainbox:tus:kv'),
   }),
   eventsChannel: z.string().optional().default('events'),
 });

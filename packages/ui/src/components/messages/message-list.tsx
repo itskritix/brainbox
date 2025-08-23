@@ -1,12 +1,12 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { InView } from 'react-intersection-observer';
 
-import { MessageListQueryInput } from '@colanode/client/queries';
-import { compareString } from '@colanode/core';
-import { Message } from '@colanode/ui/components/messages/message';
-import { useConversation } from '@colanode/ui/contexts/conversation';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQueries } from '@colanode/ui/hooks/use-live-queries';
+import { MessageListQueryInput } from '@brainbox/client/queries';
+import { compareString } from '@brainbox/core';
+import { Message } from '@brainbox/ui/components/messages/message';
+import { useConversation } from '@brainbox/ui/contexts/conversation';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQueries } from '@brainbox/ui/hooks/use-live-queries';
 
 const MESSAGES_PER_PAGE = 50;
 

@@ -1,15 +1,15 @@
 import { ChevronDown, Trash2 } from 'lucide-react';
 
-import { FieldAttributes, DatabaseViewSortAttributes } from '@colanode/core';
-import { FieldIcon } from '@colanode/ui/components/databases/fields/field-icon';
-import { Button } from '@colanode/ui/components/ui/button';
+import { FieldAttributes, DatabaseViewSortAttributes } from '@brainbox/core';
+import { FieldIcon } from '@brainbox/ui/components/databases/fields/field-icon';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
+} from '@brainbox/ui/components/ui/dropdown-menu';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
 
 interface ViewSortFieldRowProps {
   sort: DatabaseViewSortAttributes;

@@ -1,11 +1,11 @@
-import { Workspace } from '@colanode/client/types/workspaces';
+import { Workspace } from '@brainbox/client/types/workspaces';
 
 export type WorkspaceListQueryInput = {
   type: 'workspace.list';
   accountId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'workspace.list': {
       input: WorkspaceListQueryInput;

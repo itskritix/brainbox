@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import { Emoji } from '@colanode/client/types';
-import { EmojiBrowser } from '@colanode/ui/components/emojis/emoji-browser';
-import { EmojiSearch } from '@colanode/ui/components/emojis/emoji-search';
-import { EmojiSkinToneSelector } from '@colanode/ui/components/emojis/emoji-skin-tone-selector';
-import { EmojiPickerContext } from '@colanode/ui/contexts/emoji-picker';
+import { Emoji } from '@brainbox/client/types';
+import { EmojiBrowser } from '@brainbox/ui/components/emojis/emoji-browser';
+import { EmojiSearch } from '@brainbox/ui/components/emojis/emoji-search';
+import { EmojiSkinToneSelector } from '@brainbox/ui/components/emojis/emoji-skin-tone-selector';
+import { EmojiPickerContext } from '@brainbox/ui/contexts/emoji-picker';
 
 interface EmojiPickerProps {
   onPick: (emoji: Emoji, skinTone: number) => void;

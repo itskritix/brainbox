@@ -11,8 +11,8 @@ import {
   type FieldValues,
 } from 'react-hook-form';
 
-import { Label } from '@colanode/ui/components/ui/label';
-import { cn } from '@colanode/ui/lib/utils';
+import { Label } from '@brainbox/ui/components/ui/label';
+import { cn } from '@brainbox/ui/lib/utils';
 
 const Form = FormProvider;
 

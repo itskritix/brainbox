@@ -11,7 +11,7 @@ export type FolderUpdateMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'folder.update': {
       input: FolderUpdateMutationInput;

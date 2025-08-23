@@ -11,13 +11,13 @@ import {
   UsersCreateOutput,
   usersCreateOutputSchema,
   UserStatus,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { SelectAccount } from '@colanode/server/data/schema';
-import { config } from '@colanode/server/lib/config';
-import { eventBus } from '@colanode/server/lib/event-bus';
-import { createNode } from '@colanode/server/lib/nodes';
-import { getNameFromEmail } from '@colanode/server/lib/utils';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { SelectAccount } from '@brainbox/server/data/schema';
+import { config } from '@brainbox/server/lib/config';
+import { eventBus } from '@brainbox/server/lib/event-bus';
+import { createNode } from '@brainbox/server/lib/nodes';
+import { getNameFromEmail } from '@brainbox/server/lib/utils';
 
 export const usersCreateRoute: FastifyPluginCallbackZod = (
   instance,

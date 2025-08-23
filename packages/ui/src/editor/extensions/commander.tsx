@@ -22,8 +22,8 @@ import {
   useState,
 } from 'react';
 
-import { EditorCommand, EditorContext } from '@colanode/client/types';
-import { updateScrollView } from '@colanode/ui/lib/utils';
+import { EditorCommand, EditorContext } from '@brainbox/client/types';
+import { updateScrollView } from '@brainbox/ui/lib/utils';
 
 interface CommanderOptions {
   commands: EditorCommand[];

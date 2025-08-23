@@ -4,7 +4,7 @@ import {
   AppMetadataKey,
   AppMetadataMap,
   AppType,
-} from '@colanode/client/types';
+} from '@brainbox/client/types';
 
 interface AppContext {
   type: AppType;

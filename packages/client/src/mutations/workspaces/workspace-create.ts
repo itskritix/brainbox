@@ -11,7 +11,7 @@ export type WorkspaceCreateMutationOutput = {
   userId: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'workspace.create': {
       input: WorkspaceCreateMutationInput;

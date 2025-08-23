@@ -1,10 +1,10 @@
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   ServerCreateMutationInput,
   ServerCreateMutationOutput,
-} from '@colanode/client/mutations/servers/server-create';
-import { AppService } from '@colanode/client/services/app-service';
+} from '@brainbox/client/mutations/servers/server-create';
+import { AppService } from '@brainbox/client/services/app-service';
 
 export class ServerCreateMutationHandler
   implements MutationHandler<ServerCreateMutationInput>

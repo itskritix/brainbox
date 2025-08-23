@@ -1,9 +1,9 @@
 import { JSONContent } from '@tiptap/core';
 
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { defaultClasses } from '@colanode/ui/editor/classes';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { defaultClasses } from '@brainbox/ui/editor/classes';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface MentionRendererProps {
   node: JSONContent;

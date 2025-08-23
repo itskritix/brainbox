@@ -1,11 +1,11 @@
-import { DownloadStatus, LocalFileNode } from '@colanode/client/types';
-import { FileDownloadProgress } from '@colanode/ui/components/files/file-download-progress';
-import { FileNoPreview } from '@colanode/ui/components/files/file-no-preview';
-import { FilePreviewAudio } from '@colanode/ui/components/files/previews/file-preview-audio';
-import { FilePreviewImage } from '@colanode/ui/components/files/previews/file-preview-image';
-import { FilePreviewVideo } from '@colanode/ui/components/files/previews/file-preview-video';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { DownloadStatus, LocalFileNode } from '@brainbox/client/types';
+import { FileDownloadProgress } from '@brainbox/ui/components/files/file-download-progress';
+import { FileNoPreview } from '@brainbox/ui/components/files/file-no-preview';
+import { FilePreviewAudio } from '@brainbox/ui/components/files/previews/file-preview-audio';
+import { FilePreviewImage } from '@brainbox/ui/components/files/previews/file-preview-image';
+import { FilePreviewVideo } from '@brainbox/ui/components/files/previews/file-preview-video';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface FilePreviewProps {
   file: LocalFileNode;

@@ -1,8 +1,8 @@
 import { Fullscreen } from 'lucide-react';
 
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseViews } from '@colanode/ui/contexts/database-views';
-import { useLayout } from '@colanode/ui/contexts/layout';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseViews } from '@brainbox/ui/contexts/database-views';
+import { useLayout } from '@brainbox/ui/contexts/layout';
 
 export const ViewFullscreenButton = () => {
   const database = useDatabase();

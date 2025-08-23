@@ -1,4 +1,4 @@
-import { FieldValue } from '@colanode/core';
+import { FieldValue } from '@brainbox/core';
 
 export type RecordCreateMutationInput = {
   type: 'record.create';
@@ -13,7 +13,7 @@ export type RecordCreateMutationOutput = {
   id: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'record.create': {
       input: RecordCreateMutationInput;

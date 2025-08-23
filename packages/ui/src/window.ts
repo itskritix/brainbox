@@ -1,7 +1,7 @@
-import { EventBus } from '@colanode/client/lib';
-import { MutationInput, MutationResult } from '@colanode/client/mutations';
-import { QueryInput, QueryMap } from '@colanode/client/queries';
-import { TempFile } from '@colanode/client/types';
+import { EventBus } from '@brainbox/client/lib';
+import { MutationInput, MutationResult } from '@brainbox/client/mutations';
+import { QueryInput, QueryMap } from '@brainbox/client/queries';
+import { TempFile } from '@brainbox/client/types';
 
 interface SaveDialogOptions {
   name: string;
@@ -30,7 +30,7 @@ export interface ColanodeWindowApi {
 
 declare global {
   interface Window {
-    colanode: ColanodeWindowApi;
+    brainbox: ColanodeWindowApi;
     eventBus: EventBus;
   }
 }

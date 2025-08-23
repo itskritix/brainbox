@@ -5,7 +5,7 @@ import { Editor } from '@tiptap/react';
 import { GripVertical, Plus } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
-import { isDescendantNode } from '@colanode/client/lib';
+import { isDescendantNode } from '@brainbox/client/lib';
 
 interface ActionMenuProps {
   editor: Editor | null;

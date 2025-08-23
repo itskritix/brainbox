@@ -1,4 +1,4 @@
-import { AppType } from '@colanode/client/types';
+import { AppType } from '@brainbox/client/types';
 
 interface FontLoaderProps {
   type: AppType;

@@ -1,9 +1,9 @@
-import { LocalMessageNode } from '@colanode/client/types';
-import { MessageAuthorAvatar } from '@colanode/ui/components/messages/message-author-avatar';
-import { MessageAuthorName } from '@colanode/ui/components/messages/message-author-name';
-import { MessageContent } from '@colanode/ui/components/messages/message-content';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { LocalMessageNode } from '@brainbox/client/types';
+import { MessageAuthorAvatar } from '@brainbox/ui/components/messages/message-author-avatar';
+import { MessageAuthorName } from '@brainbox/ui/components/messages/message-author-name';
+import { MessageContent } from '@brainbox/ui/components/messages/message-content';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface MessageReferenceProps {
   messageId: string;

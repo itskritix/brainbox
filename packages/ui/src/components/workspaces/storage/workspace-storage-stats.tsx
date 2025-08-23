@@ -1,13 +1,13 @@
 import { BadgeAlert, ServerCog } from 'lucide-react';
 import { match } from 'ts-pattern';
 
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { StorageStats } from '@colanode/ui/components/workspaces/storage/storage-stats';
-import { WorkspaceStorageUserTable } from '@colanode/ui/components/workspaces/storage/workspace-storage-user-table';
-import { useServer } from '@colanode/ui/contexts/server';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useQuery } from '@colanode/ui/hooks/use-query';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { StorageStats } from '@brainbox/ui/components/workspaces/storage/storage-stats';
+import { WorkspaceStorageUserTable } from '@brainbox/ui/components/workspaces/storage/workspace-storage-user-table';
+import { useServer } from '@brainbox/ui/contexts/server';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useQuery } from '@brainbox/ui/hooks/use-query';
 
 export const WorkspaceStorageStats = () => {
   const workspace = useWorkspace();

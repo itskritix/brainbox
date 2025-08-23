@@ -15,7 +15,7 @@ export type SyncNodeInteractionData = {
   lastOpenedAt: string | null;
 };
 
-declare module '@colanode/core' {
+declare module '@brainbox/core' {
   interface SynchronizerMap {
     'node.interactions': {
       input: SyncNodeInteractionsInput;

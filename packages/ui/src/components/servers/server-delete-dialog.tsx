@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 
-import { ServerDetails } from '@colanode/client/types';
+import { ServerDetails } from '@brainbox/client/types';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -9,10 +9,10 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@colanode/ui/components/ui/alert-dialog';
-import { Button } from '@colanode/ui/components/ui/button';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+} from '@brainbox/ui/components/ui/alert-dialog';
+import { Button } from '@brainbox/ui/components/ui/button';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface ServerDeleteDialogProps {
   open: boolean;

@@ -7,15 +7,15 @@ import {
   isSameDay,
   toUTCDate,
   DatabaseViewFilterAttributes,
-} from '@colanode/core';
-import { CalendarViewDay } from '@colanode/ui/components/databases/calendars/calendar-view-day';
-import { buttonVariants } from '@colanode/ui/components/ui/button';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useRecordsQuery } from '@colanode/ui/hooks/use-records-query';
-import { filterRecords } from '@colanode/ui/lib/databases';
-import { cn, getDisplayedDates } from '@colanode/ui/lib/utils';
+} from '@brainbox/core';
+import { CalendarViewDay } from '@brainbox/ui/components/databases/calendars/calendar-view-day';
+import { buttonVariants } from '@brainbox/ui/components/ui/button';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useRecordsQuery } from '@brainbox/ui/hooks/use-records-query';
+import { filterRecords } from '@brainbox/ui/lib/databases';
+import { cn, getDisplayedDates } from '@brainbox/ui/lib/utils';
 
 interface CalendarViewGridProps {
   field: FieldAttributes;

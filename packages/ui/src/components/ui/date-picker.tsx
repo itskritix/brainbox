@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-import { toUTCDate } from '@colanode/core';
-import { Calendar } from '@colanode/ui/components/ui/calendar';
+import { toUTCDate } from '@brainbox/core';
+import { Calendar } from '@brainbox/ui/components/ui/calendar';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/popover';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface DatePickerProps {
   value: Date | null;

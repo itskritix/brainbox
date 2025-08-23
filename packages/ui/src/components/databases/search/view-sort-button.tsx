@@ -1,7 +1,7 @@
 import { ArrowDownAz } from 'lucide-react';
 
-import { ViewSortAddPopover } from '@colanode/ui/components/databases/search/view-sort-add-popover';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
+import { ViewSortAddPopover } from '@brainbox/ui/components/databases/search/view-sort-add-popover';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
 
 export const ViewSortButton = () => {
   const view = useDatabaseView();

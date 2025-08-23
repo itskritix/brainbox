@@ -5,9 +5,9 @@ import {
   workspaceCreateInputSchema,
   apiErrorOutputSchema,
   workspaceOutputSchema,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { createWorkspace } from '@colanode/server/lib/workspaces';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { createWorkspace } from '@brainbox/server/lib/workspaces';
 
 export const workspaceCreateRoute: FastifyPluginCallbackZod = (
   instance,

@@ -3,20 +3,20 @@ import { Resizable } from 're-resizable';
 import { Fragment, useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
-import { ViewField } from '@colanode/client/types';
-import { FieldDeleteDialog } from '@colanode/ui/components/databases/fields/field-delete-dialog';
-import { FieldIcon } from '@colanode/ui/components/databases/fields/field-icon';
-import { FieldRenameInput } from '@colanode/ui/components/databases/fields/field-rename-input';
+import { ViewField } from '@brainbox/client/types';
+import { FieldDeleteDialog } from '@brainbox/ui/components/databases/fields/field-delete-dialog';
+import { FieldIcon } from '@brainbox/ui/components/databases/fields/field-icon';
+import { FieldRenameInput } from '@brainbox/ui/components/databases/fields/field-rename-input';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { isFilterableField, isSortableField } from '@colanode/ui/lib/databases';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/popover';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { isFilterableField, isSortableField } from '@brainbox/ui/lib/databases';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface TableViewFieldHeaderProps {
   viewField: ViewField;

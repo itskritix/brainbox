@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import { AvatarFallback } from '@colanode/ui/components/avatars/avatar-fallback';
-import { useAccount } from '@colanode/ui/contexts/account';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { AvatarProps, getAvatarSizeClasses } from '@colanode/ui/lib/avatars';
-import { cn } from '@colanode/ui/lib/utils';
+import { AvatarFallback } from '@brainbox/ui/components/avatars/avatar-fallback';
+import { useAccount } from '@brainbox/ui/contexts/account';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { AvatarProps, getAvatarSizeClasses } from '@brainbox/ui/lib/avatars';
+import { cn } from '@brainbox/ui/lib/utils';
 
 export const AvatarImage = (props: AvatarProps) => {
   const account = useAccount();

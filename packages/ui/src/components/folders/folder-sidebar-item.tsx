@@ -1,7 +1,7 @@
-import { LocalFolderNode } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { cn } from '@colanode/ui/lib/utils';
+import { LocalFolderNode } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface FolderSidebarItemProps {
   folder: LocalFolderNode;

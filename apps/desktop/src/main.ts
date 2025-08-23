@@ -11,23 +11,23 @@ import {
 import started from 'electron-squirrel-startup';
 import { updateElectronApp, UpdateSourceType } from 'update-electron-app';
 
-import { eventBus } from '@colanode/client/lib';
-import { MutationInput, MutationMap } from '@colanode/client/mutations';
-import { QueryInput, QueryMap } from '@colanode/client/queries';
-import { TempFile } from '@colanode/client/types';
+import { eventBus } from '@brainbox/client/lib';
+import { MutationInput, MutationMap } from '@brainbox/client/mutations';
+import { QueryInput, QueryMap } from '@brainbox/client/queries';
+import { TempFile } from '@brainbox/client/types';
 import {
   createDebugger,
   extractFileSubtype,
   generateId,
   IdType,
-} from '@colanode/core';
-import { app, appBadge } from '@colanode/desktop/main/app-service';
-import { handleLocalRequest } from '@colanode/desktop/main/protocols';
+} from '@brainbox/core';
+import { app, appBadge } from '@brainbox/desktop/main/app-service';
+import { handleLocalRequest } from '@brainbox/desktop/main/protocols';
 
 const debug = createDebugger('desktop:main');
 
-electronApp.setName('Colanode');
-electronApp.setAppUserModelId('com.colanode.desktop');
+electronApp.setName('Brainbox');
+electronApp.setAppUserModelId('com.brainbox.desktop');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -37,7 +37,7 @@ if (started) {
 updateElectronApp({
   updateSource: {
     type: UpdateSourceType.ElectronPublicUpdateService,
-    repo: 'colanode/colanode',
+    repo: 'brainbox/brainbox',
     host: 'https://update.electronjs.org',
   },
   updateInterval: '10 minutes',
@@ -56,7 +56,7 @@ const createWindow = async () => {
     fullscreenable: true,
     minWidth: 800,
     minHeight: 600,
-    icon: app.path.join(app.path.assets, 'colanode-logo-black.png'),
+    icon: app.path.join(app.path.assets, 'brainbox-logo-black.png'),
     webPreferences: {
       preload: app.path.join(__dirname, 'preload.js'),
     },

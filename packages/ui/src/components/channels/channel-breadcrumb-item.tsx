@@ -1,5 +1,5 @@
-import { LocalChannelNode } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
+import { LocalChannelNode } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
 
 interface ChannelBreadcrumbItemProps {
   channel: LocalChannelNode;

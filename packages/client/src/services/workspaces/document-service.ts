@@ -1,20 +1,20 @@
 import {
   CreateNodeReference,
   SelectDocument,
-} from '@colanode/client/databases/workspace';
-import { eventBus } from '@colanode/client/lib/event-bus';
+} from '@brainbox/client/databases/workspace';
+import { eventBus } from '@brainbox/client/lib/event-bus';
 import {
   mapDocument,
   mapDocumentState,
   mapDocumentUpdate,
   mapNodeReference,
-} from '@colanode/client/lib/mappers';
+} from '@brainbox/client/lib/mappers';
 import {
   applyMentionUpdates,
   checkMentionChanges,
-} from '@colanode/client/lib/mentions';
-import { fetchNodeTree } from '@colanode/client/lib/utils';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
+} from '@brainbox/client/lib/mentions';
+import { fetchNodeTree } from '@brainbox/client/lib/utils';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
 import {
   CanUpdateDocumentContext,
   createDebugger,
@@ -27,8 +27,8 @@ import {
   NodeModel,
   SyncDocumentUpdateData,
   UpdateDocumentMutationData,
-} from '@colanode/core';
-import { encodeState, YDoc } from '@colanode/crdt';
+} from '@brainbox/core';
+import { encodeState, YDoc } from '@brainbox/crdt';
 
 const UPDATE_RETRIES_LIMIT = 10;
 

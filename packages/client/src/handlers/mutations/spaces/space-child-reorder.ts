@@ -1,17 +1,17 @@
-import { SelectNode } from '@colanode/client/databases';
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { MutationHandler } from '@colanode/client/lib/types';
+import { SelectNode } from '@brainbox/client/databases';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { MutationHandler } from '@brainbox/client/lib/types';
 import {
   MutationError,
   MutationErrorCode,
   SpaceChildReorderMutationInput,
   SpaceChildReorderMutationOutput,
-} from '@colanode/client/mutations';
+} from '@brainbox/client/mutations';
 import {
   compareString,
   generateFractionalIndex,
   SpaceAttributes,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 interface NodeFractionalIndex {
   id: string;

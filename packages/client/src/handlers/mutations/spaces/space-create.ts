@@ -1,17 +1,17 @@
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   SpaceCreateMutationInput,
   SpaceCreateMutationOutput,
-} from '@colanode/client/mutations/spaces/space-create';
+} from '@brainbox/client/mutations/spaces/space-create';
 import {
   ChannelAttributes,
   generateId,
   IdType,
   PageAttributes,
   SpaceAttributes,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 export class SpaceCreateMutationHandler
   extends WorkspaceMutationHandlerBase

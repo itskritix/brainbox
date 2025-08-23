@@ -1,9 +1,9 @@
-import { mapEmoji } from '@colanode/client/lib/mappers';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { EmojiGetBySkinIdQueryInput } from '@colanode/client/queries/emojis/emoji-get-by-skin-id';
-import { AppService } from '@colanode/client/services/app-service';
-import { Emoji } from '@colanode/client/types/emojis';
-import { Event } from '@colanode/client/types/events';
+import { mapEmoji } from '@brainbox/client/lib/mappers';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { EmojiGetBySkinIdQueryInput } from '@brainbox/client/queries/emojis/emoji-get-by-skin-id';
+import { AppService } from '@brainbox/client/services/app-service';
+import { Emoji } from '@brainbox/client/types/emojis';
+import { Event } from '@brainbox/client/types/events';
 
 export class EmojiGetBySkinIdQueryHandler
   implements QueryHandler<EmojiGetBySkinIdQueryInput>

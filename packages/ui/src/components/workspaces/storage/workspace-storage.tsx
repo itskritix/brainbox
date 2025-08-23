@@ -1,7 +1,7 @@
-import { Container, ContainerBody } from '@colanode/ui/components/ui/container';
-import { UserStorageStats } from '@colanode/ui/components/workspaces/storage/user-storage-stats';
-import { WorkspaceStorageStats } from '@colanode/ui/components/workspaces/storage/workspace-storage-stats';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
+import { Container, ContainerBody } from '@brainbox/ui/components/ui/container';
+import { UserStorageStats } from '@brainbox/ui/components/workspaces/storage/user-storage-stats';
+import { WorkspaceStorageStats } from '@brainbox/ui/components/workspaces/storage/workspace-storage-stats';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
 
 export const WorkspaceStorage = () => {
   const workspace = useWorkspace();

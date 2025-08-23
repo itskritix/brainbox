@@ -1,4 +1,4 @@
-import { NodeReaction } from '@colanode/client/types/nodes';
+import { NodeReaction } from '@brainbox/client/types/nodes';
 
 export type NodeReactionListQueryInput = {
   type: 'node.reaction.list';
@@ -10,7 +10,7 @@ export type NodeReactionListQueryInput = {
   count: number;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'node.reaction.list': {
       input: NodeReactionListQueryInput;

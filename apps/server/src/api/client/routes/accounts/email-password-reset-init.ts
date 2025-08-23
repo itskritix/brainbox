@@ -9,16 +9,16 @@ import {
   apiErrorOutputSchema,
   emailPasswordResetInitOutputSchema,
   emailPasswordResetInitInputSchema,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { config } from '@colanode/server/lib/config';
-import { generateOtpCode, saveOtp } from '@colanode/server/lib/otps';
-import { isAuthEmailRateLimited } from '@colanode/server/lib/rate-limits';
-import { jobService } from '@colanode/server/services/job-service';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { config } from '@brainbox/server/lib/config';
+import { generateOtpCode, saveOtp } from '@brainbox/server/lib/otps';
+import { isAuthEmailRateLimited } from '@brainbox/server/lib/rate-limits';
+import { jobService } from '@brainbox/server/services/job-service';
 import {
   AccountPasswordResetOtpAttributes,
   Otp,
-} from '@colanode/server/types/otps';
+} from '@brainbox/server/types/otps';
 
 export const emailPasswordResetInitRoute: FastifyPluginCallbackZod = (
   instance,

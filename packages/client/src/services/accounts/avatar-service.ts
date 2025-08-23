@@ -1,9 +1,9 @@
 import ms from 'ms';
 
-import { mapAvatar } from '@colanode/client/lib';
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { AccountService } from '@colanode/client/services/accounts/account-service';
-import { Avatar } from '@colanode/client/types/avatars';
+import { mapAvatar } from '@brainbox/client/lib';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { AccountService } from '@brainbox/client/services/accounts/account-service';
+import { Avatar } from '@brainbox/client/types/avatars';
 
 export class AvatarService {
   private readonly account: AccountService;

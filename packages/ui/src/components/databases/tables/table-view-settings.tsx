@@ -1,28 +1,28 @@
 import { Eye, EyeOff, Trash2 } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { AvatarPopover } from '@colanode/ui/components/avatars/avatar-popover';
-import { FieldDeleteDialog } from '@colanode/ui/components/databases/fields/field-delete-dialog';
-import { FieldIcon } from '@colanode/ui/components/databases/fields/field-icon';
-import { ViewDeleteDialog } from '@colanode/ui/components/databases/view-delete-dialog';
-import { ViewIcon } from '@colanode/ui/components/databases/view-icon';
-import { ViewSettingsButton } from '@colanode/ui/components/databases/view-settings-button';
-import { Button } from '@colanode/ui/components/ui/button';
+import { AvatarPopover } from '@brainbox/ui/components/avatars/avatar-popover';
+import { FieldDeleteDialog } from '@brainbox/ui/components/databases/fields/field-delete-dialog';
+import { FieldIcon } from '@brainbox/ui/components/databases/fields/field-icon';
+import { ViewDeleteDialog } from '@brainbox/ui/components/databases/view-delete-dialog';
+import { ViewIcon } from '@brainbox/ui/components/databases/view-icon';
+import { ViewSettingsButton } from '@brainbox/ui/components/databases/view-settings-button';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { SmartTextInput } from '@colanode/ui/components/ui/smart-text-input';
+} from '@brainbox/ui/components/ui/popover';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { SmartTextInput } from '@brainbox/ui/components/ui/smart-text-input';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@colanode/ui/components/ui/tooltip';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/tooltip';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { cn } from '@brainbox/ui/lib/utils';
 
 export const TableViewSettings = () => {
   const database = useDatabase();

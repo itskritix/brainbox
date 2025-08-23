@@ -1,12 +1,12 @@
 import { BadgeAlert } from 'lucide-react';
 
-import { Upload, LocalFileNode } from '@colanode/client/types';
-import { formatBytes, timeAgo } from '@colanode/core';
-import { FileThumbnail } from '@colanode/ui/components/files/file-thumbnail';
-import { WorkspaceUploadStatus } from '@colanode/ui/components/workspaces/uploads/workspace-upload-status';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { Upload, LocalFileNode } from '@brainbox/client/types';
+import { formatBytes, timeAgo } from '@brainbox/core';
+import { FileThumbnail } from '@brainbox/ui/components/files/file-thumbnail';
+import { WorkspaceUploadStatus } from '@brainbox/ui/components/workspaces/uploads/workspace-upload-status';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface WorkspaceUploadFileProps {
   upload: Upload;

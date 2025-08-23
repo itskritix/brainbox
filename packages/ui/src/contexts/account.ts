@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import { Account } from '@colanode/client/types';
+import { Account } from '@brainbox/client/types';
 
 interface AccountContext extends Account {
   openWorkspace: (id: string) => void;

@@ -1,9 +1,9 @@
-import { database } from '@colanode/server/data/database';
-import { CreateNodeTombstone } from '@colanode/server/data/schema';
-import { JobHandler } from '@colanode/server/jobs';
-import { eventBus } from '@colanode/server/lib/event-bus';
-import { deleteFile } from '@colanode/server/lib/files';
-import { createLogger } from '@colanode/server/lib/logger';
+import { database } from '@brainbox/server/data/database';
+import { CreateNodeTombstone } from '@brainbox/server/data/schema';
+import { JobHandler } from '@brainbox/server/jobs';
+import { eventBus } from '@brainbox/server/lib/event-bus';
+import { deleteFile } from '@brainbox/server/lib/files';
+import { createLogger } from '@brainbox/server/lib/logger';
 
 const BATCH_SIZE = 100;
 const logger = createLogger('server:job:clean-node-data');
@@ -15,7 +15,7 @@ export type NodeCleanInput = {
   userId: string;
 };
 
-declare module '@colanode/server/jobs' {
+declare module '@brainbox/server/jobs' {
   interface JobMap {
     'node.clean': {
       input: NodeCleanInput;

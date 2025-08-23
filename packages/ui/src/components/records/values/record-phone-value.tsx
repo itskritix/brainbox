@@ -1,6 +1,6 @@
-import { PhoneFieldAttributes } from '@colanode/core';
-import { SmartTextInput } from '@colanode/ui/components/ui/smart-text-input';
-import { useRecord } from '@colanode/ui/contexts/record';
+import { PhoneFieldAttributes } from '@brainbox/core';
+import { SmartTextInput } from '@brainbox/ui/components/ui/smart-text-input';
+import { useRecord } from '@brainbox/ui/contexts/record';
 
 interface RecordPhoneValueProps {
   field: PhoneFieldAttributes;

@@ -3,24 +3,24 @@ import { ChevronDown, Trash2 } from 'lucide-react';
 import {
   SelectFieldAttributes,
   DatabaseViewFieldFilterAttributes,
-} from '@colanode/core';
-import { FieldIcon } from '@colanode/ui/components/databases/fields/field-icon';
-import { SelectFieldOptions } from '@colanode/ui/components/databases/fields/select-field-options';
-import { SelectOptionBadge } from '@colanode/ui/components/databases/fields/select-option-badge';
-import { Button } from '@colanode/ui/components/ui/button';
+} from '@brainbox/core';
+import { FieldIcon } from '@brainbox/ui/components/databases/fields/field-icon';
+import { SelectFieldOptions } from '@brainbox/ui/components/databases/fields/select-field-options';
+import { SelectOptionBadge } from '@brainbox/ui/components/databases/fields/select-option-badge';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
+} from '@brainbox/ui/components/ui/dropdown-menu';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { selectFieldFilterOperators } from '@colanode/ui/lib/databases';
+} from '@brainbox/ui/components/ui/popover';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { selectFieldFilterOperators } from '@brainbox/ui/lib/databases';
 
 interface ViewSelectFieldFilterProps {
   field: SelectFieldAttributes;

@@ -1,7 +1,7 @@
 import { Migration } from 'kysely';
 
-import { CreateUpload } from '@colanode/client/databases/workspace';
-import { UploadStatus } from '@colanode/client/types/files';
+import { CreateUpload } from '@brainbox/client/databases/workspace';
+import { UploadStatus } from '@brainbox/client/types/files';
 
 export const dropFileStatesTable: Migration = {
   up: async (db) => {

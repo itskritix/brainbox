@@ -1,10 +1,10 @@
-import { Account } from '@colanode/client/types/accounts';
+import { Account } from '@brainbox/client/types/accounts';
 
 export type AccountListQueryInput = {
   type: 'account.list';
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'account.list': {
       input: AccountListQueryInput;

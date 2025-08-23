@@ -3,11 +3,11 @@ import { SquareArrowOutUpRight } from 'lucide-react';
 import React, { Fragment } from 'react';
 import { toast } from 'sonner';
 
-import { RecordNode } from '@colanode/core';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { RecordNode } from '@brainbox/core';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface NameEditorProps {
   initialValue: string;

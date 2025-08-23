@@ -1,8 +1,8 @@
 import { FilePlus } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { EditorCommand } from '@colanode/client/types';
-import { openFileDialog } from '@colanode/ui/lib/files';
+import { EditorCommand } from '@brainbox/client/types';
+import { openFileDialog } from '@brainbox/ui/lib/files';
 
 export const FileCommand: EditorCommand = {
   key: 'file',
@@ -21,7 +21,7 @@ export const FileCommand: EditorCommand = {
 
     if (result.type === 'success') {
       result.files.forEach(async (tempFile) => {
-        const output = await window.colanode.executeMutation({
+        const output = await window.brainbox.executeMutation({
           type: 'file.create',
           tempFileId: tempFile.id,
           accountId,

@@ -1,6 +1,6 @@
-import { getIdType, IdType } from '@colanode/core';
-import { RadarContext } from '@colanode/ui/contexts/radar';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { getIdType, IdType } from '@brainbox/core';
+import { RadarContext } from '@brainbox/ui/contexts/radar';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface RadarProviderProps {
   children: React.ReactNode;
@@ -116,7 +116,7 @@ export const RadarProvider = ({ children }: RadarProviderProps) => {
           };
         },
         markNodeAsSeen: (accountId, workspaceId, nodeId) => {
-          window.colanode.executeMutation({
+          window.brainbox.executeMutation({
             type: 'node.interaction.seen',
             nodeId,
             accountId,
@@ -124,7 +124,7 @@ export const RadarProvider = ({ children }: RadarProviderProps) => {
           });
         },
         markNodeAsOpened: (accountId, workspaceId, nodeId) => {
-          window.colanode.executeMutation({
+          window.brainbox.executeMutation({
             type: 'node.interaction.opened',
             nodeId,
             accountId,

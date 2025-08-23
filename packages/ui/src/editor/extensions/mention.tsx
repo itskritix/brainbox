@@ -22,11 +22,11 @@ import {
   useState,
 } from 'react';
 
-import { EditorContext, User } from '@colanode/client/types';
-import { generateId, IdType } from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { MentionNodeView } from '@colanode/ui/editor/views';
-import { updateScrollView } from '@colanode/ui/lib/utils';
+import { EditorContext, User } from '@brainbox/client/types';
+import { generateId, IdType } from '@brainbox/core';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { MentionNodeView } from '@brainbox/ui/editor/views';
+import { updateScrollView } from '@brainbox/ui/lib/utils';
 
 declare module '@tiptap/core' {
   interface Storage {
@@ -294,7 +294,7 @@ export const MentionExtension = Node.create<MentionOptions>({
             }
 
             const { accountId, workspaceId, userId } = this.options.context;
-            window.colanode
+            window.brainbox
               .executeQuery({
                 type: 'user.search',
                 accountId,

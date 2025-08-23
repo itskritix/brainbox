@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { BooleanFieldAttributes } from '@colanode/core';
-import { Checkbox } from '@colanode/ui/components/ui/checkbox';
-import { useRecord } from '@colanode/ui/contexts/record';
+import { BooleanFieldAttributes } from '@brainbox/core';
+import { Checkbox } from '@brainbox/ui/components/ui/checkbox';
+import { useRecord } from '@brainbox/ui/contexts/record';
 
 interface RecordBooleanValueProps {
   field: BooleanFieldAttributes;

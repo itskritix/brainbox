@@ -1,10 +1,10 @@
-import { LocalSpaceNode } from '@colanode/client/types';
-import { NodeRole, hasNodeRole } from '@colanode/core';
-import { NodeCollaborators } from '@colanode/ui/components/collaborators/node-collaborators';
-import { SpaceDeleteForm } from '@colanode/ui/components/spaces/space-delete-form';
-import { SpaceGeneralTab } from '@colanode/ui/components/spaces/space-general-tab';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { useLayout } from '@colanode/ui/contexts/layout';
+import { LocalSpaceNode } from '@brainbox/client/types';
+import { NodeRole, hasNodeRole } from '@brainbox/core';
+import { NodeCollaborators } from '@brainbox/ui/components/collaborators/node-collaborators';
+import { SpaceDeleteForm } from '@brainbox/ui/components/spaces/space-delete-form';
+import { SpaceGeneralTab } from '@brainbox/ui/components/spaces/space-general-tab';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { useLayout } from '@brainbox/ui/contexts/layout';
 
 interface SpaceBodyProps {
   space: LocalSpaceNode;

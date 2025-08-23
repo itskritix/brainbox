@@ -1,7 +1,7 @@
-import { SelectCollaboration } from '@colanode/client/databases/workspace';
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
-import { SyncCollaborationData, createDebugger } from '@colanode/core';
+import { SelectCollaboration } from '@brainbox/client/databases/workspace';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
+import { SyncCollaborationData, createDebugger } from '@brainbox/core';
 
 const debug = createDebugger('desktop:service:collaboration');
 

@@ -1,6 +1,6 @@
 # PostgreSQL with pgvector
 
-Custom PostgreSQL image with pgvector extension for Colanode's vector search capabilities.
+Custom PostgreSQL image with pgvector extension for Brainbox's vector search capabilities.
 
 ## Why Custom Image?
 

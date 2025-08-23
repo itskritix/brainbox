@@ -8,13 +8,13 @@ import {
   apiErrorOutputSchema,
   generateId,
   IdType,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { s3Client } from '@colanode/server/data/storage';
-import { config } from '@colanode/server/lib/config';
-import { fetchCounter } from '@colanode/server/lib/counters';
-import { buildFilePath } from '@colanode/server/lib/files';
-import { mapNode, updateNode } from '@colanode/server/lib/nodes';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { s3Client } from '@brainbox/server/data/storage';
+import { config } from '@brainbox/server/lib/config';
+import { fetchCounter } from '@brainbox/server/lib/counters';
+import { buildFilePath } from '@brainbox/server/lib/files';
+import { mapNode, updateNode } from '@brainbox/server/lib/nodes';
 
 export const fileUploadRoute: FastifyPluginCallbackZod = (
   instance,

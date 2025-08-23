@@ -1,10 +1,10 @@
-import { LocalFileNode } from '@colanode/client/types';
-import { FileIcon } from '@colanode/ui/components/files/file-icon';
-import { FilePreview } from '@colanode/ui/components/files/file-preview';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { canPreviewFile } from '@colanode/ui/lib/files';
+import { LocalFileNode } from '@brainbox/client/types';
+import { FileIcon } from '@brainbox/ui/components/files/file-icon';
+import { FilePreview } from '@brainbox/ui/components/files/file-preview';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { canPreviewFile } from '@brainbox/ui/lib/files';
 
 interface FileBlockProps {
   id: string;

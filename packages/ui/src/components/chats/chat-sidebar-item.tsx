@@ -1,15 +1,15 @@
 import { Pin, PinOff, Loader2 } from 'lucide-react';
 import { InView } from 'react-intersection-observer';
 
-import { LocalChatNode } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { UnreadBadge } from '@colanode/ui/components/ui/unread-badge';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useRadar } from '@colanode/ui/contexts/radar';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { usePinnedItems } from '@colanode/ui/hooks/use-pinned-items';
-import { cn } from '@colanode/ui/lib/utils';
+import { LocalChatNode } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { UnreadBadge } from '@brainbox/ui/components/ui/unread-badge';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useRadar } from '@brainbox/ui/contexts/radar';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { usePinnedItems } from '@brainbox/ui/hooks/use-pinned-items';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface ChatSidebarItemProps {
   chat: LocalChatNode;

@@ -10,7 +10,7 @@ export type FileDownloadRequestGetQueryOutput = {
   headers: Record<string, string>;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'file.download.request.get': {
       input: FileDownloadRequestGetQueryInput;
