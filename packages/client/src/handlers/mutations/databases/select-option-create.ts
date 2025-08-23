@@ -46,7 +46,7 @@ export class SelectOptionCreateMutationHandler
         }
 
         const maxIndex = Object.values(field.options)
-          .map((selectOption) => selectOption.index)
+          .map((selectOption: any) => selectOption.index)
           .sort((a, b) => -compareString(a, b))[0];
 
         const index = generateFractionalIndex(maxIndex, null);

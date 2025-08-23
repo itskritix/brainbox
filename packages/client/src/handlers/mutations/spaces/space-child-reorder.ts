@@ -16,7 +16,7 @@ import {
 interface NodeFractionalIndex {
   id: string;
   defaultIndex: string;
-  customIndex: string | null;
+  customIndex: string;
 }
 
 export class SpaceChildReorderMutationHandler
@@ -103,14 +103,14 @@ export class SpaceChildReorderMutationHandler
       indexes.push({
         id: child.id,
         defaultIndex: lastIndex,
-        customIndex: childrenSettings[child.id]?.index ?? null,
+        customIndex: childrenSettings[child.id]?.index ?? '',
       });
     }
 
     const sortedIndexes = indexes.sort((a, b) =>
       compareString(
-        a.customIndex ?? a.defaultIndex,
-        b.customIndex ?? b.defaultIndex
+        a.customIndex || a.defaultIndex,
+        b.customIndex || b.defaultIndex
       )
     );
 
@@ -120,7 +120,7 @@ export class SpaceChildReorderMutationHandler
         return generateFractionalIndex(null, null);
       }
 
-      const nextIndex = firstIndex.customIndex ?? firstIndex.defaultIndex;
+      const nextIndex = firstIndex.customIndex || firstIndex.defaultIndex;
       return generateFractionalIndex(null, nextIndex);
     }
 
@@ -134,7 +134,7 @@ export class SpaceChildReorderMutationHandler
       return null;
     }
 
-    const previousIndex = afterNode.customIndex ?? afterNode.defaultIndex;
+    const previousIndex = afterNode.customIndex || afterNode.defaultIndex;
     let nextIndex: string | null = null;
     if (afterNodeIndex < sortedIndexes.length - 1) {
       const nextNode = sortedIndexes[afterNodeIndex + 1];
@@ -142,7 +142,7 @@ export class SpaceChildReorderMutationHandler
         return null;
       }
 
-      nextIndex = nextNode.customIndex ?? nextNode.defaultIndex;
+      nextIndex = nextNode.customIndex || nextNode.defaultIndex;
     }
 
     let newIndex = generateFractionalIndex(previousIndex, nextIndex);

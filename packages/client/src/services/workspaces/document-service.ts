@@ -24,6 +24,7 @@ import {
   generateId,
   getNodeModel,
   IdType,
+  Mention,
   NodeModel,
   SyncDocumentUpdateData,
   UpdateDocumentMutationData,
@@ -126,7 +127,7 @@ export class DocumentService {
     const text = extractDocumentText(id, content);
     const mentions = extractBlocksMentions(id, content.blocks) ?? [];
     const nodeReferencesToCreate: CreateNodeReference[] = mentions.map(
-      (mention) => ({
+      (mention: Mention) => ({
         node_id: id,
         reference_id: mention.target,
         inner_id: mention.id,
@@ -663,7 +664,7 @@ export class DocumentService {
       .execute();
 
     const mergedUpdateIds =
-      data.mergedUpdates?.map((update) => update.id) ?? [];
+      data.mergedUpdates?.map((update: any) => update.id) ?? [];
 
     const ydoc = new YDoc(documentState?.state);
     ydoc.applyUpdate(data.data);

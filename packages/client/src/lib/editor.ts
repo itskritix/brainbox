@@ -203,7 +203,7 @@ const mapBlockLeafsToContents = (
       ...(leaf.text && { text: leaf.text }),
       ...(leaf.attrs && { attrs: leaf.attrs }),
       ...(leaf.marks?.length && {
-        marks: leaf.marks.map((mark) => ({
+        marks: leaf.marks.map((mark: any) => ({
           type: mark.type,
           ...(mark.attrs && { attrs: mark.attrs }),
         })),

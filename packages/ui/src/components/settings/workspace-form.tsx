@@ -82,8 +82,8 @@ export const WorkspaceForm = () => {
         id: workspace.id,
         accountId: workspace.accountId,
         name: values.workspaceName,
-        description: values.workspaceDescription,
-        avatar: values.workspaceAvatar,
+        description: values.workspaceDescription ?? null,
+        avatar: values.workspaceAvatar ?? null,
       },
       onSuccess() {
         toast.success('Workspace updated');

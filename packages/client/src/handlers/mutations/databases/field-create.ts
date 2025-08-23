@@ -51,7 +51,7 @@ export class FieldCreateMutationHandler
       input.databaseId,
       (attributes) => {
         const maxIndex = Object.values(attributes.fields)
-          .map((field) => field.index)
+          .map((field: FieldAttributes) => field.index)
           .sort((a, b) => -compareString(a, b))[0];
 
         const index = generateFractionalIndex(maxIndex, null);

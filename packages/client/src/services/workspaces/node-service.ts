@@ -94,7 +94,7 @@ export class NodeService {
     const nodeText = model.extractText(input.id, input.attributes);
     const mentions = model.extractMentions(input.id, input.attributes);
     const nodeReferencesToCreate: CreateNodeReference[] = mentions.map(
-      (mention) => ({
+      (mention: any) => ({
         node_id: input.id,
         reference_id: mention.target,
         inner_id: mention.id,
@@ -588,7 +588,7 @@ export class NodeService {
     const model = getNodeModel(attributes.type);
     const nodeText = model.extractText(update.nodeId, attributes);
     const mentions = model.extractMentions(update.nodeId, attributes);
-    const nodeReferencesToCreate = mentions.map((mention) => ({
+    const nodeReferencesToCreate = mentions.map((mention: any) => ({
       node_id: update.nodeId,
       reference_id: mention.target,
       inner_id: mention.id,
@@ -726,7 +726,7 @@ export class NodeService {
     const afterMentions = model.extractMentions(existingNode.id, attributes);
     const mentionChanges = checkMentionChanges(beforeMentions, afterMentions);
 
-    const mergedUpdateIds = update.mergedUpdates?.map((u) => u.id) ?? [];
+    const mergedUpdateIds = update.mergedUpdates?.map((u: any) => u.id) ?? [];
     const updatesToDelete = [update.id, ...mergedUpdateIds];
 
     const { updatedNode, createdNodeReferences, deletedNodeReferences } =

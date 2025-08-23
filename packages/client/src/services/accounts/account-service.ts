@@ -347,7 +347,7 @@ export class AccountService {
       const workspaceIds = this.workspaces.keys();
       for (const workspaceId of workspaceIds) {
         const updatedWorkspace = response.workspaces.find(
-          (w) => w.id === workspaceId
+          (w: any) => w.id === workspaceId
         );
 
         if (!updatedWorkspace) {
