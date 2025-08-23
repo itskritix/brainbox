@@ -1,6 +1,6 @@
 import { JSONContent } from '@tiptap/core';
 
-import { FileBlock } from '@colanode/ui/components/files/file-block';
+import { FileBlock } from '@brainbox/ui/components/files/file-block';
 
 interface FileRendererProps {
   node: JSONContent;

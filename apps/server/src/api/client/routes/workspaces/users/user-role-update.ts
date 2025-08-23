@@ -7,9 +7,9 @@ import {
   userRoleUpdateInputSchema,
   apiErrorOutputSchema,
   userOutputSchema,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { eventBus } from '@colanode/server/lib/event-bus';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { eventBus } from '@brainbox/server/lib/event-bus';
 
 export const userRoleUpdateRoute: FastifyPluginCallbackZod = (
   instance,

@@ -1,4 +1,4 @@
-import { Document } from '@colanode/client/types/documents';
+import { Document } from '@brainbox/client/types/documents';
 
 export type DocumentGetQueryInput = {
   type: 'document.get';
@@ -7,7 +7,7 @@ export type DocumentGetQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'document.get': {
       input: DocumentGetQueryInput;

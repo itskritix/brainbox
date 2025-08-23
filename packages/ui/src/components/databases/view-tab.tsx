@@ -1,6 +1,6 @@
-import { LocalDatabaseViewNode } from '@colanode/client/types';
-import { ViewIcon } from '@colanode/ui/components/databases/view-icon';
-import { cn } from '@colanode/ui/lib/utils';
+import { LocalDatabaseViewNode } from '@brainbox/client/types';
+import { ViewIcon } from '@brainbox/ui/components/databases/view-icon';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface ViewTabProps {
   view: LocalDatabaseViewNode;

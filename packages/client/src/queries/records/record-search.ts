@@ -1,4 +1,4 @@
-import { LocalRecordNode } from '@colanode/client/types/nodes';
+import { LocalRecordNode } from '@brainbox/client/types/nodes';
 
 export type RecordSearchQueryInput = {
   type: 'record.search';
@@ -9,7 +9,7 @@ export type RecordSearchQueryInput = {
   exclude?: string[];
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'record.search': {
       input: RecordSearchQueryInput;

@@ -3,7 +3,7 @@ import { z } from 'zod/v4';
 import {
   richTextContentSchema,
   RichTextContent,
-} from '@colanode/core/registry/documents/rich-text';
+} from '@brainbox/core/registry/documents/rich-text';
 
 export const documentContentSchema = z.discriminatedUnion('type', [
   richTextContentSchema,

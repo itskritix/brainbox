@@ -1,11 +1,11 @@
-import { AccountMetadata } from '@colanode/client/types/accounts';
+import { AccountMetadata } from '@brainbox/client/types/accounts';
 
 export type AccountMetadataListQueryInput = {
   type: 'account.metadata.list';
   accountId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'account.metadata.list': {
       input: AccountMetadataListQueryInput;

@@ -1,8 +1,8 @@
-import { SidebarMenuType } from '@colanode/client/types';
-import { SidebarChats } from '@colanode/ui/components/layouts/sidebars/sidebar-chats';
-import { SidebarMenu } from '@colanode/ui/components/layouts/sidebars/sidebar-menu';
-import { SidebarSettings } from '@colanode/ui/components/layouts/sidebars/sidebar-settings';
-import { SidebarSpaces } from '@colanode/ui/components/layouts/sidebars/sidebar-spaces';
+import { SidebarMenuType } from '@brainbox/client/types';
+import { SidebarChats } from '@brainbox/ui/components/layouts/sidebars/sidebar-chats';
+import { SidebarMenu } from '@brainbox/ui/components/layouts/sidebars/sidebar-menu';
+import { SidebarSettings } from '@brainbox/ui/components/layouts/sidebars/sidebar-settings';
+import { SidebarSpaces } from '@brainbox/ui/components/layouts/sidebars/sidebar-spaces';
 
 interface SidebarProps {
   menu: SidebarMenuType;

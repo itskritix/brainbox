@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { User } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
+import { User } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
 import {
   Command,
   CommandEmpty,
@@ -9,9 +9,9 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@colanode/ui/components/ui/command';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+} from '@brainbox/ui/components/ui/command';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface UserSearchProps {
   exclude?: string[];

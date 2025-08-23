@@ -1,11 +1,11 @@
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { MutationHandler } from '@colanode/client/lib/types';
-import { fetchNode } from '@colanode/client/lib/utils';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { fetchNode } from '@brainbox/client/lib/utils';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   FieldCreateMutationInput,
   FieldCreateMutationOutput,
-} from '@colanode/client/mutations/databases/field-create';
+} from '@brainbox/client/mutations/databases/field-create';
 import {
   compareString,
   DatabaseAttributes,
@@ -14,7 +14,7 @@ import {
   generateId,
   generateFractionalIndex,
   IdType,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 export class FieldCreateMutationHandler
   extends WorkspaceMutationHandlerBase
@@ -51,7 +51,7 @@ export class FieldCreateMutationHandler
       input.databaseId,
       (attributes) => {
         const maxIndex = Object.values(attributes.fields)
-          .map((field) => field.index)
+          .map((field: FieldAttributes) => field.index)
           .sort((a, b) => -compareString(a, b))[0];
 
         const index = generateFractionalIndex(maxIndex, null);

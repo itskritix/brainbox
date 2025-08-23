@@ -6,19 +6,19 @@ import {
   IdType,
   MutationStatus,
   UpdateDocumentMutationData,
-} from '@colanode/core';
-import { decodeState, YDoc } from '@colanode/crdt';
-import { database } from '@colanode/server/data/database';
-import { SelectUser } from '@colanode/server/data/schema';
-import { scheduleDocumentEmbedding } from '@colanode/server/lib/ai/embeddings';
-import { eventBus } from '@colanode/server/lib/event-bus';
-import { createLogger } from '@colanode/server/lib/logger';
-import { fetchNode, fetchNodeTree, mapNode } from '@colanode/server/lib/nodes';
+} from '@brainbox/core';
+import { decodeState, YDoc } from '@brainbox/crdt';
+import { database } from '@brainbox/server/data/database';
+import { SelectUser } from '@brainbox/server/data/schema';
+import { scheduleDocumentEmbedding } from '@brainbox/server/lib/ai/embeddings';
+import { eventBus } from '@brainbox/server/lib/event-bus';
+import { createLogger } from '@brainbox/server/lib/logger';
+import { fetchNode, fetchNodeTree, mapNode } from '@brainbox/server/lib/nodes';
 import {
   CreateDocumentInput,
   CreateDocumentOutput,
-} from '@colanode/server/types/documents';
-import { ConcurrentUpdateResult } from '@colanode/server/types/nodes';
+} from '@brainbox/server/types/documents';
+import { ConcurrentUpdateResult } from '@brainbox/server/types/nodes';
 
 const logger = createLogger('server:lib:documents');
 

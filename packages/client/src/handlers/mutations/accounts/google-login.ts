@@ -1,13 +1,13 @@
-import { AccountMutationHandlerBase } from '@colanode/client/handlers/mutations/accounts/base';
-import { parseApiError } from '@colanode/client/lib/ky';
-import { MutationHandler } from '@colanode/client/lib/types';
+import { AccountMutationHandlerBase } from '@brainbox/client/handlers/mutations/accounts/base';
+import { parseApiError } from '@brainbox/client/lib/ky';
+import { MutationHandler } from '@brainbox/client/lib/types';
 import {
   GoogleLoginMutationInput,
   MutationError,
   MutationErrorCode,
-} from '@colanode/client/mutations';
-import { AppService } from '@colanode/client/services/app-service';
-import { GoogleLoginInput, LoginOutput } from '@colanode/core';
+} from '@brainbox/client/mutations';
+import { AppService } from '@brainbox/client/services/app-service';
+import { GoogleLoginInput, LoginOutput } from '@brainbox/core';
 
 export class GoogleLoginMutationHandler
   extends AccountMutationHandlerBase

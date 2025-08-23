@@ -8,8 +8,8 @@ import {
   UserStatus,
   accountSyncOutputSchema,
   apiErrorOutputSchema,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
 
 export const accountSyncRoute: FastifyPluginCallbackZod = (
   instance,

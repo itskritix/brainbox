@@ -1,19 +1,19 @@
 import ms from 'ms';
 
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { mapNodeInteraction } from '@colanode/client/lib/mappers';
-import { MutationHandler } from '@colanode/client/lib/types';
-import { fetchNode } from '@colanode/client/lib/utils';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { mapNodeInteraction } from '@brainbox/client/lib/mappers';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { fetchNode } from '@brainbox/client/lib/utils';
 import {
   NodeInteractionSeenMutationInput,
   NodeInteractionSeenMutationOutput,
-} from '@colanode/client/mutations/nodes/node-interaction-seen';
+} from '@brainbox/client/mutations/nodes/node-interaction-seen';
 import {
   NodeInteractionSeenMutation,
   generateId,
   IdType,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 export class NodeInteractionSeenMutationHandler
   extends WorkspaceMutationHandlerBase

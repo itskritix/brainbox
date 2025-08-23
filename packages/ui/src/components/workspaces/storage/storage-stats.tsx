@@ -1,5 +1,5 @@
-import { FileSubtype, formatBytes } from '@colanode/core';
-import { bigintToPercent } from '@colanode/ui/lib/utils';
+import { FileSubtype, formatBytes } from '@brainbox/core';
+import { bigintToPercent } from '@brainbox/ui/lib/utils';
 
 interface SubtypeMetadata {
   subtype: FileSubtype;

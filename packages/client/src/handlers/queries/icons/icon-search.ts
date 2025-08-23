@@ -1,9 +1,9 @@
-import { mapIcon } from '@colanode/client/lib';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { IconSearchQueryInput } from '@colanode/client/queries/icons/icon-search';
-import { AppService } from '@colanode/client/services/app-service';
-import { Event } from '@colanode/client/types/events';
-import { Icon } from '@colanode/client/types/icons';
+import { mapIcon } from '@brainbox/client/lib';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { IconSearchQueryInput } from '@brainbox/client/queries/icons/icon-search';
+import { AppService } from '@brainbox/client/services/app-service';
+import { Event } from '@brainbox/client/types/events';
+import { Icon } from '@brainbox/client/types/icons';
 
 export class IconSearchQueryHandler
   implements QueryHandler<IconSearchQueryInput>

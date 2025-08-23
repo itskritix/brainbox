@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 
-import { config } from '@colanode/server/lib/config';
-import { createLogger } from '@colanode/server/lib/logger';
+import { config } from '@brainbox/server/lib/config';
+import { createLogger } from '@brainbox/server/lib/logger';
 
 interface EmailMessage {
   to: string | string[];

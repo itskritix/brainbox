@@ -1,11 +1,11 @@
 import { toast } from 'sonner';
 
-import { Container, ContainerBody } from '@colanode/ui/components/ui/container';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { WorkspaceDelete } from '@colanode/ui/components/workspaces/workspace-delete';
-import { WorkspaceForm } from '@colanode/ui/components/workspaces/workspace-form';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { Container, ContainerBody } from '@brainbox/ui/components/ui/container';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { WorkspaceDelete } from '@brainbox/ui/components/workspaces/workspace-delete';
+import { WorkspaceForm } from '@brainbox/ui/components/workspaces/workspace-form';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 export const WorkspaceSettings = () => {
   const workspace = useWorkspace();

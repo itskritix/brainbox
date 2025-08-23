@@ -1,6 +1,6 @@
-import { EmojiPickerItemsRow } from '@colanode/client/types';
-import { EmojiPickerItem } from '@colanode/ui/components/emojis/emoji-picker-item';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { EmojiPickerItemsRow } from '@brainbox/client/types';
+import { EmojiPickerItem } from '@brainbox/ui/components/emojis/emoji-picker-item';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface EmojiBrowserItemsProps {
   row: EmojiPickerItemsRow;

@@ -1,7 +1,7 @@
-import { LocalMessageNode } from '@colanode/client/types';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { cn } from '@colanode/ui/lib/utils';
+import { LocalMessageNode } from '@brainbox/client/types';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface MessageAuthorNameProps {
   message: LocalMessageNode;

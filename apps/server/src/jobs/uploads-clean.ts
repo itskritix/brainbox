@@ -1,12 +1,12 @@
 import ms from 'ms';
 
-import { database } from '@colanode/server/data/database';
-import { redis } from '@colanode/server/data/redis';
-import { JobHandler } from '@colanode/server/jobs';
-import { config } from '@colanode/server/lib/config';
-import { deleteFile } from '@colanode/server/lib/files';
-import { createLogger } from '@colanode/server/lib/logger';
-import { RedisKvStore } from '@colanode/server/lib/tus/redis-kv';
+import { database } from '@brainbox/server/data/database';
+import { redis } from '@brainbox/server/data/redis';
+import { JobHandler } from '@brainbox/server/jobs';
+import { config } from '@brainbox/server/lib/config';
+import { deleteFile } from '@brainbox/server/lib/files';
+import { createLogger } from '@brainbox/server/lib/logger';
+import { RedisKvStore } from '@brainbox/server/lib/tus/redis-kv';
 
 const logger = createLogger('server:job:uploads-clean');
 
@@ -14,7 +14,7 @@ export type UploadsCleanInput = {
   type: 'uploads.clean';
 };
 
-declare module '@colanode/server/jobs' {
+declare module '@brainbox/server/jobs' {
   interface JobMap {
     'uploads.clean': {
       input: UploadsCleanInput;

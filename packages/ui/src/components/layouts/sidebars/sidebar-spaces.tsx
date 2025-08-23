@@ -1,13 +1,13 @@
 import { Settings, UserPlus, Plus } from 'lucide-react';
 import { useState } from 'react';
 
-import { SpecialContainerTabPath } from '@colanode/client/types';
-import { SpaceSidebarItem } from '@colanode/ui/components/spaces/space-sidebar-item';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { SidebarMenuHeader } from '@colanode/ui/components/layouts/sidebars/sidebar-menu-header';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { SpaceCreateDialog } from '@colanode/ui/components/spaces/space-create-dialog';
+import { SpecialContainerTabPath } from '@brainbox/client/types';
+import { SpaceSidebarItem } from '@brainbox/ui/components/spaces/space-sidebar-item';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { SidebarMenuHeader } from '@brainbox/ui/components/layouts/sidebars/sidebar-menu-header';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { SpaceCreateDialog } from '@brainbox/ui/components/spaces/space-create-dialog';
 
 export const SidebarSpaces = () => {
   const workspace = useWorkspace();

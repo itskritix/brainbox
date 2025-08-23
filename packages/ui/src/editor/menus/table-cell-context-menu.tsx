@@ -23,9 +23,9 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from '@colanode/ui/components/ui/context-menu';
-import { editorColors } from '@colanode/ui/lib/editor';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/context-menu';
+import { editorColors } from '@brainbox/ui/lib/editor';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface TableCellContextMenuProps extends NodeViewProps {
   children: React.ReactNode;

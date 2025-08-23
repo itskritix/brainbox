@@ -4,8 +4,8 @@ import {
   JobHandler,
   JobOutput,
   JobConcurrencyConfig,
-} from '@colanode/client/jobs';
-import { AppService } from '@colanode/client/services/app-service';
+} from '@brainbox/client/jobs';
+import { AppService } from '@brainbox/client/services/app-service';
 
 export type AvatarDownloadInput = {
   type: 'avatar.download';
@@ -13,7 +13,7 @@ export type AvatarDownloadInput = {
   avatar: string;
 };
 
-declare module '@colanode/client/jobs' {
+declare module '@brainbox/client/jobs' {
   interface JobMap {
     'avatar.download': {
       input: AvatarDownloadInput;

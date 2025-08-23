@@ -9,11 +9,11 @@ import {
   ApiErrorCode,
   extractNodeRole,
   FileStatus,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { s3Client } from '@colanode/server/data/storage';
-import { config } from '@colanode/server/lib/config';
-import { fetchNodeTree, mapNode } from '@colanode/server/lib/nodes';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { s3Client } from '@brainbox/server/data/storage';
+import { config } from '@brainbox/server/lib/config';
+import { fetchNodeTree, mapNode } from '@brainbox/server/lib/nodes';
 
 export const fileDownloadRoute: FastifyPluginCallbackZod = (
   instance,

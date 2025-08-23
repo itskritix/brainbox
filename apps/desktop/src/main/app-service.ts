@@ -1,8 +1,8 @@
-import { AppMeta, AppService } from '@colanode/client/services';
-import { AppBadge } from '@colanode/desktop/main/app-badge';
-import { DesktopFileSystem } from '@colanode/desktop/main/file-system';
-import { DesktopKyselyService } from '@colanode/desktop/main/kysely-service';
-import { DesktopPathService } from '@colanode/desktop/main/path-service';
+import { AppMeta, AppService } from '@brainbox/client/services';
+import { AppBadge } from '@brainbox/desktop/main/app-badge';
+import { DesktopFileSystem } from '@brainbox/desktop/main/file-system';
+import { DesktopKyselyService } from '@brainbox/desktop/main/kysely-service';
+import { DesktopPathService } from '@brainbox/desktop/main/path-service';
 
 const appMeta: AppMeta = {
   type: 'desktop',

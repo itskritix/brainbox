@@ -1,9 +1,9 @@
 import { JSONContent } from '@tiptap/core';
 
-import { defaultClasses } from '@colanode/ui/editor/classes';
-import { NodeChildrenRenderer } from '@colanode/ui/editor/renderers/node-children';
-import { editorColors } from '@colanode/ui/lib/editor';
-import { cn } from '@colanode/ui/lib/utils';
+import { defaultClasses } from '@brainbox/ui/editor/classes';
+import { NodeChildrenRenderer } from '@brainbox/ui/editor/renderers/node-children';
+import { editorColors } from '@brainbox/ui/lib/editor';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface TableHeaderRendererProps {
   node: JSONContent;

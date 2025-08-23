@@ -1,8 +1,8 @@
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { Button } from '@colanode/ui/components/ui/button';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -10,15 +10,15 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@colanode/ui/components/ui/command';
+} from '@brainbox/ui/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/popover';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface DatabaseSelectProps {
   id: string | null | undefined;

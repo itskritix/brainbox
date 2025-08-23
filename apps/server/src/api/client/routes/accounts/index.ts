@@ -1,7 +1,7 @@
 import { FastifyPluginCallback } from 'fastify';
 
-import { accountAuthenticator } from '@colanode/server/api/client/plugins/account-auth';
-import { authIpRateLimiter } from '@colanode/server/api/client/plugins/auth-ip-rate-limit';
+import { accountAuthenticator } from '@brainbox/server/api/client/plugins/account-auth';
+import { authIpRateLimiter } from '@brainbox/server/api/client/plugins/auth-ip-rate-limit';
 
 import { accountSyncRoute } from './account-sync';
 import { accountUpdateRoute } from './account-update';

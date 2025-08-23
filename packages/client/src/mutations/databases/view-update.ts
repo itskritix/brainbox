@@ -1,4 +1,4 @@
-import { DatabaseViewAttributes } from '@colanode/core';
+import { DatabaseViewAttributes } from '@brainbox/core';
 
 export type ViewUpdateMutationInput = {
   type: 'view.update';
@@ -12,7 +12,7 @@ export type ViewUpdateMutationOutput = {
   id: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'view.update': {
       input: ViewUpdateMutationInput;

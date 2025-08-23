@@ -2,13 +2,13 @@ import {
   SynchronizerOutputMessage,
   SyncNodesUpdatesInput,
   SyncNodeUpdateData,
-} from '@colanode/core';
-import { encodeState } from '@colanode/crdt';
-import { database } from '@colanode/server/data/database';
-import { SelectNodeUpdate } from '@colanode/server/data/schema';
-import { createLogger } from '@colanode/server/lib/logger';
-import { BaseSynchronizer } from '@colanode/server/synchronizers/base';
-import { Event } from '@colanode/server/types/events';
+} from '@brainbox/core';
+import { encodeState } from '@brainbox/crdt';
+import { database } from '@brainbox/server/data/database';
+import { SelectNodeUpdate } from '@brainbox/server/data/schema';
+import { createLogger } from '@brainbox/server/lib/logger';
+import { BaseSynchronizer } from '@brainbox/server/synchronizers/base';
+import { Event } from '@brainbox/server/types/events';
 
 const logger = createLogger('node-update-synchronizer');
 

@@ -1,12 +1,12 @@
-import { AvatarUpload } from '@colanode/ui/components/avatars/avatar-upload';
-import { EmojiPicker } from '@colanode/ui/components/emojis/emoji-picker';
-import { IconPicker } from '@colanode/ui/components/icons/icon-picker';
+import { AvatarUpload } from '@brainbox/ui/components/avatars/avatar-upload';
+import { EmojiPicker } from '@brainbox/ui/components/emojis/emoji-picker';
+import { IconPicker } from '@brainbox/ui/components/icons/icon-picker';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@colanode/ui/components/ui/tabs';
+} from '@brainbox/ui/components/ui/tabs';
 
 interface AvatarPickerProps {
   onPick: (avatar: string) => void;

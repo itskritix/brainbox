@@ -1,12 +1,12 @@
-import { extractDocumentText } from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { JobHandler } from '@colanode/server/jobs';
+import { extractDocumentText } from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { JobHandler } from '@brainbox/server/jobs';
 import {
   fetchEmbeddingCursor,
   scheduleDocumentEmbedding,
   updateEmbeddingCursor,
-} from '@colanode/server/lib/ai/embeddings';
-import { config } from '@colanode/server/lib/config';
+} from '@brainbox/server/lib/ai/embeddings';
+import { config } from '@brainbox/server/lib/config';
 
 const BATCH_SIZE = 100;
 
@@ -14,7 +14,7 @@ export type DocumentEmbedScanInput = {
   type: 'document.embed.scan';
 };
 
-declare module '@colanode/server/jobs' {
+declare module '@brainbox/server/jobs' {
   interface JobMap {
     'document.embed.scan': {
       input: DocumentEmbedScanInput;

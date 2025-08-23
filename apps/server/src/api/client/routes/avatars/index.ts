@@ -1,6 +1,6 @@
 import { FastifyPluginCallback } from 'fastify';
 
-import { accountAuthenticator } from '@colanode/server/api/client/plugins/account-auth';
+import { accountAuthenticator } from '@brainbox/server/api/client/plugins/account-auth';
 
 import { avatarDownloadRoute } from './avatar-download';
 import { avatarUploadRoute } from './avatar-upload';

@@ -1,7 +1,7 @@
 import { net } from 'electron';
 import path from 'path';
 
-import { app } from '@colanode/desktop/main/app-service';
+import { app } from '@brainbox/desktop/main/app-service';
 
 export const handleLocalRequest = async (
   request: Request

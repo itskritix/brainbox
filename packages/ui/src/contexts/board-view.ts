@@ -4,7 +4,7 @@ import {
   DatabaseViewFilterAttributes,
   FieldAttributes,
   FieldValue,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 interface RecordItem {
   id: string;

@@ -1,7 +1,7 @@
-import { LocalSpaceNode } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { AvatarPopover } from '@colanode/ui/components/avatars/avatar-popover';
-import { Button } from '@colanode/ui/components/ui/button';
+import { LocalSpaceNode } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { AvatarPopover } from '@brainbox/ui/components/avatars/avatar-popover';
+import { Button } from '@brainbox/ui/components/ui/button';
 
 interface SpaceAvatarProps {
   space: LocalSpaceNode;

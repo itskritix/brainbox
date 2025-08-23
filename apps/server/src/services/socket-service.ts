@@ -1,11 +1,11 @@
 import { WebSocket } from 'ws';
 
-import { generateId, IdType } from '@colanode/core';
-import { redis } from '@colanode/server/data/redis';
-import { eventBus } from '@colanode/server/lib/event-bus';
-import { SocketConnection } from '@colanode/server/services/socket-connection';
-import { ClientContext, RequestAccount } from '@colanode/server/types/api';
-import { SocketContext } from '@colanode/server/types/sockets';
+import { generateId, IdType } from '@brainbox/core';
+import { redis } from '@brainbox/server/data/redis';
+import { eventBus } from '@brainbox/server/lib/event-bus';
+import { SocketConnection } from '@brainbox/server/services/socket-connection';
+import { ClientContext, RequestAccount } from '@brainbox/server/types/api';
+import { SocketContext } from '@brainbox/server/types/sockets';
 
 class SocketService {
   private readonly connections: Map<string, SocketConnection> = new Map();

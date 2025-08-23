@@ -1,4 +1,4 @@
-import { Avatar } from '@colanode/client/types/avatars';
+import { Avatar } from '@brainbox/client/types/avatars';
 
 export type AvatarGetQueryInput = {
   type: 'avatar.get';
@@ -6,7 +6,7 @@ export type AvatarGetQueryInput = {
   avatarId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'avatar.get': {
       input: AvatarGetQueryInput;

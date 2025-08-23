@@ -1,12 +1,12 @@
 import { useRef } from 'react';
 import { useDrop } from 'react-dnd';
 
-import { ContainerTab } from '@colanode/client/types';
-import { ContainerTabContent } from '@colanode/ui/components/layouts/containers/container-tab-content';
-import { ContainerTabTrigger } from '@colanode/ui/components/layouts/containers/container-tab-trigger';
-import { ScrollArea, ScrollBar } from '@colanode/ui/components/ui/scroll-area';
-import { Tabs, TabsList } from '@colanode/ui/components/ui/tabs';
-import { cn } from '@colanode/ui/lib/utils';
+import { ContainerTab } from '@brainbox/client/types';
+import { ContainerTabContent } from '@brainbox/ui/components/layouts/containers/container-tab-content';
+import { ContainerTabTrigger } from '@brainbox/ui/components/layouts/containers/container-tab-trigger';
+import { ScrollArea, ScrollBar } from '@brainbox/ui/components/ui/scroll-area';
+import { Tabs, TabsList } from '@brainbox/ui/components/ui/tabs';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface ContainerTabsProps {
   tabs: ContainerTab[];

@@ -1,7 +1,7 @@
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { StorageStats } from '@colanode/ui/components/workspaces/storage/storage-stats';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { StorageStats } from '@brainbox/ui/components/workspaces/storage/storage-stats';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 export const UserStorageStats = () => {
   const workspace = useWorkspace();

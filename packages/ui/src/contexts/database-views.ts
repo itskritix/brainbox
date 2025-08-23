@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import { LocalDatabaseViewNode } from '@colanode/client/types';
+import { LocalDatabaseViewNode } from '@brainbox/client/types';
 
 interface DatabaseViewsContext {
   views: LocalDatabaseViewNode[];

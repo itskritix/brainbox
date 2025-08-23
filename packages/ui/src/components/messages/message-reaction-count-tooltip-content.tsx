@@ -1,8 +1,8 @@
-import { NodeReactionCount, LocalMessageNode } from '@colanode/client/types';
-import { EmojiElement } from '@colanode/ui/components/emojis/emoji-element';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQueries } from '@colanode/ui/hooks/use-live-queries';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { NodeReactionCount, LocalMessageNode } from '@brainbox/client/types';
+import { EmojiElement } from '@brainbox/ui/components/emojis/emoji-element';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQueries } from '@brainbox/ui/hooks/use-live-queries';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface MessageReactionCountTooltipContentProps {
   message: LocalMessageNode;

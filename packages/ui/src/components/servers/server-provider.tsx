@@ -1,7 +1,7 @@
-import { isFeatureSupported } from '@colanode/client/lib';
-import { ServerNotFound } from '@colanode/ui/components/servers/server-not-found';
-import { ServerContext } from '@colanode/ui/contexts/server';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { isFeatureSupported } from '@brainbox/client/lib';
+import { ServerNotFound } from '@brainbox/ui/components/servers/server-not-found';
+import { ServerContext } from '@brainbox/ui/contexts/server';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface ServerProviderProps {
   domain: string;

@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import { MultiSelectFieldAttributes } from '@colanode/core';
-import { SelectFieldOptions } from '@colanode/ui/components/databases/fields/select-field-options';
-import { SelectOptionBadge } from '@colanode/ui/components/databases/fields/select-option-badge';
+import { MultiSelectFieldAttributes } from '@brainbox/core';
+import { SelectFieldOptions } from '@brainbox/ui/components/databases/fields/select-field-options';
+import { SelectOptionBadge } from '@brainbox/ui/components/databases/fields/select-option-badge';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { useRecord } from '@colanode/ui/contexts/record';
+} from '@brainbox/ui/components/ui/popover';
+import { useRecord } from '@brainbox/ui/contexts/record';
 
 interface RecordMultiSelectValueProps {
   field: MultiSelectFieldAttributes;

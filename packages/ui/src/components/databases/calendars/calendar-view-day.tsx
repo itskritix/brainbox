@@ -1,12 +1,12 @@
 import { Plus } from 'lucide-react';
 
-import { LocalRecordNode } from '@colanode/client/types';
-import { extractNodeRole, isSameDay } from '@colanode/core';
-import { CalendarViewRecordCard } from '@colanode/ui/components/databases/calendars/calendar-view-record-card';
-import { RecordProvider } from '@colanode/ui/components/records/record-provider';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { cn } from '@colanode/ui/lib/utils';
+import { LocalRecordNode } from '@brainbox/client/types';
+import { extractNodeRole, isSameDay } from '@brainbox/core';
+import { CalendarViewRecordCard } from '@brainbox/ui/components/databases/calendars/calendar-view-record-card';
+import { RecordProvider } from '@brainbox/ui/components/records/record-provider';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface CalendarViewDayProps {
   date: Date;

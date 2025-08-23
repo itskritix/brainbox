@@ -1,10 +1,10 @@
 import * as Comlink from 'comlink';
 
-import { eventBus } from '@colanode/client/lib';
-import { MutationInput, MutationResult } from '@colanode/client/mutations';
-import { QueryInput, QueryMap } from '@colanode/client/queries';
-import { AppMeta, AppService } from '@colanode/client/services';
-import { extractFileSubtype, generateId, IdType } from '@colanode/core';
+import { eventBus } from '@brainbox/client/lib';
+import { MutationInput, MutationResult } from '@brainbox/client/mutations';
+import { QueryInput, QueryMap } from '@brainbox/client/queries';
+import { AppMeta, AppService } from '@brainbox/client/services';
+import { extractFileSubtype, generateId, IdType } from '@brainbox/core';
 import {
   BroadcastMessage,
   BroadcastMutationMessage,
@@ -13,10 +13,10 @@ import {
   BroadcastQueryUnsubscribeMessage,
   ColanodeWorkerApi,
   PendingPromise,
-} from '@colanode/web/lib/types';
-import { WebFileSystem } from '@colanode/web/services/file-system';
-import { WebKyselyService } from '@colanode/web/services/kysely-service';
-import { WebPathService } from '@colanode/web/services/path-service';
+} from '@brainbox/web/lib/types';
+import { WebFileSystem } from '@brainbox/web/services/file-system';
+import { WebKyselyService } from '@brainbox/web/services/kysely-service';
+import { WebPathService } from '@brainbox/web/services/path-service';
 
 const windowId = generateId(IdType.Window);
 const pendingPromises = new Map<string, PendingPromise>();
@@ -26,12 +26,12 @@ const path = new WebPathService();
 let app: AppService | null = null;
 let appInitialized = false;
 
-const broadcast = new BroadcastChannel('colanode');
+const broadcast = new BroadcastChannel('brainbox');
 broadcast.onmessage = (event) => {
   handleMessage(event.data);
 };
 
-navigator.locks.request('colanode', async () => {
+navigator.locks.request('brainbox', async () => {
   const appMeta: AppMeta = {
     type: 'web',
     platform: navigator.userAgent,

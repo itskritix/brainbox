@@ -1,7 +1,7 @@
-{{- if .Values.colanode.ingress.enabled -}}
-{{- if and .Values.colanode.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.colanode.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.colanode.ingress.annotations "kubernetes.io/ingress.class" .Values.colanode.ingress.className}}
+{{- if .Values.brainbox.ingress.enabled -}}
+{{- if and .Values.brainbox.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- if not (hasKey .Values.brainbox.ingress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.brainbox.ingress.annotations "kubernetes.io/ingress.class" .Values.brainbox.ingress.className}}
   {{- end }}
 {{- end }}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -13,20 +13,20 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ include "colanode.fullname" . }}
+  name: {{ include "brainbox.fullname" . }}
   labels:
-    {{- include "colanode.labels" . | nindent 4 }}
-  {{- with .Values.colanode.ingress.annotations }}
+    {{- include "brainbox.labels" . | nindent 4 }}
+  {{- with .Values.brainbox.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if and .Values.colanode.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  ingressClassName: {{ .Values.colanode.ingress.className }}
+  {{- if and .Values.brainbox.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.brainbox.ingress.className }}
   {{- end }}
-  {{- if .Values.colanode.ingress.tls }}
+  {{- if .Values.brainbox.ingress.tls }}
   tls:
-    {{- range .Values.colanode.ingress.tls }}
+    {{- range .Values.brainbox.ingress.tls }}
     - hosts:
         {{- range .hosts }}
         - {{ . | quote }}
@@ -35,7 +35,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- range .Values.colanode.ingress.hosts }}
+    {{- range .Values.brainbox.ingress.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
@@ -47,11 +47,11 @@ spec:
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ include "colanode.fullname" $ }}
+                name: {{ include "brainbox.fullname" $ }}
                 port:
                   name: http
               {{- else }}
-              serviceName: {{ include "colanode.fullname" $ }}
+              serviceName: {{ include "brainbox.fullname" $ }}
               servicePort: http
               {{- end }}
           {{- end }}

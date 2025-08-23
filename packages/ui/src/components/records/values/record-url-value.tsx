@@ -1,14 +1,14 @@
 import { ExternalLink } from 'lucide-react';
 
-import { isValidUrl, UrlFieldAttributes } from '@colanode/core';
+import { isValidUrl, UrlFieldAttributes } from '@brainbox/core';
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from '@colanode/ui/components/ui/hover-card';
-import { SmartTextInput } from '@colanode/ui/components/ui/smart-text-input';
-import { useRecord } from '@colanode/ui/contexts/record';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/hover-card';
+import { SmartTextInput } from '@brainbox/ui/components/ui/smart-text-input';
+import { useRecord } from '@brainbox/ui/contexts/record';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface RecordUrlValueProps {
   field: UrlFieldAttributes;
@@ -57,7 +57,7 @@ export const RecordUrlValue = ({ field, readOnly }: RecordUrlValueProps) => {
           onClick={() => {
             if (!canOpen) return;
 
-            window.colanode.openExternalUrl(url);
+            window.brainbox.openExternalUrl(url);
           }}
         >
           {url}

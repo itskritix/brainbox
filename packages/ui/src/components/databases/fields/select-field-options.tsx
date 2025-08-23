@@ -5,9 +5,9 @@ import { toast } from 'sonner';
 import {
   MultiSelectFieldAttributes,
   SelectFieldAttributes,
-} from '@colanode/core';
-import { SelectOptionBadge } from '@colanode/ui/components/databases/fields/select-option-badge';
-import { SelectOptionSettingsPopover } from '@colanode/ui/components/databases/fields/select-option-settings-popover';
+} from '@brainbox/core';
+import { SelectOptionBadge } from '@brainbox/ui/components/databases/fields/select-option-badge';
+import { SelectOptionSettingsPopover } from '@brainbox/ui/components/databases/fields/select-option-settings-popover';
 import {
   Command,
   CommandEmpty,
@@ -15,11 +15,11 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@colanode/ui/components/ui/command';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
-import { getRandomSelectOptionColor } from '@colanode/ui/lib/databases';
+} from '@brainbox/ui/components/ui/command';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
+import { getRandomSelectOptionColor } from '@brainbox/ui/lib/databases';
 
 interface SelectFieldOptionsProps {
   field: SelectFieldAttributes | MultiSelectFieldAttributes;

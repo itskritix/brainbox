@@ -1,4 +1,4 @@
-import { Download, LocalFile } from '@colanode/client/types';
+import { Download, LocalFile } from '@brainbox/client/types';
 
 export type LocalFileGetQueryInput = {
   type: 'local.file.get';
@@ -13,7 +13,7 @@ export type LocalFileGetQueryOutput = {
   download: Download | null;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'local.file.get': {
       input: LocalFileGetQueryInput;

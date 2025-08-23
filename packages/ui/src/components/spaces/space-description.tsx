@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-import { LocalSpaceNode } from '@colanode/client/types';
-import { SmartTextarea } from '@colanode/ui/components/ui/smart-textarea';
+import { LocalSpaceNode } from '@brainbox/client/types';
+import { SmartTextarea } from '@brainbox/ui/components/ui/smart-textarea';
 
 interface SpaceDescriptionProps {
   space: LocalSpaceNode;

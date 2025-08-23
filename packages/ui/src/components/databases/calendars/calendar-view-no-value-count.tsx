@@ -1,7 +1,7 @@
 import { CircleDashed } from 'lucide-react';
 
-import { DatabaseViewFilterAttributes, FieldAttributes } from '@colanode/core';
-import { CalendarViewNoValueList } from '@colanode/ui/components/databases/calendars/calendar-view-no-value-list';
+import { DatabaseViewFilterAttributes, FieldAttributes } from '@brainbox/core';
+import { CalendarViewNoValueList } from '@brainbox/ui/components/databases/calendars/calendar-view-no-value-list';
 import {
   Dialog,
   DialogTrigger,
@@ -9,11 +9,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from '@colanode/ui/components/ui/dialog';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+} from '@brainbox/ui/components/ui/dialog';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface CalendarViewNoValueCountProps {
   field: FieldAttributes;

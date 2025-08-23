@@ -1,9 +1,9 @@
 import { z } from 'zod/v4';
 
-import { extractNodeRole } from '@colanode/core/lib/nodes';
-import { hasNodeRole, hasWorkspaceRole } from '@colanode/core/lib/permissions';
-import { NodeAttributes } from '@colanode/core/registry/nodes';
-import { NodeModel, nodeRoleEnum } from '@colanode/core/registry/nodes/core';
+import { extractNodeRole } from '@brainbox/core/lib/nodes';
+import { hasNodeRole, hasWorkspaceRole } from '@brainbox/core/lib/permissions';
+import { NodeAttributes } from '@brainbox/core/registry/nodes';
+import { NodeModel, nodeRoleEnum } from '@brainbox/core/registry/nodes/core';
 
 export const channelAttributesSchema = z.object({
   type: z.literal('channel'),

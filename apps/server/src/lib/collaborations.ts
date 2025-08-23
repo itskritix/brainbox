@@ -4,11 +4,11 @@ import {
   extractNodeCollaborators,
   NodeAttributes,
   NodeRole,
-} from '@colanode/core';
+} from '@brainbox/core';
 import {
   DatabaseSchema,
   SelectCollaboration,
-} from '@colanode/server/data/schema';
+} from '@brainbox/server/data/schema';
 
 type CollaboratorChangeResult = {
   addedCollaborators: Record<string, NodeRole>;

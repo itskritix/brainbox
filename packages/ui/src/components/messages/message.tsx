@@ -1,15 +1,15 @@
 import { InView } from 'react-intersection-observer';
 
-import { LocalMessageNode } from '@colanode/client/types';
-import { MessageActions } from '@colanode/ui/components/messages/message-actions';
-import { MessageAuthorAvatar } from '@colanode/ui/components/messages/message-author-avatar';
-import { MessageAuthorName } from '@colanode/ui/components/messages/message-author-name';
-import { MessageContent } from '@colanode/ui/components/messages/message-content';
-import { MessageReactionCounts } from '@colanode/ui/components/messages/message-reaction-counts';
-import { MessageReference } from '@colanode/ui/components/messages/message-reference';
-import { MessageTime } from '@colanode/ui/components/messages/message-time';
-import { useRadar } from '@colanode/ui/contexts/radar';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
+import { LocalMessageNode } from '@brainbox/client/types';
+import { MessageActions } from '@brainbox/ui/components/messages/message-actions';
+import { MessageAuthorAvatar } from '@brainbox/ui/components/messages/message-author-avatar';
+import { MessageAuthorName } from '@brainbox/ui/components/messages/message-author-name';
+import { MessageContent } from '@brainbox/ui/components/messages/message-content';
+import { MessageReactionCounts } from '@brainbox/ui/components/messages/message-reaction-counts';
+import { MessageReference } from '@brainbox/ui/components/messages/message-reference';
+import { MessageTime } from '@brainbox/ui/components/messages/message-time';
+import { useRadar } from '@brainbox/ui/contexts/radar';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
 
 interface MessageProps {
   message: LocalMessageNode;

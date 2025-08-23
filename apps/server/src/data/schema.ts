@@ -15,8 +15,8 @@ import {
   DocumentType,
   DocumentContent,
   UpdateMergeMetadata,
-} from '@colanode/core';
-import { AccountAttributes } from '@colanode/server/types/accounts';
+} from '@brainbox/core';
+import { AccountAttributes } from '@brainbox/server/types/accounts';
 
 interface AccountTable {
   id: ColumnType<string, string, never>;

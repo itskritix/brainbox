@@ -6,7 +6,7 @@ import SQLite from 'better-sqlite3';
 import ky from 'ky';
 import SvgSprite from 'svg-sprite';
 
-import { generateId, IdType } from '@colanode/core';
+import { generateId, IdType } from '@brainbox/core';
 
 type EmojiMartI18n = {
   categories: Record<string, string>;

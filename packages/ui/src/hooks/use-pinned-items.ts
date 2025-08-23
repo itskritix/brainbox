@@ -1,9 +1,9 @@
 import { useMemo, useCallback, useRef, useState, useEffect } from 'react';
 import { toast } from 'sonner';
 
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 export const usePinnedItems = () => {
   const workspace = useWorkspace();

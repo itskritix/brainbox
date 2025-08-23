@@ -1,8 +1,8 @@
 import { Plus } from 'lucide-react';
 
-import { DatabaseViewFilterAttributes } from '@colanode/core';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
+import { DatabaseViewFilterAttributes } from '@brainbox/core';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
 
 interface BoardViewRecordCreateCardProps {
   filters: DatabaseViewFilterAttributes[];

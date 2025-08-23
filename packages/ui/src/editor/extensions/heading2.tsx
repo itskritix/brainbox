@@ -1,6 +1,6 @@
 import { mergeAttributes, Node, textblockTypeInputRule } from '@tiptap/core';
 
-import { defaultClasses } from '@colanode/ui/editor/classes';
+import { defaultClasses } from '@brainbox/ui/editor/classes';
 
 export interface Heading2Options {
   HTMLAttributes: Record<string, unknown>;

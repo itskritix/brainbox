@@ -1,11 +1,11 @@
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   ServerDeleteMutationInput,
   ServerDeleteMutationOutput,
-} from '@colanode/client/mutations/servers/server-delete';
-import { AppService } from '@colanode/client/services/app-service';
-import { isColanodeServer } from '@colanode/core';
+} from '@brainbox/client/mutations/servers/server-delete';
+import { AppService } from '@brainbox/client/services/app-service';
+import { isColanodeServer } from '@brainbox/core';
 
 export class ServerDeleteMutationHandler
   implements MutationHandler<ServerDeleteMutationInput>
@@ -22,7 +22,7 @@ export class ServerDeleteMutationHandler
     if (isColanodeServer(input.domain)) {
       throw new MutationError(
         MutationErrorCode.ServerDeleteForbidden,
-        'Cannot delete Colanode server'
+        'Cannot delete Brainbox server'
       );
     }
 

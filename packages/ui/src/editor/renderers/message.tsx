@@ -1,6 +1,6 @@
 import { JSONContent } from '@tiptap/core';
 
-import { NodeChildrenRenderer } from '@colanode/ui/editor/renderers/node-children';
+import { NodeChildrenRenderer } from '@brainbox/ui/editor/renderers/node-children';
 
 interface MessageRendererProps {
   node: JSONContent;

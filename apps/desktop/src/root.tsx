@@ -3,7 +3,7 @@ import '../../../packages/ui/src/styles/globals.css';
 
 import { createRoot } from 'react-dom/client';
 
-import { RootProvider } from '@colanode/ui';
+import { RootProvider } from '@brainbox/ui';
 
 const Root = () => {
   return <RootProvider type="desktop" />;

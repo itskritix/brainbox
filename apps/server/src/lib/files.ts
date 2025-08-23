@@ -1,8 +1,8 @@
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 
-import { FileAttributes } from '@colanode/core';
-import { s3Client } from '@colanode/server/data/storage';
-import { config } from '@colanode/server/lib/config';
+import { FileAttributes } from '@brainbox/core';
+import { s3Client } from '@brainbox/server/data/storage';
+import { config } from '@brainbox/server/lib/config';
 
 export const buildFilePath = (
   workspaceId: string,

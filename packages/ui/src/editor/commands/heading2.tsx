@@ -1,6 +1,6 @@
 import { Heading2 } from 'lucide-react';
 
-import { EditorCommand } from '@colanode/client/types';
+import { EditorCommand } from '@brainbox/client/types';
 
 export const Heading2Command: EditorCommand = {
   key: 'heading2',

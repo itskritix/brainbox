@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 
-import { SmartTextInput } from '@colanode/ui/components/ui/smart-text-input';
-import { useRecord } from '@colanode/ui/contexts/record';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { SmartTextInput } from '@brainbox/ui/components/ui/smart-text-input';
+import { useRecord } from '@brainbox/ui/contexts/record';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 export const RecordName = () => {
   const workspace = useWorkspace();

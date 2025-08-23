@@ -5,15 +5,15 @@ import {
   DatabaseViewFilterAttributes,
   SelectFieldAttributes,
   SelectOptionAttributes,
-} from '@colanode/core';
-import { BoardViewColumn } from '@colanode/ui/components/databases/boards/board-view-column';
-import { SelectOptionBadge } from '@colanode/ui/components/databases/fields/select-option-badge';
-import { BoardViewContext } from '@colanode/ui/contexts/board-view';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { getSelectOptionLightColorClass } from '@colanode/ui/lib/databases';
+} from '@brainbox/core';
+import { BoardViewColumn } from '@brainbox/ui/components/databases/boards/board-view-column';
+import { SelectOptionBadge } from '@brainbox/ui/components/databases/fields/select-option-badge';
+import { BoardViewContext } from '@brainbox/ui/contexts/board-view';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { getSelectOptionLightColorClass } from '@brainbox/ui/lib/databases';
 
 interface BoardViewColumnsSelectProps {
   field: SelectFieldAttributes;
@@ -91,7 +91,7 @@ export const BoardViewColumnsSelect = ({
               canDrag: (record) => record.canEdit,
               onDragEnd: async (record, value) => {
                 if (!value) {
-                  const result = await window.colanode.executeMutation({
+                  const result = await window.brainbox.executeMutation({
                     type: 'record.field.value.delete',
                     recordId: record.id,
                     fieldId: field.id,
@@ -103,7 +103,7 @@ export const BoardViewColumnsSelect = ({
                     toast.error(result.error.message);
                   }
                 } else {
-                  const result = await window.colanode.executeMutation({
+                  const result = await window.brainbox.executeMutation({
                     type: 'record.field.value.set',
                     recordId: record.id,
                     fieldId: field.id,
@@ -142,7 +142,7 @@ export const BoardViewColumnsSelect = ({
           canDrag: () => true,
           onDragEnd: async (record, value) => {
             if (!value) {
-              const result = await window.colanode.executeMutation({
+              const result = await window.brainbox.executeMutation({
                 type: 'record.field.value.delete',
                 recordId: record.id,
                 fieldId: field.id,
@@ -154,7 +154,7 @@ export const BoardViewColumnsSelect = ({
                 toast.error(result.error.message);
               }
             } else {
-              const result = await window.colanode.executeMutation({
+              const result = await window.brainbox.executeMutation({
                 type: 'record.field.value.set',
                 recordId: record.id,
                 fieldId: field.id,

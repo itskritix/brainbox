@@ -1,4 +1,4 @@
-import { UpdateMergeMetadata } from '@colanode/core/types/crdt';
+import { UpdateMergeMetadata } from '@brainbox/core/types/crdt';
 
 export type SyncDocumentUpdatesInput = {
   type: 'document.updates';
@@ -15,7 +15,7 @@ export type SyncDocumentUpdateData = {
   mergedUpdates: UpdateMergeMetadata[] | null | undefined;
 };
 
-declare module '@colanode/core' {
+declare module '@brainbox/core' {
   interface SynchronizerMap {
     'document.updates': {
       input: SyncDocumentUpdatesInput;

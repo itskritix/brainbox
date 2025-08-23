@@ -23,9 +23,9 @@ COPY ../../apps/server apps/server
 COPY ../../tsconfig.base.json ./
 
 # Build packages
-RUN npm run build -w @colanode/core && \
-    npm run build -w @colanode/crdt && \
-    npm run build -w @colanode/server && \
+RUN npm run build -w @brainbox/core && \
+    npm run build -w @brainbox/crdt && \
+    npm run build -w @brainbox/server && \
     npm prune --production
 
 ENV NODE_ENV=production

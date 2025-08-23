@@ -14,7 +14,7 @@ export type SyncNodeReactionData = {
   deletedAt: string | null;
 };
 
-declare module '@colanode/core' {
+declare module '@brainbox/core' {
   interface SynchronizerMap {
     'node.reactions': {
       input: SyncNodeReactionsInput;

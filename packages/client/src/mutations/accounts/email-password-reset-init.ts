@@ -9,7 +9,7 @@ export type EmailPasswordResetInitMutationOutput = {
   expiresAt: Date;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'email.password.reset.init': {
       input: EmailPasswordResetInitMutationInput;

@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import { Emoji } from '@colanode/client/types';
+import { Emoji } from '@brainbox/client/types';
 
 interface EmojiPickerContextProps {
   skinTone: number;

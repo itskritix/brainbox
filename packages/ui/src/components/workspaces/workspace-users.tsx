@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { InView } from 'react-intersection-observer';
 
-import { UserListQueryInput } from '@colanode/client/queries';
-import { WorkspaceRole } from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { Container } from '@colanode/ui/components/ui/container';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { WorkspaceUserInvite } from '@colanode/ui/components/workspaces/workspace-user-invite';
-import { WorkspaceUserRoleDropdown } from '@colanode/ui/components/workspaces/workspace-user-role-dropdown';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQueries } from '@colanode/ui/hooks/use-live-queries';
+import { UserListQueryInput } from '@brainbox/client/queries';
+import { WorkspaceRole } from '@brainbox/core';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { Container } from '@brainbox/ui/components/ui/container';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { WorkspaceUserInvite } from '@brainbox/ui/components/workspaces/workspace-user-invite';
+import { WorkspaceUserRoleDropdown } from '@brainbox/ui/components/workspaces/workspace-user-role-dropdown';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQueries } from '@brainbox/ui/hooks/use-live-queries';
 
 const USERS_PER_PAGE = 50;
 

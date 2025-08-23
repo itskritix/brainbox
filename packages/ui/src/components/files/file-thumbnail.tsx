@@ -1,8 +1,8 @@
-import { LocalFileNode } from '@colanode/client/types';
-import { FileIcon } from '@colanode/ui/components/files/file-icon';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { cn } from '@colanode/ui/lib/utils';
+import { LocalFileNode } from '@brainbox/client/types';
+import { FileIcon } from '@brainbox/ui/components/files/file-icon';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface FileThumbnailProps {
   file: LocalFileNode;

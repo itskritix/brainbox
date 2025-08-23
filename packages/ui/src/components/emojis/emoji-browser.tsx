@@ -1,10 +1,10 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useMemo, useRef } from 'react';
 
-import { EmojiPickerRowData } from '@colanode/client/types';
-import { EmojiBrowserCategory } from '@colanode/ui/components/emojis/emoji-browser-category';
-import { EmojiBrowserItems } from '@colanode/ui/components/emojis/emoji-browser-items';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { EmojiPickerRowData } from '@brainbox/client/types';
+import { EmojiBrowserCategory } from '@brainbox/ui/components/emojis/emoji-browser-category';
+import { EmojiBrowserItems } from '@brainbox/ui/components/emojis/emoji-browser-items';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 const EMOJIS_PER_ROW = 10;
 

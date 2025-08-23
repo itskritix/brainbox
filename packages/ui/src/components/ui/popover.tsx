@@ -1,7 +1,7 @@
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import * as React from 'react';
 
-import { cn } from '@colanode/ui/lib/utils';
+import { cn } from '@brainbox/ui/lib/utils';
 
 function Popover({
   ...props

@@ -1,10 +1,10 @@
-import { SelectWorkspace } from '@colanode/client/databases/account';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib';
-import { mapWorkspace } from '@colanode/client/lib/mappers';
-import { WorkspaceListQueryInput } from '@colanode/client/queries/workspaces/workspace-list';
-import { AppService } from '@colanode/client/services/app-service';
-import { Event } from '@colanode/client/types/events';
-import { Workspace } from '@colanode/client/types/workspaces';
+import { SelectWorkspace } from '@brainbox/client/databases/account';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib';
+import { mapWorkspace } from '@brainbox/client/lib/mappers';
+import { WorkspaceListQueryInput } from '@brainbox/client/queries/workspaces/workspace-list';
+import { AppService } from '@brainbox/client/services/app-service';
+import { Event } from '@brainbox/client/types/events';
+import { Workspace } from '@brainbox/client/types/workspaces';
 
 export class WorkspaceListQueryHandler
   implements QueryHandler<WorkspaceListQueryInput>

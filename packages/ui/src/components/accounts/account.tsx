@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import { Account as AccountType } from '@colanode/client/types';
-import { Workspace } from '@colanode/ui/components/workspaces/workspace';
-import { WorkspaceCreate } from '@colanode/ui/components/workspaces/workspace-create';
-import { AccountContext } from '@colanode/ui/contexts/account';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { Account as AccountType } from '@brainbox/client/types';
+import { Workspace } from '@brainbox/ui/components/workspaces/workspace';
+import { WorkspaceCreate } from '@brainbox/ui/components/workspaces/workspace-create';
+import { AccountContext } from '@brainbox/ui/contexts/account';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface AccountProps {
   account: AccountType;
@@ -38,7 +38,7 @@ export const Account = ({ account }: AccountProps) => {
 
   const handleWorkspaceCreateSuccess = (id: string) => {
     setOpenCreateWorkspace(false);
-    window.colanode.executeMutation({
+    window.brainbox.executeMutation({
       type: 'account.metadata.update',
       accountId: account.id,
       key: 'workspace',
@@ -58,7 +58,7 @@ export const Account = ({ account }: AccountProps) => {
         openWorkspaceCreate: () => setOpenCreateWorkspace(true),
         openWorkspace: (id) => {
           setOpenCreateWorkspace(false);
-          window.colanode.executeMutation({
+          window.brainbox.executeMutation({
             type: 'account.metadata.update',
             accountId: account.id,
             key: 'workspace',

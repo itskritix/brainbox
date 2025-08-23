@@ -1,15 +1,15 @@
 import { Fragment } from 'react';
 
-import { BoardViewColumns } from '@colanode/ui/components/databases/boards/board-view-columns';
-import { BoardViewNoGroup } from '@colanode/ui/components/databases/boards/board-view-no-group';
-import { BoardViewSettings } from '@colanode/ui/components/databases/boards/board-view-settings';
-import { ViewFilterButton } from '@colanode/ui/components/databases/search/view-filter-button';
-import { ViewSearchBar } from '@colanode/ui/components/databases/search/view-search-bar';
-import { ViewSortButton } from '@colanode/ui/components/databases/search/view-sort-button';
-import { ViewFullscreenButton } from '@colanode/ui/components/databases/view-fullscreen-button';
-import { ViewTabs } from '@colanode/ui/components/databases/view-tabs';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
+import { BoardViewColumns } from '@brainbox/ui/components/databases/boards/board-view-columns';
+import { BoardViewNoGroup } from '@brainbox/ui/components/databases/boards/board-view-no-group';
+import { BoardViewSettings } from '@brainbox/ui/components/databases/boards/board-view-settings';
+import { ViewFilterButton } from '@brainbox/ui/components/databases/search/view-filter-button';
+import { ViewSearchBar } from '@brainbox/ui/components/databases/search/view-search-bar';
+import { ViewSortButton } from '@brainbox/ui/components/databases/search/view-sort-button';
+import { ViewFullscreenButton } from '@brainbox/ui/components/databases/view-fullscreen-button';
+import { ViewTabs } from '@brainbox/ui/components/databases/view-tabs';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
 
 export const BoardView = () => {
   const database = useDatabase();

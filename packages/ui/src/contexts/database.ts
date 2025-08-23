@@ -6,7 +6,7 @@ import {
   FieldType,
   NodeRole,
   SelectOptionAttributes,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 interface DatabaseContext {
   id: string;

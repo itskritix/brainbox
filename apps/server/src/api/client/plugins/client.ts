@@ -1,8 +1,8 @@
 import { FastifyPluginCallback, FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
 
-import { ApiHeader } from '@colanode/core';
-import { ClientContext, ClientType } from '@colanode/server/types/api';
+import { ApiHeader } from '@brainbox/core';
+import { ClientContext, ClientType } from '@brainbox/server/types/api';
 
 declare module 'fastify' {
   interface FastifyRequest {

@@ -1,10 +1,10 @@
-import { SelectAccount } from '@colanode/client/databases/app';
-import { mapAccount } from '@colanode/client/lib/mappers';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { AccountGetQueryInput } from '@colanode/client/queries/accounts/account-get';
-import { AppService } from '@colanode/client/services/app-service';
-import { Account } from '@colanode/client/types/accounts';
-import { Event } from '@colanode/client/types/events';
+import { SelectAccount } from '@brainbox/client/databases/app';
+import { mapAccount } from '@brainbox/client/lib/mappers';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { AccountGetQueryInput } from '@brainbox/client/queries/accounts/account-get';
+import { AppService } from '@brainbox/client/services/app-service';
+import { Account } from '@brainbox/client/types/accounts';
+import { Event } from '@brainbox/client/types/events';
 
 export class AccountGetQueryHandler
   implements QueryHandler<AccountGetQueryInput>

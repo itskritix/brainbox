@@ -1,8 +1,8 @@
 import {
   UnreadBadge,
   UnreadBadgeProps,
-} from '@colanode/ui/components/ui/unread-badge';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/unread-badge';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface SidebarMenuIconProps {
   icon: React.ComponentType<{ className?: string }>;

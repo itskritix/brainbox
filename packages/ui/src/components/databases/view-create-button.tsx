@@ -1,7 +1,7 @@
 import { Plus } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { ViewCreateDialog } from '@colanode/ui/components/databases/view-create-dialog';
+import { ViewCreateDialog } from '@brainbox/ui/components/databases/view-create-dialog';
 
 export const ViewCreateButton = () => {
   const [open, setOpen] = useState(false);

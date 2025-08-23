@@ -13,7 +13,7 @@ export type MessageCreateMutationOutput = {
   id: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'message.create': {
       input: MessageCreateMutationInput;

@@ -1,10 +1,10 @@
-# Colanode postinstall script
+# Brainbox postinstall script
 
-This directory contains the **postinstall script** that automatically copies and distributes emoji and icon assets to the appropriate **Colanode** applications after each dependency installation. It ensures that the latest emojis, icons, fonts, and images are always present in both the desktop and web applications without requiring manual intervention.
+This directory contains the **postinstall script** that automatically copies and distributes emoji and icon assets to the appropriate **Brainbox** applications after each dependency installation. It ensures that the latest emojis, icons, fonts, and images are always present in both the desktop and web applications without requiring manual intervention.
 
 ## What It Does
 
-The script copies different types of assets to different Colanode apps based on their specific needs:
+The script copies different types of assets to different Brainbox apps based on their specific needs:
 
 **Desktop Application (`apps/desktop/assets/`)**:
 

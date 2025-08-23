@@ -4,22 +4,22 @@ import ms from 'ms';
 import {
   WorkspaceDatabaseSchema,
   workspaceDatabaseMigrations,
-} from '@colanode/client/databases/workspace';
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { AccountService } from '@colanode/client/services/accounts/account-service';
-import { CollaborationService } from '@colanode/client/services/workspaces/collaboration-service';
-import { DocumentService } from '@colanode/client/services/workspaces/document-service';
-import { FileService } from '@colanode/client/services/workspaces/file-service';
-import { MutationService } from '@colanode/client/services/workspaces/mutation-service';
-import { NodeCountersService } from '@colanode/client/services/workspaces/node-counters-service';
-import { NodeInteractionService } from '@colanode/client/services/workspaces/node-interaction-service';
-import { NodeReactionService } from '@colanode/client/services/workspaces/node-reaction-service';
-import { NodeService } from '@colanode/client/services/workspaces/node-service';
-import { RadarService } from '@colanode/client/services/workspaces/radar-service';
-import { SyncService } from '@colanode/client/services/workspaces/sync-service';
-import { UserService } from '@colanode/client/services/workspaces/user-service';
-import { Workspace } from '@colanode/client/types/workspaces';
-import { createDebugger, WorkspaceRole } from '@colanode/core';
+} from '@brainbox/client/databases/workspace';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { AccountService } from '@brainbox/client/services/accounts/account-service';
+import { CollaborationService } from '@brainbox/client/services/workspaces/collaboration-service';
+import { DocumentService } from '@brainbox/client/services/workspaces/document-service';
+import { FileService } from '@brainbox/client/services/workspaces/file-service';
+import { MutationService } from '@brainbox/client/services/workspaces/mutation-service';
+import { NodeCountersService } from '@brainbox/client/services/workspaces/node-counters-service';
+import { NodeInteractionService } from '@brainbox/client/services/workspaces/node-interaction-service';
+import { NodeReactionService } from '@brainbox/client/services/workspaces/node-reaction-service';
+import { NodeService } from '@brainbox/client/services/workspaces/node-service';
+import { RadarService } from '@brainbox/client/services/workspaces/radar-service';
+import { SyncService } from '@brainbox/client/services/workspaces/sync-service';
+import { UserService } from '@brainbox/client/services/workspaces/user-service';
+import { Workspace } from '@brainbox/client/types/workspaces';
+import { createDebugger, WorkspaceRole } from '@brainbox/core';
 
 const debug = createDebugger('desktop:service:workspace');
 

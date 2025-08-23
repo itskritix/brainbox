@@ -1,6 +1,6 @@
 import { Code } from 'lucide-react';
 
-import { EditorCommand } from '@colanode/client/types';
+import { EditorCommand } from '@brainbox/client/types';
 
 export const CodeBlockCommand: EditorCommand = {
   key: 'code-block',

@@ -1,9 +1,9 @@
 import WebSocket from 'isomorphic-ws';
 
-import { BackoffCalculator } from '@colanode/client/lib/backoff-calculator';
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { AccountService } from '@colanode/client/services/accounts/account-service';
-import { Message, SocketInitOutput, createDebugger } from '@colanode/core';
+import { BackoffCalculator } from '@brainbox/client/lib/backoff-calculator';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { AccountService } from '@brainbox/client/services/accounts/account-service';
+import { Message, SocketInitOutput, createDebugger } from '@brainbox/core';
 
 const debug = createDebugger('desktop:service:account-socket');
 

@@ -2,17 +2,17 @@ import { HouseIcon } from 'lucide-react';
 import { useState, Fragment } from 'react';
 import { match } from 'ts-pattern';
 
-import { isFeatureSupported } from '@colanode/client/lib';
-import { Account, ServerDetails } from '@colanode/client/types';
-import { EmailLogin } from '@colanode/ui/components/accounts/email-login';
-import { EmailPasswordResetComplete } from '@colanode/ui/components/accounts/email-password-reset-complete';
-import { EmailPasswordResetInit } from '@colanode/ui/components/accounts/email-password-reset-init';
-import { EmailRegister } from '@colanode/ui/components/accounts/email-register';
-import { EmailVerify } from '@colanode/ui/components/accounts/email-verify';
-import { Button } from '@colanode/ui/components/ui/button';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { useApp } from '@colanode/ui/contexts/app';
-import { ServerContext } from '@colanode/ui/contexts/server';
+import { isFeatureSupported } from '@brainbox/client/lib';
+import { Account, ServerDetails } from '@brainbox/client/types';
+import { EmailLogin } from '@brainbox/ui/components/accounts/email-login';
+import { EmailPasswordResetComplete } from '@brainbox/ui/components/accounts/email-password-reset-complete';
+import { EmailPasswordResetInit } from '@brainbox/ui/components/accounts/email-password-reset-init';
+import { EmailRegister } from '@brainbox/ui/components/accounts/email-register';
+import { EmailVerify } from '@brainbox/ui/components/accounts/email-verify';
+import { Button } from '@brainbox/ui/components/ui/button';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { useApp } from '@brainbox/ui/contexts/app';
+import { ServerContext } from '@brainbox/ui/contexts/server';
 
 interface LoginFormProps {
   accounts: Account[];

@@ -1,4 +1,4 @@
-import { AppMetadataKey, AppMetadataMap } from '@colanode/client/types/apps';
+import { AppMetadataKey, AppMetadataMap } from '@brainbox/client/types/apps';
 
 export type AppMetadataUpdateMutationInput = {
   type: 'app.metadata.update';
@@ -10,7 +10,7 @@ export type AppMetadataUpdateMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'app.metadata.update': {
       input: AppMetadataUpdateMutationInput;

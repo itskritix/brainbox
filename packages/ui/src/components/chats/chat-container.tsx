@@ -1,16 +1,16 @@
-import { LocalChatNode } from '@colanode/client/types';
-import { ChatNotFound } from '@colanode/ui/components/chats/chat-not-found';
-import { NodeCollaboratorsPopover } from '@colanode/ui/components/collaborators/node-collaborators-popover';
-import { ContainerBreadcrumb } from '@colanode/ui/components/layouts/containers/container-breadrumb';
-import { Conversation } from '@colanode/ui/components/messages/conversation';
+import { LocalChatNode } from '@brainbox/client/types';
+import { ChatNotFound } from '@brainbox/ui/components/chats/chat-not-found';
+import { NodeCollaboratorsPopover } from '@brainbox/ui/components/collaborators/node-collaborators-popover';
+import { ContainerBreadcrumb } from '@brainbox/ui/components/layouts/containers/container-breadrumb';
+import { Conversation } from '@brainbox/ui/components/messages/conversation';
 import {
   Container,
   ContainerBody,
   ContainerHeader,
   ContainerSettings,
-} from '@colanode/ui/components/ui/container';
-import { useNodeContainer } from '@colanode/ui/hooks/use-node-container';
-import { useNodeRadar } from '@colanode/ui/hooks/use-node-radar';
+} from '@brainbox/ui/components/ui/container';
+import { useNodeContainer } from '@brainbox/ui/hooks/use-node-container';
+import { useNodeRadar } from '@brainbox/ui/hooks/use-node-radar';
 
 interface ChatContainerProps {
   chatId: string;

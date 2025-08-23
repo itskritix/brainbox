@@ -1,19 +1,19 @@
-import { FieldAttributes } from '@colanode/core';
-import { RecordBooleanValue } from '@colanode/ui/components/records/values/record-boolean-value';
-import { RecordCollaboratorValue } from '@colanode/ui/components/records/values/record-collaborator-value';
-import { RecordCreatedAtValue } from '@colanode/ui/components/records/values/record-created-at-value';
-import { RecordCreatedByValue } from '@colanode/ui/components/records/values/record-created-by-value';
-import { RecordDateValue } from '@colanode/ui/components/records/values/record-date-value';
-import { RecordEmailValue } from '@colanode/ui/components/records/values/record-email-value';
-import { RecordMultiSelectValue } from '@colanode/ui/components/records/values/record-multi-select-value';
-import { RecordNumberValue } from '@colanode/ui/components/records/values/record-number-value';
-import { RecordPhoneValue } from '@colanode/ui/components/records/values/record-phone-value';
-import { RecordRelationValue } from '@colanode/ui/components/records/values/record-relation-value';
-import { RecordSelectValue } from '@colanode/ui/components/records/values/record-select-value';
-import { RecordTextValue } from '@colanode/ui/components/records/values/record-text-value';
-import { RecordUpdatedAtValue } from '@colanode/ui/components/records/values/record-updated-at-value';
-import { RecordUpdatedByValue } from '@colanode/ui/components/records/values/record-updated-by-value';
-import { RecordUrlValue } from '@colanode/ui/components/records/values/record-url-value';
+import { FieldAttributes } from '@brainbox/core';
+import { RecordBooleanValue } from '@brainbox/ui/components/records/values/record-boolean-value';
+import { RecordCollaboratorValue } from '@brainbox/ui/components/records/values/record-collaborator-value';
+import { RecordCreatedAtValue } from '@brainbox/ui/components/records/values/record-created-at-value';
+import { RecordCreatedByValue } from '@brainbox/ui/components/records/values/record-created-by-value';
+import { RecordDateValue } from '@brainbox/ui/components/records/values/record-date-value';
+import { RecordEmailValue } from '@brainbox/ui/components/records/values/record-email-value';
+import { RecordMultiSelectValue } from '@brainbox/ui/components/records/values/record-multi-select-value';
+import { RecordNumberValue } from '@brainbox/ui/components/records/values/record-number-value';
+import { RecordPhoneValue } from '@brainbox/ui/components/records/values/record-phone-value';
+import { RecordRelationValue } from '@brainbox/ui/components/records/values/record-relation-value';
+import { RecordSelectValue } from '@brainbox/ui/components/records/values/record-select-value';
+import { RecordTextValue } from '@brainbox/ui/components/records/values/record-text-value';
+import { RecordUpdatedAtValue } from '@brainbox/ui/components/records/values/record-updated-at-value';
+import { RecordUpdatedByValue } from '@brainbox/ui/components/records/values/record-updated-by-value';
+import { RecordUrlValue } from '@brainbox/ui/components/records/values/record-url-value';
 
 interface RecordFieldValueProps {
   field: FieldAttributes;

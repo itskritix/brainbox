@@ -1,6 +1,6 @@
-import { Icon } from '@colanode/client/types';
-import { IconElement } from '@colanode/ui/components/icons/icon-element';
-import { useIconPicker } from '@colanode/ui/contexts/icon-picker';
+import { Icon } from '@brainbox/client/types';
+import { IconElement } from '@brainbox/ui/components/icons/icon-element';
+import { useIconPicker } from '@brainbox/ui/contexts/icon-picker';
 
 interface IconPickerItemProps {
   icon: Icon;

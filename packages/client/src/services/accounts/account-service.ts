@@ -5,24 +5,24 @@ import ms from 'ms';
 import {
   AccountDatabaseSchema,
   accountDatabaseMigrations,
-} from '@colanode/client/databases/account';
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { parseApiError } from '@colanode/client/lib/ky';
-import { mapAccount, mapWorkspace } from '@colanode/client/lib/mappers';
-import { AccountSocket } from '@colanode/client/services/accounts/account-socket';
-import { AvatarService } from '@colanode/client/services/accounts/avatar-service';
-import { AppService } from '@colanode/client/services/app-service';
-import { ServerService } from '@colanode/client/services/server-service';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
-import { Account } from '@colanode/client/types/accounts';
-import { Workspace } from '@colanode/client/types/workspaces';
+} from '@brainbox/client/databases/account';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { parseApiError } from '@brainbox/client/lib/ky';
+import { mapAccount, mapWorkspace } from '@brainbox/client/lib/mappers';
+import { AccountSocket } from '@brainbox/client/services/accounts/account-socket';
+import { AvatarService } from '@brainbox/client/services/accounts/avatar-service';
+import { AppService } from '@brainbox/client/services/app-service';
+import { ServerService } from '@brainbox/client/services/server-service';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
+import { Account } from '@brainbox/client/types/accounts';
+import { Workspace } from '@brainbox/client/types/workspaces';
 import {
   AccountSyncOutput,
   ApiErrorCode,
   ApiErrorOutput,
   createDebugger,
   Message,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 const debug = createDebugger('desktop:service:account');
 
@@ -347,7 +347,7 @@ export class AccountService {
       const workspaceIds = this.workspaces.keys();
       for (const workspaceId of workspaceIds) {
         const updatedWorkspace = response.workspaces.find(
-          (w) => w.id === workspaceId
+          (w: any) => w.id === workspaceId
         );
 
         if (!updatedWorkspace) {

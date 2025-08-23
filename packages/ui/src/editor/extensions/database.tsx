@@ -1,7 +1,7 @@
 import { mergeAttributes, Node } from '@tiptap/core';
 import { ReactNodeViewRenderer } from '@tiptap/react';
 
-import { DatabaseNodeView } from '@colanode/ui/editor/views';
+import { DatabaseNodeView } from '@brainbox/ui/editor/views';
 
 export const DatabaseNode = Node.create({
   name: 'database',

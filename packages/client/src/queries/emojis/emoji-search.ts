@@ -1,4 +1,4 @@
-import { Emoji } from '@colanode/client/types/emojis';
+import { Emoji } from '@brainbox/client/types/emojis';
 
 export type EmojiSearchQueryInput = {
   type: 'emoji.search';
@@ -6,7 +6,7 @@ export type EmojiSearchQueryInput = {
   count: number;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'emoji.search': {
       input: EmojiSearchQueryInput;

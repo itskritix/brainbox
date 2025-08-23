@@ -1,6 +1,6 @@
 import { DownloadIcon } from 'lucide-react';
 
-import { Spinner } from '@colanode/ui/components/ui/spinner';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
 
 interface FileDownloadProgressProps {
   progress: number;

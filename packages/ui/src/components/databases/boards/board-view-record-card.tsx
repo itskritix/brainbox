@@ -1,12 +1,12 @@
 import { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 
-import { FieldValue } from '@colanode/core';
-import { RecordFieldValue } from '@colanode/ui/components/records/record-field-value';
-import { useBoardView } from '@colanode/ui/contexts/board-view';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useRecord } from '@colanode/ui/contexts/record';
+import { FieldValue } from '@brainbox/core';
+import { RecordFieldValue } from '@brainbox/ui/components/records/record-field-value';
+import { useBoardView } from '@brainbox/ui/contexts/board-view';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useRecord } from '@brainbox/ui/contexts/record';
 
 export const BoardViewRecordCard = () => {
   const layout = useLayout();

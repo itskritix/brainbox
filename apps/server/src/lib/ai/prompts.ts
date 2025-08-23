@@ -128,7 +128,7 @@ export const rerankPrompt = PromptTemplate.fromTemplate(
 
 export const answerPrompt = ChatPromptTemplate.fromTemplate(
   `<system_context>
-  You are an AI assistant in a collaboration workspace app called Colanode.
+  You are an AI assistant in a collaboration workspace app called Brainbox.
 
   CURRENT TIME: {currentTimestamp}
   WORKSPACE: {workspaceName}

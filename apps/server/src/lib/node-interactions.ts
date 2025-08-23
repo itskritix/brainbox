@@ -4,11 +4,11 @@ import {
   NodeInteractionOpenedMutation,
   NodeInteractionSeenMutation,
   MutationStatus,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { SelectUser } from '@colanode/server/data/schema';
-import { eventBus } from '@colanode/server/lib/event-bus';
-import { mapNode } from '@colanode/server/lib/nodes';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { SelectUser } from '@brainbox/server/data/schema';
+import { eventBus } from '@brainbox/server/lib/event-bus';
+import { mapNode } from '@brainbox/server/lib/nodes';
 
 export const markNodeAsSeen = async (
   user: SelectUser,

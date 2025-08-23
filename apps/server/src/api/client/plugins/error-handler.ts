@@ -2,8 +2,8 @@ import { FastifyPluginCallback } from 'fastify';
 import fp from 'fastify-plugin';
 import { hasZodFastifySchemaValidationErrors } from 'fastify-type-provider-zod';
 
-import { ApiErrorCode } from '@colanode/core';
-import { createLogger } from '@colanode/server/lib/logger';
+import { ApiErrorCode } from '@brainbox/core';
+import { createLogger } from '@brainbox/server/lib/logger';
 
 const logger = createLogger('api:client:error-handler');
 

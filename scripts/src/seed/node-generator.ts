@@ -26,8 +26,8 @@ import {
   databaseModel,
   databaseViewModel,
   recordModel,
-} from '@colanode/core';
-import { encodeState, YDoc } from '@colanode/crdt';
+} from '@brainbox/core';
+import { encodeState, YDoc } from '@brainbox/crdt';
 
 import { User } from './types';
 

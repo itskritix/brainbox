@@ -1,9 +1,9 @@
 import { FastifyPluginCallback } from 'fastify';
 
-import { clientRoutes } from '@colanode/server/api/client/routes';
-import { configGetRoute } from '@colanode/server/api/config';
-import { homeRoute } from '@colanode/server/api/home';
-import { config } from '@colanode/server/lib/config';
+import { clientRoutes } from '@brainbox/server/api/client/routes';
+import { configGetRoute } from '@brainbox/server/api/config';
+import { homeRoute } from '@brainbox/server/api/home';
+import { config } from '@brainbox/server/lib/config';
 
 export const apiRoutes: FastifyPluginCallback = (instance, _, done) => {
   const prefix = config.server.pathPrefix ? `/${config.server.pathPrefix}` : '';

@@ -5,17 +5,17 @@ import {
   SynchronizerInput,
   SynchronizerInputMessage,
   UserStatus,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { createLogger } from '@colanode/server/lib/logger';
-import { BaseSynchronizer } from '@colanode/server/synchronizers/base';
-import { CollaborationSynchronizer } from '@colanode/server/synchronizers/collaborations';
-import { DocumentUpdateSynchronizer } from '@colanode/server/synchronizers/document-updates';
-import { NodeInteractionSynchronizer } from '@colanode/server/synchronizers/node-interactions';
-import { NodeReactionSynchronizer } from '@colanode/server/synchronizers/node-reactions';
-import { NodeTombstoneSynchronizer } from '@colanode/server/synchronizers/node-tombstones';
-import { NodeUpdatesSynchronizer } from '@colanode/server/synchronizers/node-updates';
-import { UserSynchronizer } from '@colanode/server/synchronizers/users';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { createLogger } from '@brainbox/server/lib/logger';
+import { BaseSynchronizer } from '@brainbox/server/synchronizers/base';
+import { CollaborationSynchronizer } from '@brainbox/server/synchronizers/collaborations';
+import { DocumentUpdateSynchronizer } from '@brainbox/server/synchronizers/document-updates';
+import { NodeInteractionSynchronizer } from '@brainbox/server/synchronizers/node-interactions';
+import { NodeReactionSynchronizer } from '@brainbox/server/synchronizers/node-reactions';
+import { NodeTombstoneSynchronizer } from '@brainbox/server/synchronizers/node-tombstones';
+import { NodeUpdatesSynchronizer } from '@brainbox/server/synchronizers/node-updates';
+import { UserSynchronizer } from '@brainbox/server/synchronizers/users';
 import {
   AccountUpdatedEvent,
   CollaborationCreatedEvent,
@@ -25,9 +25,9 @@ import {
   UserUpdatedEvent,
   WorkspaceDeletedEvent,
   WorkspaceUpdatedEvent,
-} from '@colanode/server/types/events';
-import { SocketContext } from '@colanode/server/types/sockets';
-import { ConnectedUser } from '@colanode/server/types/users';
+} from '@brainbox/server/types/events';
+import { SocketContext } from '@brainbox/server/types/sockets';
+import { ConnectedUser } from '@brainbox/server/types/users';
 
 type SocketUser = {
   user: ConnectedUser;

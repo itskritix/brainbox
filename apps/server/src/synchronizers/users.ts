@@ -2,12 +2,12 @@ import {
   SynchronizerOutputMessage,
   SyncUserData,
   SyncUsersInput,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { SelectUser } from '@colanode/server/data/schema';
-import { createLogger } from '@colanode/server/lib/logger';
-import { BaseSynchronizer } from '@colanode/server/synchronizers/base';
-import { Event } from '@colanode/server/types/events';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { SelectUser } from '@brainbox/server/data/schema';
+import { createLogger } from '@brainbox/server/lib/logger';
+import { BaseSynchronizer } from '@brainbox/server/synchronizers/base';
+import { Event } from '@brainbox/server/types/events';
 
 const logger = createLogger('user-synchronizer');
 

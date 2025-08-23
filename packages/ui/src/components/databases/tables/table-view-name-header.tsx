@@ -3,17 +3,17 @@ import { Resizable } from 're-resizable';
 import { Fragment, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
 
-import { SpecialId } from '@colanode/core';
+import { SpecialId } from '@brainbox/core';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { SmartTextInput } from '@colanode/ui/components/ui/smart-text-input';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/popover';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { SmartTextInput } from '@brainbox/ui/components/ui/smart-text-input';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { cn } from '@brainbox/ui/lib/utils';
 
 export const TableViewNameHeader = () => {
   const database = useDatabase();

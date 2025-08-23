@@ -9,8 +9,8 @@ import {
   extractFileSubtype,
   FileSubtype,
   workspaceStorageGetOutputSchema,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
 
 interface WorkspaceStorageAggregateRow {
   mime_type: string;

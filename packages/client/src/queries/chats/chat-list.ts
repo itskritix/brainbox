@@ -1,4 +1,4 @@
-import { LocalChatNode } from '@colanode/client/types/nodes';
+import { LocalChatNode } from '@brainbox/client/types/nodes';
 
 export type ChatListQueryInput = {
   type: 'chat.list';
@@ -8,7 +8,7 @@ export type ChatListQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'chat.list': {
       input: ChatListQueryInput;

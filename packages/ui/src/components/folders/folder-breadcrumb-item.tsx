@@ -1,5 +1,5 @@
-import { LocalFolderNode } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
+import { LocalFolderNode } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
 
 interface FolderBreadcrumbItemProps {
   folder: LocalFolderNode;

@@ -1,17 +1,17 @@
 import { toast } from 'sonner';
 
-import { LocalDatabaseNode } from '@colanode/client/types';
-import { NodeRole, hasNodeRole } from '@colanode/core';
-import { DatabaseForm } from '@colanode/ui/components/databases/database-form';
+import { LocalDatabaseNode } from '@brainbox/client/types';
+import { NodeRole, hasNodeRole } from '@brainbox/core';
+import { DatabaseForm } from '@brainbox/ui/components/databases/database-form';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@colanode/ui/components/ui/dialog';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+} from '@brainbox/ui/components/ui/dialog';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface DatabaseUpdateDialogProps {
   database: LocalDatabaseNode;

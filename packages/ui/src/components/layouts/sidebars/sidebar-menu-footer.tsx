@@ -1,8 +1,8 @@
 import { Check, Plus } from 'lucide-react';
 import { useState } from 'react';
 
-import { UnreadState } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
+import { UnreadState } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,12 +10,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
-import { UnreadBadge } from '@colanode/ui/components/ui/unread-badge';
-import { AccountContext, useAccount } from '@colanode/ui/contexts/account';
-import { useApp } from '@colanode/ui/contexts/app';
-import { useRadar } from '@colanode/ui/contexts/radar';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+} from '@brainbox/ui/components/ui/dropdown-menu';
+import { UnreadBadge } from '@brainbox/ui/components/ui/unread-badge';
+import { AccountContext, useAccount } from '@brainbox/ui/contexts/account';
+import { useApp } from '@brainbox/ui/contexts/app';
+import { useRadar } from '@brainbox/ui/contexts/radar';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 export function SidebarMenuFooter() {
   const app = useApp();

@@ -1,7 +1,7 @@
 import { app } from 'electron';
 import path from 'path';
 
-import { PathService } from '@colanode/client/services';
+import { PathService } from '@brainbox/client/services';
 
 export class DesktopPathService implements PathService {
   private readonly nativePath = path;

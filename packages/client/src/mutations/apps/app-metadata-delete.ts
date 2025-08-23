@@ -7,7 +7,7 @@ export type AppMetadataDeleteMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'app.metadata.delete': {
       input: AppMetadataDeleteMutationInput;

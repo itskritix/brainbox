@@ -1,16 +1,16 @@
-import { LocalChannelNode } from '@colanode/client/types';
-import { ChannelNotFound } from '@colanode/ui/components/channels/channel-not-found';
-import { ChannelSettings } from '@colanode/ui/components/channels/channel-settings';
-import { ContainerBreadcrumb } from '@colanode/ui/components/layouts/containers/container-breadrumb';
-import { Conversation } from '@colanode/ui/components/messages/conversation';
+import { LocalChannelNode } from '@brainbox/client/types';
+import { ChannelNotFound } from '@brainbox/ui/components/channels/channel-not-found';
+import { ChannelSettings } from '@brainbox/ui/components/channels/channel-settings';
+import { ContainerBreadcrumb } from '@brainbox/ui/components/layouts/containers/container-breadrumb';
+import { Conversation } from '@brainbox/ui/components/messages/conversation';
 import {
   Container,
   ContainerBody,
   ContainerHeader,
   ContainerSettings,
-} from '@colanode/ui/components/ui/container';
-import { useNodeContainer } from '@colanode/ui/hooks/use-node-container';
-import { useNodeRadar } from '@colanode/ui/hooks/use-node-radar';
+} from '@brainbox/ui/components/ui/container';
+import { useNodeContainer } from '@brainbox/ui/hooks/use-node-container';
+import { useNodeRadar } from '@brainbox/ui/hooks/use-node-radar';
 
 interface ChannelContainerProps {
   channelId: string;

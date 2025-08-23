@@ -1,4 +1,4 @@
-import { UserStatus, WorkspaceRole } from '@colanode/core/types/workspaces';
+import { UserStatus, WorkspaceRole } from '@brainbox/core/types/workspaces';
 
 export type SyncUsersInput = {
   type: 'users';
@@ -19,7 +19,7 @@ export type SyncUserData = {
   status: UserStatus;
 };
 
-declare module '@colanode/core' {
+declare module '@brainbox/core' {
   interface SynchronizerMap {
     users: {
       input: SyncUsersInput;

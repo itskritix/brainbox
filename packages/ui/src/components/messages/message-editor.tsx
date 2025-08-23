@@ -3,7 +3,7 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import isHotkey from 'is-hotkey';
 import { forwardRef, Fragment, useImperativeHandle } from 'react';
 
-import { TempFile } from '@colanode/client/types';
+import { TempFile } from '@brainbox/client/types';
 import {
   BoldMark,
   CodeBlockNode,
@@ -27,8 +27,8 @@ import {
   UnderlineMark,
   MentionExtension,
   HardBreakNode,
-} from '@colanode/ui/editor/extensions';
-import { ToolbarMenu } from '@colanode/ui/editor/menus';
+} from '@brainbox/ui/editor/extensions';
+import { ToolbarMenu } from '@brainbox/ui/editor/menus';
 
 interface MessageEditorProps {
   userId: string;

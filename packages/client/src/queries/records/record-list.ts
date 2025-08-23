@@ -1,8 +1,8 @@
-import { LocalRecordNode } from '@colanode/client/types/nodes';
+import { LocalRecordNode } from '@brainbox/client/types/nodes';
 import {
   DatabaseViewFilterAttributes,
   DatabaseViewSortAttributes,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 export type RecordListQueryInput = {
   type: 'record.list';
@@ -15,7 +15,7 @@ export type RecordListQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'record.list': {
       input: RecordListQueryInput;

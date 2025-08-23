@@ -2,20 +2,20 @@ import { Hash, MessageCircle, Plus, User } from 'lucide-react';
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
 
-import { LocalChannelNode } from '@colanode/client/types';
-import { ChannelCreateDialog } from '@colanode/ui/components/channels/channel-create-dialog';
-import { ChannelSidebarItem } from '@colanode/ui/components/channels/channel-sidebar-item';
-import { ChatCreatePopover } from '@colanode/ui/components/chats/chat-create-popover';
-import { ChatSidebarItem } from '@colanode/ui/components/chats/chat-sidebar-item';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { useAccount } from '@colanode/ui/contexts/account';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useRadar } from '@colanode/ui/contexts/radar';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
-import { usePinnedItems } from '@colanode/ui/hooks/use-pinned-items';
-import { cn } from '@colanode/ui/lib/utils';
+import { LocalChannelNode } from '@brainbox/client/types';
+import { ChannelCreateDialog } from '@brainbox/ui/components/channels/channel-create-dialog';
+import { ChannelSidebarItem } from '@brainbox/ui/components/channels/channel-sidebar-item';
+import { ChatCreatePopover } from '@brainbox/ui/components/chats/chat-create-popover';
+import { ChatSidebarItem } from '@brainbox/ui/components/chats/chat-sidebar-item';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { useAccount } from '@brainbox/ui/contexts/account';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useRadar } from '@brainbox/ui/contexts/radar';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
+import { usePinnedItems } from '@brainbox/ui/hooks/use-pinned-items';
+import { cn } from '@brainbox/ui/lib/utils';
 
 // Helper function for safe date parsing
 const parseDate = (dateStr: string) => {

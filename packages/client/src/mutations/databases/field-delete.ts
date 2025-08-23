@@ -10,7 +10,7 @@ export type FieldDeleteMutationOutput = {
   id: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'field.delete': {
       input: FieldDeleteMutationInput;

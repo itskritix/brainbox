@@ -1,4 +1,4 @@
-import { LocalDatabaseViewNode } from '@colanode/client/types/nodes';
+import { LocalDatabaseViewNode } from '@brainbox/client/types/nodes';
 
 export type DatabaseViewListQueryInput = {
   type: 'database.view.list';
@@ -7,7 +7,7 @@ export type DatabaseViewListQueryInput = {
   databaseId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'database.view.list': {
       input: DatabaseViewListQueryInput;

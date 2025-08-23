@@ -1,10 +1,10 @@
-import { SelectAccountMetadata } from '@colanode/client/databases/account/schema';
-import { mapAccountMetadata } from '@colanode/client/lib/mappers';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { AccountMetadataListQueryInput } from '@colanode/client/queries/accounts/account-metadata-list';
-import { AppService } from '@colanode/client/services/app-service';
-import { AccountMetadata } from '@colanode/client/types/accounts';
-import { Event } from '@colanode/client/types/events';
+import { SelectAccountMetadata } from '@brainbox/client/databases/account/schema';
+import { mapAccountMetadata } from '@brainbox/client/lib/mappers';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { AccountMetadataListQueryInput } from '@brainbox/client/queries/accounts/account-metadata-list';
+import { AppService } from '@brainbox/client/services/app-service';
+import { AccountMetadata } from '@brainbox/client/types/accounts';
+import { Event } from '@brainbox/client/types/events';
 
 export class AccountMetadataListQueryHandler
   implements QueryHandler<AccountMetadataListQueryInput>

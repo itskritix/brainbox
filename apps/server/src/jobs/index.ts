@@ -1,15 +1,15 @@
-import { assistantRespondHandler } from '@colanode/server/jobs/assistant-response';
-import { documentEmbedHandler } from '@colanode/server/jobs/document-embed';
-import { documentEmbedScanHandler } from '@colanode/server/jobs/document-embed-scan';
-import { documentUpdatesMergeHandler } from '@colanode/server/jobs/document-updates-merge';
-import { emailPasswordResetSendHandler } from '@colanode/server/jobs/email-password-reset-sent';
-import { emailVerifySendHandler } from '@colanode/server/jobs/email-verify-send';
-import { nodeCleanHandler } from '@colanode/server/jobs/node-clean';
-import { nodeEmbedHandler } from '@colanode/server/jobs/node-embed';
-import { nodeEmbedScanHandler } from '@colanode/server/jobs/node-embed-scan';
-import { nodeUpdatesMergeHandler } from '@colanode/server/jobs/node-updates-merge';
-import { uploadsCleanHandler } from '@colanode/server/jobs/uploads-clean';
-import { workspaceCleanHandler } from '@colanode/server/jobs/workspace-clean';
+import { assistantRespondHandler } from '@brainbox/server/jobs/assistant-response';
+import { documentEmbedHandler } from '@brainbox/server/jobs/document-embed';
+import { documentEmbedScanHandler } from '@brainbox/server/jobs/document-embed-scan';
+import { documentUpdatesMergeHandler } from '@brainbox/server/jobs/document-updates-merge';
+import { emailPasswordResetSendHandler } from '@brainbox/server/jobs/email-password-reset-sent';
+import { emailVerifySendHandler } from '@brainbox/server/jobs/email-verify-send';
+import { nodeCleanHandler } from '@brainbox/server/jobs/node-clean';
+import { nodeEmbedHandler } from '@brainbox/server/jobs/node-embed';
+import { nodeEmbedScanHandler } from '@brainbox/server/jobs/node-embed-scan';
+import { nodeUpdatesMergeHandler } from '@brainbox/server/jobs/node-updates-merge';
+import { uploadsCleanHandler } from '@brainbox/server/jobs/uploads-clean';
+import { workspaceCleanHandler } from '@brainbox/server/jobs/workspace-clean';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface JobMap {}

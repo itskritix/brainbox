@@ -10,7 +10,7 @@ import {
   SpaceNode,
   MessageNode,
   RecordNode,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 export type NodeCollaborator = {
   nodeId: string;

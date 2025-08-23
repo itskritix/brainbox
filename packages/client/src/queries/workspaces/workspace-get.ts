@@ -1,4 +1,4 @@
-import { Workspace } from '@colanode/client/types/workspaces';
+import { Workspace } from '@brainbox/client/types/workspaces';
 
 export type WorkspaceGetQueryInput = {
   type: 'workspace.get';
@@ -6,7 +6,7 @@ export type WorkspaceGetQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'workspace.get': {
       input: WorkspaceGetQueryInput;

@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
 
-import { RecordAvatar } from '@colanode/ui/components/records/record-avatar';
-import { RecordField } from '@colanode/ui/components/records/record-field';
-import { RecordFieldValue } from '@colanode/ui/components/records/record-field-value';
-import { RecordName } from '@colanode/ui/components/records/record-name';
-import { useDatabase } from '@colanode/ui/contexts/database';
+import { RecordAvatar } from '@brainbox/ui/components/records/record-avatar';
+import { RecordField } from '@brainbox/ui/components/records/record-field';
+import { RecordFieldValue } from '@brainbox/ui/components/records/record-field-value';
+import { RecordName } from '@brainbox/ui/components/records/record-name';
+import { useDatabase } from '@brainbox/ui/contexts/database';
 
 export const RecordAttributes = () => {
   const database = useDatabase();

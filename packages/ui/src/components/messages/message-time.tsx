@@ -1,10 +1,10 @@
-import { LocalMessageNode } from '@colanode/client/types';
-import { formatDate, timeAgo } from '@colanode/core';
+import { LocalMessageNode } from '@brainbox/client/types';
+import { formatDate, timeAgo } from '@brainbox/core';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@colanode/ui/components/ui/tooltip';
+} from '@brainbox/ui/components/ui/tooltip';
 
 interface MessageTimeProps {
   message: LocalMessageNode;

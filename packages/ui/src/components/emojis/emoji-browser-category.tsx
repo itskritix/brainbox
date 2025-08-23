@@ -1,4 +1,4 @@
-import { EmojiPickerCategoryRow } from '@colanode/client/types';
+import { EmojiPickerCategoryRow } from '@brainbox/client/types';
 
 interface EmojiBrowserCategoryProps {
   row: EmojiPickerCategoryRow;

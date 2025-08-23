@@ -1,6 +1,6 @@
 import { Kysely, Transaction } from 'kysely';
 
-import { DatabaseSchema } from '@colanode/server/data/schema';
+import { DatabaseSchema } from '@brainbox/server/data/schema';
 
 export type CounterKey =
   | `${string}.storage.used`

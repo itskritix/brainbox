@@ -1,4 +1,4 @@
-import { LoginOutput } from '@colanode/core';
+import { LoginOutput } from '@brainbox/core';
 
 export type GoogleLoginMutationInput = {
   type: 'google.login';
@@ -6,7 +6,7 @@ export type GoogleLoginMutationInput = {
   code: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'google.login': {
       input: GoogleLoginMutationInput;

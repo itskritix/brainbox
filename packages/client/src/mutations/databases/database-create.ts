@@ -11,7 +11,7 @@ export type DatabaseCreateMutationOutput = {
   id: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'database.create': {
       input: DatabaseCreateMutationInput;

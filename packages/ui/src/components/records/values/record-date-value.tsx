@@ -1,6 +1,6 @@
-import { DateFieldAttributes } from '@colanode/core';
-import { DatePicker } from '@colanode/ui/components/ui/date-picker';
-import { useRecord } from '@colanode/ui/contexts/record';
+import { DateFieldAttributes } from '@brainbox/core';
+import { DatePicker } from '@brainbox/ui/components/ui/date-picker';
+import { useRecord } from '@brainbox/ui/contexts/record';
 
 interface RecordDateValueProps {
   field: DateFieldAttributes;

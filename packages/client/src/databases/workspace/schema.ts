@@ -4,8 +4,8 @@ import {
   DownloadStatus,
   DownloadType,
   UploadStatus,
-} from '@colanode/client/types/files';
-import { NodeCounterType } from '@colanode/client/types/nodes';
+} from '@brainbox/client/types/files';
+import { NodeCounterType } from '@brainbox/client/types/nodes';
 import {
   MutationType,
   NodeType,
@@ -13,7 +13,7 @@ import {
   UserStatus,
   DocumentType,
   FileSubtype,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 interface UserTable {
   id: ColumnType<string, string, never>;

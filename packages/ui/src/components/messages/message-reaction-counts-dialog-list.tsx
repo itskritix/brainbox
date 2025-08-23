@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { InView } from 'react-intersection-observer';
 
-import { NodeReactionListQueryInput } from '@colanode/client/queries';
-import { NodeReactionCount, LocalMessageNode } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQueries } from '@colanode/ui/hooks/use-live-queries';
+import { NodeReactionListQueryInput } from '@brainbox/client/queries';
+import { NodeReactionCount, LocalMessageNode } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQueries } from '@brainbox/ui/hooks/use-live-queries';
 
 const REACTIONS_PER_PAGE = 20;
 

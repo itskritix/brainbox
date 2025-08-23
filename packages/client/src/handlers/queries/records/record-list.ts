@@ -1,17 +1,17 @@
 import { sql } from 'kysely';
 
-import { SelectNode } from '@colanode/client/databases/workspace';
-import { WorkspaceQueryHandlerBase } from '@colanode/client/handlers/queries/workspace-query-handler-base';
-import { mapNode } from '@colanode/client/lib/mappers';
+import { SelectNode } from '@brainbox/client/databases/workspace';
+import { WorkspaceQueryHandlerBase } from '@brainbox/client/handlers/queries/workspace-query-handler-base';
+import { mapNode } from '@brainbox/client/lib/mappers';
 import {
   buildFiltersQuery,
   buildSortOrdersQuery,
-} from '@colanode/client/lib/records';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { RecordListQueryInput } from '@colanode/client/queries/records/record-list';
-import { Event } from '@colanode/client/types/events';
-import { LocalRecordNode } from '@colanode/client/types/nodes';
-import { DatabaseNode } from '@colanode/core';
+} from '@brainbox/client/lib/records';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { RecordListQueryInput } from '@brainbox/client/queries/records/record-list';
+import { Event } from '@brainbox/client/types/events';
+import { LocalRecordNode } from '@brainbox/client/types/nodes';
+import { DatabaseNode } from '@brainbox/core';
 
 export class RecordListQueryHandler
   extends WorkspaceQueryHandlerBase

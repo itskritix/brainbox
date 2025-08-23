@@ -2,13 +2,13 @@ import { Download } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { LocalFileNode, SpecialContainerTabPath } from '@colanode/client/types';
-import { Button } from '@colanode/ui/components/ui/button';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useApp } from '@colanode/ui/contexts/app';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { LocalFileNode, SpecialContainerTabPath } from '@brainbox/client/types';
+import { Button } from '@brainbox/ui/components/ui/button';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useApp } from '@brainbox/ui/contexts/app';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface FileSaveButtonProps {
   file: LocalFileNode;
@@ -22,7 +22,7 @@ export const FileSaveButton = ({ file }: FileSaveButtonProps) => {
   const [isSaving, setIsSaving] = useState(false);
 
   const handleDownloadDesktop = async () => {
-    const path = await window.colanode.showFileSaveDialog({
+    const path = await window.brainbox.showFileSaveDialog({
       name: file.attributes.name,
     });
 
@@ -51,7 +51,7 @@ export const FileSaveButton = ({ file }: FileSaveButtonProps) => {
     setIsSaving(true);
 
     try {
-      const localFileQuery = await window.colanode.executeQuery({
+      const localFileQuery = await window.brainbox.executeQuery({
         type: 'local.file.get',
         fileId: file.id,
         accountId: workspace.accountId,
@@ -71,7 +71,7 @@ export const FileSaveButton = ({ file }: FileSaveButtonProps) => {
       }
 
       // the file is not downloaded locally, so we need to download it
-      const request = await window.colanode.executeQuery({
+      const request = await window.brainbox.executeQuery({
         type: 'file.download.request.get',
         id: file.id,
         accountId: workspace.accountId,

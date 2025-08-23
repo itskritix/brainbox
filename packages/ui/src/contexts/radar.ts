@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import { WorkspaceRadarData, UnreadState } from '@colanode/client/types';
+import { WorkspaceRadarData, UnreadState } from '@brainbox/client/types';
 
 interface RadarContext {
   getAccountState: (accountId: string) => UnreadState;

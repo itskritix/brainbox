@@ -1,4 +1,4 @@
-import { WorkspaceRole } from '@colanode/core';
+import { WorkspaceRole } from '@brainbox/core';
 
 export type UserRoleUpdateMutationInput = {
   type: 'user.role.update';
@@ -12,7 +12,7 @@ export type UserRoleUpdateMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'user.role.update': {
       input: UserRoleUpdateMutationInput;

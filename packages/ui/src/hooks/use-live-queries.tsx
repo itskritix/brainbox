@@ -1,7 +1,7 @@
 import { useQueries as useTanstackQueries } from '@tanstack/react-query';
 import { sha256 } from 'js-sha256';
 
-import { QueryInput } from '@colanode/client/queries';
+import { QueryInput } from '@brainbox/client/queries';
 
 export const useLiveQueries = <T extends QueryInput>(inputs: T[]) => {
   const result = useTanstackQueries({
@@ -9,7 +9,7 @@ export const useLiveQueries = <T extends QueryInput>(inputs: T[]) => {
       const hash = sha256(JSON.stringify(input));
       return {
         queryKey: [hash],
-        queryFn: () => window.colanode.executeQueryAndSubscribe(hash, input),
+        queryFn: () => window.brainbox.executeQueryAndSubscribe(hash, input),
       };
     }),
   });

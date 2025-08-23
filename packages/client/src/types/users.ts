@@ -1,4 +1,4 @@
-import { WorkspaceRole } from '@colanode/core';
+import { WorkspaceRole } from '@brainbox/core';
 
 export type User = {
   id: string;

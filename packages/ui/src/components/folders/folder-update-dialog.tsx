@@ -1,17 +1,17 @@
 import { toast } from 'sonner';
 
-import { LocalFolderNode } from '@colanode/client/types';
-import { NodeRole, hasNodeRole } from '@colanode/core';
-import { FolderForm } from '@colanode/ui/components/folders/folder-form';
+import { LocalFolderNode } from '@brainbox/client/types';
+import { NodeRole, hasNodeRole } from '@brainbox/core';
+import { FolderForm } from '@brainbox/ui/components/folders/folder-form';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@colanode/ui/components/ui/dialog';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+} from '@brainbox/ui/components/ui/dialog';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface FolderUpdateDialogProps {
   folder: LocalFolderNode;

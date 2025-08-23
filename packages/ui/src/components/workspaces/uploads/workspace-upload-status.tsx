@@ -2,12 +2,12 @@ import 'react-circular-progressbar/dist/styles.css';
 import { Check, X, Clock } from 'lucide-react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
-import { UploadStatus } from '@colanode/client/types';
+import { UploadStatus } from '@brainbox/client/types';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@colanode/ui/components/ui/tooltip';
+} from '@brainbox/ui/components/ui/tooltip';
 
 interface WorkspaceUploadStatusProps {
   status: UploadStatus;

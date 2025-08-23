@@ -1,11 +1,11 @@
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   FieldDeleteMutationInput,
   FieldDeleteMutationOutput,
-} from '@colanode/client/mutations/databases/field-delete';
-import { DatabaseAttributes } from '@colanode/core';
+} from '@brainbox/client/mutations/databases/field-delete';
+import { DatabaseAttributes } from '@brainbox/core';
 
 export class FieldDeleteMutationHandler
   extends WorkspaceMutationHandlerBase

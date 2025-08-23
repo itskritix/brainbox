@@ -1,10 +1,10 @@
 import { InView } from 'react-intersection-observer';
 
-import { DatabaseViewFilterAttributes, FieldAttributes } from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useRecordsQuery } from '@colanode/ui/hooks/use-records-query';
+import { DatabaseViewFilterAttributes, FieldAttributes } from '@brainbox/core';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useRecordsQuery } from '@brainbox/ui/hooks/use-records-query';
 
 interface CalendarViewNoValueListProps {
   filters: DatabaseViewFilterAttributes[];

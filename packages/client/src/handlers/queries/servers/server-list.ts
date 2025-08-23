@@ -1,8 +1,8 @@
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib';
-import { ServerListQueryInput } from '@colanode/client/queries/servers/server-list';
-import { AppService } from '@colanode/client/services/app-service';
-import { Event } from '@colanode/client/types/events';
-import { ServerDetails } from '@colanode/client/types/servers';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib';
+import { ServerListQueryInput } from '@brainbox/client/queries/servers/server-list';
+import { AppService } from '@brainbox/client/services/app-service';
+import { Event } from '@brainbox/client/types/events';
+import { ServerDetails } from '@brainbox/client/types/servers';
 
 export class ServerListQueryHandler
   implements QueryHandler<ServerListQueryInput>

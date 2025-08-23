@@ -1,15 +1,15 @@
 import { Folder, Trash2 } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { FileDeleteDialog } from '@colanode/ui/components/files/file-delete-dialog';
+import { FileDeleteDialog } from '@brainbox/ui/components/files/file-delete-dialog';
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuShortcut,
   ContextMenuTrigger,
-} from '@colanode/ui/components/ui/context-menu';
-import { useLayout } from '@colanode/ui/contexts/layout';
+} from '@brainbox/ui/components/ui/context-menu';
+import { useLayout } from '@brainbox/ui/contexts/layout';
 
 interface FileContextMenuProps {
   id: string;

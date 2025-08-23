@@ -2,21 +2,21 @@ import {
   CreateNodeReference,
   SelectNode,
   SelectNodeReference,
-} from '@colanode/client/databases/workspace';
-import { eventBus } from '@colanode/client/lib/event-bus';
+} from '@brainbox/client/databases/workspace';
+import { eventBus } from '@brainbox/client/lib/event-bus';
 import {
   mapDownload,
   mapNode,
   mapNodeReference,
   mapUpload,
-} from '@colanode/client/lib/mappers';
+} from '@brainbox/client/lib/mappers';
 import {
   applyMentionUpdates,
   checkMentionChanges,
-} from '@colanode/client/lib/mentions';
-import { deleteNodeRelations, fetchNodeTree } from '@colanode/client/lib/utils';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
-import { DownloadStatus } from '@colanode/client/types';
+} from '@brainbox/client/lib/mentions';
+import { deleteNodeRelations, fetchNodeTree } from '@brainbox/client/lib/utils';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
+import { DownloadStatus } from '@brainbox/client/types';
 import {
   generateId,
   IdType,
@@ -31,8 +31,8 @@ import {
   CanCreateNodeContext,
   CanUpdateAttributesContext,
   CanDeleteNodeContext,
-} from '@colanode/core';
-import { decodeState, encodeState, YDoc } from '@colanode/crdt';
+} from '@brainbox/core';
+import { decodeState, encodeState, YDoc } from '@brainbox/crdt';
 
 const UPDATE_RETRIES_LIMIT = 20;
 
@@ -94,7 +94,7 @@ export class NodeService {
     const nodeText = model.extractText(input.id, input.attributes);
     const mentions = model.extractMentions(input.id, input.attributes);
     const nodeReferencesToCreate: CreateNodeReference[] = mentions.map(
-      (mention) => ({
+      (mention: any) => ({
         node_id: input.id,
         reference_id: mention.target,
         inner_id: mention.id,
@@ -588,7 +588,7 @@ export class NodeService {
     const model = getNodeModel(attributes.type);
     const nodeText = model.extractText(update.nodeId, attributes);
     const mentions = model.extractMentions(update.nodeId, attributes);
-    const nodeReferencesToCreate = mentions.map((mention) => ({
+    const nodeReferencesToCreate = mentions.map((mention: any) => ({
       node_id: update.nodeId,
       reference_id: mention.target,
       inner_id: mention.id,
@@ -726,7 +726,7 @@ export class NodeService {
     const afterMentions = model.extractMentions(existingNode.id, attributes);
     const mentionChanges = checkMentionChanges(beforeMentions, afterMentions);
 
-    const mergedUpdateIds = update.mergedUpdates?.map((u) => u.id) ?? [];
+    const mergedUpdateIds = update.mergedUpdates?.map((u: any) => u.id) ?? [];
     const updatesToDelete = [update.id, ...mergedUpdateIds];
 
     const { updatedNode, createdNodeReferences, deletedNodeReferences } =

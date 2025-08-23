@@ -11,7 +11,7 @@ export type ChannelUpdateMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'channel.update': {
       input: ChannelUpdateMutationInput;

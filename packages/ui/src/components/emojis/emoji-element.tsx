@@ -1,4 +1,4 @@
-import { useApp } from '@colanode/ui/contexts/app';
+import { useApp } from '@brainbox/ui/contexts/app';
 
 interface EmojiElementProps {
   id: string;

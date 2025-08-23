@@ -1,10 +1,10 @@
-import { SelectAppMetadata } from '@colanode/client/databases/app/schema';
-import { mapAppMetadata } from '@colanode/client/lib/mappers';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { AppMetadataListQueryInput } from '@colanode/client/queries/apps/app-metadata-list';
-import { AppService } from '@colanode/client/services/app-service';
-import { AppMetadata } from '@colanode/client/types/apps';
-import { Event } from '@colanode/client/types/events';
+import { SelectAppMetadata } from '@brainbox/client/databases/app/schema';
+import { mapAppMetadata } from '@brainbox/client/lib/mappers';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { AppMetadataListQueryInput } from '@brainbox/client/queries/apps/app-metadata-list';
+import { AppService } from '@brainbox/client/services/app-service';
+import { AppMetadata } from '@brainbox/client/types/apps';
+import { Event } from '@brainbox/client/types/events';
 
 export class AppMetadataListQueryHandler
   implements QueryHandler<AppMetadataListQueryInput>

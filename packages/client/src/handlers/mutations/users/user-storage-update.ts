@@ -1,12 +1,12 @@
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { parseApiError } from '@colanode/client/lib/ky';
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { parseApiError } from '@brainbox/client/lib/ky';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   UserStorageUpdateMutationInput,
   UserStorageUpdateMutationOutput,
-} from '@colanode/client/mutations/users/user-storage-update';
-import { UserOutput, UserStorageUpdateInput } from '@colanode/core';
+} from '@brainbox/client/mutations/users/user-storage-update';
+import { UserOutput, UserStorageUpdateInput } from '@brainbox/core';
 
 export class UserStorageUpdateMutationHandler
   extends WorkspaceMutationHandlerBase

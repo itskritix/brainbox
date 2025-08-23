@@ -1,10 +1,10 @@
-import { AccountMutationHandlerBase } from '@colanode/client/handlers/mutations/accounts/base';
-import { parseApiError } from '@colanode/client/lib/ky';
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
-import { EmailVerifyMutationInput } from '@colanode/client/mutations/accounts/email-verify';
-import { AppService } from '@colanode/client/services/app-service';
-import { EmailVerifyInput, LoginOutput } from '@colanode/core';
+import { AccountMutationHandlerBase } from '@brainbox/client/handlers/mutations/accounts/base';
+import { parseApiError } from '@brainbox/client/lib/ky';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
+import { EmailVerifyMutationInput } from '@brainbox/client/mutations/accounts/email-verify';
+import { AppService } from '@brainbox/client/services/app-service';
+import { EmailVerifyInput, LoginOutput } from '@brainbox/core';
 
 export class EmailVerifyMutationHandler
   extends AccountMutationHandlerBase

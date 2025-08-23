@@ -1,9 +1,9 @@
-import { WorkspaceQueryHandlerBase } from '@colanode/client/handlers/queries/workspace-query-handler-base';
-import { mapUpload } from '@colanode/client/lib';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { UploadListPendingQueryInput } from '@colanode/client/queries/files/upload-list-pending';
-import { Event } from '@colanode/client/types/events';
-import { Upload, UploadStatus } from '@colanode/client/types/files';
+import { WorkspaceQueryHandlerBase } from '@brainbox/client/handlers/queries/workspace-query-handler-base';
+import { mapUpload } from '@brainbox/client/lib';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { UploadListPendingQueryInput } from '@brainbox/client/queries/files/upload-list-pending';
+import { Event } from '@brainbox/client/types/events';
+import { Upload, UploadStatus } from '@brainbox/client/types/files';
 
 export class UploadListPendingQueryHandler
   extends WorkspaceQueryHandlerBase

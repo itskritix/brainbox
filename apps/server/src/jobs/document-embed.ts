@@ -1,20 +1,20 @@
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { sql } from 'kysely';
 
-import { extractDocumentText, getNodeModel } from '@colanode/core';
-import { database } from '@colanode/server/data/database';
-import { CreateDocumentEmbedding } from '@colanode/server/data/schema';
-import { JobHandler } from '@colanode/server/jobs';
-import { chunkText } from '@colanode/server/lib/ai/chunking';
-import { config } from '@colanode/server/lib/config';
-import { fetchNode } from '@colanode/server/lib/nodes';
+import { extractDocumentText, getNodeModel } from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
+import { CreateDocumentEmbedding } from '@brainbox/server/data/schema';
+import { JobHandler } from '@brainbox/server/jobs';
+import { chunkText } from '@brainbox/server/lib/ai/chunking';
+import { config } from '@brainbox/server/lib/config';
+import { fetchNode } from '@brainbox/server/lib/nodes';
 
 export type DocumentEmbedInput = {
   type: 'document.embed';
   documentId: string;
 };
 
-declare module '@colanode/server/jobs' {
+declare module '@brainbox/server/jobs' {
   interface JobMap {
     'document.embed': {
       input: DocumentEmbedInput;

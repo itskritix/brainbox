@@ -24,14 +24,14 @@ export default defineConfig((env) => {
     plugins: [react(), pluginExposeRenderer(name)],
     resolve: {
       alias: {
-        '@colanode/desktop': path.resolve(__dirname, './src'),
-        '@colanode/core': path.resolve(__dirname, '../../packages/core/src'),
-        '@colanode/crdt': path.resolve(__dirname, '../../packages/crdt/src'),
-        '@colanode/client': path.resolve(
+        '@brainbox/desktop': path.resolve(__dirname, './src'),
+        '@brainbox/core': path.resolve(__dirname, '../../packages/core/src'),
+        '@brainbox/crdt': path.resolve(__dirname, '../../packages/crdt/src'),
+        '@brainbox/client': path.resolve(
           __dirname,
           '../../packages/client/src'
         ),
-        '@colanode/ui': path.resolve(__dirname, '../../packages/ui/src'),
+        '@brainbox/ui': path.resolve(__dirname, '../../packages/ui/src'),
       },
     },
     clearScreen: false,

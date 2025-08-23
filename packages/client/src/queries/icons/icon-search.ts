@@ -1,4 +1,4 @@
-import { Icon } from '@colanode/client/types/icons';
+import { Icon } from '@brainbox/client/types/icons';
 
 export type IconSearchQueryInput = {
   type: 'icon.search';
@@ -6,7 +6,7 @@ export type IconSearchQueryInput = {
   count: number;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'icon.search': {
       input: IconSearchQueryInput;

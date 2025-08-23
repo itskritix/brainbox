@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { InView } from 'react-intersection-observer';
 
-import { DownloadListManualQueryInput } from '@colanode/client/queries';
-import { Container, ContainerBody } from '@colanode/ui/components/ui/container';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { WorkspaceDownloadFile } from '@colanode/ui/components/workspaces/downloads/workspace-download-file';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQueries } from '@colanode/ui/hooks/use-live-queries';
+import { DownloadListManualQueryInput } from '@brainbox/client/queries';
+import { Container, ContainerBody } from '@brainbox/ui/components/ui/container';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { WorkspaceDownloadFile } from '@brainbox/ui/components/workspaces/downloads/workspace-download-file';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQueries } from '@brainbox/ui/hooks/use-live-queries';
 
 const DOWNLOADS_PER_PAGE = 100;
 

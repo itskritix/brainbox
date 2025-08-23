@@ -1,6 +1,6 @@
 import { z } from 'zod/v4';
 
-import { build } from '@colanode/core';
+import { build } from '@brainbox/core';
 
 const serverModeSchema = z.enum(['standalone', 'cluster']);
 export type ServerMode = z.infer<typeof serverModeSchema>;
@@ -8,7 +8,7 @@ export type ServerMode = z.infer<typeof serverModeSchema>;
 export const serverConfigSchema = z.object({
   version: z.string().default(build.version),
   sha: z.string().default(build.sha),
-  name: z.string().default('Colanode Server'),
+  name: z.string().default('Brainbox Server'),
   avatar: z.string().optional(),
   mode: serverModeSchema.default('standalone'),
   pathPrefix: z.string().optional(),

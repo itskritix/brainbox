@@ -1,4 +1,4 @@
-import { User } from '@colanode/client/types/users';
+import { User } from '@brainbox/client/types/users';
 
 export type UserListQueryInput = {
   type: 'user.list';
@@ -8,7 +8,7 @@ export type UserListQueryInput = {
   count: number;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'user.list': {
       input: UserListQueryInput;

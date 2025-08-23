@@ -1,4 +1,4 @@
-import { DocumentState } from '@colanode/client/types/documents';
+import { DocumentState } from '@brainbox/client/types/documents';
 
 export type DocumentStateGetQueryInput = {
   type: 'document.state.get';
@@ -7,7 +7,7 @@ export type DocumentStateGetQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'document.state.get': {
       input: DocumentStateGetQueryInput;

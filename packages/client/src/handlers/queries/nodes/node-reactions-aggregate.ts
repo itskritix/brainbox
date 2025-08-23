@@ -1,10 +1,10 @@
 import { sql } from 'kysely';
 
-import { WorkspaceQueryHandlerBase } from '@colanode/client/handlers/queries/workspace-query-handler-base';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib';
-import { NodeReactionsAggregateQueryInput } from '@colanode/client/queries/nodes/node-reactions-aggregate';
-import { Event } from '@colanode/client/types/events';
-import { NodeReactionCount } from '@colanode/client/types/nodes';
+import { WorkspaceQueryHandlerBase } from '@brainbox/client/handlers/queries/workspace-query-handler-base';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib';
+import { NodeReactionsAggregateQueryInput } from '@brainbox/client/queries/nodes/node-reactions-aggregate';
+import { Event } from '@brainbox/client/types/events';
+import { NodeReactionCount } from '@brainbox/client/types/nodes';
 
 interface NodeReactionsAggregateRow {
   reaction: string;

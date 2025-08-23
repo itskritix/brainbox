@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
-import { FeatureKey } from '@colanode/client/lib';
-import { ServerDetails } from '@colanode/client/types';
+import { FeatureKey } from '@brainbox/client/lib';
+import { ServerDetails } from '@brainbox/client/types';
 
 interface ServerContext extends ServerDetails {
   supports(feature: FeatureKey): boolean;

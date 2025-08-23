@@ -6,18 +6,18 @@ import {
 } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { ServerDetails } from '@colanode/client/types';
-import { ServerAvatar } from '@colanode/ui/components/servers/server-avatar';
-import { ServerCreateDialog } from '@colanode/ui/components/servers/server-create-dialog';
-import { ServerDeleteDialog } from '@colanode/ui/components/servers/server-delete-dialog';
-import { ServerSettingsDialog } from '@colanode/ui/components/servers/server-settings-dialog';
+import { ServerDetails } from '@brainbox/client/types';
+import { ServerAvatar } from '@brainbox/ui/components/servers/server-avatar';
+import { ServerCreateDialog } from '@brainbox/ui/components/servers/server-create-dialog';
+import { ServerDeleteDialog } from '@brainbox/ui/components/servers/server-delete-dialog';
+import { ServerSettingsDialog } from '@brainbox/ui/components/servers/server-settings-dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
+} from '@brainbox/ui/components/ui/dropdown-menu';
 
 interface ServerDropdownProps {
   value: string | null;

@@ -1,14 +1,14 @@
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { parseApiError } from '@colanode/client/lib/ky';
-import { mapAccount } from '@colanode/client/lib/mappers';
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { parseApiError } from '@brainbox/client/lib/ky';
+import { mapAccount } from '@brainbox/client/lib/mappers';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   AccountUpdateMutationInput,
   AccountUpdateMutationOutput,
-} from '@colanode/client/mutations/accounts/account-update';
-import { AppService } from '@colanode/client/services/app-service';
-import { AccountUpdateInput, AccountUpdateOutput } from '@colanode/core';
+} from '@brainbox/client/mutations/accounts/account-update';
+import { AppService } from '@brainbox/client/services/app-service';
+import { AccountUpdateInput, AccountUpdateOutput } from '@brainbox/core';
 
 export class AccountUpdateMutationHandler
   implements MutationHandler<AccountUpdateMutationInput>

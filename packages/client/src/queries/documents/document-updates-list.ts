@@ -1,4 +1,4 @@
-import { DocumentUpdate } from '@colanode/client/types/documents';
+import { DocumentUpdate } from '@brainbox/client/types/documents';
 
 export type DocumentUpdatesListQueryInput = {
   type: 'document.updates.list';
@@ -7,7 +7,7 @@ export type DocumentUpdatesListQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'document.updates.list': {
       input: DocumentUpdatesListQueryInput;

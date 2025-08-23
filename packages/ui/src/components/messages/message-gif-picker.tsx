@@ -5,7 +5,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
+} from '@brainbox/ui/components/ui/popover';
 
 export const MessageGifPicker = () => {
   const [open, setOpen] = useState(false);

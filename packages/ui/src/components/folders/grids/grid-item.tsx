@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
-import { useFolder } from '@colanode/ui/contexts/folder';
-import { cn } from '@colanode/ui/lib/utils';
+import { useFolder } from '@brainbox/ui/contexts/folder';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface GridItemProps {
   id: string;

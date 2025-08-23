@@ -1,5 +1,5 @@
-import { IconPickerItem } from '@colanode/ui/components/icons/icon-picker-item';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { IconPickerItem } from '@brainbox/ui/components/icons/icon-picker-item';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface IconSearchProps {
   query: string;

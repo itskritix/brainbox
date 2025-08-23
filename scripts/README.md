@@ -1,12 +1,12 @@
-# Colanode scripts
+# Brainbox scripts
 
-This folder contains a collection of one-time or utility scripts that support the Colanode application. These scripts are not part of the main application runtime; rather, they are used to generate assets, seed data, or perform other setup tasks.
+This folder contains a collection of one-time or utility scripts that support the Brainbox application. These scripts are not part of the main application runtime; rather, they are used to generate assets, seed data, or perform other setup tasks.
 
 ## Overview
 
-- **Emoji Generator (`/src/emojis`)** - Generates emoji files and metadata used in Colanode app.
+- **Emoji Generator (`/src/emojis`)** - Generates emoji files and metadata used in Brainbox app.
 
-- **Icons Generator (`/src/icons`)** - Generates icon files and metadata used in Colanode app.
+- **Icons Generator (`/src/icons`)** - Generates icon files and metadata used in Brainbox app.
 
 - **Seed Script (`/src/seed`)** - Automatically creates dummy data for testing or local development. This includes:
 

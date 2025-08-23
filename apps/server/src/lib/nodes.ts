@@ -14,30 +14,30 @@ import {
   NodeAttributes,
   MutationStatus,
   UpdateNodeMutationData,
-} from '@colanode/core';
-import { decodeState, YDoc } from '@colanode/crdt';
-import { database } from '@colanode/server/data/database';
+} from '@brainbox/core';
+import { decodeState, YDoc } from '@brainbox/crdt';
+import { database } from '@brainbox/server/data/database';
 import {
   CreateCollaboration,
   SelectCollaboration,
   SelectNode,
   SelectNodeUpdate,
   SelectUser,
-} from '@colanode/server/data/schema';
-import { scheduleNodeEmbedding } from '@colanode/server/lib/ai/embeddings';
+} from '@brainbox/server/data/schema';
+import { scheduleNodeEmbedding } from '@brainbox/server/lib/ai/embeddings';
 import {
   applyCollaboratorUpdates,
   checkCollaboratorChanges,
-} from '@colanode/server/lib/collaborations';
-import { eventBus } from '@colanode/server/lib/event-bus';
-import { deleteFile } from '@colanode/server/lib/files';
-import { createLogger } from '@colanode/server/lib/logger';
-import { jobService } from '@colanode/server/services/job-service';
+} from '@brainbox/server/lib/collaborations';
+import { eventBus } from '@brainbox/server/lib/event-bus';
+import { deleteFile } from '@brainbox/server/lib/files';
+import { createLogger } from '@brainbox/server/lib/logger';
+import { jobService } from '@brainbox/server/services/job-service';
 import {
   ConcurrentUpdateResult,
   CreateNodeInput,
   UpdateNodeInput,
-} from '@colanode/server/types/nodes';
+} from '@brainbox/server/types/nodes';
 
 const logger = createLogger('server:lib:nodes');
 

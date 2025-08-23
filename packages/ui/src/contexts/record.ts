@@ -16,7 +16,7 @@ import {
   SelectFieldAttributes,
   TextFieldAttributes,
   UrlFieldAttributes,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 interface RecordContext {
   id: string;

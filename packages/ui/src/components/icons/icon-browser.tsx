@@ -1,10 +1,10 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useMemo, useRef } from 'react';
 
-import { IconPickerRowData } from '@colanode/client/types';
-import { IconBrowserCategory } from '@colanode/ui/components/icons/icon-browser-category';
-import { IconBrowserItems } from '@colanode/ui/components/icons/icon-browser-items';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { IconPickerRowData } from '@brainbox/client/types';
+import { IconBrowserCategory } from '@brainbox/ui/components/icons/icon-browser-category';
+import { IconBrowserItems } from '@brainbox/ui/components/icons/icon-browser-items';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 const ICONS_PER_ROW = 10;
 

@@ -1,10 +1,10 @@
 import { sha256 } from 'js-sha256';
 import ms from 'ms';
 
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { EventLoop } from '@colanode/client/lib/event-loop';
-import { AccountSocket } from '@colanode/client/services/accounts/account-socket';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { EventLoop } from '@brainbox/client/lib/event-loop';
+import { AccountSocket } from '@brainbox/client/services/accounts/account-socket';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
 import {
   SynchronizerOutputMessage,
   SynchronizerInputMessage,
@@ -12,7 +12,7 @@ import {
   SynchronizerMap,
   createDebugger,
   Message,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 export type SynchronizerStatus = 'idle' | 'waiting' | 'processing';
 

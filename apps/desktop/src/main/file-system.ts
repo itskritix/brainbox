@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { Writable } from 'stream';
 
-import { FileReadStream, FileSystem } from '@colanode/client/services';
+import { FileReadStream, FileSystem } from '@brainbox/client/services';
 
 export class DesktopFileSystem implements FileSystem {
   public async makeDirectory(path: string): Promise<void> {

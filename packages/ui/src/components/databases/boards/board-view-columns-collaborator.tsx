@@ -5,15 +5,15 @@ import {
   CollaboratorFieldAttributes,
   DatabaseViewFilterAttributes,
   FieldValue,
-} from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { BoardViewColumn } from '@colanode/ui/components/databases/boards/board-view-column';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { BoardViewContext } from '@colanode/ui/contexts/board-view';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+} from '@brainbox/core';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { BoardViewColumn } from '@brainbox/ui/components/databases/boards/board-view-column';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { BoardViewContext } from '@brainbox/ui/contexts/board-view';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface BoardViewColumnsCollaboratorProps {
   field: CollaboratorFieldAttributes;
@@ -82,7 +82,7 @@ export const BoardViewColumnsCollaborator = ({
               canDrag: (record) => record.canEdit,
               onDragEnd: async (record, value) => {
                 if (!value) {
-                  const result = await window.colanode.executeMutation({
+                  const result = await window.brainbox.executeMutation({
                     type: 'record.field.value.delete',
                     recordId: record.id,
                     fieldId: field.id,
@@ -115,7 +115,7 @@ export const BoardViewColumnsCollaborator = ({
                     };
                   }
 
-                  const result = await window.colanode.executeMutation({
+                  const result = await window.brainbox.executeMutation({
                     type: 'record.field.value.set',
                     recordId: record.id,
                     fieldId: field.id,
@@ -153,7 +153,7 @@ export const BoardViewColumnsCollaborator = ({
           canDrag: () => true,
           onDragEnd: async (record, value) => {
             if (!value) {
-              const result = await window.colanode.executeMutation({
+              const result = await window.brainbox.executeMutation({
                 type: 'record.field.value.delete',
                 recordId: record.id,
                 fieldId: field.id,
@@ -165,7 +165,7 @@ export const BoardViewColumnsCollaborator = ({
                 toast.error(result.error.message);
               }
             } else {
-              const result = await window.colanode.executeMutation({
+              const result = await window.brainbox.executeMutation({
                 type: 'record.field.value.set',
                 recordId: record.id,
                 fieldId: field.id,

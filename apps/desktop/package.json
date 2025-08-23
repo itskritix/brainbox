@@ -1,14 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@colanode/desktop",
-  "productName": "Colanode",
+  "name": "@brainbox/desktop",
+  "productName": "Brainbox",
   "version": "1.0.0",
-  "author": "Colanode",
-  "description": "Colanode desktop application",
+  "author": "Brainbox",
+  "description": "Brainbox desktop application",
   "main": ".vite/build/main.js",
   "scripts": {
-    "dev": "set DEBUG=colanode:* & electron-forge start",
-    "dev:win": "set DEBUG=colanode:* & electron-forge start",
+    "dev": "set DEBUG=brainbox:* & electron-forge start",
+    "dev:win": "set DEBUG=brainbox:* & electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -36,9 +36,9 @@
     "vite": "^7.1.1"
   },
   "dependencies": {
-    "@colanode/client": "*",
-    "@colanode/core": "*",
-    "@colanode/ui": "*",
+    "@brainbox/client": "*",
+    "@brainbox/core": "*",
+    "@brainbox/ui": "*",
     "better-sqlite3": "^12.2.0",
     "bufferutil": "^4.0.9",
     "electron-squirrel-startup": "^1.0.1",

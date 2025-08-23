@@ -1,7 +1,7 @@
-import { generateId, IdType } from '@colanode/core';
-import { redis } from '@colanode/server/data/redis';
-import { config } from '@colanode/server/lib/config';
-import { Event } from '@colanode/server/types/events';
+import { generateId, IdType } from '@brainbox/core';
+import { redis } from '@brainbox/server/data/redis';
+import { config } from '@brainbox/server/lib/config';
+import { Event } from '@brainbox/server/types/events';
 
 export interface Subscription {
   id: string;

@@ -3,23 +3,23 @@ import { ChevronDown, Trash2 } from 'lucide-react';
 import {
   CreatedAtFieldAttributes,
   DatabaseViewFieldFilterAttributes,
-} from '@colanode/core';
-import { FieldIcon } from '@colanode/ui/components/databases/fields/field-icon';
-import { Button } from '@colanode/ui/components/ui/button';
-import { DatePicker } from '@colanode/ui/components/ui/date-picker';
+} from '@brainbox/core';
+import { FieldIcon } from '@brainbox/ui/components/databases/fields/field-icon';
+import { Button } from '@brainbox/ui/components/ui/button';
+import { DatePicker } from '@brainbox/ui/components/ui/date-picker';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
+} from '@brainbox/ui/components/ui/dropdown-menu';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { createdAtFieldFilterOperators } from '@colanode/ui/lib/databases';
+} from '@brainbox/ui/components/ui/popover';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { createdAtFieldFilterOperators } from '@brainbox/ui/lib/databases';
 
 interface ViewCreatedAtFieldFilterProps {
   field: CreatedAtFieldAttributes;

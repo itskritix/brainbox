@@ -8,9 +8,9 @@ import {
   avatarUploadOutputSchema,
   generateId,
   IdType,
-} from '@colanode/core';
-import { s3Client } from '@colanode/server/data/storage';
-import { config } from '@colanode/server/lib/config';
+} from '@brainbox/core';
+import { s3Client } from '@brainbox/server/data/storage';
+import { config } from '@brainbox/server/lib/config';
 
 const ALLOWED_MIME_TYPES = [
   'image/jpeg',

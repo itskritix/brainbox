@@ -1,11 +1,11 @@
 import { toast } from 'sonner';
 
-import { Button } from '@colanode/ui/components/ui/button';
-import { Container, ContainerBody } from '@colanode/ui/components/ui/container';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useAccount } from '@colanode/ui/contexts/account';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { Button } from '@brainbox/ui/components/ui/button';
+import { Container, ContainerBody } from '@brainbox/ui/components/ui/container';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useAccount } from '@brainbox/ui/contexts/account';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 export const AccountLogout = () => {
   const account = useAccount();

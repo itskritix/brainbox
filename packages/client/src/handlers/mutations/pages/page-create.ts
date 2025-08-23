@@ -1,11 +1,11 @@
-import { SelectNode } from '@colanode/client/databases';
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { MutationHandler } from '@colanode/client/lib/types';
+import { SelectNode } from '@brainbox/client/databases';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { MutationHandler } from '@brainbox/client/lib/types';
 import {
   PageCreateMutationInput,
   PageCreateMutationOutput,
-} from '@colanode/client/mutations/pages/page-create';
-import { generateId, IdType, PageAttributes, SpaceAttributes, compareString, generateFractionalIndex } from '@colanode/core';
+} from '@brainbox/client/mutations/pages/page-create';
+import { generateId, IdType, PageAttributes, SpaceAttributes, compareString, generateFractionalIndex } from '@brainbox/core';
 
 export class PageCreateMutationHandler
   extends WorkspaceMutationHandlerBase
@@ -76,7 +76,7 @@ export class PageCreateMutationHandler
     after: string | null
   ): string | null {
     const sortedById = children.toSorted((a, b) => compareString(a.id, b.id));
-    const indexes: { id: string; defaultIndex: string; customIndex: string | null; }[] = [];
+    const indexes: { id: string; defaultIndex: string; customIndex: string; }[] = [];
     const childrenSettings = attributes.children ?? {};
     let lastIndex: string | null = null;
 
@@ -85,14 +85,14 @@ export class PageCreateMutationHandler
       indexes.push({
         id: child.id,
         defaultIndex: lastIndex,
-        customIndex: childrenSettings[child.id]?.index ?? null,
+        customIndex: childrenSettings[child.id]?.index ?? '',
       });
     }
 
     const sortedIndexes = indexes.sort((a, b) =>
       compareString(
-        a.customIndex ?? a.defaultIndex,
-        b.customIndex ?? b.defaultIndex
+        a.customIndex || a.defaultIndex,
+        b.customIndex || b.defaultIndex
       )
     );
 
@@ -102,7 +102,7 @@ export class PageCreateMutationHandler
         return generateFractionalIndex(null, null);
       }
 
-      const nextIndex = firstIndex.customIndex ?? firstIndex.defaultIndex;
+      const nextIndex = firstIndex.customIndex || firstIndex.defaultIndex;
       return generateFractionalIndex(null, nextIndex);
     }
 
@@ -116,7 +116,7 @@ export class PageCreateMutationHandler
       return null;
     }
 
-    const previousIndex = afterNode.customIndex ?? afterNode.defaultIndex;
+    const previousIndex = afterNode.customIndex || afterNode.defaultIndex;
     let nextIndex: string | null = null;
     if (afterNodeIndex < sortedIndexes.length - 1) {
       const nextNode = sortedIndexes[afterNodeIndex + 1];
@@ -124,7 +124,7 @@ export class PageCreateMutationHandler
         return null;
       }
 
-      nextIndex = nextNode.customIndex ?? nextNode.defaultIndex;
+      nextIndex = nextNode.customIndex || nextNode.defaultIndex;
     }
 
     return generateFractionalIndex(previousIndex, nextIndex);

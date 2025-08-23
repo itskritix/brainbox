@@ -1,9 +1,9 @@
-import { FieldType } from '@colanode/core';
-import { FieldCreatePopover } from '@colanode/ui/components/databases/fields/field-create-popover';
-import { FieldSelect } from '@colanode/ui/components/databases/fields/field-select';
-import { Button } from '@colanode/ui/components/ui/button';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
+import { FieldType } from '@brainbox/core';
+import { FieldCreatePopover } from '@brainbox/ui/components/databases/fields/field-create-popover';
+import { FieldSelect } from '@brainbox/ui/components/databases/fields/field-select';
+import { Button } from '@brainbox/ui/components/ui/button';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
 
 const calendarGroupFields: FieldType[] = ['date', 'created_at', 'updated_at'];
 

@@ -2,11 +2,11 @@ import { Document } from '@langchain/core/documents';
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { sql } from 'kysely';
 
-import { database } from '@colanode/server/data/database';
-import { combineAndScoreSearchResults } from '@colanode/server/lib/ai/utils';
-import { config } from '@colanode/server/lib/config';
-import { RewrittenQuery } from '@colanode/server/types/llm';
-import { SearchResult } from '@colanode/server/types/retrieval';
+import { database } from '@brainbox/server/data/database';
+import { combineAndScoreSearchResults } from '@brainbox/server/lib/ai/utils';
+import { config } from '@brainbox/server/lib/config';
+import { RewrittenQuery } from '@brainbox/server/types/llm';
+import { SearchResult } from '@brainbox/server/types/retrieval';
 
 const embeddings = config.ai.enabled
   ? new OpenAIEmbeddings({

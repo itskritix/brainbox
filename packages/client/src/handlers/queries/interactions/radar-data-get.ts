@@ -1,11 +1,11 @@
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
 import {
   RadarDataGetQueryInput,
   RadarDataGetQueryOutput,
-} from '@colanode/client/queries/interactions/radar-data-get';
-import { AppService } from '@colanode/client/services/app-service';
-import { Event } from '@colanode/client/types/events';
-import { WorkspaceRadarData } from '@colanode/client/types/radars';
+} from '@brainbox/client/queries/interactions/radar-data-get';
+import { AppService } from '@brainbox/client/services/app-service';
+import { Event } from '@brainbox/client/types/events';
+import { WorkspaceRadarData } from '@brainbox/client/types/radars';
 
 export class RadarDataGetQueryHandler
   implements QueryHandler<RadarDataGetQueryInput>

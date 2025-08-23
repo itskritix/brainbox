@@ -1,6 +1,6 @@
 import { ColumnType, Insertable, Selectable, Updateable } from 'kysely';
 
-import { WorkspaceRole } from '@colanode/core';
+import { WorkspaceRole } from '@brainbox/core';
 
 interface WorkspaceTable {
   id: ColumnType<string, string, never>;

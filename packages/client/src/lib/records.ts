@@ -20,7 +20,7 @@ import {
   UpdatedAtFieldAttributes,
   UpdatedByFieldAttributes,
   RelationFieldAttributes,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 type SqliteOperator =
   | '='

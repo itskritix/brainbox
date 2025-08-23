@@ -8,8 +8,8 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@colanode/ui/components/ui/dialog';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/dialog';
+import { cn } from '@brainbox/ui/lib/utils';
 
 function Command({
   className,

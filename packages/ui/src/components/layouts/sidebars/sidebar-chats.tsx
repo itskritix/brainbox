@@ -1,10 +1,9 @@
-import { ChatCreatePopover } from '@colanode/ui/components/chats/chat-create-popover';
-import { ChatSidebarItem } from '@colanode/ui/components/chats/chat-sidebar-item';
-import { SidebarHeader } from '@colanode/ui/components/layouts/sidebars/sidebar-header';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { cn } from '@colanode/ui/lib/utils';
+import { ChatCreatePopover } from '@brainbox/ui/components/chats/chat-create-popover';
+import { ChatSidebarItem } from '@brainbox/ui/components/chats/chat-sidebar-item';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { cn } from '@brainbox/ui/lib/utils';
 
 export const SidebarChats = () => {
   const workspace = useWorkspace();
@@ -22,7 +21,10 @@ export const SidebarChats = () => {
 
   return (
     <div className="flex flex-col group/sidebar h-full px-2">
-      <SidebarHeader title="Chats" actions={<ChatCreatePopover />} />
+      <div className="flex items-center justify-between h-10 px-2 mb-2">
+        <span className="text-sm font-medium text-gray-700">Chats</span>
+        <ChatCreatePopover />
+      </div>
       <div className="flex w-full min-w-0 flex-col gap-1">
         {chats.map((item) => (
           <button

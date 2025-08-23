@@ -1,32 +1,32 @@
-{{- if .Values.colanode.autoscaling.enabled }}
+{{- if .Values.brainbox.autoscaling.enabled }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "colanode.fullname" . }}
+  name: {{ include "brainbox.fullname" . }}
   labels:
-    {{- include "colanode.labels" . | nindent 4 }}
+    {{- include "brainbox.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "colanode.fullname" . }}
-  minReplicas: {{ .Values.colanode.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.colanode.autoscaling.maxReplicas }}
+    name: {{ include "brainbox.fullname" . }}
+  minReplicas: {{ .Values.brainbox.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.brainbox.autoscaling.maxReplicas }}
   metrics:
-    {{- if .Values.colanode.autoscaling.targetCPUUtilizationPercentage }}
+    {{- if .Values.brainbox.autoscaling.targetCPUUtilizationPercentage }}
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{ .Values.colanode.autoscaling.targetCPUUtilizationPercentage }}
+          averageUtilization: {{ .Values.brainbox.autoscaling.targetCPUUtilizationPercentage }}
     {{- end }}
-    {{- if .Values.colanode.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- if .Values.brainbox.autoscaling.targetMemoryUtilizationPercentage }}
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: {{ .Values.colanode.autoscaling.targetMemoryUtilizationPercentage }}
+          averageUtilization: {{ .Values.brainbox.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
 {{- end }}

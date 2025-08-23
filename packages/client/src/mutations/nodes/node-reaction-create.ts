@@ -10,7 +10,7 @@ export type NodeReactionCreateMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'node.reaction.create': {
       input: NodeReactionCreateMutationInput;

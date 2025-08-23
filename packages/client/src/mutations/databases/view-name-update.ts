@@ -11,7 +11,7 @@ export type ViewNameUpdateMutationOutput = {
   id: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'view.name.update': {
       input: ViewNameUpdateMutationInput;

@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "colanode.fullname" . }}
-  labels: {{- include "colanode.labels" . | nindent 4 }}
+  name: {{ include "brainbox.fullname" . }}
+  labels: {{- include "brainbox.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.colanode.service.type }}
+  type: {{ .Values.brainbox.service.type }}
   ports:
-    - port: {{ .Values.colanode.service.port }}
+    - port: {{ .Values.brainbox.service.port }}
       targetPort: http
       protocol: TCP
       name: http
-  selector: {{- include "colanode.selectorLabels" . | nindent 4 }}
+  selector: {{- include "brainbox.selectorLabels" . | nindent 4 }}

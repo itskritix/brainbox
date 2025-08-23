@@ -1,7 +1,7 @@
-import { ViewCreateButton } from '@colanode/ui/components/databases/view-create-button';
-import { ViewTab } from '@colanode/ui/components/databases/view-tab';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseViews } from '@colanode/ui/contexts/database-views';
+import { ViewCreateButton } from '@brainbox/ui/components/databases/view-create-button';
+import { ViewTab } from '@brainbox/ui/components/databases/view-tab';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseViews } from '@brainbox/ui/contexts/database-views';
 
 export const ViewTabs = () => {
   const database = useDatabase();

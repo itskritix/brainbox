@@ -1,7 +1,7 @@
 import debounce from 'lodash/debounce';
 import * as React from 'react';
 
-import { cn } from '@colanode/ui/lib/utils';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface SmartTextInputProps {
   value: string | null;

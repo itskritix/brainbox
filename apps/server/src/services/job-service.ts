@@ -1,8 +1,8 @@
 import { Job, JobsOptions, Queue, Worker } from 'bullmq';
 
-import { jobHandlerMap, JobHandler, JobInput } from '@colanode/server/jobs';
-import { config } from '@colanode/server/lib/config';
-import { createLogger } from '@colanode/server/lib/logger';
+import { jobHandlerMap, JobHandler, JobInput } from '@brainbox/server/jobs';
+import { config } from '@brainbox/server/lib/config';
+import { createLogger } from '@brainbox/server/lib/logger';
 
 const logger = createLogger('server:service:job');
 

@@ -1,8 +1,8 @@
-import { EventBus } from '@colanode/client/lib';
-import { MutationInput, MutationResult } from '@colanode/client/mutations';
-import { QueryInput, QueryMap } from '@colanode/client/queries';
-import { Event, TempFile } from '@colanode/client/types';
-import { ColanodeWindowApi } from '@colanode/ui';
+import { EventBus } from '@brainbox/client/lib';
+import { MutationInput, MutationResult } from '@brainbox/client/mutations';
+import { QueryInput, QueryMap } from '@brainbox/client/queries';
+import { Event, TempFile } from '@brainbox/client/types';
+import { ColanodeWindowApi } from '@brainbox/ui';
 
 export interface ColanodeWorkerApi {
   init: () => Promise<void>;
@@ -25,7 +25,7 @@ export interface ColanodeWorkerApi {
 
 declare global {
   interface Window {
-    colanode: ColanodeWindowApi;
+    brainbox: ColanodeWindowApi;
     eventBus: EventBus;
   }
 }

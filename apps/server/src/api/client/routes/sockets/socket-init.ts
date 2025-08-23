@@ -1,8 +1,8 @@
 import { FastifyPluginCallback } from 'fastify';
 
-import { apiErrorOutputSchema, socketInitOutputSchema } from '@colanode/core';
-import { accountAuthenticator } from '@colanode/server/api/client/plugins/account-auth';
-import { socketService } from '@colanode/server/services/socket-service';
+import { apiErrorOutputSchema, socketInitOutputSchema } from '@brainbox/core';
+import { accountAuthenticator } from '@brainbox/server/api/client/plugins/account-auth';
+import { socketService } from '@brainbox/server/services/socket-service';
 
 export const socketInitHandler: FastifyPluginCallback = (instance, _, done) => {
   instance.register(accountAuthenticator);

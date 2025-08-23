@@ -1,16 +1,16 @@
 import { sql } from 'kysely';
 
-import { WorkspaceQueryHandlerBase } from '@colanode/client/handlers/queries/workspace-query-handler-base';
-import { mapNode } from '@colanode/client/lib/mappers';
-import { buildFiltersQuery } from '@colanode/client/lib/records';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
+import { WorkspaceQueryHandlerBase } from '@brainbox/client/handlers/queries/workspace-query-handler-base';
+import { mapNode } from '@brainbox/client/lib/mappers';
+import { buildFiltersQuery } from '@brainbox/client/lib/records';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
 import {
   RecordFieldValueCountQueryInput,
   RecordFieldValueCountQueryOutput,
   RecordFieldValueCount,
-} from '@colanode/client/queries/records/record-field-value-count';
-import { Event } from '@colanode/client/types/events';
-import { DatabaseNode, FieldAttributes } from '@colanode/core';
+} from '@brainbox/client/queries/records/record-field-value-count';
+import { Event } from '@brainbox/client/types/events';
+import { DatabaseNode, FieldAttributes } from '@brainbox/core';
 
 export class RecordFieldValueCountQueryHandler
   extends WorkspaceQueryHandlerBase

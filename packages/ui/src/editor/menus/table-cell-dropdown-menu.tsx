@@ -24,9 +24,9 @@ import {
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
-import { editorColors } from '@colanode/ui/lib/editor';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/dropdown-menu';
+import { editorColors } from '@brainbox/ui/lib/editor';
+import { cn } from '@brainbox/ui/lib/utils';
 
 export const TableCellDropdownMenu = ({
   editor,

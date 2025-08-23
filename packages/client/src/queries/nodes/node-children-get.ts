@@ -1,5 +1,5 @@
-import { LocalNode } from '@colanode/client/types/nodes';
-import { NodeType } from '@colanode/core';
+import { LocalNode } from '@brainbox/client/types/nodes';
+import { NodeType } from '@brainbox/core';
 
 export type NodeChildrenGetQueryInput = {
   type: 'node.children.get';
@@ -9,7 +9,7 @@ export type NodeChildrenGetQueryInput = {
   types?: NodeType[];
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'node.children.get': {
       input: NodeChildrenGetQueryInput;

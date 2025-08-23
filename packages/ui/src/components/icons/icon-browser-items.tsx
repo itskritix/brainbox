@@ -1,6 +1,6 @@
-import { IconPickerItemsRow } from '@colanode/client/types';
-import { IconPickerItem } from '@colanode/ui/components/icons/icon-picker-item';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { IconPickerItemsRow } from '@brainbox/client/types';
+import { IconPickerItem } from '@brainbox/ui/components/icons/icon-picker-item';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface IconBrowserItemsProps {
   row: IconPickerItemsRow;

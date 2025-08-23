@@ -2,14 +2,14 @@ import { Editor } from '@tiptap/core';
 import { useEditorState } from '@tiptap/react';
 import { Check, Link, Trash2 } from 'lucide-react';
 
-import { isValidUrl } from '@colanode/core';
-import { Input } from '@colanode/ui/components/ui/input';
+import { isValidUrl } from '@brainbox/core';
+import { Input } from '@brainbox/ui/components/ui/input';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/popover';
+import { cn } from '@brainbox/ui/lib/utils';
 
 const getUrlFromString = (str: string): string | null => {
   if (isValidUrl(str)) return str;

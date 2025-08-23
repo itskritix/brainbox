@@ -2,8 +2,8 @@ import { JSONContent } from '@tiptap/core';
 import { Clipboard } from 'lucide-react';
 import { useState } from 'react';
 
-import { defaultClasses } from '@colanode/ui/editor/classes';
-import { highlightCode, languages } from '@colanode/ui/lib/lowlight';
+import { defaultClasses } from '@brainbox/ui/editor/classes';
+import { highlightCode, languages } from '@brainbox/ui/lib/lowlight';
 
 interface CodeBlockRendererProps {
   node: JSONContent;

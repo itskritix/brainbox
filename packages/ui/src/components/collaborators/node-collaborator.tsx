@@ -1,12 +1,12 @@
 import { Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { NodeRole } from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { NodeCollaboratorRoleDropdown } from '@colanode/ui/components/collaborators/node-collaborator-role-dropdown';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { NodeRole } from '@brainbox/core';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { NodeCollaboratorRoleDropdown } from '@brainbox/ui/components/collaborators/node-collaborator-role-dropdown';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface NodeCollaboratorProps {
   nodeId: string;

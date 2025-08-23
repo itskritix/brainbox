@@ -1,4 +1,4 @@
-import { LocalMessageNode } from '@colanode/client/types/nodes';
+import { LocalMessageNode } from '@brainbox/client/types/nodes';
 
 export type MessageListQueryInput = {
   type: 'message.list';
@@ -9,7 +9,7 @@ export type MessageListQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'message.list': {
       input: MessageListQueryInput;

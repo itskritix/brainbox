@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { Server } from '@colanode/client/types';
-import { Button } from '@colanode/ui/components/ui/button';
+import { Server } from '@brainbox/client/types';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -10,11 +10,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@colanode/ui/components/ui/dialog';
-import { Input } from '@colanode/ui/components/ui/input';
-import { Label } from '@colanode/ui/components/ui/label';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+} from '@brainbox/ui/components/ui/dialog';
+import { Input } from '@brainbox/ui/components/ui/input';
+import { Label } from '@brainbox/ui/components/ui/label';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface ServerCreateDialogProps {
   onCancel: () => void;
@@ -45,7 +45,7 @@ export const ServerCreateDialog = ({
         <div className="flex-grow space-y-2 py-2 pb-4">
           <Label>Server URL</Label>
           <Input
-            placeholder="https://us.colanode.com/config"
+            placeholder="https://us.brainbox.com/config"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
           />

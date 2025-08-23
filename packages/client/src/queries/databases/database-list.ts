@@ -1,4 +1,4 @@
-import { LocalDatabaseNode } from '@colanode/client/types/nodes';
+import { LocalDatabaseNode } from '@brainbox/client/types/nodes';
 
 export type DatabaseListQueryInput = {
   type: 'database.list';
@@ -6,7 +6,7 @@ export type DatabaseListQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'database.list': {
       input: DatabaseListQueryInput;

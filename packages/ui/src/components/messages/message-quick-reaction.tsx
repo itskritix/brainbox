@@ -1,5 +1,5 @@
-import { EmojiElement } from '@colanode/ui/components/emojis/emoji-element';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { EmojiElement } from '@brainbox/ui/components/emojis/emoji-element';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface MessageQuickReactionProps {
   emoji: string;

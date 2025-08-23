@@ -1,5 +1,5 @@
-import { hashCode, IdType } from '@colanode/core';
-import { defaultIcons } from '@colanode/ui/lib/assets';
+import { hashCode, IdType } from '@brainbox/core';
+import { defaultIcons } from '@brainbox/ui/lib/assets';
 
 export type AvatarSize = 'small' | 'medium' | 'large' | 'extra-large';
 

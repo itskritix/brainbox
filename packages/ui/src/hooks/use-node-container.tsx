@@ -1,7 +1,7 @@
-import { LocalNode } from '@colanode/client/types';
-import { NodeRole, extractNodeRole } from '@colanode/core';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { LocalNode } from '@brainbox/client/types';
+import { NodeRole, extractNodeRole } from '@brainbox/core';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 type UseNodeContainerResult<T extends LocalNode> =
   | {

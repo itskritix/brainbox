@@ -1,9 +1,9 @@
-import { SelectNodeReaction } from '@colanode/client/databases/workspace';
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { mapNodeReaction } from '@colanode/client/lib/mappers';
-import { fetchNodeTree } from '@colanode/client/lib/utils';
-import { MutationErrorCode, MutationError } from '@colanode/client/mutations';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
+import { SelectNodeReaction } from '@brainbox/client/databases/workspace';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { mapNodeReaction } from '@brainbox/client/lib/mappers';
+import { fetchNodeTree } from '@brainbox/client/lib/utils';
+import { MutationErrorCode, MutationError } from '@brainbox/client/mutations';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
 import {
   createDebugger,
   CreateNodeReactionMutation,
@@ -15,7 +15,7 @@ import {
   IdType,
   SyncNodeReactionData,
   CanReactNodeContext,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 const debug = createDebugger('desktop:service:node-reaction');
 

@@ -11,7 +11,7 @@ export type ViewCreateMutationOutput = {
   id: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'view.create': {
       input: ViewCreateMutationInput;

@@ -1,21 +1,21 @@
-# Default values for colanode.
+# Default values for brainbox.
 
 # -- Override the name for the selector labels, defaults to the chart name
 nameOverride: ''
 # -- Override the full name of the deployed resources, defaults to a combination of the release name and the name for the selector labels
 fullnameOverride: ''
 
-# Core Colanode Configuration
-colanode:
-  # -- Number of replicas for the Colanode server deployment
+# Core Brainbox Configuration
+brainbox:
+  # -- Number of replicas for the Brainbox server deployment
   replicaCount: 1
 
   image:
-    # -- Colanode server image repository
-    repository: ghcr.io/colanode/server
-    # -- Colanode server image pull policy
+    # -- Brainbox server image repository
+    repository: ghcr.io/brainbox/server
+    # -- Brainbox server image pull policy
     pullPolicy: Always
-    # -- Colanode server image tag
+    # -- Brainbox server image tag
     tag: 'latest'
 
   # -- Image pull secrets
@@ -71,12 +71,12 @@ colanode:
   autoscaling:
     enabled: false
 
-  # -- Colanode server configuration
+  # -- Brainbox server configuration
   config:
     # Core settings
     NODE_ENV: production
     PORT: 3000
-    SERVER_NAME: 'Colanode Kubernetes'
+    SERVER_NAME: 'Brainbox Kubernetes'
     SERVER_AVATAR: ''
     SERVER_MODE: 'standalone'
 
@@ -109,16 +109,16 @@ colanode:
     # Redis/Valkey configuration
     REDIS_DB: '0'
     REDIS_JOBS_QUEUE_NAME: 'jobs'
-    REDIS_JOBS_QUEUE_PREFIX: 'colanode'
-    REDIS_TUS_LOCK_PREFIX: 'colanode:tus:lock'
-    REDIS_TUS_KV_PREFIX: 'colanode:tus:kv'
+    REDIS_JOBS_QUEUE_PREFIX: 'brainbox'
+    REDIS_TUS_LOCK_PREFIX: 'brainbox:tus:lock'
+    REDIS_TUS_KV_PREFIX: 'brainbox:tus:kv'
     REDIS_EVENTS_CHANNEL: 'events'
 
     # S3 storage for files
     STORAGE_S3_ENDPOINT: 'http://{{ .Release.Name }}-minio:9000'
     STORAGE_S3_ACCESS_KEY: 'minioadmin'
     STORAGE_S3_SECRET_KEY: '$(MINIO_ROOT_PASSWORD)'
-    STORAGE_S3_BUCKET: 'colanode'
+    STORAGE_S3_BUCKET: 'brainbox'
     STORAGE_S3_REGION: 'us-east-1'
     STORAGE_S3_FORCE_PATH_STYLE: 'true'
 
@@ -129,7 +129,7 @@ colanode:
     # SMTP_USER: ""
     # SMTP_PASSWORD: ""
     # SMTP_EMAIL_FROM: ""
-    # SMTP_EMAIL_FROM_NAME: "Colanode"
+    # SMTP_EMAIL_FROM_NAME: "Brainbox"
 
 global:
   security:
@@ -143,7 +143,7 @@ postgresql:
   enabled: true
   image:
     registry: ghcr.io
-    repository: colanode/postgresql
+    repository: brainbox/postgresql
     tag: '17'
     pullPolicy: Always
 
@@ -190,8 +190,8 @@ minio:
     size: 10Gi
   service:
     type: ClusterIP
-  # Create default buckets for Colanode
-  defaultBuckets: 'colanode'
+  # Create default buckets for Brainbox
+  defaultBuckets: 'brainbox'
   extraArgs:
     - '--console-address'
     - ':9001'

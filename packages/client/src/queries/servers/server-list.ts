@@ -1,10 +1,10 @@
-import { ServerDetails } from '@colanode/client/types/servers';
+import { ServerDetails } from '@brainbox/client/types/servers';
 
 export type ServerListQueryInput = {
   type: 'server.list';
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'server.list': {
       input: ServerListQueryInput;

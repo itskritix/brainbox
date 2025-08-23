@@ -1,16 +1,16 @@
-import { LocalPageNode } from '@colanode/client/types';
-import { ContainerBreadcrumb } from '@colanode/ui/components/layouts/containers/container-breadrumb';
-import { PageBody } from '@colanode/ui/components/pages/page-body';
-import { PageNotFound } from '@colanode/ui/components/pages/page-not-found';
-import { PageSettings } from '@colanode/ui/components/pages/page-settings';
+import { LocalPageNode } from '@brainbox/client/types';
+import { ContainerBreadcrumb } from '@brainbox/ui/components/layouts/containers/container-breadrumb';
+import { PageBody } from '@brainbox/ui/components/pages/page-body';
+import { PageNotFound } from '@brainbox/ui/components/pages/page-not-found';
+import { PageSettings } from '@brainbox/ui/components/pages/page-settings';
 import {
   Container,
   ContainerBody,
   ContainerHeader,
   ContainerSettings,
-} from '@colanode/ui/components/ui/container';
-import { useNodeContainer } from '@colanode/ui/hooks/use-node-container';
-import { useNodeRadar } from '@colanode/ui/hooks/use-node-radar';
+} from '@brainbox/ui/components/ui/container';
+import { useNodeContainer } from '@brainbox/ui/hooks/use-node-container';
+import { useNodeRadar } from '@brainbox/ui/hooks/use-node-radar';
 
 interface PageContainerProps {
   pageId: string;

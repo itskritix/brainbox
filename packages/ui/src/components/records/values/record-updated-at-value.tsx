@@ -1,5 +1,5 @@
-import { UpdatedAtFieldAttributes } from '@colanode/core';
-import { useRecord } from '@colanode/ui/contexts/record';
+import { UpdatedAtFieldAttributes } from '@brainbox/core';
+import { useRecord } from '@brainbox/ui/contexts/record';
 
 interface RecordUpdatedAtValueProps {
   field: UpdatedAtFieldAttributes;

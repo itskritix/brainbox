@@ -18,11 +18,11 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@colanode/web': resolve(__dirname, './src'),
-      '@colanode/core': resolve(__dirname, '../../packages/core/src'),
-      '@colanode/crdt': resolve(__dirname, '../../packages/crdt/src'),
-      '@colanode/client': resolve(__dirname, '../../packages/client/src'),
-      '@colanode/ui': resolve(__dirname, '../../packages/ui/src'),
+      '@brainbox/web': resolve(__dirname, './src'),
+      '@brainbox/core': resolve(__dirname, '../../packages/core/src'),
+      '@brainbox/crdt': resolve(__dirname, '../../packages/crdt/src'),
+      '@brainbox/client': resolve(__dirname, '../../packages/client/src'),
+      '@brainbox/ui': resolve(__dirname, '../../packages/ui/src'),
     },
   },
   optimizeDeps: {

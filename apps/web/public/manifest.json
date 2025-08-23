@@ -1,6 +1,6 @@
 {
-  "short_name": "Colanode",
-  "name": "Colanode",
+  "short_name": "Brainbox",
+  "name": "Brainbox",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,13 +8,13 @@
       "type": "image/x-icon"
     },
     {
-      "src": "assets/colanode-logo-black-192.png",
+      "src": "assets/brainbox-logo-black-192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "assets/colanode-logo-black-512.png",
+      "src": "assets/brainbox-logo-black-512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
@@ -26,6 +26,6 @@
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "orientation": "any",
-  "description": "Colanode Web Application",
+  "description": "Brainbox Web Application",
   "prefer_related_applications": false
 }

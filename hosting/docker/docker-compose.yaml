@@ -45,7 +45,7 @@ services:
       - '9000:9000'
       - '9001:9001'
     entrypoint: sh
-    command: -c 'mkdir -p /data/colanode && minio server /data --address ":9000" --console-address ":9001"'
+    command: -c 'mkdir -p /data/brainbox && minio server /data --address ":9000" --console-address ":9001"'
     networks:
       - colanode_network
 
@@ -71,7 +71,7 @@ services:
   #    - colanode_network
 
   server:
-    image: ghcr.io/colanode/server:latest
+    image: ghcr.io/brainbox/server:latest
     container_name: colanode_server
     restart: always
     depends_on:
@@ -86,15 +86,15 @@ services:
       NODE_ENV: production
 
       # The server requires a name and avatar URL which will be displayed in the desktop app login screen.
-      SERVER_NAME: 'Colanode Local'
+      SERVER_NAME: 'Brainbox Local'
       SERVER_AVATAR: ''
       # Possible values for SERVER_MODE: 'standalone', 'cluster'
       SERVER_MODE: 'standalone'
 
       # Optional custom path prefix for the server.
-      # Add a plain text without any slashes. For example if you set 'colanode'
-      # the URL 'https://localhost:3000/config' will be: 'https://localhost:3000/colanode/config'
-      # SERVER_PATH_PREFIX: 'colanode'
+      # Add a plain text without any slashes. For example if you set 'brainbox'
+      # the URL 'https://localhost:3000/config' will be: 'https://localhost:3000/brainbox/config'
+      # SERVER_PATH_PREFIX: 'brainbox'
 
       # Optional CORS Configuration. By default the server is accessible from 'http://localhost:4000'.
       # You can change this to allow custom origins (use comma to separate multiple origins) or '*' to allow all origins.
@@ -152,9 +152,9 @@ services:
       REDIS_DB: '0'
       # Optional variables:
       # REDIS_JOBS_QUEUE_NAME: 'jobs'
-      # REDIS_JOBS_QUEUE_PREFIX: 'colanode'
-      # REDIS_TUS_LOCK_PREFIX: 'colanode:tus:lock'
-      # REDIS_TUS_KV_PREFIX: 'colanode:tus:kv'
+      # REDIS_JOBS_QUEUE_PREFIX: 'brainbox'
+      # REDIS_TUS_LOCK_PREFIX: 'brainbox:tus:lock'
+      # REDIS_TUS_KV_PREFIX: 'brainbox:tus:kv'
       # REDIS_EVENTS_CHANNEL: 'events'
 
       # ───────────────────────────────────────────────────────────────
@@ -164,7 +164,7 @@ services:
       STORAGE_S3_ENDPOINT: 'http://minio:9000'
       STORAGE_S3_ACCESS_KEY: 'minioadmin'
       STORAGE_S3_SECRET_KEY: 'your_minio_password'
-      STORAGE_S3_BUCKET: 'colanode'
+      STORAGE_S3_BUCKET: 'brainbox'
       STORAGE_S3_REGION: 'us-east-1'
       STORAGE_S3_FORCE_PATH_STYLE: 'true'
 
@@ -182,7 +182,7 @@ services:
       # SMTP_USER: ''
       # SMTP_PASSWORD: ''
       # SMTP_EMAIL_FROM: 'your_email@example.com'
-      # SMTP_EMAIL_FROM_NAME: 'Colanode'
+      # SMTP_EMAIL_FROM_NAME: 'Brainbox'
       # ---------------------------------------------------------------
       # If using a real SMTP provider, update these:
       # SMTP_ENABLED: 'true'
@@ -191,7 +191,7 @@ services:
       # SMTP_USER: 'your_smtp_username'
       # SMTP_PASSWORD: 'your_smtp_password'
       # SMTP_EMAIL_FROM: 'your_email@example.com'
-      # SMTP_EMAIL_FROM_NAME: 'Colanode'
+      # SMTP_EMAIL_FROM_NAME: 'Brainbox'
       # ---------------------------------------------------------------
 
     ports:
@@ -200,7 +200,7 @@ services:
       - colanode_network
 
   web:
-    image: ghcr.io/colanode/web:latest
+    image: ghcr.io/brainbox/web:latest
     container_name: colanode_web
     restart: always
     ports:

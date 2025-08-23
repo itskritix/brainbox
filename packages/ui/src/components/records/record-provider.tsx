@@ -1,9 +1,9 @@
 import { toast } from 'sonner';
 
-import { LocalRecordNode } from '@colanode/client/types';
-import { NodeRole, hasNodeRole } from '@colanode/core';
-import { RecordContext } from '@colanode/ui/contexts/record';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
+import { LocalRecordNode } from '@brainbox/client/types';
+import { NodeRole, hasNodeRole } from '@brainbox/core';
+import { RecordContext } from '@brainbox/ui/contexts/record';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
 
 export const RecordProvider = ({
   record,
@@ -34,7 +34,7 @@ export const RecordProvider = ({
         localRevision: record.localRevision,
         canEdit,
         updateFieldValue: async (field, value) => {
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'record.field.value.set',
             recordId: record.id,
             fieldId: field.id,
@@ -48,7 +48,7 @@ export const RecordProvider = ({
           }
         },
         removeFieldValue: async (field) => {
-          const result = await window.colanode.executeMutation({
+          const result = await window.brainbox.executeMutation({
             type: 'record.field.value.delete',
             recordId: record.id,
             fieldId: field.id,

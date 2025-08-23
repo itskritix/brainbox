@@ -1,8 +1,8 @@
 import { Type } from 'lucide-react';
 import { useState } from 'react';
 
-import { SpecialId } from '@colanode/core';
-import { FieldIcon } from '@colanode/ui/components/databases/fields/field-icon';
+import { SpecialId } from '@brainbox/core';
+import { FieldIcon } from '@brainbox/ui/components/databases/fields/field-icon';
 import {
   Command,
   CommandEmpty,
@@ -10,15 +10,15 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@colanode/ui/components/ui/command';
+} from '@brainbox/ui/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { isSortableField } from '@colanode/ui/lib/databases';
+} from '@brainbox/ui/components/ui/popover';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { isSortableField } from '@brainbox/ui/lib/databases';
 
 interface ViewSortAddPopoverProps {
   children: React.ReactNode;

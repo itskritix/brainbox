@@ -1,4 +1,4 @@
-import '@colanode/ui/styles/editor.css';
+import '@brainbox/ui/styles/editor.css';
 
 import {
   EditorContent,
@@ -15,15 +15,15 @@ import {
   getRelativeSelection,
   mapContentsToBlocks,
   buildEditorContent,
-} from '@colanode/client/lib';
+} from '@brainbox/client/lib';
 import {
   LocalNode,
   DocumentState,
   DocumentUpdate,
-} from '@colanode/client/types';
-import { RichTextContent, richTextContentSchema } from '@colanode/core';
-import { YDoc } from '@colanode/crdt';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
+} from '@brainbox/client/types';
+import { RichTextContent, richTextContentSchema } from '@brainbox/core';
+import { YDoc } from '@brainbox/crdt';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
 import {
   BlockquoteCommand,
   BulletListCommand,
@@ -41,7 +41,7 @@ import {
   TodoCommand,
   DatabaseCommand,
   DatabaseInlineCommand,
-} from '@colanode/ui/editor/commands';
+} from '@brainbox/ui/editor/commands';
 import {
   BlockquoteNode,
   BoldMark,
@@ -83,8 +83,8 @@ import {
   DatabaseNode,
   AutoJoiner,
   HardBreakNode,
-} from '@colanode/ui/editor/extensions';
-import { ToolbarMenu, ActionMenu } from '@colanode/ui/editor/menus';
+} from '@brainbox/ui/editor/extensions';
+import { ToolbarMenu, ActionMenu } from '@brainbox/ui/editor/menus';
 
 interface DocumentEditorProps {
   node: LocalNode;
@@ -152,7 +152,7 @@ export const DocumentEditor = ({
           return;
         }
 
-        const result = await window.colanode.executeMutation({
+        const result = await window.brainbox.executeMutation({
           type: 'document.update',
           accountId: workspace.accountId,
           workspaceId: workspace.id,
@@ -350,7 +350,7 @@ export const DocumentEditor = ({
     const editorContent = buildEditorContent(node.id, afterContent);
     editor.chain().setContent(editorContent).run();
 
-    const result = await window.colanode.executeMutation({
+    const result = await window.brainbox.executeMutation({
       type: 'document.update',
       accountId: workspace.accountId,
       workspaceId: workspace.id,
@@ -384,7 +384,7 @@ export const DocumentEditor = ({
     const editorContent = buildEditorContent(node.id, afterContent);
     editor.chain().setContent(editorContent).run();
 
-    const result = await window.colanode.executeMutation({
+    const result = await window.brainbox.executeMutation({
       type: 'document.update',
       accountId: workspace.accountId,
       workspaceId: workspace.id,

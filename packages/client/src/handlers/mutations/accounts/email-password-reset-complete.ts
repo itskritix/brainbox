@@ -1,16 +1,16 @@
-import { AccountMutationHandlerBase } from '@colanode/client/handlers/mutations/accounts/base';
-import { MutationHandler } from '@colanode/client/lib';
-import { parseApiError } from '@colanode/client/lib/ky';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { AccountMutationHandlerBase } from '@brainbox/client/handlers/mutations/accounts/base';
+import { MutationHandler } from '@brainbox/client/lib';
+import { parseApiError } from '@brainbox/client/lib/ky';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   EmailPasswordResetCompleteMutationInput,
   EmailPasswordResetCompleteMutationOutput,
-} from '@colanode/client/mutations/accounts/email-password-reset-complete';
-import { AppService } from '@colanode/client/services/app-service';
+} from '@brainbox/client/mutations/accounts/email-password-reset-complete';
+import { AppService } from '@brainbox/client/services/app-service';
 import {
   EmailPasswordResetCompleteInput,
   EmailPasswordResetCompleteOutput,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 export class EmailPasswordResetCompleteMutationHandler
   extends AccountMutationHandlerBase

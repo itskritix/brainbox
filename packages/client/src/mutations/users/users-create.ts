@@ -2,7 +2,7 @@ import {
   UserCreateErrorOutput,
   UserCreateInput,
   UserOutput,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 export type UsersCreateMutationInput = {
   type: 'users.create';
@@ -16,7 +16,7 @@ export type UsersCreateMutationOutput = {
   errors: UserCreateErrorOutput[];
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'users.create': {
       input: UsersCreateMutationInput;

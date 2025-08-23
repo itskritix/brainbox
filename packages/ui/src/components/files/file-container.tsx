@@ -1,16 +1,16 @@
-import { LocalFileNode } from '@colanode/client/types';
-import { FileBody } from '@colanode/ui/components/files/file-body';
-import { FileNotFound } from '@colanode/ui/components/files/file-not-found';
-import { FileSettings } from '@colanode/ui/components/files/file-settings';
-import { ContainerBreadcrumb } from '@colanode/ui/components/layouts/containers/container-breadrumb';
+import { LocalFileNode } from '@brainbox/client/types';
+import { FileBody } from '@brainbox/ui/components/files/file-body';
+import { FileNotFound } from '@brainbox/ui/components/files/file-not-found';
+import { FileSettings } from '@brainbox/ui/components/files/file-settings';
+import { ContainerBreadcrumb } from '@brainbox/ui/components/layouts/containers/container-breadrumb';
 import {
   Container,
   ContainerBody,
   ContainerHeader,
   ContainerSettings,
-} from '@colanode/ui/components/ui/container';
-import { useNodeContainer } from '@colanode/ui/hooks/use-node-container';
-import { useNodeRadar } from '@colanode/ui/hooks/use-node-radar';
+} from '@brainbox/ui/components/ui/container';
+import { useNodeContainer } from '@brainbox/ui/hooks/use-node-container';
+import { useNodeRadar } from '@brainbox/ui/hooks/use-node-radar';
 
 interface FileContainerProps {
   fileId: string;

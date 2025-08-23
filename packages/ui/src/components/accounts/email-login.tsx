@@ -4,21 +4,21 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod/v4';
 
-import { LoginOutput } from '@colanode/core';
-import { GoogleLogin } from '@colanode/ui/components/accounts/google-login';
-import { Button } from '@colanode/ui/components/ui/button';
+import { LoginOutput } from '@brainbox/core';
+import { GoogleLogin } from '@brainbox/ui/components/accounts/google-login';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from '@colanode/ui/components/ui/form';
-import { Input } from '@colanode/ui/components/ui/input';
-import { Label } from '@colanode/ui/components/ui/label';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
-import { getServerDomain } from '@colanode/ui/lib/server-config';
+} from '@brainbox/ui/components/ui/form';
+import { Input } from '@brainbox/ui/components/ui/input';
+import { Label } from '@brainbox/ui/components/ui/label';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
+import { getServerDomain } from '@brainbox/ui/lib/server-config';
 
 const formSchema = z.object({
   email: z.string().min(2).email(),

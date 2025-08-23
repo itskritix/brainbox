@@ -1,6 +1,6 @@
-import { QueryHandler } from '@colanode/client/lib/types';
-import { QueryMap } from '@colanode/client/queries';
-import { AppService } from '@colanode/client/services/app-service';
+import { QueryHandler } from '@brainbox/client/lib/types';
+import { QueryMap } from '@brainbox/client/queries';
+import { AppService } from '@brainbox/client/services/app-service';
 
 import { AccountGetQueryHandler } from './accounts/account-get';
 import { AccountMetadataListQueryHandler } from './accounts/account-metadata-list';

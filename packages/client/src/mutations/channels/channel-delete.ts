@@ -9,7 +9,7 @@ export type ChannelDeleteMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'channel.delete': {
       input: ChannelDeleteMutationInput;

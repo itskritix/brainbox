@@ -1,4 +1,4 @@
-import { NodeRole } from '@colanode/core/registry/nodes/core';
+import { NodeRole } from '@brainbox/core/registry/nodes/core';
 
 export type SyncCollaborationsInput = {
   type: 'collaborations';
@@ -18,7 +18,7 @@ export type SyncCollaborationData = {
   revision: string;
 };
 
-declare module '@colanode/core' {
+declare module '@brainbox/core' {
   interface SynchronizerMap {
     collaborations: {
       input: SyncCollaborationsInput;

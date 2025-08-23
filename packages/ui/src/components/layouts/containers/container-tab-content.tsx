@@ -1,25 +1,25 @@
 import { match } from 'ts-pattern';
 
-import { ContainerTab, SpecialContainerTabPath } from '@colanode/client/types';
-import { getIdType, IdType } from '@colanode/core';
-import { AccountLogout } from '@colanode/ui/components/accounts/account-logout';
-import { AccountSettings } from '@colanode/ui/components/accounts/account-settings';
-import { AllSettings } from '@colanode/ui/components/settings/all-settings';
-import { ChannelContainer } from '@colanode/ui/components/channels/channel-container';
-import { ChatContainer } from '@colanode/ui/components/chats/chat-container';
-import { DatabaseContainer } from '@colanode/ui/components/databases/database-container';
-import { FileContainer } from '@colanode/ui/components/files/file-container';
-import { FolderContainer } from '@colanode/ui/components/folders/folder-container';
-import { MessageContainer } from '@colanode/ui/components/messages/message-container';
-import { PageContainer } from '@colanode/ui/components/pages/page-container';
-import { RecordContainer } from '@colanode/ui/components/records/record-container';
-import { SpaceContainer } from '@colanode/ui/components/spaces/space-container';
-import { TabsContent } from '@colanode/ui/components/ui/tabs';
-import { WorkspaceDownloads } from '@colanode/ui/components/workspaces/downloads/workspace-downloads';
-import { WorkspaceStorage } from '@colanode/ui/components/workspaces/storage/workspace-storage';
-import { WorkspaceUploads } from '@colanode/ui/components/workspaces/uploads/workspace-uploads';
-import { WorkspaceSettings } from '@colanode/ui/components/workspaces/workspace-settings';
-import { WorkspaceUsers } from '@colanode/ui/components/workspaces/workspace-users';
+import { ContainerTab, SpecialContainerTabPath } from '@brainbox/client/types';
+import { getIdType, IdType } from '@brainbox/core';
+import { AccountLogout } from '@brainbox/ui/components/accounts/account-logout';
+import { AccountSettings } from '@brainbox/ui/components/accounts/account-settings';
+import { AllSettings } from '@brainbox/ui/components/settings/all-settings';
+import { ChannelContainer } from '@brainbox/ui/components/channels/channel-container';
+import { ChatContainer } from '@brainbox/ui/components/chats/chat-container';
+import { DatabaseContainer } from '@brainbox/ui/components/databases/database-container';
+import { FileContainer } from '@brainbox/ui/components/files/file-container';
+import { FolderContainer } from '@brainbox/ui/components/folders/folder-container';
+import { MessageContainer } from '@brainbox/ui/components/messages/message-container';
+import { PageContainer } from '@brainbox/ui/components/pages/page-container';
+import { RecordContainer } from '@brainbox/ui/components/records/record-container';
+import { SpaceContainer } from '@brainbox/ui/components/spaces/space-container';
+import { TabsContent } from '@brainbox/ui/components/ui/tabs';
+import { WorkspaceDownloads } from '@brainbox/ui/components/workspaces/downloads/workspace-downloads';
+import { WorkspaceStorage } from '@brainbox/ui/components/workspaces/storage/workspace-storage';
+import { WorkspaceUploads } from '@brainbox/ui/components/workspaces/uploads/workspace-uploads';
+import { WorkspaceSettings } from '@brainbox/ui/components/workspaces/workspace-settings';
+import { WorkspaceUsers } from '@brainbox/ui/components/workspaces/workspace-users';
 
 interface ContainerTabContentProps {
   tab: ContainerTab;

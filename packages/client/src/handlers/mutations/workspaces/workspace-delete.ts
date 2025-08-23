@@ -1,12 +1,12 @@
-import { parseApiError } from '@colanode/client/lib/ky';
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { parseApiError } from '@brainbox/client/lib/ky';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   WorkspaceDeleteMutationInput,
   WorkspaceDeleteMutationOutput,
-} from '@colanode/client/mutations/workspaces/workspace-delete';
-import { AppService } from '@colanode/client/services/app-service';
-import { WorkspaceOutput } from '@colanode/core';
+} from '@brainbox/client/mutations/workspaces/workspace-delete';
+import { AppService } from '@brainbox/client/services/app-service';
+import { WorkspaceOutput } from '@brainbox/core';
 
 export class WorkspaceDeleteMutationHandler
   implements MutationHandler<WorkspaceDeleteMutationInput>

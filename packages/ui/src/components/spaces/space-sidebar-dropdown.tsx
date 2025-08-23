@@ -8,10 +8,10 @@ import {
 } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { LocalSpaceNode } from '@colanode/client/types';
-import { DatabaseCreateDialog } from '@colanode/ui/components/databases/database-create-dialog';
-import { FolderCreateDialog } from '@colanode/ui/components/folders/folder-create-dialog';
-import { PageCreateDialog } from '@colanode/ui/components/pages/page-create-dialog';
+import { LocalSpaceNode } from '@brainbox/client/types';
+import { DatabaseCreateDialog } from '@brainbox/ui/components/databases/database-create-dialog';
+import { FolderCreateDialog } from '@brainbox/ui/components/folders/folder-create-dialog';
+import { PageCreateDialog } from '@brainbox/ui/components/pages/page-create-dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,8 +19,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
-import { useLayout } from '@colanode/ui/contexts/layout';
+} from '@brainbox/ui/components/ui/dropdown-menu';
+import { useLayout } from '@brainbox/ui/contexts/layout';
 
 interface SpaceSidebarDropdownProps {
   space: LocalSpaceNode;

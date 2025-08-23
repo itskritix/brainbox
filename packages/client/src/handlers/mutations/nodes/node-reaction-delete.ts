@@ -1,9 +1,9 @@
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { MutationHandler } from '@colanode/client/lib/types';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { MutationHandler } from '@brainbox/client/lib/types';
 import {
   NodeReactionDeleteMutationInput,
   NodeReactionDeleteMutationOutput,
-} from '@colanode/client/mutations/nodes/node-reaction-delete';
+} from '@brainbox/client/mutations/nodes/node-reaction-delete';
 
 export class NodeReactionDeleteMutationHandler
   extends WorkspaceMutationHandlerBase

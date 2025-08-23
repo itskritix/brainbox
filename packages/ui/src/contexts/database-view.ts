@@ -1,12 +1,12 @@
 import { createContext, useContext } from 'react';
 
-import { ViewField } from '@colanode/client/types';
+import { ViewField } from '@brainbox/client/types';
 import {
   SortDirection,
   DatabaseViewFilterAttributes,
   DatabaseViewSortAttributes,
   DatabaseViewLayout,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 interface DatabaseViewContext {
   id: string;

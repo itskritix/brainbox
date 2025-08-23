@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
 
-import { Node, NodeRole, extractNodeName, hasNodeRole } from '@colanode/core';
-import { NodeCollaborator } from '@colanode/ui/components/collaborators/node-collaborator';
-import { NodeCollaboratorCreate } from '@colanode/ui/components/collaborators/node-collaborator-create';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { buildNodeCollaborators } from '@colanode/ui/lib/nodes';
+import { Node, NodeRole, extractNodeName, hasNodeRole } from '@brainbox/core';
+import { NodeCollaborator } from '@brainbox/ui/components/collaborators/node-collaborator';
+import { NodeCollaboratorCreate } from '@brainbox/ui/components/collaborators/node-collaborator-create';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { buildNodeCollaborators } from '@brainbox/ui/lib/nodes';
 
 interface NodeCollaboratorsProps {
   node: Node;

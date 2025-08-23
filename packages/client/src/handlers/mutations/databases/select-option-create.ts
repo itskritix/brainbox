@@ -1,17 +1,17 @@
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   SelectOptionCreateMutationInput,
   SelectOptionCreateMutationOutput,
-} from '@colanode/client/mutations/databases/select-option-create';
+} from '@brainbox/client/mutations/databases/select-option-create';
 import {
   compareString,
   DatabaseAttributes,
   generateId,
   generateFractionalIndex,
   IdType,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 export class SelectOptionCreateMutationHandler
   extends WorkspaceMutationHandlerBase
@@ -46,7 +46,7 @@ export class SelectOptionCreateMutationHandler
         }
 
         const maxIndex = Object.values(field.options)
-          .map((selectOption) => selectOption.index)
+          .map((selectOption: any) => selectOption.index)
           .sort((a, b) => -compareString(a, b))[0];
 
         const index = generateFractionalIndex(maxIndex, null);

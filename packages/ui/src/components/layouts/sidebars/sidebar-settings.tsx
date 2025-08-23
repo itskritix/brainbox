@@ -7,12 +7,12 @@ import {
   Users,
 } from 'lucide-react';
 
-import { SpecialContainerTabPath } from '@colanode/client/types';
-import { SidebarSettingsItem } from '@colanode/ui/components/layouts/sidebars/sidebar-settings-item';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { useApp } from '@colanode/ui/contexts/app';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { SpecialContainerTabPath } from '@brainbox/client/types';
+import { SidebarSettingsItem } from '@brainbox/ui/components/layouts/sidebars/sidebar-settings-item';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { useApp } from '@brainbox/ui/contexts/app';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 export const SidebarSettings = () => {
   const app = useApp();

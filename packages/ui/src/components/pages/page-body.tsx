@@ -1,9 +1,9 @@
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
 
-import { LocalPageNode } from '@colanode/client/types';
-import { NodeRole, hasNodeRole } from '@colanode/core';
-import { Document } from '@colanode/ui/components/documents/document';
-import { ScrollBar } from '@colanode/ui/components/ui/scroll-area';
+import { LocalPageNode } from '@brainbox/client/types';
+import { NodeRole, hasNodeRole } from '@brainbox/core';
+import { Document } from '@brainbox/ui/components/documents/document';
+import { ScrollBar } from '@brainbox/ui/components/ui/scroll-area';
 
 interface PageBodyProps {
   page: LocalPageNode;

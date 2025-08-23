@@ -1,9 +1,9 @@
-import { WorkspaceQueryHandlerBase } from '@colanode/client/handlers/queries/workspace-query-handler-base';
-import { mapDocumentState } from '@colanode/client/lib/mappers';
-import { ChangeCheckResult, QueryHandler } from '@colanode/client/lib/types';
-import { DocumentStateGetQueryInput } from '@colanode/client/queries/documents/document-state-get';
-import { DocumentState } from '@colanode/client/types/documents';
-import { Event } from '@colanode/client/types/events';
+import { WorkspaceQueryHandlerBase } from '@brainbox/client/handlers/queries/workspace-query-handler-base';
+import { mapDocumentState } from '@brainbox/client/lib/mappers';
+import { ChangeCheckResult, QueryHandler } from '@brainbox/client/lib/types';
+import { DocumentStateGetQueryInput } from '@brainbox/client/queries/documents/document-state-get';
+import { DocumentState } from '@brainbox/client/types/documents';
+import { Event } from '@brainbox/client/types/events';
 
 export class DocumentStateGetQueryHandler
   extends WorkspaceQueryHandlerBase

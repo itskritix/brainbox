@@ -1,4 +1,4 @@
-import { NodeReactionCount } from '@colanode/client/types/nodes';
+import { NodeReactionCount } from '@brainbox/client/types/nodes';
 
 export type NodeReactionsAggregateQueryInput = {
   type: 'node.reactions.aggregate';
@@ -7,7 +7,7 @@ export type NodeReactionsAggregateQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'node.reactions.aggregate': {
       input: NodeReactionsAggregateQueryInput;

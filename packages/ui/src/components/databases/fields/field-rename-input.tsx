@@ -1,6 +1,6 @@
-import { FieldAttributes } from '@colanode/core';
-import { SmartTextInput } from '@colanode/ui/components/ui/smart-text-input';
-import { useDatabase } from '@colanode/ui/contexts/database';
+import { FieldAttributes } from '@brainbox/core';
+import { SmartTextInput } from '@brainbox/ui/components/ui/smart-text-input';
+import { useDatabase } from '@brainbox/ui/contexts/database';
 
 interface FieldRenameInputProps {
   field: FieldAttributes;

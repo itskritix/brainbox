@@ -1,17 +1,17 @@
 import { Trash2 } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { FieldAttributes } from '@colanode/core';
-import { FieldDeleteDialog } from '@colanode/ui/components/databases/fields/field-delete-dialog';
-import { FieldIcon } from '@colanode/ui/components/databases/fields/field-icon';
-import { FieldRenameInput } from '@colanode/ui/components/databases/fields/field-rename-input';
+import { FieldAttributes } from '@brainbox/core';
+import { FieldDeleteDialog } from '@brainbox/ui/components/databases/fields/field-delete-dialog';
+import { FieldIcon } from '@brainbox/ui/components/databases/fields/field-icon';
+import { FieldRenameInput } from '@brainbox/ui/components/databases/fields/field-rename-input';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { useDatabase } from '@colanode/ui/contexts/database';
+} from '@brainbox/ui/components/ui/popover';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { useDatabase } from '@brainbox/ui/contexts/database';
 
 interface RecordFieldProps {
   field: FieldAttributes;

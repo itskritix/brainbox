@@ -1,9 +1,9 @@
 import { Settings } from 'lucide-react';
 import { useState } from 'react';
 
-import { formatBytes, WorkspaceStorageUser } from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { Button } from '@colanode/ui/components/ui/button';
+import { formatBytes, WorkspaceStorageUser } from '@brainbox/core';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Table,
   TableBody,
@@ -11,11 +11,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@colanode/ui/components/ui/table';
-import { WorkspaceStorageUserUpdateDialog } from '@colanode/ui/components/workspaces/storage/workspace-storage-user-update-dialog';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useQuery } from '@colanode/ui/hooks/use-query';
-import { bigintToPercent, cn } from '@colanode/ui/lib/utils';
+} from '@brainbox/ui/components/ui/table';
+import { WorkspaceStorageUserUpdateDialog } from '@brainbox/ui/components/workspaces/storage/workspace-storage-user-update-dialog';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useQuery } from '@brainbox/ui/hooks/use-query';
+import { bigintToPercent, cn } from '@brainbox/ui/lib/utils';
 
 const UserStorageProgressBar = ({
   storageUsed,

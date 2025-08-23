@@ -1,7 +1,7 @@
-import { database } from '@colanode/server/data/database';
-import { JobHandler } from '@colanode/server/jobs';
-import { deleteFile } from '@colanode/server/lib/files';
-import { createLogger } from '@colanode/server/lib/logger';
+import { database } from '@brainbox/server/data/database';
+import { JobHandler } from '@brainbox/server/jobs';
+import { deleteFile } from '@brainbox/server/lib/files';
+import { createLogger } from '@brainbox/server/lib/logger';
 
 const BATCH_SIZE = 500;
 const logger = createLogger('server:job:clean-workspace-data');
@@ -11,7 +11,7 @@ export type WorkspaceCleanInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/server/jobs' {
+declare module '@brainbox/server/jobs' {
   interface JobMap {
     'workspace.clean': {
       input: WorkspaceCleanInput;

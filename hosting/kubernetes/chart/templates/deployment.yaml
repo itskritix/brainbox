@@ -1,42 +1,42 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "colanode.fullname" . }}
+  name: {{ include "brainbox.fullname" . }}
   labels:
-    {{- include "colanode.labels" . | nindent 4 }}
+    {{- include "brainbox.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.colanode.autoscaling.enabled }}
-  replicas: {{ .Values.colanode.replicaCount }}
+  {{- if not .Values.brainbox.autoscaling.enabled }}
+  replicas: {{ .Values.brainbox.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "colanode.selectorLabels" . | nindent 6 }}
+      {{- include "brainbox.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.colanode.podAnnotations }}
+      {{- with .Values.brainbox.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "colanode.selectorLabels" . | nindent 8 }}
-        {{- with .Values.colanode.podLabels }}
+        {{- include "brainbox.selectorLabels" . | nindent 8 }}
+        {{- with .Values.brainbox.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.colanode.imagePullSecrets }}
+      {{- with .Values.brainbox.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "colanode.serviceAccountName" . }}
+      serviceAccountName: {{ include "brainbox.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.colanode.image.repository }}:{{ .Values.colanode.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.colanode.image.pullPolicy }}
+          image: "{{ .Values.brainbox.image.repository }}:{{ .Values.brainbox.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.brainbox.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.colanode.service.port }}
+              containerPort: {{ .Values.brainbox.service.port }}
               protocol: TCP
           env:
-            {{- include "colanode.serverEnvVars" . | nindent 12 }}
+            {{- include "brainbox.serverEnvVars" . | nindent 12 }}
           resources:
-            {{- toYaml .Values.colanode.resources | nindent 12 }}
+            {{- toYaml .Values.brainbox.resources | nindent 12 }}

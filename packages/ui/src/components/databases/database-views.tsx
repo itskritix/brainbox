@@ -1,12 +1,12 @@
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
 import { useEffect, useState } from 'react';
 
-import { View } from '@colanode/ui/components/databases/view';
-import { ScrollBar } from '@colanode/ui/components/ui/scroll-area';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { DatabaseViewsContext } from '@colanode/ui/contexts/database-views';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+import { View } from '@brainbox/ui/components/databases/view';
+import { ScrollBar } from '@brainbox/ui/components/ui/scroll-area';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { DatabaseViewsContext } from '@brainbox/ui/contexts/database-views';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 interface DatabaseViewsProps {
   inline?: boolean;

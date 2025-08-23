@@ -1,17 +1,17 @@
 import ky from 'ky';
 import ms from 'ms';
 
-import { FeatureKey, isFeatureSupported } from '@colanode/client/lib';
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { mapServer } from '@colanode/client/lib/mappers';
-import { isServerOutdated } from '@colanode/client/lib/servers';
-import { AppService } from '@colanode/client/services/app-service';
+import { FeatureKey, isFeatureSupported } from '@brainbox/client/lib';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { mapServer } from '@brainbox/client/lib/mappers';
+import { isServerOutdated } from '@brainbox/client/lib/servers';
+import { AppService } from '@brainbox/client/services/app-service';
 import {
   Server,
   ServerAttributes,
   ServerState,
-} from '@colanode/client/types/servers';
-import { createDebugger, ServerConfig } from '@colanode/core';
+} from '@brainbox/client/types/servers';
+import { createDebugger, ServerConfig } from '@brainbox/core';
 
 const debug = createDebugger('desktop:service:server');
 

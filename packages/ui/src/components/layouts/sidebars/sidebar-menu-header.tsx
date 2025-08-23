@@ -1,7 +1,7 @@
 import { Check, ChevronDown, Plus } from 'lucide-react';
 import { useState } from 'react';
 
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,12 +9,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
-import { UnreadBadge } from '@colanode/ui/components/ui/unread-badge';
-import { useAccount } from '@colanode/ui/contexts/account';
-import { useRadar } from '@colanode/ui/contexts/radar';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQuery } from '@colanode/ui/hooks/use-live-query';
+} from '@brainbox/ui/components/ui/dropdown-menu';
+import { UnreadBadge } from '@brainbox/ui/components/ui/unread-badge';
+import { useAccount } from '@brainbox/ui/contexts/account';
+import { useRadar } from '@brainbox/ui/contexts/radar';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQuery } from '@brainbox/ui/hooks/use-live-query';
 
 export const SidebarMenuHeader = () => {
   const workspace = useWorkspace();

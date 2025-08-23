@@ -1,4 +1,4 @@
-import { FileSubtype } from '@colanode/core';
+import { FileSubtype } from '@brainbox/core';
 
 export type TempFileCreateMutationInput = {
   type: 'temp.file.create';
@@ -15,7 +15,7 @@ export type TempFileCreateMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'temp.file.create': {
       input: TempFileCreateMutationInput;

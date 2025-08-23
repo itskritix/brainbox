@@ -11,7 +11,7 @@ export type NodeCollaboratorCreateMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'node.collaborator.create': {
       input: NodeCollaboratorCreateMutationInput;

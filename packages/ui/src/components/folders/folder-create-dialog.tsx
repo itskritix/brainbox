@@ -1,17 +1,17 @@
 import { toast } from 'sonner';
 
-import { generateId, IdType } from '@colanode/core';
-import { FolderForm } from '@colanode/ui/components/folders/folder-form';
+import { generateId, IdType } from '@brainbox/core';
+import { FolderForm } from '@brainbox/ui/components/folders/folder-form';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@colanode/ui/components/ui/dialog';
-import { useLayout } from '@colanode/ui/contexts/layout';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+} from '@brainbox/ui/components/ui/dialog';
+import { useLayout } from '@brainbox/ui/contexts/layout';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface FolderCreateDialogProps {
   spaceId: string;

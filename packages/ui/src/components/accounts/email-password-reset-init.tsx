@@ -4,20 +4,20 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod/v4';
 
-import { EmailPasswordResetInitOutput } from '@colanode/core';
-import { Button } from '@colanode/ui/components/ui/button';
+import { EmailPasswordResetInitOutput } from '@brainbox/core';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from '@colanode/ui/components/ui/form';
-import { Input } from '@colanode/ui/components/ui/input';
-import { Label } from '@colanode/ui/components/ui/label';
-import { Spinner } from '@colanode/ui/components/ui/spinner';
-import { getServerDomain } from '@colanode/ui/lib/server-config';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+} from '@brainbox/ui/components/ui/form';
+import { Input } from '@brainbox/ui/components/ui/input';
+import { Label } from '@brainbox/ui/components/ui/label';
+import { Spinner } from '@brainbox/ui/components/ui/spinner';
+import { getServerDomain } from '@brainbox/ui/lib/server-config';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 const formSchema = z.object({
   email: z.string().min(2).email(),

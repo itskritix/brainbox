@@ -1,11 +1,11 @@
 import { toast } from 'sonner';
 
-import { LocalSpaceNode } from '@colanode/client/types';
-import { SpaceAvatar } from '@colanode/ui/components/spaces/space-avatar';
-import { SpaceDescription } from '@colanode/ui/components/spaces/space-description';
-import { SpaceName } from '@colanode/ui/components/spaces/space-name';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+import { LocalSpaceNode } from '@brainbox/client/types';
+import { SpaceAvatar } from '@brainbox/ui/components/spaces/space-avatar';
+import { SpaceDescription } from '@brainbox/ui/components/spaces/space-description';
+import { SpaceName } from '@brainbox/ui/components/spaces/space-name';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface SpaceGeneralTabProps {
   space: LocalSpaceNode;

@@ -10,7 +10,7 @@ export type SpaceCreateMutationOutput = {
   id: string;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'space.create': {
       input: SpaceCreateMutationInput;

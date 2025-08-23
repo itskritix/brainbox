@@ -1,4 +1,4 @@
-import { ClientContext } from '@colanode/server/types/api';
+import { ClientContext } from '@brainbox/server/types/api';
 
 export type SocketContext = {
   id: string;

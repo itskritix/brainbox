@@ -1,11 +1,11 @@
-import { WorkspaceMutationHandlerBase } from '@colanode/client/handlers/mutations/workspace-mutation-handler-base';
-import { MutationHandler } from '@colanode/client/lib/types';
-import { MutationError, MutationErrorCode } from '@colanode/client/mutations';
+import { WorkspaceMutationHandlerBase } from '@brainbox/client/handlers/mutations/workspace-mutation-handler-base';
+import { MutationHandler } from '@brainbox/client/lib/types';
+import { MutationError, MutationErrorCode } from '@brainbox/client/mutations';
 import {
   SelectOptionUpdateMutationInput,
   SelectOptionUpdateMutationOutput,
-} from '@colanode/client/mutations/databases/select-option-update';
-import { DatabaseAttributes } from '@colanode/core';
+} from '@brainbox/client/mutations/databases/select-option-update';
+import { DatabaseAttributes } from '@brainbox/core';
 
 export class SelectOptionUpdateMutationHandler
   extends WorkspaceMutationHandlerBase

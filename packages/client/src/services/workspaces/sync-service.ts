@@ -1,7 +1,7 @@
-import { eventBus } from '@colanode/client/lib/event-bus';
-import { Synchronizer } from '@colanode/client/services/workspaces/synchronizer';
-import { WorkspaceService } from '@colanode/client/services/workspaces/workspace-service';
-import { Event } from '@colanode/client/types/events';
+import { eventBus } from '@brainbox/client/lib/event-bus';
+import { Synchronizer } from '@brainbox/client/services/workspaces/synchronizer';
+import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
+import { Event } from '@brainbox/client/types/events';
 import {
   createDebugger,
   SyncCollaborationsInput,
@@ -18,7 +18,7 @@ import {
   SyncCollaborationData,
   SyncDocumentUpdatesInput,
   SyncDocumentUpdateData,
-} from '@colanode/core';
+} from '@brainbox/core';
 
 interface RootSynchronizers {
   nodeUpdates: Synchronizer<SyncNodesUpdatesInput>;

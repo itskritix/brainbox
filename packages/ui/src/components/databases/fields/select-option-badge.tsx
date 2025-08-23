@@ -1,5 +1,5 @@
-import { getSelectOptionColorClass } from '@colanode/ui/lib/databases';
-import { cn } from '@colanode/ui/lib/utils';
+import { getSelectOptionColorClass } from '@brainbox/ui/lib/databases';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface SelectOptionBadgeProps {
   name: string;

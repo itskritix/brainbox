@@ -1,6 +1,6 @@
 import { createClient } from '@redis/client';
 
-import { config } from '@colanode/server/lib/config';
+import { config } from '@brainbox/server/lib/config';
 
 export const redis = createClient({
   url: config.redis.url,

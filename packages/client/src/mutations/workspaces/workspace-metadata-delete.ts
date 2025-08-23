@@ -9,7 +9,7 @@ export type WorkspaceMetadataDeleteMutationOutput = {
   success: boolean;
 };
 
-declare module '@colanode/client/mutations' {
+declare module '@brainbox/client/mutations' {
   interface MutationMap {
     'workspace.metadata.delete': {
       input: WorkspaceMetadataDeleteMutationInput;

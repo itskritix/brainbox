@@ -1,17 +1,17 @@
 import { Plus } from 'lucide-react';
 
-import { SpecialId } from '@colanode/core';
-import { ViewSortAddPopover } from '@colanode/ui/components/databases/search/view-sort-add-popover';
-import { ViewSortFieldRow } from '@colanode/ui/components/databases/search/view-sort-field-row';
-import { ViewSortNameRow } from '@colanode/ui/components/databases/search/view-sort-name-row';
-import { Button } from '@colanode/ui/components/ui/button';
+import { SpecialId } from '@brainbox/core';
+import { ViewSortAddPopover } from '@brainbox/ui/components/databases/search/view-sort-add-popover';
+import { ViewSortFieldRow } from '@brainbox/ui/components/databases/search/view-sort-field-row';
+import { ViewSortNameRow } from '@brainbox/ui/components/databases/search/view-sort-name-row';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { useDatabase } from '@colanode/ui/contexts/database';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
+} from '@brainbox/ui/components/ui/popover';
+import { useDatabase } from '@brainbox/ui/contexts/database';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
 
 export const ViewSorts = () => {
   const database = useDatabase();

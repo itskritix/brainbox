@@ -1,31 +1,31 @@
 import { ChevronDown, Trash2, X } from 'lucide-react';
 
-import { LocalRecordNode } from '@colanode/client/types';
+import { LocalRecordNode } from '@brainbox/client/types';
 import {
   DatabaseViewFieldFilterAttributes,
   RelationFieldAttributes,
-} from '@colanode/core';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
-import { FieldIcon } from '@colanode/ui/components/databases/fields/field-icon';
-import { RecordSearch } from '@colanode/ui/components/records/record-search';
-import { Badge } from '@colanode/ui/components/ui/badge';
-import { Button } from '@colanode/ui/components/ui/button';
+} from '@brainbox/core';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
+import { FieldIcon } from '@brainbox/ui/components/databases/fields/field-icon';
+import { RecordSearch } from '@brainbox/ui/components/records/record-search';
+import { Badge } from '@brainbox/ui/components/ui/badge';
+import { Button } from '@brainbox/ui/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
+} from '@brainbox/ui/components/ui/dropdown-menu';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@colanode/ui/components/ui/popover';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { useDatabaseView } from '@colanode/ui/contexts/database-view';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useLiveQueries } from '@colanode/ui/hooks/use-live-queries';
-import { relationFieldFilterOperators } from '@colanode/ui/lib/databases';
+} from '@brainbox/ui/components/ui/popover';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { useDatabaseView } from '@brainbox/ui/contexts/database-view';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useLiveQueries } from '@brainbox/ui/hooks/use-live-queries';
+import { relationFieldFilterOperators } from '@brainbox/ui/lib/databases';
 
 interface ViewRelationFieldFilterProps {
   field: RelationFieldAttributes;

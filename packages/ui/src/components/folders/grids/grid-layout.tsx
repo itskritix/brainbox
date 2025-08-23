@@ -1,5 +1,5 @@
-import { GridFile } from '@colanode/ui/components/folders/grids/grid-file';
-import { useFolder } from '@colanode/ui/contexts/folder';
+import { GridFile } from '@brainbox/ui/components/folders/grids/grid-file';
+import { useFolder } from '@brainbox/ui/contexts/folder';
 
 export const GridLayout = () => {
   const folder = useFolder();

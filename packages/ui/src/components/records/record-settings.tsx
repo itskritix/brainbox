@@ -1,10 +1,10 @@
 import { Copy, Settings, Trash2 } from 'lucide-react';
 import { Fragment, useState } from 'react';
 
-import { LocalRecordNode } from '@colanode/client/types';
-import { NodeRole, hasNodeRole } from '@colanode/core';
-import { NodeCollaboratorAudit } from '@colanode/ui/components/collaborators/node-collaborator-audit';
-import { RecordDeleteDialog } from '@colanode/ui/components/records/record-delete-dialog';
+import { LocalRecordNode } from '@brainbox/client/types';
+import { NodeRole, hasNodeRole } from '@brainbox/core';
+import { NodeCollaboratorAudit } from '@brainbox/ui/components/collaborators/node-collaborator-audit';
+import { RecordDeleteDialog } from '@brainbox/ui/components/records/record-delete-dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,8 +12,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@colanode/ui/components/ui/dropdown-menu';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
+} from '@brainbox/ui/components/ui/dropdown-menu';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
 
 interface RecordSettingsProps {
   record: LocalRecordNode;

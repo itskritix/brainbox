@@ -1,4 +1,4 @@
-import { LocalNode } from '@colanode/client/types/nodes';
+import { LocalNode } from '@brainbox/client/types/nodes';
 
 export type NodeTreeGetQueryInput = {
   type: 'node.tree.get';
@@ -7,7 +7,7 @@ export type NodeTreeGetQueryInput = {
   workspaceId: string;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'node.tree.get': {
       input: NodeTreeGetQueryInput;

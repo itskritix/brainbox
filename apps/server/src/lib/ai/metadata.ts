@@ -3,8 +3,8 @@ import {
   FieldAttributes,
   RecordAttributes,
   DatabaseAttributes,
-} from '@colanode/core';
-import { database } from '@colanode/server/data/database';
+} from '@brainbox/core';
+import { database } from '@brainbox/server/data/database';
 import {
   NodeMetadata,
   DocumentMetadata,
@@ -14,7 +14,7 @@ import {
   ParentContextInfo,
   DatabaseInfo,
   DatabaseFieldInfo,
-} from '@colanode/server/types/metadata';
+} from '@brainbox/server/types/metadata';
 
 const fetchBaseMetadata = async (
   id: string,

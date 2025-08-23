@@ -1,5 +1,5 @@
-import { LocalDatabaseNode } from '@colanode/client/types';
-import { Avatar } from '@colanode/ui/components/avatars/avatar';
+import { LocalDatabaseNode } from '@brainbox/client/types';
+import { Avatar } from '@brainbox/ui/components/avatars/avatar';
 
 interface DatabaseBreadcrumbItemProps {
   database: LocalDatabaseNode;

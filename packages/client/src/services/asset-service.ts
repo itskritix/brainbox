@@ -3,8 +3,8 @@ import { Kysely } from 'kysely';
 import {
   EmojiDatabaseSchema,
   IconDatabaseSchema,
-} from '@colanode/client/databases';
-import { AppService } from '@colanode/client/services/app-service';
+} from '@brainbox/client/databases';
+import { AppService } from '@brainbox/client/services/app-service';
 
 export class AssetService {
   private readonly app: AppService;

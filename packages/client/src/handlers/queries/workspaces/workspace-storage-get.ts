@@ -1,13 +1,13 @@
-import { WorkspaceQueryHandlerBase } from '@colanode/client/handlers/queries/workspace-query-handler-base';
+import { WorkspaceQueryHandlerBase } from '@brainbox/client/handlers/queries/workspace-query-handler-base';
 import {
   ChangeCheckResult,
   parseApiError,
   QueryHandler,
-} from '@colanode/client/lib';
-import { QueryError, QueryErrorCode } from '@colanode/client/queries';
-import { WorkspaceStorageGetQueryInput } from '@colanode/client/queries/workspaces/workspace-storage-get';
-import { Event } from '@colanode/client/types/events';
-import { WorkspaceStorageGetOutput } from '@colanode/core';
+} from '@brainbox/client/lib';
+import { QueryError, QueryErrorCode } from '@brainbox/client/queries';
+import { WorkspaceStorageGetQueryInput } from '@brainbox/client/queries/workspaces/workspace-storage-get';
+import { Event } from '@brainbox/client/types/events';
+import { WorkspaceStorageGetOutput } from '@brainbox/core';
 
 const EMPTY_STORAGE_OUTPUT: WorkspaceStorageGetOutput = {
   storageLimit: '0',

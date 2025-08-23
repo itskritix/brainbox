@@ -1,8 +1,8 @@
-import { AccountDelete } from '@colanode/ui/components/accounts/account-delete';
-import { AccountUpdate } from '@colanode/ui/components/accounts/account-update';
-import { Container, ContainerBody } from '@colanode/ui/components/ui/container';
-import { Separator } from '@colanode/ui/components/ui/separator';
-import { useAccount } from '@colanode/ui/contexts/account';
+import { AccountDelete } from '@brainbox/ui/components/accounts/account-delete';
+import { AccountUpdate } from '@brainbox/ui/components/accounts/account-update';
+import { Container, ContainerBody } from '@brainbox/ui/components/ui/container';
+import { Separator } from '@brainbox/ui/components/ui/separator';
+import { useAccount } from '@brainbox/ui/contexts/account';
 
 export const AccountSettings = () => {
   const account = useAccount();

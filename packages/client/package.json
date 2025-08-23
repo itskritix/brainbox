@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@colanode/client",
+  "name": "@brainbox/client",
   "version": "1.0.0",
   "type": "module",
   "exports": {

@@ -1,17 +1,17 @@
 import { toast } from 'sonner';
 
-import { LocalChannelNode } from '@colanode/client/types';
-import { NodeRole, hasNodeRole } from '@colanode/core';
-import { ChannelForm } from '@colanode/ui/components/channels/channel-form';
+import { LocalChannelNode } from '@brainbox/client/types';
+import { NodeRole, hasNodeRole } from '@brainbox/core';
+import { ChannelForm } from '@brainbox/ui/components/channels/channel-form';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@colanode/ui/components/ui/dialog';
-import { useWorkspace } from '@colanode/ui/contexts/workspace';
-import { useMutation } from '@colanode/ui/hooks/use-mutation';
+} from '@brainbox/ui/components/ui/dialog';
+import { useWorkspace } from '@brainbox/ui/contexts/workspace';
+import { useMutation } from '@brainbox/ui/hooks/use-mutation';
 
 interface ChannelUpdateDialogProps {
   channel: LocalChannelNode;

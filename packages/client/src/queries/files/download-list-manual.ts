@@ -1,4 +1,4 @@
-import { Download } from '@colanode/client/types/files';
+import { Download } from '@brainbox/client/types/files';
 
 export type DownloadListManualQueryInput = {
   type: 'download.list.manual';
@@ -8,7 +8,7 @@ export type DownloadListManualQueryInput = {
   count: number;
 };
 
-declare module '@colanode/client/queries' {
+declare module '@brainbox/client/queries' {
   interface QueryMap {
     'download.list.manual': {
       input: DownloadListManualQueryInput;

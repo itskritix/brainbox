@@ -1,14 +1,14 @@
 import { RefAttributes, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
-import { LocalNode } from '@colanode/client/types';
-import { ChannelSidebarItem } from '@colanode/ui/components/channels/channel-sidebar-item';
-import { ChatSidebarItem } from '@colanode/ui/components/chats/chat-sidebar-item';
-import { DatabaseSidebarItem } from '@colanode/ui/components/databases/database-sidiebar-item';
-import { FolderSidebarItem } from '@colanode/ui/components/folders/folder-sidebar-item';
-import { PageSidebarItem } from '@colanode/ui/components/pages/page-sidebar-item';
-import { SpaceSidebarItem } from '@colanode/ui/components/spaces/space-sidebar-item';
-import { cn } from '@colanode/ui/lib/utils';
+import { LocalNode } from '@brainbox/client/types';
+import { ChannelSidebarItem } from '@brainbox/ui/components/channels/channel-sidebar-item';
+import { ChatSidebarItem } from '@brainbox/ui/components/chats/chat-sidebar-item';
+import { DatabaseSidebarItem } from '@brainbox/ui/components/databases/database-sidiebar-item';
+import { FolderSidebarItem } from '@brainbox/ui/components/folders/folder-sidebar-item';
+import { PageSidebarItem } from '@brainbox/ui/components/pages/page-sidebar-item';
+import { SpaceSidebarItem } from '@brainbox/ui/components/spaces/space-sidebar-item';
+import { cn } from '@brainbox/ui/lib/utils';
 
 interface SidebarItemContentProps {
   node: LocalNode;
