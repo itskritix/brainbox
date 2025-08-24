@@ -31,6 +31,12 @@ export class WorkspaceListQueryHandler
       event.type === 'workspace.created' &&
       event.workspace.accountId === input.accountId
     ) {
+      // Check if workspace already exists in output to prevent duplicates
+      const workspaceExists = output.some(w => w.id === event.workspace.id);
+      if (workspaceExists) {
+        return { hasChanges: false };
+      }
+      
       const newWorkspaces = [...output, event.workspace];
       return {
         hasChanges: true,
