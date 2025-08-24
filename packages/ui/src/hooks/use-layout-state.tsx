@@ -20,7 +20,7 @@ export const useLayoutState = () => {
   const [sidebarMetadata, setSidebarMetadata] = useState<SidebarMetadata>(
     workspace.getMetadata('sidebar')?.value ?? {
       menu: 'spaces',
-      width: 250,
+      width: 200,
     }
   );
 
