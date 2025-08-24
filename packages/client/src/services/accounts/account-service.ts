@@ -11,6 +11,7 @@ import { parseApiError } from '@brainbox/client/lib/ky';
 import { mapAccount, mapWorkspace } from '@brainbox/client/lib/mappers';
 import { AccountSocket } from '@brainbox/client/services/accounts/account-socket';
 import { AvatarService } from '@brainbox/client/services/accounts/avatar-service';
+import { OfflineManager } from '@brainbox/client/services/offline-manager';
 import { AppService } from '@brainbox/client/services/app-service';
 import { ServerService } from '@brainbox/client/services/server-service';
 import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
@@ -34,6 +35,7 @@ export class AccountService {
   public readonly server: ServerService;
   public readonly database: Kysely<AccountDatabaseSchema>;
   public readonly avatars: AvatarService;
+  public readonly offlineManager: OfflineManager;
 
   public readonly socket: AccountSocket;
   public readonly client: KyInstance;
@@ -53,6 +55,7 @@ export class AccountService {
     });
 
     this.avatars = new AvatarService(this);
+    this.offlineManager = new OfflineManager(this);
     this.socket = new AccountSocket(this);
     this.client = this.app.client.extend({
       prefixUrl: this.server.httpBaseUrl,
@@ -215,11 +218,13 @@ export class AccountService {
     await workspaceService.init();
 
     this.workspaces.set(workspace.id, workspaceService);
+    this.offlineManager.registerWorkspace(workspaceService);
   }
 
   public async deleteWorkspace(id: string): Promise<void> {
     const workspaceService = this.workspaces.get(id);
     if (workspaceService) {
+      this.offlineManager.unregisterWorkspace(id);
       await workspaceService.delete();
       this.workspaces.delete(id);
     }

@@ -1,3 +1,4 @@
+import { eventBus } from '@brainbox/client/lib/event-bus';
 import { mapMutation } from '@brainbox/client/lib/mappers';
 import { WorkspaceService } from '@brainbox/client/services/workspaces/workspace-service';
 import {
@@ -53,6 +54,13 @@ export class MutationService {
 
   private async sendMutations(): Promise<boolean> {
     if (!this.workspace.account.server.isAvailable) {
+      debug(`Server not available, skipping mutation sync for workspace ${this.workspace.id}`);
+      return false;
+    }
+
+    if (!this.workspace.account.socket.isConnected()) {
+      debug(`Socket not connected, attempting HTTP fallback for workspace ${this.workspace.id}`);
+      // HTTP fallback will be handled by the synchronizer
       return false;
     }
 
@@ -129,6 +137,24 @@ export class MutationService {
       debug(
         `Failed to send local pending mutations for user ${this.workspace.id}: ${error}`
       );
+
+      // Mark all mutations in current batch as failed (increment retry count)
+      const currentBatchIds = validMutations.map(m => m.id);
+      if (currentBatchIds.length > 0) {
+        await this.markMutationsAsFailed(currentBatchIds);
+        
+        // Publish events for failed operations
+        for (const mutationId of currentBatchIds) {
+          eventBus.publish({
+            type: 'offline.queue.operation.failed',
+            workspaceId: this.workspace.id,
+            operationId: mutationId,
+            operationType: 'mutation.sync',
+            error: error instanceof Error ? error.message : String(error),
+            retries: 1, // Will be updated by markMutationsAsFailed
+          });
+        }
+      }
 
       return false;
     }

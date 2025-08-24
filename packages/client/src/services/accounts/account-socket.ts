@@ -3,6 +3,7 @@ import WebSocket from 'isomorphic-ws';
 import { BackoffCalculator } from '@brainbox/client/lib/backoff-calculator';
 import { eventBus } from '@brainbox/client/lib/event-bus';
 import { AccountService } from '@brainbox/client/services/accounts/account-service';
+import { AccountHttpFallback } from '@brainbox/client/services/accounts/account-http-fallback';
 import { Message, SocketInitOutput, createDebugger } from '@brainbox/core';
 
 const debug = createDebugger('desktop:service:account-socket');
@@ -13,12 +14,16 @@ export class AccountSocket {
   private socket: WebSocket | null;
   private backoffCalculator: BackoffCalculator;
   private closingCount: number;
+  private httpFallback: AccountHttpFallback;
+  private connectionFailures: number = 0;
+  private maxConnectionFailures: number = 3;
 
   constructor(account: AccountService) {
     this.account = account;
     this.socket = null;
     this.backoffCalculator = new BackoffCalculator();
     this.closingCount = 0;
+    this.httpFallback = new AccountHttpFallback(account);
   }
 
   public async init(): Promise<void> {
@@ -63,6 +68,8 @@ export class AccountSocket {
       debug(`Socket connection for account ${this.account.id} opened`);
 
       this.backoffCalculator.reset();
+      this.connectionFailures = 0;
+      this.httpFallback.deactivate();
       eventBus.publish({
         type: 'account.connection.opened',
         accountId: this.account.id,
@@ -71,20 +78,12 @@ export class AccountSocket {
 
     this.socket.onerror = () => {
       debug(`Socket connection for account ${this.account.id} errored`);
-      this.backoffCalculator.increaseError();
-      eventBus.publish({
-        type: 'account.connection.closed',
-        accountId: this.account.id,
-      });
+      this.handleConnectionFailure();
     };
 
     this.socket.onclose = () => {
       debug(`Socket connection for account ${this.account.id} closed`);
-      this.backoffCalculator.increaseError();
-      eventBus.publish({
-        type: 'account.connection.closed',
-        accountId: this.account.id,
-      });
+      this.handleConnectionFailure();
     };
   }
 
@@ -111,6 +110,30 @@ export class AccountSocket {
       this.socket.close();
       this.socket = null;
     }
+    this.httpFallback.deactivate();
+  }
+
+  private handleConnectionFailure(): void {
+    this.backoffCalculator.increaseError();
+    this.connectionFailures++;
+
+    if (this.connectionFailures >= this.maxConnectionFailures) {
+      debug(`Connection failed ${this.connectionFailures} times, activating HTTP fallback`);
+      this.httpFallback.activate();
+    }
+
+    eventBus.publish({
+      type: 'account.connection.closed',
+      accountId: this.account.id,
+    });
+  }
+
+  public addFallbackRequest(input: any): void {
+    this.httpFallback.addSyncRequest(input);
+  }
+
+  public getFallbackStatus() {
+    return this.httpFallback.getStatus();
   }
 
   public checkConnection(): void {

@@ -133,6 +133,8 @@ export class Synchronizer<TInput extends SynchronizerInput> {
     }
 
     if (!this.connection.isConnected()) {
+      // Try HTTP fallback if WebSocket is not connected
+      this.connection.addFallbackRequest(this.input);
       return;
     }
 
@@ -149,6 +151,9 @@ export class Synchronizer<TInput extends SynchronizerInput> {
     const sent = this.connection.send(message);
     if (sent) {
       this.status = 'waiting';
+    } else {
+      // If send failed, try HTTP fallback
+      this.connection.addFallbackRequest(this.input);
     }
   }
 

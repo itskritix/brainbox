@@ -200,6 +200,8 @@ interface MutationTable {
   data: ColumnType<string, string, never>;
   created_at: ColumnType<string, string, never>;
   retries: ColumnType<number, number, number>;
+  last_attempt: ColumnType<string | null, string | null, string | null>;
+  error: ColumnType<string | null, string | null, string | null>;
 }
 
 export type SelectMutation = Selectable<MutationTable>;

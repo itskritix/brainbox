@@ -18,6 +18,7 @@ import { NodeService } from '@brainbox/client/services/workspaces/node-service';
 import { RadarService } from '@brainbox/client/services/workspaces/radar-service';
 import { SyncService } from '@brainbox/client/services/workspaces/sync-service';
 import { UserService } from '@brainbox/client/services/workspaces/user-service';
+import { OfflineQueue } from '@brainbox/client/services/offline-queue';
 import { Workspace } from '@brainbox/client/types/workspaces';
 import { createDebugger, WorkspaceRole } from '@brainbox/core';
 
@@ -39,6 +40,7 @@ export class WorkspaceService {
   public readonly synchronizer: SyncService;
   public readonly radar: RadarService;
   public readonly nodeCounters: NodeCountersService;
+  public readonly offlineQueue: OfflineQueue;
 
   private readonly workspaceFilesCleanJobScheduleId: string;
 
@@ -67,6 +69,7 @@ export class WorkspaceService {
     this.synchronizer = new SyncService(this);
     this.radar = new RadarService(this);
     this.nodeCounters = new NodeCountersService(this);
+    this.offlineQueue = new OfflineQueue(this);
 
     this.workspaceFilesCleanJobScheduleId = `workspace.files.clean.${this.account.id}.${this.workspace.id}`;
   }

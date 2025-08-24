@@ -197,6 +197,52 @@ export type QueryResultUpdatedEvent = {
   result: unknown;
 };
 
+export type AccountConnectionFallbackActivatedEvent = {
+  type: 'account.connection.fallback.activated';
+  accountId: string;
+};
+
+export type AccountConnectionFallbackDeactivatedEvent = {
+  type: 'account.connection.fallback.deactivated';
+  accountId: string;
+};
+
+export type OfflineQueueOperationAddedEvent = {
+  type: 'offline.queue.operation.added';
+  workspaceId: string;
+  operationId: string;
+  operationType: string;
+};
+
+export type OfflineQueueOperationCompletedEvent = {
+  type: 'offline.queue.operation.completed';
+  workspaceId: string;
+  operationId: string;
+  operationType: string;
+};
+
+export type OfflineQueueOperationFailedEvent = {
+  type: 'offline.queue.operation.failed';
+  workspaceId: string;
+  operationId: string;
+  operationType: string;
+  error: string;
+  retries: number;
+};
+
+export type OfflineQueueOperationAbandonedEvent = {
+  type: 'offline.queue.operation.abandoned';
+  workspaceId: string;
+  operationId: string;
+  operationType: string;
+  maxRetries: number;
+};
+
+export type OfflineQueueClearedEvent = {
+  type: 'offline.queue.cleared';
+  workspaceId: string;
+};
+
 export type RadarDataUpdatedEvent = {
   type: 'radar.data.updated';
 };
@@ -394,6 +440,13 @@ export type Event =
   | AccountConnectionOpenedEvent
   | AccountConnectionClosedEvent
   | AccountConnectionMessageReceivedEvent
+  | AccountConnectionFallbackActivatedEvent
+  | AccountConnectionFallbackDeactivatedEvent
+  | OfflineQueueOperationAddedEvent
+  | OfflineQueueOperationCompletedEvent
+  | OfflineQueueOperationFailedEvent
+  | OfflineQueueOperationAbandonedEvent
+  | OfflineQueueClearedEvent
   | AppMetadataUpdatedEvent
   | AppMetadataDeletedEvent
   | AccountMetadataUpdatedEvent
