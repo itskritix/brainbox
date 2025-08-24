@@ -8,13 +8,13 @@
       "type": "image/x-icon"
     },
     {
-      "src": "assets/brainbox-logo-black-192.png",
+      "src": "assets/brainbox-logo-white-192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "assets/brainbox-logo-black-512.png",
+      "src": "assets/brainbox-logo-white-512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"

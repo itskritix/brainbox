@@ -56,7 +56,7 @@ const createWindow = async () => {
     fullscreenable: true,
     minWidth: 800,
     minHeight: 600,
-    icon: app.path.join(app.path.assets, 'brainbox-logo-black.png'),
+    icon: app.path.join(app.path.assets, 'brainbox-logo-white.png'),
     webPreferences: {
       preload: app.path.join(__dirname, 'preload.js'),
     },

@@ -12,7 +12,7 @@ const config: ForgeConfig = {
   packagerConfig: {
     name: 'Brainbox',
     executableName: process.platform === 'linux' ? 'brainbox' : 'Brainbox',
-    icon: 'assets/brainbox-logo-black',
+    icon: 'assets/brainbox-logo-white',
     appBundleId: 'com.brainbox.desktop',
     ...(process.platform === 'win32' && {
       certificateFile: process.env.CERTIFICATE_PATH,
@@ -77,7 +77,7 @@ const config: ForgeConfig = {
       }),
     }),
     new MakerDMG({
-      icon: 'assets/brainbox-logo-black.png',
+      icon: 'assets/brainbox-logo-white.png',
       title: 'Brainbox',
     }),
     {
