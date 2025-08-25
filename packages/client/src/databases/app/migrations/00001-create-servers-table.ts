@@ -1,4 +1,5 @@
 import { Migration } from 'kysely';
+import { getAvailableServers } from '@brainbox/client/lib/deployment-config';
 
 export const createServersTable: Migration = {
   up: async (db) => {
@@ -13,34 +14,12 @@ export const createServersTable: Migration = {
       .addColumn('synced_at', 'text')
       .execute();
 
+    // Get servers based on deployment configuration
+    const servers = getAvailableServers();
+
     await db
       .insertInto('servers')
-      .values([
-        {
-          domain: 'localhost:3000',
-          name: 'Local Development Server',
-          avatar: '',
-          attributes: '{"insecure":true}',
-          version: '0.2.0',
-          created_at: new Date().toISOString(),
-        },
-        {
-          domain: 'eu.brainbox.com',
-          name: 'Brainbox Cloud (EU)',
-          avatar: 'https://brainbox.com/assets/flags/eu.svg',
-          attributes: '{}',
-          version: '0.2.0',
-          created_at: new Date().toISOString(),
-        },
-        {
-          domain: 'us.brainbox.com',
-          name: 'Brainbox Cloud (US)',
-          avatar: 'https://brainbox.com/assets/flags/us.svg',
-          attributes: '{}',
-          version: '0.2.0',
-          created_at: new Date().toISOString(),
-        },
-      ])
+      .values(servers)
       .execute();
   },
   down: async (db) => {
