@@ -1,0 +1,193 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   BRAINBOX - Resend design system
+   Dark-first. Pure black canvas, near-white ink, hairline
+   white-alpha borders, the signature heading gradient.
+   Built on Radix-style grays via shadcn semantic tokens.
+   ============================================================ */
+
+:root {
+  --radius: 0.75rem;
+
+  /* surfaces */
+  --background: #000000;
+  --foreground: #fafafa;
+  --card: #0a0a0b;
+  --card-foreground: #fafafa;
+  --popover: #0c0c0e;
+  --popover-foreground: #fafafa;
+
+  /* brand (primary button = white, ink-on-white) */
+  --primary: #fdfdfd;
+  --primary-foreground: #000000;
+
+  /* quiet interactive surfaces */
+  --secondary: rgba(255, 255, 255, 0.05);
+  --secondary-foreground: #ededed;
+  --muted: #101012;
+  --muted-foreground: #a0a0a8;
+  --accent: rgba(255, 255, 255, 0.06);
+  --accent-foreground: #fafafa;
+
+  /* state (accent communicates state, not style) */
+  --destructive: #ff6166;
+  --destructive-foreground: #fafafa;
+
+  /* lines + focus */
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: rgba(255, 255, 255, 0.22);
+}
+
+/* forced-dark marketing surface; mirror the values for dark: utilities */
+.dark {
+  --background: #000000;
+  --foreground: #fafafa;
+  --card: #0a0a0b;
+  --card-foreground: #fafafa;
+  --popover: #0c0c0e;
+  --popover-foreground: #fafafa;
+  --primary: #fdfdfd;
+  --primary-foreground: #000000;
+  --secondary: rgba(255, 255, 255, 0.05);
+  --secondary-foreground: #ededed;
+  --muted: #101012;
+  --muted-foreground: #a0a0a8;
+  --accent: rgba(255, 255, 255, 0.06);
+  --accent-foreground: #fafafa;
+  --destructive: #ff6166;
+  --destructive-foreground: #fafafa;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: rgba(255, 255, 255, 0.22);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --shadow-button: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+    overflow-x: hidden;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    font-variation-settings: "opsz" 32;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.011em;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+  }
+}
+
+/* ============ Resend signatures ============ */
+
+/* heading gradient: linear-gradient(97deg, #fff 30%, rgba(255,255,255,.5)) */
+.text-gradient {
+  background: linear-gradient(97deg, #ffffff 30%, rgba(255, 255, 255, 0.5) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* hairline border with the brand vertical sheen */
+.border-sheen {
+  position: relative;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%) border-box;
+}
+
+/* glass blur (nav, floating chrome) */
+.glass {
+  backdrop-filter: saturate(140%) blur(25px);
+  -webkit-backdrop-filter: saturate(140%) blur(25px);
+}
+
+/* atmospheric noise tooth, Resend hero texture, inlined to avoid a network dep */
+.bg-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* soft top-of-page glow */
+.glow-top::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 480px at 50% -10%, rgba(255, 255, 255, 0.09), transparent 70%),
+    radial-gradient(600px 420px at 85% 0%, rgba(255, 255, 255, 0.04), transparent 60%);
+}
+
+/* canvas grid (subtle dotted/line surface like Resend interface scenes) */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* marquee */
+@keyframes marquee-x {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee-x var(--marquee-dur, 40s) linear infinite;
+}
