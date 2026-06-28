@@ -42,14 +42,14 @@ export function HowItWorks() {
             key={s.n}
             className="border-sheen rounded-2xl p-6 transition-colors duration-200 hover:border-white/15"
           >
-            <div className="font-mono text-xs text-muted-foreground/60">{s.n}</div>
-            <div className="mt-5 inline-flex size-11 items-center justify-center rounded-xl border border-border bg-white/[0.03]">
-              <s.icon className="size-5 text-foreground" />
+            <div className="font-mono text-xs text-gray-11/60">{s.n}</div>
+            <div className="mt-5 inline-flex size-11 items-center justify-center rounded-xl border border-default bg-white/[0.03]">
+              <s.icon className="size-5 text-emphasis" />
             </div>
-            <h3 className="mt-4 text-base font-semibold tracking-tight text-foreground">
+            <h3 className="mt-4 text-base font-semibold tracking-tight text-emphasis">
               {s.title}
             </h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
+            <p className="mt-2 text-sm leading-relaxed text-default">{s.body}</p>
           </div>
         ))}
       </div>

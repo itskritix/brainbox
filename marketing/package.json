@@ -12,6 +12,7 @@
     "deploy": "pnpm build && pnpm dlx wrangler pages deploy dist --project-name brainbox-landing"
   },
   "dependencies": {
+    "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-slot": "^1.2.4",
     "@tailwindcss/vite": "^4.3.0",
     "class-variance-authority": "^0.7.1",

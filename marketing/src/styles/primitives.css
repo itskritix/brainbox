@@ -1,0 +1,132 @@
+/* ============================================================
+   PRIMITIVES — Radix Colors (the raw scales)
+   Light scales live under :root, dark scales under .dark, so
+   the theme flips automatically. Colored families are exposed
+   alpha-backed (Resend convention: `bg-red-3` === var(--red-a3)).
+   Reach for the SEMANTIC tokens (tokens.css) first; these are
+   escape hatches.
+   ============================================================ */
+
+@import "@radix-ui/colors/gray.css";
+@import "@radix-ui/colors/gray-dark.css";
+@import "@radix-ui/colors/gray-alpha.css";
+@import "@radix-ui/colors/gray-dark-alpha.css";
+
+@import "@radix-ui/colors/red.css";
+@import "@radix-ui/colors/red-dark.css";
+@import "@radix-ui/colors/red-alpha.css";
+@import "@radix-ui/colors/red-dark-alpha.css";
+
+@import "@radix-ui/colors/green.css";
+@import "@radix-ui/colors/green-dark.css";
+@import "@radix-ui/colors/green-alpha.css";
+@import "@radix-ui/colors/green-dark-alpha.css";
+
+@import "@radix-ui/colors/blue.css";
+@import "@radix-ui/colors/blue-dark.css";
+@import "@radix-ui/colors/blue-alpha.css";
+@import "@radix-ui/colors/blue-dark-alpha.css";
+
+@import "@radix-ui/colors/amber.css";
+@import "@radix-ui/colors/amber-dark.css";
+@import "@radix-ui/colors/amber-alpha.css";
+@import "@radix-ui/colors/amber-dark-alpha.css";
+
+@import "@radix-ui/colors/black-alpha.css";
+
+@theme inline {
+  /* gray — solid */
+  --color-gray-1: var(--gray-1);
+  --color-gray-2: var(--gray-2);
+  --color-gray-3: var(--gray-3);
+  --color-gray-4: var(--gray-4);
+  --color-gray-5: var(--gray-5);
+  --color-gray-6: var(--gray-6);
+  --color-gray-7: var(--gray-7);
+  --color-gray-8: var(--gray-8);
+  --color-gray-9: var(--gray-9);
+  --color-gray-10: var(--gray-10);
+  --color-gray-11: var(--gray-11);
+  --color-gray-12: var(--gray-12);
+  /* gray — alpha */
+  --color-gray-a1: var(--gray-a1);
+  --color-gray-a2: var(--gray-a2);
+  --color-gray-a3: var(--gray-a3);
+  --color-gray-a4: var(--gray-a4);
+  --color-gray-a5: var(--gray-a5);
+  --color-gray-a6: var(--gray-a6);
+  --color-gray-a7: var(--gray-a7);
+  --color-gray-a8: var(--gray-a8);
+  --color-gray-a9: var(--gray-a9);
+  --color-gray-a10: var(--gray-a10);
+  --color-gray-a11: var(--gray-a11);
+  --color-gray-a12: var(--gray-a12);
+
+  /* colored families — alpha-backed (bare step resolves to the alpha var) */
+  --color-red-1: var(--red-a1);
+  --color-red-2: var(--red-a2);
+  --color-red-3: var(--red-a3);
+  --color-red-4: var(--red-a4);
+  --color-red-5: var(--red-a5);
+  --color-red-6: var(--red-a6);
+  --color-red-7: var(--red-a7);
+  --color-red-8: var(--red-a8);
+  --color-red-9: var(--red-a9);
+  --color-red-10: var(--red-a10);
+  --color-red-11: var(--red-a11);
+  --color-red-12: var(--red-a12);
+
+  --color-green-1: var(--green-a1);
+  --color-green-2: var(--green-a2);
+  --color-green-3: var(--green-a3);
+  --color-green-4: var(--green-a4);
+  --color-green-5: var(--green-a5);
+  --color-green-6: var(--green-a6);
+  --color-green-7: var(--green-a7);
+  --color-green-8: var(--green-a8);
+  --color-green-9: var(--green-a9);
+  --color-green-10: var(--green-a10);
+  --color-green-11: var(--green-a11);
+  --color-green-12: var(--green-a12);
+
+  --color-blue-1: var(--blue-a1);
+  --color-blue-2: var(--blue-a2);
+  --color-blue-3: var(--blue-a3);
+  --color-blue-4: var(--blue-a4);
+  --color-blue-5: var(--blue-a5);
+  --color-blue-6: var(--blue-a6);
+  --color-blue-7: var(--blue-a7);
+  --color-blue-8: var(--blue-a8);
+  --color-blue-9: var(--blue-a9);
+  --color-blue-10: var(--blue-a10);
+  --color-blue-11: var(--blue-a11);
+  --color-blue-12: var(--blue-a12);
+
+  /* yellow maps to amber alpha (Resend convention) */
+  --color-yellow-1: var(--amber-a1);
+  --color-yellow-2: var(--amber-a2);
+  --color-yellow-3: var(--amber-a3);
+  --color-yellow-4: var(--amber-a4);
+  --color-yellow-5: var(--amber-a5);
+  --color-yellow-6: var(--amber-a6);
+  --color-yellow-7: var(--amber-a7);
+  --color-yellow-8: var(--amber-a8);
+  --color-yellow-9: var(--amber-a9);
+  --color-yellow-10: var(--amber-a10);
+  --color-yellow-11: var(--amber-a11);
+  --color-yellow-12: var(--amber-a12);
+
+  /* black alpha — used by brand hover/ring in light mode */
+  --color-black-a1: var(--black-a1);
+  --color-black-a2: var(--black-a2);
+  --color-black-a3: var(--black-a3);
+  --color-black-a4: var(--black-a4);
+  --color-black-a5: var(--black-a5);
+  --color-black-a6: var(--black-a6);
+  --color-black-a7: var(--black-a7);
+  --color-black-a8: var(--black-a8);
+  --color-black-a9: var(--black-a9);
+  --color-black-a10: var(--black-a10);
+  --color-black-a11: var(--black-a11);
+  --color-black-a12: var(--black-a12);
+}

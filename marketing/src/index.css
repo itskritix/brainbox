@@ -1,117 +1,48 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./styles/primitives.css";
+@import "./styles/tokens.css";
 
 @custom-variant dark (&:is(.dark *));
 
 /* ============================================================
-   BRAINBOX - Resend design system
-   Dark-first. Pure black canvas, near-white ink, hairline
-   white-alpha borders, the signature heading gradient.
-   Built on Radix-style grays via shadcn semantic tokens.
+   BRAINBOX — Resend design system
+   Real two-layer tokens: Radix primitives (primitives.css) +
+   semantic layer (tokens.css). Dark-first marketing surface
+   (html.dark). This file holds only theme scalars + the brand
+   signature utilities (gradient, sheen, glass, noise, grid).
    ============================================================ */
 
-:root {
-  --radius: 0.75rem;
-
-  /* surfaces */
-  --background: #000000;
-  --foreground: #fafafa;
-  --card: #0a0a0b;
-  --card-foreground: #fafafa;
-  --popover: #0c0c0e;
-  --popover-foreground: #fafafa;
-
-  /* brand (primary button = white, ink-on-white) */
-  --primary: #fdfdfd;
-  --primary-foreground: #000000;
-
-  /* quiet interactive surfaces */
-  --secondary: rgba(255, 255, 255, 0.05);
-  --secondary-foreground: #ededed;
-  --muted: #101012;
-  --muted-foreground: #a0a0a8;
-  --accent: rgba(255, 255, 255, 0.06);
-  --accent-foreground: #fafafa;
-
-  /* state (accent communicates state, not style) */
-  --destructive: #ff6166;
-  --destructive-foreground: #fafafa;
-
-  /* lines + focus */
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.12);
-  --ring: rgba(255, 255, 255, 0.22);
-}
-
-/* forced-dark marketing surface; mirror the values for dark: utilities */
-.dark {
-  --background: #000000;
-  --foreground: #fafafa;
-  --card: #0a0a0b;
-  --card-foreground: #fafafa;
-  --popover: #0c0c0e;
-  --popover-foreground: #fafafa;
-  --primary: #fdfdfd;
-  --primary-foreground: #000000;
-  --secondary: rgba(255, 255, 255, 0.05);
-  --secondary-foreground: #ededed;
-  --muted: #101012;
-  --muted-foreground: #a0a0a8;
-  --accent: rgba(255, 255, 255, 0.06);
-  --accent-foreground: #fafafa;
-  --destructive: #ff6166;
-  --destructive-foreground: #fafafa;
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.12);
-  --ring: rgba(255, 255, 255, 0.22);
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: 1rem;
-  --radius-3xl: 1.5rem;
-
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono: "Commit Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
+  /* radii — lg/xl/2xl/3xl match Tailwind defaults (Resend's scale); add 4xl */
+  --radius-4xl: 2rem;
+
+  /* shadows */
   --shadow-button: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-3xl: 0 16px 48px -12px rgba(0, 0, 0, 0.6);
+  --shadow-4xl: 0 32px 80px -16px rgba(0, 0, 0, 0.7);
 }
 
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+  .dark {
+    color-scheme: dark;
+  }
   * {
-    border-color: var(--border);
+    border-color: var(--border-default);
   }
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
     overflow-x: hidden;
   }
   body {
-    background: var(--background);
-    color: var(--foreground);
+    background: var(--bg-background);
+    color: var(--text-emphasis);
     font-family: var(--font-sans);
     font-feature-settings: "cv11", "ss01";
     font-variation-settings: "opsz" 32;
@@ -121,8 +52,8 @@
     overflow-x: hidden;
   }
   ::selection {
-    background: rgba(255, 255, 255, 0.16);
-    color: #fff;
+    background: var(--gray-a5);
+    color: var(--gray-12);
   }
 }
 
@@ -141,7 +72,7 @@
   position: relative;
   border: 1px solid transparent;
   background:
-    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(var(--bg-elevated), var(--bg-elevated)) padding-box,
     linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%) border-box;
 }
 

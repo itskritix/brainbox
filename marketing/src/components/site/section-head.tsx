@@ -10,14 +10,14 @@ interface SectionHeadProps {
 export function SectionHead({ label, title, desc, center = true }: SectionHeadProps) {
   return (
     <div className={cn("mb-14 max-w-2xl", center && "mx-auto text-center")}>
-      <span className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
+      <span className="font-mono text-xs uppercase tracking-[0.18em] text-default">
         {label}
       </span>
-      <h2 className="mt-4 text-3xl font-semibold tracking-[-0.02em] text-foreground md:text-[2.6rem] md:leading-[1.05]">
+      <h2 className="mt-4 text-3xl font-semibold tracking-[-0.02em] text-emphasis md:text-[2.6rem] md:leading-[1.05]">
         {title}
       </h2>
       {desc && (
-        <p className={cn("mt-4 max-w-xl text-muted-foreground", center && "mx-auto")}>
+        <p className={cn("mt-4 max-w-xl text-default", center && "mx-auto")}>
           {desc}
         </p>
       )}

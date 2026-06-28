@@ -18,7 +18,7 @@ export function WaitlistForm({ className }: { className?: string }) {
     return (
       <div
         className={cn(
-          "flex h-11 w-full max-w-md items-center justify-center gap-2 rounded-xl border border-border bg-white/[0.03] px-4 text-sm text-foreground",
+          "flex h-11 w-full max-w-md items-center justify-center gap-2 rounded-xl border border-default bg-white/[0.03] px-4 text-sm text-emphasis",
           className,
         )}
       >
@@ -43,7 +43,7 @@ export function WaitlistForm({ className }: { className?: string }) {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="you@company.com"
         aria-label="Email address"
-        className="h-11 w-full min-w-0 flex-1 rounded-xl border border-border bg-white/[0.03] px-4 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-white/25"
+        className="h-11 w-full min-w-0 flex-1 rounded-xl border border-default bg-white/[0.03] px-4 text-sm text-emphasis outline-none transition-colors placeholder:text-default focus:border-white/25"
       />
       <Button type="submit" size="lg" className="h-11 w-full sm:w-auto">
         Reserve access

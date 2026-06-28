@@ -5,18 +5,18 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-[3px] focus-visible:ring-focus",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-button hover:bg-primary/90",
+          "bg-brand text-on-brand shadow-button hover:bg-brand-hover",
         secondary:
-          "bg-secondary text-secondary-foreground border border-border hover:bg-accent",
-        ghost: "hover:bg-accent hover:text-foreground",
+          "bg-interactive text-emphasis border border-default hover:bg-interactive-hover",
+        ghost: "hover:bg-interactive-hover hover:text-emphasis",
         outline:
-          "border border-border bg-transparent hover:bg-accent hover:text-foreground",
-        link: "text-foreground underline-offset-4 hover:underline",
+          "border border-default bg-transparent hover:bg-interactive-hover hover:text-emphasis",
+        link: "text-emphasis underline-offset-4 hover:underline",
       },
       size: {
         default: "h-10 px-4 py-2 has-[>svg]:px-3",

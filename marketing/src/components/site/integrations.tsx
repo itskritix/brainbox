@@ -49,20 +49,20 @@ export function Integrations() {
             key={it.name}
             className="border-sheen flex flex-col items-center gap-4 rounded-2xl px-6 py-8 text-center transition-colors duration-200 hover:border-white/15"
           >
-            <div className="inline-flex size-14 items-center justify-center rounded-2xl border border-border bg-white/[0.03] text-foreground">
+            <div className="inline-flex size-14 items-center justify-center rounded-2xl border border-default bg-white/[0.03] text-emphasis">
               {it.icon}
             </div>
             <div>
-              <h3 className="text-base font-semibold tracking-tight text-foreground">{it.name}</h3>
-              <p className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
+              <h3 className="text-base font-semibold tracking-tight text-emphasis">{it.name}</h3>
+              <p className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.1em] text-default">
                 {it.sub}
               </p>
             </div>
           </div>
         ))}
       </div>
-      <p className="mt-8 text-center font-mono text-sm text-muted-foreground">
-        …and <span className="text-foreground">any tool</span> via webhooks &amp; API.
+      <p className="mt-8 text-center font-mono text-sm text-default">
+        …and <span className="text-emphasis">any tool</span> via webhooks &amp; API.
       </p>
     </section>
   )

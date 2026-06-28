@@ -8,7 +8,7 @@ export function FinalCta() {
           <h2 className="text-gradient mx-auto max-w-2xl text-4xl font-semibold tracking-[-0.03em] md:text-5xl md:leading-[1.05]">
             Stop guessing what your users need.
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-muted-foreground">
+          <p className="mx-auto mt-5 max-w-xl text-default">
             They tap once. You get the full story: every bug and feature request, ready to ship.
           </p>
           <div className="mt-8 flex justify-center">
