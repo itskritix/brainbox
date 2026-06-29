@@ -1,0 +1,11 @@
+packages:
+  - "marketing"
+  - "widget"
+  - "dashboard"
+  - "backend"
+  - "packages/*"
+
+# Shared versions so internal packages can't drift.
+catalog:
+  typescript: ^6.0.3
+  "@types/node": ^24.13.0
