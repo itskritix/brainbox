@@ -6,14 +6,15 @@ import { getAuthConfig } from "./auth/config.ts";
 import { env } from "./env.ts";
 import { dbMiddleware } from "./middleware/db.ts";
 import { health } from "./routes/health.ts";
+import { ingest } from "./routes/ingest.ts";
 import { me } from "./routes/me.ts";
 import type { AppEnv } from "./types.ts";
 
 export const app = new Hono<AppEnv>();
 
-// CORS for the dashboard SPA (step 5). credentials:true so the JWT session
-// cookie is allowed cross-origin.
-app.use("*", cors({ origin: env.DASHBOARD_ORIGIN, credentials: true }));
+// Dashboard SPA CORS scoped to /api/* only (credentials:true for the JWT cookie).
+// /ingest is cross-origin from arbitrary customer sites and sets its own CORS.
+app.use("/api/*", cors({ origin: env.DASHBOARD_ORIGIN, credentials: true }));
 
 app.use("*", initAuthConfig(getAuthConfig));
 app.use("*", dbMiddleware);
@@ -22,7 +23,8 @@ app.use("*", dbMiddleware);
 app.route("/health", health);
 // Auth.js endpoints: /api/auth/signin, /callback/google, /session, ...
 app.use("/api/auth/*", authHandler());
-// Step 3 note: /ingest mounts HERE (public) — its auth is project key + origin.
+// Public widget ingest — auth is project key + origin allowlist, not a session.
+app.route("/ingest", ingest);
 
 // Everything else under /api requires a valid session.
 app.use("/api/*", verifyAuth());

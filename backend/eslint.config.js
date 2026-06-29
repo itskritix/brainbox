@@ -12,5 +12,11 @@ export default tseslint.config(
       ecmaVersion: 2023,
       globals: globals.node,
     },
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+    },
   },
 );
