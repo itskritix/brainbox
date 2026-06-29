@@ -4,10 +4,12 @@ import { R2Storage } from "./r2.ts";
 
 export type StorageDriver = "local" | "r2";
 
-// Object storage for screenshots/audio. `presignGet` is intentionally absent —
-// it lands in step 5 with the dashboard read routes.
+// Object storage for screenshots/audio.
 export interface Storage {
   put(key: string, body: Uint8Array, contentType: string): Promise<void>;
+  // A URL the dashboard can use to fetch the object. R2 → a short-lived
+  // presigned URL; local → a cookie-gated /api/files route.
+  presignGet(key: string): Promise<string>;
 }
 
 let instance: Storage | null = null;
