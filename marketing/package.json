@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "typecheck": "tsc -b",
     "lint": "eslint .",
     "preview": "vite preview",
     "deploy": "pnpm build && pnpm dlx wrangler pages deploy dist --project-name brainbox-landing"
