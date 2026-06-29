@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: brainbox
+      POSTGRES_PASSWORD: brainbox
+      POSTGRES_DB: brainbox
+    volumes:
+      - brainbox_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U brainbox -d brainbox"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # The API service slots in here at deploy time (Dockerfile + this service),
+  # depending on `db` healthy. Dev runs the API on the host via `pnpm dev`.
+
+volumes:
+  brainbox_pgdata:
