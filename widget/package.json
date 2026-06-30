@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "test": "vitest run"
   },
   "dependencies": {
     "@brainbox/shared": "workspace:*",
@@ -33,9 +34,11 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "jsdom": "catalog:",
     "puppeteer-core": "^25.1.0",
     "typescript": "catalog:",
     "typescript-eslint": "^8.60.1",
-    "vite": "^8.0.16"
+    "vite": "^8.0.16",
+    "vitest": "catalog:"
   }
 }

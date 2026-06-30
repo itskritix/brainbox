@@ -1,0 +1,63 @@
+import { describe, expect, it } from "vitest";
+
+import { app } from "../src/app.ts";
+import { authCookie, makeIssue, makeProject, makeUser } from "./helpers.ts";
+
+describe("/api/projects", () => {
+  it("requires auth (401 without a cookie)", async () => {
+    expect((await app.request("/api/projects")).status).toBe(401);
+  });
+
+  it("lists only the caller's projects", async () => {
+    const me = await makeUser();
+    const other = await makeUser();
+    await makeProject(me.id);
+    await makeProject(other.id);
+
+    const res = await app.request("/api/projects", {
+      headers: { cookie: await authCookie(me.id) },
+    });
+    expect(res.status).toBe(200);
+    const rows = (await res.json()) as unknown[];
+    expect(rows).toHaveLength(1);
+  });
+
+  it("creates a project with a generated pk_ key owned by the caller", async () => {
+    const me = await makeUser();
+    const res = await app.request("/api/projects", {
+      method: "POST",
+      headers: { cookie: await authCookie(me.id), "content-type": "application/json" },
+      body: JSON.stringify({ name: "My App", allowedOrigins: ["https://app.example"] }),
+    });
+    expect(res.status).toBe(201);
+    const project = (await res.json()) as { key: string; name: string; allowedOrigins: string[] };
+    expect(project.key).toMatch(/^pk_/);
+    expect(project.name).toBe("My App");
+    expect(project.allowedOrigins).toEqual(["https://app.example"]);
+  });
+
+  it("404s another user's project (no existence leak)", async () => {
+    const me = await makeUser();
+    const other = await makeUser();
+    const theirs = await makeProject(other.id);
+
+    const res = await app.request(`/api/projects/${theirs.id}`, {
+      headers: { cookie: await authCookie(me.id) },
+    });
+    expect(res.status).toBe(404);
+  });
+
+  it("returns a project's issues newest-first", async () => {
+    const me = await makeUser();
+    const project = await makeProject(me.id);
+    await makeIssue(project.id, { text: "older", createdAt: new Date("2024-01-01T00:00:00Z") });
+    await makeIssue(project.id, { text: "newer", createdAt: new Date("2024-02-01T00:00:00Z") });
+
+    const res = await app.request(`/api/projects/${project.id}/issues`, {
+      headers: { cookie: await authCookie(me.id) },
+    });
+    expect(res.status).toBe(200);
+    const rows = (await res.json()) as { text: string }[];
+    expect(rows.map((r) => r.text)).toEqual(["newer", "older"]);
+  });
+});

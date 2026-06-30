@@ -16,7 +16,8 @@ export function cssPath(el: Element | null): string | undefined {
   while (node && node.nodeType === 1 && parts.length < 5) {
     let sel = node.nodeName.toLowerCase();
     if (node.id) {
-      parts.unshift(`${sel}#${CSS.escape(node.id)}`);
+      const id = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(node.id) : node.id;
+      parts.unshift(`${sel}#${id}`);
       break;
     }
     const parent: HTMLElement | null = node.parentElement;
