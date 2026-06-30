@@ -1,0 +1,80 @@
+import { describe, expect, it } from "vitest";
+import type { CapturedMetadata, Region } from "@brainbox/shared";
+
+import { issues, projects } from "../db/schema/index.ts";
+import type { Storage } from "../storage/index.ts";
+import { toIssue, toProject } from "./serialize.ts";
+
+const region: Region = { x: 0, y: 0, width: 10, height: 10 };
+const metadata: CapturedMetadata = {
+  url: "http://host/app",
+  title: "App",
+  viewport: { width: 1, height: 1 },
+  devicePixelRatio: 1,
+  userAgent: "x",
+  language: "en",
+  timezone: "UTC",
+  consoleErrors: [],
+};
+
+// Storage stub — toIssue should only call presignGet.
+const storage: Storage = {
+  put: async () => {},
+  presignGet: async (key) => `https://signed/${key}`,
+};
+
+describe("toProject", () => {
+  it("maps a row 1:1 with an ISO createdAt", () => {
+    const row: typeof projects.$inferSelect = {
+      id: "p1",
+      ownerId: "o1",
+      name: "N",
+      key: "pk_x",
+      allowedOrigins: ["a.com"],
+      createdAt: new Date("2024-01-01T00:00:00Z"),
+    };
+    expect(toProject(row)).toEqual({
+      id: "p1",
+      name: "N",
+      key: "pk_x",
+      allowedOrigins: ["a.com"],
+      createdAt: "2024-01-01T00:00:00.000Z",
+    });
+  });
+});
+
+describe("toIssue", () => {
+  const base: typeof issues.$inferSelect = {
+    id: "i1",
+    projectId: "p1",
+    createdAt: new Date("2024-01-01T00:00:00Z"),
+    text: "hi",
+    screenshotKey: "p1/i1/s.png",
+    audioKey: "p1/i1/a.webm",
+    audioMime: "audio/webm",
+    region,
+    metadata,
+  };
+
+  it("builds screenshot + audio with signed urls and an ISO date", async () => {
+    const issue = await toIssue(base, storage);
+    expect(issue.createdAt).toBe("2024-01-01T00:00:00.000Z");
+    expect(issue.screenshot).toEqual({ key: "p1/i1/s.png", url: "https://signed/p1/i1/s.png" });
+    expect(issue.audio).toEqual({
+      key: "p1/i1/a.webm",
+      url: "https://signed/p1/i1/a.webm",
+      mime: "audio/webm",
+    });
+    expect(issue.text).toBe("hi");
+  });
+
+  it("omits audio when there is no audioKey", async () => {
+    const issue = await toIssue({ ...base, audioKey: null, audioMime: null }, storage);
+    expect(issue.audio).toBeUndefined();
+  });
+
+  it("maps null text to undefined", async () => {
+    const issue = await toIssue({ ...base, text: null }, storage);
+    expect(issue.text).toBeUndefined();
+  });
+});
