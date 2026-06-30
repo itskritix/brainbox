@@ -18,6 +18,7 @@
     "@auth/core": "0.41.2",
     "@auth/drizzle-adapter": "^1.11.2",
     "@aws-sdk/client-s3": "^3.1075.0",
+    "@aws-sdk/s3-request-presigner": "^3.1075.0",
     "@brainbox/shared": "workspace:*",
     "@hono/auth-js": "^1.1.1",
     "@hono/node-server": "^2.0.6",

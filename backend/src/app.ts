@@ -5,9 +5,12 @@ import { cors } from "hono/cors";
 import { getAuthConfig } from "./auth/config.ts";
 import { env } from "./env.ts";
 import { dbMiddleware } from "./middleware/db.ts";
+import { filesRoute } from "./routes/files.ts";
 import { health } from "./routes/health.ts";
 import { ingest } from "./routes/ingest.ts";
+import { issuesRoute } from "./routes/issues.ts";
 import { me } from "./routes/me.ts";
+import { projectsRoute } from "./routes/projects.ts";
 import type { AppEnv } from "./types.ts";
 
 export const app = new Hono<AppEnv>();
@@ -29,3 +32,6 @@ app.route("/ingest", ingest);
 // Everything else under /api requires a valid session.
 app.use("/api/*", verifyAuth());
 app.route("/api/me", me);
+app.route("/api/projects", projectsRoute);
+app.route("/api/issues", issuesRoute);
+app.route("/api/files", filesRoute);

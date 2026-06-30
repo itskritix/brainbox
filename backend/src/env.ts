@@ -22,6 +22,9 @@ export const env = {
   DASHBOARD_ORIGIN: process.env.DASHBOARD_ORIGIN ?? "http://localhost:5173",
   PORT: Number(process.env.PORT ?? 8787),
 
+  // Public base URL of this API — used to build local file URLs (STORAGE_DRIVER=local).
+  PUBLIC_API_URL: process.env.PUBLIC_API_URL ?? "http://localhost:8787",
+
   // Object storage. "local" writes to backend/.storage/ (dev); "r2" uses
   // Cloudflare R2. R2_* are only needed when STORAGE_DRIVER=r2.
   STORAGE_DRIVER: process.env.STORAGE_DRIVER ?? "local",
