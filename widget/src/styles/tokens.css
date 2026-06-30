@@ -1,0 +1,138 @@
+/* ============================================================
+   SEMANTIC TOKENS — intent over value (Resend design system)
+   Components should reach for these first. Each token is a
+   custom utility so `text-default` (gray-11) and `border-default`
+   (gray-3) can differ — impossible with a single --color-* key.
+
+   Most tokens reference Radix steps that already flip with the
+   theme, so they need no dark override. Only theme-ASYMMETRIC
+   roles (background, brand, on-brand, placeholder) are redefined
+   under .dark.
+   ============================================================ */
+
+:root {
+  /* surfaces */
+  --bg-background: #fdfdfd;
+  --bg-canvas: var(--gray-1);
+  --bg-subtle: var(--gray-1);
+  --bg-elevated: var(--gray-2);
+
+  /* text */
+  --text-emphasis: var(--gray-12);
+  --text-default: var(--gray-11);
+  --text-muted: var(--gray-8);
+  --text-placeholder: var(--gray-5);
+  --text-on-brand: #ffffff;
+
+  /* borders */
+  --border-default: var(--gray-3);
+  --border-subtle: var(--gray-2);
+  --border-interactive: var(--gray-a3);
+
+  /* interactive (gray) */
+  --bg-interactive: var(--gray-a2);
+  --bg-interactive-hover: var(--gray-a3);
+  --ring-focus: var(--gray-a3);
+
+  /* brand (primary button) */
+  --bg-brand: #000000;
+  --bg-brand-hover: var(--black-a11);
+  --ring-brand: var(--black-a4);
+
+  /* error (red) */
+  --bg-error: var(--red-a3);
+  --bg-error-hover: var(--red-a5);
+  --border-error: var(--red-a6);
+  --border-error-subtle: var(--red-a4);
+  --text-error: var(--red-a11);
+  --ring-error: var(--red-a7);
+
+  /* warning (amber) */
+  --bg-warning: var(--amber-a3);
+  --border-warning: var(--amber-a6);
+  --border-warning-subtle: var(--amber-a4);
+  --text-warning: var(--amber-a11);
+
+  /* success (green) */
+  --bg-success: var(--green-a3);
+  --border-success: var(--green-a6);
+  --border-success-subtle: var(--green-a4);
+  --text-success: var(--green-a11);
+
+  /* info (blue) */
+  --bg-info: var(--blue-a3);
+  --border-info-subtle: var(--blue-a4);
+  --text-info: var(--blue-a11);
+
+  /* link (blue) */
+  --text-link: var(--blue-a9);
+  --border-link: var(--blue-a9);
+  --ring-link: var(--blue-a7);
+}
+
+.dark {
+  --bg-background: #000000;
+  --text-placeholder: var(--gray-8);
+  --text-on-brand: #000000;
+  --bg-brand: #ffffff;
+  --bg-brand-hover: var(--gray-12);
+  --ring-brand: var(--gray-a4);
+}
+
+/* ---- surfaces ---- */
+@utility bg-background { background-color: var(--bg-background); }
+@utility bg-canvas { background-color: var(--bg-canvas); }
+@utility bg-subtle { background-color: var(--bg-subtle); }
+@utility bg-elevated { background-color: var(--bg-elevated); }
+
+/* ---- text ---- */
+@utility text-emphasis { color: var(--text-emphasis); }
+@utility text-default { color: var(--text-default); }
+@utility text-muted { color: var(--text-muted); }
+@utility text-placeholder { color: var(--text-placeholder); }
+@utility text-on-brand { color: var(--text-on-brand); }
+
+/* ---- borders ---- */
+@utility border-default { border-color: var(--border-default); }
+@utility border-subtle { border-color: var(--border-subtle); }
+@utility border-interactive { border-color: var(--border-interactive); }
+
+/* ---- interactive (gray) ---- */
+@utility bg-interactive { background-color: var(--bg-interactive); }
+@utility bg-interactive-hover { background-color: var(--bg-interactive-hover); }
+@utility ring-focus { --tw-ring-color: var(--ring-focus); }
+
+/* ---- brand ---- */
+@utility bg-brand { background-color: var(--bg-brand); }
+@utility bg-brand-hover { background-color: var(--bg-brand-hover); }
+@utility ring-brand { --tw-ring-color: var(--ring-brand); }
+
+/* ---- error ---- */
+@utility bg-error { background-color: var(--bg-error); }
+@utility bg-error-hover { background-color: var(--bg-error-hover); }
+@utility border-error { border-color: var(--border-error); }
+@utility border-error-subtle { border-color: var(--border-error-subtle); }
+@utility text-error { color: var(--text-error); }
+@utility ring-error { --tw-ring-color: var(--ring-error); }
+
+/* ---- warning ---- */
+@utility bg-warning { background-color: var(--bg-warning); }
+@utility border-warning { border-color: var(--border-warning); }
+@utility border-warning-subtle { border-color: var(--border-warning-subtle); }
+@utility text-warning { color: var(--text-warning); }
+
+/* ---- success ---- */
+@utility bg-success { background-color: var(--bg-success); }
+@utility border-success { border-color: var(--border-success); }
+@utility border-success-subtle { border-color: var(--border-success-subtle); }
+@utility text-success { color: var(--text-success); }
+
+/* ---- info ---- */
+@utility bg-info { background-color: var(--bg-info); }
+@utility border-info-subtle { border-color: var(--border-info-subtle); }
+@utility text-info { color: var(--text-info); }
+
+/* ---- link ---- */
+@utility text-link { color: var(--text-link); }
+@utility border-link { border-color: var(--border-link); }
+@utility ring-link { --tw-ring-color: var(--ring-link); }

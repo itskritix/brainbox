@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brainbox widget — dev harness</title>
+    <style>
+      body { font-family: ui-sans-serif, system-ui, sans-serif; margin: 0; padding: 48px; background: #0a0a0a; color: #e5e5e5; }
+      h1 { font-weight: 600; }
+      .card { max-width: 520px; padding: 24px; margin-top: 24px; border: 1px solid #262626; border-radius: 16px; background: #111; }
+      button.host { padding: 8px 16px; border-radius: 8px; border: 1px solid #333; background: #1a1a1a; color: #eee; }
+    </style>
+  </head>
+  <body>
+    <h1>Host app (dev harness)</h1>
+    <div class="card">
+      <p>This page stands in for a customer's SaaS. The Brainbox widget is mounted below.</p>
+      <button class="host" id="demo">A host UI element</button>
+    </div>
+    <script
+      type="module"
+      src="/src/embed.ts"
+      data-project="pk_dev0000000000000000000000"
+      data-endpoint="http://localhost:8787/ingest"
+    ></script>
+  </body>
+</html>
