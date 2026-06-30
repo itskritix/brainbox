@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel superseded runs on the same ref.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    # Postgres for the backend integration tests. Matches the suite's default
+    # test env (backend/test/env.ts): brainbox:brainbox@localhost:5432. The
+    # superuser `brainbox` can CREATE DATABASE, so global-setup makes brainbox_test.
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: brainbox
+          POSTGRES_PASSWORD: brainbox
+          POSTGRES_DB: brainbox
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U brainbox"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm -r lint
+
+      - run: pnpm -r typecheck
+
+      - run: pnpm -r test
+
+      - run: pnpm -r build
