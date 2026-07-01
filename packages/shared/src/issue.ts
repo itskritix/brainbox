@@ -22,6 +22,9 @@ export interface Issue {
   crop?: StoredFile;
   /** Present for screen-recording submissions (a webm video with mic audio). */
   video?: StoredFile & { mime: string };
+  /** Present for session-replay submissions: a gzipped rrweb event log,
+   *  replayed in the dashboard. No permission prompt, records only the app. */
+  session?: StoredFile;
   audio?: StoredFile & { mime: string };
   /** The highlighted area — only for screenshot submissions. */
   region?: Region;

@@ -5,6 +5,7 @@ export interface SubmitInput {
   payload: FeedbackPayload;
   screenshot?: Blob;
   video?: Blob;
+  session?: Blob;
   audio?: Blob;
 }
 
@@ -14,6 +15,7 @@ export async function submitFeedback({
   payload,
   screenshot,
   video,
+  session,
   audio,
 }: SubmitInput): Promise<string> {
   const fd = new FormData();
@@ -23,6 +25,10 @@ export async function submitFeedback({
     // Name the part by the real container so the server stores the right extension.
     const ext = video.type.includes("mp4") ? "mp4" : "webm";
     fd.append("video", video, `recording.${ext}`);
+  }
+  if (session) {
+    const name = session.type.includes("gzip") ? "session.json.gz" : "session.json";
+    fd.append("session", session, name);
   }
   if (audio) fd.append("audio", audio, "voice.webm");
 

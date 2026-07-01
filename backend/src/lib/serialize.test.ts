@@ -53,6 +53,7 @@ describe("toIssue", () => {
     cropKey: null,
     videoKey: null,
     videoMime: null,
+    sessionKey: null,
     audioKey: "p1/i1/a.webm",
     audioMime: "audio/webm",
     region,
@@ -84,6 +85,18 @@ describe("toIssue", () => {
   it("omits crop when there is no cropKey", async () => {
     const issue = await toIssue(base, storage);
     expect(issue.crop).toBeUndefined();
+  });
+
+  it("maps a session recording: session present with a signed url", async () => {
+    const issue = await toIssue(
+      { ...base, screenshotKey: null, region: null, sessionKey: "p1/i1/session.json.gz" },
+      storage,
+    );
+    expect(issue.screenshot).toBeUndefined();
+    expect(issue.session).toEqual({
+      key: "p1/i1/session.json.gz",
+      url: "https://signed/p1/i1/session.json.gz",
+    });
   });
 
   it("maps a recording: video present, screenshot/region absent", async () => {

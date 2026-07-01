@@ -6,12 +6,14 @@ import { posClass, type Position } from "../lib/position.ts";
 export function Composer({
   screenshotUrl,
   videoUrl,
+  sessionReady,
   position,
   onCancel,
   onSubmit,
 }: {
   screenshotUrl?: string;
   videoUrl?: string;
+  sessionReady?: boolean;
   position: Position;
   onCancel: () => void;
   onSubmit: (text: string, audio: Blob | null) => void;
@@ -42,6 +44,10 @@ export function Composer({
           alt="Captured screenshot"
           className="mb-3 max-h-40 w-full rounded-lg border border-default object-cover object-top"
         />
+      ) : sessionReady ? (
+        <p className="mb-3 rounded-lg border border-default bg-interactive p-3 text-xs text-default">
+          ✓ Session recorded — it will replay in the dashboard.
+        </p>
       ) : null}
 
       <textarea

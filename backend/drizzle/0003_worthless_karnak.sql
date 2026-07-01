@@ -1,0 +1,1 @@
+ALTER TABLE "issues" ADD COLUMN "session_key" text;

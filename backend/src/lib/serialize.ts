@@ -21,6 +21,9 @@ export async function toIssue(row: IssueRow, storage: Storage): Promise<Issue> {
         mime: row.videoMime ?? "video/webm",
       }
     : undefined;
+  const session = row.sessionKey
+    ? { key: row.sessionKey, url: await storage.presignGet(row.sessionKey) }
+    : undefined;
   const audio = row.audioKey
     ? {
         key: row.audioKey,
@@ -36,6 +39,7 @@ export async function toIssue(row: IssueRow, storage: Storage): Promise<Issue> {
     screenshot,
     crop,
     video,
+    session,
     audio,
     region: row.region ?? undefined,
     metadata: row.metadata,

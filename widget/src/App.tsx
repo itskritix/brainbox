@@ -4,7 +4,7 @@ import type { WidgetConfig } from "./lib/config.ts";
 import { captureMetadata } from "./lib/metadata.ts";
 import { cssPath, elementAt } from "./lib/selector.ts";
 import { captureScreenshot } from "./lib/capture.ts";
-import { canScreenRecord, startScreenRecording, type Recording } from "./lib/record.ts";
+import { canSessionRecord, startSessionRecording, type SessionRecording } from "./lib/session.ts";
 import { submitFeedback } from "./lib/submit.ts";
 import { Launcher } from "./components/Launcher.tsx";
 import { Chooser } from "./components/Chooser.tsx";
@@ -13,7 +13,7 @@ import { RecordOverlay } from "./components/RecordOverlay.tsx";
 import { Composer } from "./components/Composer.tsx";
 import { Result } from "./components/Result.tsx";
 
-const MAX_VIDEO_BYTES = 50 * 1024 * 1024;
+const MAX_SESSION_BYTES = 15 * 1024 * 1024;
 
 type Status =
   | "idle"
@@ -31,18 +31,13 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
   const [region, setRegion] = useState<Region | null>(null);
   const [shot, setShot] = useState<Blob | null>(null);
   const [shotUrl, setShotUrl] = useState("");
-  const [video, setVideo] = useState<Blob | null>(null);
-  const [videoUrl, setVideoUrl] = useState("");
+  const [session, setSession] = useState<Blob | null>(null);
   const [error, setError] = useState("");
   const [issueId, setIssueId] = useState("");
-  const recRef = useRef<Recording | null>(null);
+  const recRef = useRef<SessionRecording | null>(null);
 
   const reset = useCallback(() => {
     setShotUrl((u) => {
-      if (u) URL.revokeObjectURL(u);
-      return "";
-    });
-    setVideoUrl((u) => {
       if (u) URL.revokeObjectURL(u);
       return "";
     });
@@ -50,7 +45,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
     setStatus("idle");
     setRegion(null);
     setShot(null);
-    setVideo(null);
+    setSession(null);
     setError("");
     setIssueId("");
   }, []);
@@ -92,18 +87,12 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
     recRef.current = null;
     try {
       const blob = await rec.stop();
-      if (blob.size === 0) {
-        setError("The recording was empty");
+      if (blob.size > MAX_SESSION_BYTES) {
+        setError("Recording too large — try a shorter clip");
         setStatus("error");
         return;
       }
-      if (blob.size > MAX_VIDEO_BYTES) {
-        setError("Recording too large (max 50 MB) — try a shorter clip");
-        setStatus("error");
-        return;
-      }
-      setVideo(blob);
-      setVideoUrl(URL.createObjectURL(blob));
+      setSession(blob);
       setStatus("composing");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Recording failed");
@@ -111,19 +100,19 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
     }
   }, []);
 
-  const startRecord = useCallback(async () => {
+  // rrweb DOM recording — starts instantly, no permission prompt, captures only the app.
+  const startRecord = useCallback(() => {
     try {
-      recRef.current = await startScreenRecording(() => void finishRecording());
+      recRef.current = startSessionRecording(() => void finishRecording());
       setStatus("recording");
     } catch {
-      // user dismissed the browser's share picker, or permission was denied
       setStatus("choosing");
     }
   }, [finishRecording]);
 
   const onSubmit = useCallback(
     async (text: string, audio: Blob | null) => {
-      if (!shot && !video) return;
+      if (!shot && !session) return;
       setStatus("submitting");
       const payload: FeedbackPayload = {
         projectKey: config.projectKey as ProjectKey,
@@ -136,7 +125,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
           endpoint: config.endpoint,
           payload,
           screenshot: shot ?? undefined,
-          video: video ?? undefined,
+          session: session ?? undefined,
           audio: audio ?? undefined,
         });
         setIssueId(id);
@@ -146,7 +135,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
         setStatus("error");
       }
     },
-    [shot, video, region, config],
+    [shot, session, region, config],
   );
 
   return (
@@ -157,9 +146,9 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
       {status === "choosing" && (
         <Chooser
           position={config.position}
-          canRecord={canScreenRecord()}
+          canRecord={canSessionRecord()}
           onScreenshot={() => setStatus("selecting")}
-          onRecord={() => void startRecord()}
+          onRecord={startRecord}
           onCancel={reset}
         />
       )}
@@ -167,10 +156,10 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
       {status === "recording" && (
         <RecordOverlay position={config.position} onStop={() => void finishRecording()} />
       )}
-      {status === "composing" && (shotUrl || videoUrl) && (
+      {status === "composing" && (shotUrl || session) && (
         <Composer
           screenshotUrl={shotUrl || undefined}
-          videoUrl={videoUrl || undefined}
+          sessionReady={!!session}
           position={config.position}
           onCancel={reset}
           onSubmit={onSubmit}

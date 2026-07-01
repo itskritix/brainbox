@@ -30,6 +30,8 @@ export const issues = pgTable("issues", {
   // Screen recording (webm video with mic audio).
   videoKey: text("video_key"),
   videoMime: text("video_mime"),
+  // Session replay: gzipped rrweb event log (prompt-free DOM recording).
+  sessionKey: text("session_key"),
   audioKey: text("audio_key"),
   audioMime: text("audio_mime"),
   region: jsonb("region").$type<Region>(),
