@@ -18,6 +18,9 @@ const MIME: Record<string, string> = {
   mp3: "audio/mpeg",
   ogg: "audio/ogg",
   wav: "audio/wav",
+  mp4: "video/mp4",
+  json: "application/json",
+  gz: "application/gzip",
 };
 
 export const filesRoute = new Hono<AppEnv>().get("/*", async (c) => {

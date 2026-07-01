@@ -1,9 +1,82 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ExternalLink, X, ZoomIn } from "lucide-react";
 import type { Issue } from "@brainbox/shared";
+import "rrweb-player/dist/style.css";
 
 import { api } from "../lib/api";
+
+// Minimal construct type for the (Svelte) rrweb-player default export.
+type RRWebPlayerCtor = new (opts: {
+  target: HTMLElement;
+  props: {
+    events: unknown[];
+    width?: number;
+    height?: number;
+    autoPlay?: boolean;
+    showController?: boolean;
+  };
+}) => { $destroy?: () => void };
+
+function SessionReplay({ url, vw, vh }: { url: string; vw: number; vh: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let destroy: (() => void) | undefined;
+    let cancelled = false;
+    const el = ref.current;
+    if (!el) return;
+
+    (async () => {
+      try {
+        const res = await fetch(url, { credentials: "include" });
+        if (!res.ok) throw new Error(`Session fetch failed (${res.status})`);
+        const buf = await res.arrayBuffer();
+        let text: string;
+        if (url.endsWith(".gz") && typeof DecompressionStream !== "undefined") {
+          const ds = new Blob([buf]).stream().pipeThrough(new DecompressionStream("gzip"));
+          text = await new Response(ds).text();
+        } else {
+          text = new TextDecoder().decode(buf);
+        }
+        const parsed = JSON.parse(text) as { events?: unknown[] };
+        const events = parsed.events ?? [];
+        if (cancelled || events.length < 2) {
+          if (events.length < 2) setError("Recording too short to replay");
+          return;
+        }
+        const RRWebPlayer = (await import("rrweb-player")).default as unknown as RRWebPlayerCtor;
+        const width = el.clientWidth || 640;
+        const height = Math.max(240, Math.round(width * (vh / Math.max(vw, 1))));
+        const player = new RRWebPlayer({
+          target: el,
+          props: { events, width, height, autoPlay: false, showController: true },
+        });
+        destroy = () => player.$destroy?.();
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : "Could not load recording");
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      destroy?.();
+      if (el) el.innerHTML = "";
+    };
+  }, [url, vw, vh]);
+
+  return (
+    <figure className="space-y-2">
+      <figcaption className="px-1 text-xs font-medium text-muted">Session recording</figcaption>
+      {error ? (
+        <p className="rounded-lg border border-default bg-elevated p-3 text-xs text-error">{error}</p>
+      ) : (
+        <div ref={ref} className="overflow-hidden rounded-2xl border border-default" />
+      )}
+    </figure>
+  );
+}
 
 function Meta({ label, value }: { label: string; value: string }) {
   return (
@@ -107,6 +180,9 @@ export function IssueDetail() {
 
       <main className="mx-auto grid max-w-6xl gap-8 px-6 py-8 md:grid-cols-[minmax(0,1.6fr)_1fr]">
         <div className="space-y-6">
+          {issue.session?.url && (
+            <SessionReplay url={issue.session.url} vw={m.viewport.width} vh={m.viewport.height} />
+          )}
           {issue.video?.url && (
             <figure className="space-y-2">
               <figcaption className="px-1 text-xs font-medium text-muted">Screen recording</figcaption>

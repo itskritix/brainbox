@@ -54,6 +54,7 @@ export function ProjectIssues() {
                   </p>
                   <p className="mt-1 font-mono text-xs text-muted">
                     {new Date(issue.createdAt).toLocaleString()}
+                    {issue.session ? " · ▶ recording" : ""}
                     {issue.video ? " · 🎥 recording" : ""}
                     {issue.audio ? " · 🎙 audio" : ""}
                   </p>

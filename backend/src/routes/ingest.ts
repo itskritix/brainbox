@@ -89,8 +89,15 @@ ingest.post("/", async (c) => {
     }
   }
 
-  if (!screenshot && !video) {
-    return c.json({ error: "Missing screenshot or video" }, 400);
+  // Session replay: a gzipped rrweb event log (application/gzip or application/json).
+  const sessionField = body["session"];
+  const session = sessionField instanceof File ? sessionField : undefined;
+  if (session && session.size > env.MAX_SESSION_BYTES) {
+    return c.json({ error: "session too large" }, 413);
+  }
+
+  if (!screenshot && !video && !session) {
+    return c.json({ error: "Missing screenshot, video or session" }, 400);
   }
 
   // --- audio (optional) ---
@@ -139,6 +146,13 @@ ingest.post("/", async (c) => {
     await storage.put(videoKey, new Uint8Array(await video.arrayBuffer()), video.type);
   }
 
+  let sessionKey: string | null = null;
+  if (session) {
+    const gz = session.type.includes("gzip");
+    sessionKey = `${project.id}/${issueId}/session.json${gz ? ".gz" : ""}`;
+    await storage.put(sessionKey, new Uint8Array(await session.arrayBuffer()), session.type);
+  }
+
   let audioKey: string | null = null;
   let audioMime: string | null = null;
   if (audio) {
@@ -160,6 +174,7 @@ ingest.post("/", async (c) => {
     cropKey,
     videoKey,
     videoMime,
+    sessionKey,
     audioKey,
     audioMime,
     region: feedback.region ?? null,

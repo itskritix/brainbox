@@ -14,6 +14,7 @@
   "dependencies": {
     "@brainbox/shared": "workspace:*",
     "@radix-ui/colors": "^3.0.0",
+    "@rrweb/types": "^2.1.0",
     "@tailwindcss/vite": "^4.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -21,9 +22,9 @@
     "modern-screenshot": "^4.6.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "rrweb": "^2.1.0",
     "tailwind-merge": "^3.6.0",
-    "tailwindcss": "^4.3.0",
-    "webm-fix-duration": "^1.0.1"
+    "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
