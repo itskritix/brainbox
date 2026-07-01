@@ -23,6 +23,8 @@ export const issues = pgTable("issues", {
     .defaultNow(),
   text: text("text"),
   screenshotKey: text("screenshot_key").notNull(),
+  // Auto-generated crop of the highlighted region (null if cropping failed).
+  cropKey: text("crop_key"),
   audioKey: text("audio_key"),
   audioMime: text("audio_mime"),
   region: jsonb("region").$type<Region>().notNull(),

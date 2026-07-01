@@ -16,6 +16,9 @@ export interface Issue {
   createdAt: string;
   text?: string;
   screenshot: StoredFile;
+  /** Auto-generated close-up: the highlighted `region` cropped out of the
+   *  screenshot server-side. Absent on older issues or if cropping failed. */
+  crop?: StoredFile;
   audio?: StoredFile & { mime: string };
   region: Region;
   metadata: CapturedMetadata;

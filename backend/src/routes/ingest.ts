@@ -5,6 +5,7 @@ import { cors } from "hono/cors";
 import { db } from "../db/client.ts";
 import { issues, projects } from "../db/schema/index.ts";
 import { env } from "../env.ts";
+import { cropRegion } from "../lib/crop.ts";
 import { getStorage } from "../storage/index.ts";
 import { feedbackSchema } from "../validation/feedback.ts";
 
@@ -88,12 +89,21 @@ ingest.post("/", async (c) => {
   const issueId = crypto.randomUUID();
   const storage = getStorage();
 
+  const screenshotBytes = new Uint8Array(await screenshot.arrayBuffer());
   const screenshotKey = `${project.id}/${issueId}/screenshot.png`;
-  await storage.put(
-    screenshotKey,
-    new Uint8Array(await screenshot.arrayBuffer()),
-    screenshot.type,
-  );
+  await storage.put(screenshotKey, screenshotBytes, screenshot.type);
+
+  // Auto-crop the highlighted region into a second image (best-effort).
+  let cropKey: string | null = null;
+  try {
+    const cropBytes = await cropRegion(screenshotBytes, feedback.region);
+    if (cropBytes) {
+      cropKey = `${project.id}/${issueId}/crop.png`;
+      await storage.put(cropKey, cropBytes, "image/png");
+    }
+  } catch (err) {
+    console.error("[ingest] region crop failed:", err);
+  }
 
   let audioKey: string | null = null;
   let audioMime: string | null = null;
@@ -113,6 +123,7 @@ ingest.post("/", async (c) => {
     projectId: project.id,
     text: feedback.text ?? null,
     screenshotKey,
+    cropKey,
     audioKey,
     audioMime,
     region: feedback.region,
