@@ -5,11 +5,13 @@ import { posClass, type Position } from "../lib/position.ts";
 
 export function Composer({
   screenshotUrl,
+  videoUrl,
   position,
   onCancel,
   onSubmit,
 }: {
-  screenshotUrl: string;
+  screenshotUrl?: string;
+  videoUrl?: string;
   position: Position;
   onCancel: () => void;
   onSubmit: (text: string, audio: Blob | null) => void;
@@ -28,11 +30,19 @@ export function Composer({
         </button>
       </div>
 
-      <img
-        src={screenshotUrl}
-        alt="Captured screenshot"
-        className="mb-3 max-h-40 w-full rounded-lg border border-default object-cover object-top"
-      />
+      {videoUrl ? (
+        <video
+          controls
+          src={videoUrl}
+          className="mb-3 max-h-48 w-full rounded-lg border border-default"
+        />
+      ) : screenshotUrl ? (
+        <img
+          src={screenshotUrl}
+          alt="Captured screenshot"
+          className="mb-3 max-h-40 w-full rounded-lg border border-default object-cover object-top"
+        />
+      ) : null}
 
       <textarea
         value={text}
@@ -42,7 +52,8 @@ export function Composer({
         className="mb-3 h-20 w-full resize-none rounded-lg border border-default bg-background p-2 text-sm text-default outline-none placeholder:text-placeholder"
       />
 
-      <AudioRecorder onChange={setAudio} />
+      {/* Recordings already carry mic audio; the separate voice note is screenshot-only. */}
+      {!videoUrl && <AudioRecorder onChange={setAudio} />}
 
       <button
         onClick={() => onSubmit(text, audio)}

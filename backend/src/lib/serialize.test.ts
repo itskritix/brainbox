@@ -51,6 +51,8 @@ describe("toIssue", () => {
     text: "hi",
     screenshotKey: "p1/i1/s.png",
     cropKey: null,
+    videoKey: null,
+    videoMime: null,
     audioKey: "p1/i1/a.webm",
     audioMime: "audio/webm",
     region,
@@ -82,6 +84,20 @@ describe("toIssue", () => {
   it("omits crop when there is no cropKey", async () => {
     const issue = await toIssue(base, storage);
     expect(issue.crop).toBeUndefined();
+  });
+
+  it("maps a recording: video present, screenshot/region absent", async () => {
+    const issue = await toIssue(
+      { ...base, screenshotKey: null, region: null, videoKey: "p1/i1/rec.webm", videoMime: "video/webm" },
+      storage,
+    );
+    expect(issue.screenshot).toBeUndefined();
+    expect(issue.region).toBeUndefined();
+    expect(issue.video).toEqual({
+      key: "p1/i1/rec.webm",
+      url: "https://signed/p1/i1/rec.webm",
+      mime: "video/webm",
+    });
   });
 
   it("maps null text to undefined", async () => {

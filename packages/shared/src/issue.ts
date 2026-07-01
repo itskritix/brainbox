@@ -15,11 +15,15 @@ export interface Issue {
   projectId: string;
   createdAt: string;
   text?: string;
-  screenshot: StoredFile;
+  /** Present for screenshot submissions (absent for screen recordings). */
+  screenshot?: StoredFile;
   /** Auto-generated close-up: the highlighted `region` cropped out of the
-   *  screenshot server-side. Absent on older issues or if cropping failed. */
+   *  screenshot server-side. Absent on recordings, older issues, or if cropping failed. */
   crop?: StoredFile;
+  /** Present for screen-recording submissions (a webm video with mic audio). */
+  video?: StoredFile & { mime: string };
   audio?: StoredFile & { mime: string };
-  region: Region;
+  /** The highlighted area — only for screenshot submissions. */
+  region?: Region;
   metadata: CapturedMetadata;
 }
