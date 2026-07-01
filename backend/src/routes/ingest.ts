@@ -17,6 +17,11 @@ const AUDIO_EXT: Record<string, string> = {
   "audio/wav": "wav",
 };
 
+const VIDEO_EXT: Record<string, string> = {
+  "video/webm": "webm",
+  "video/mp4": "mp4",
+};
+
 export const ingest = new Hono();
 
 // Public: called cross-origin from arbitrary customer sites, no cookies. The
@@ -61,16 +66,31 @@ ingest.post("/", async (c) => {
     return c.json({ error: "Origin not allowed" }, 403);
   }
 
-  // --- screenshot (required) ---
-  const screenshot = body["screenshot"];
-  if (!(screenshot instanceof File)) {
-    return c.json({ error: "Missing screenshot" }, 400);
+  // --- capture: a screenshot OR a screen recording (video) ---
+  const screenshotField = body["screenshot"];
+  const screenshot = screenshotField instanceof File ? screenshotField : undefined;
+  if (screenshot) {
+    if (!screenshot.type.startsWith("image/")) {
+      return c.json({ error: "screenshot must be an image" }, 400);
+    }
+    if (screenshot.size > env.MAX_SCREENSHOT_BYTES) {
+      return c.json({ error: "screenshot too large" }, 413);
+    }
   }
-  if (!screenshot.type.startsWith("image/")) {
-    return c.json({ error: "screenshot must be an image" }, 400);
+
+  const videoField = body["video"];
+  const video = videoField instanceof File ? videoField : undefined;
+  if (video) {
+    if (!video.type.startsWith("video/")) {
+      return c.json({ error: "video must be a video file" }, 400);
+    }
+    if (video.size > env.MAX_VIDEO_BYTES) {
+      return c.json({ error: "video too large" }, 413);
+    }
   }
-  if (screenshot.size > env.MAX_SCREENSHOT_BYTES) {
-    return c.json({ error: "screenshot too large" }, 413);
+
+  if (!screenshot && !video) {
+    return c.json({ error: "Missing screenshot or video" }, 400);
   }
 
   // --- audio (optional) ---
@@ -89,20 +109,34 @@ ingest.post("/", async (c) => {
   const issueId = crypto.randomUUID();
   const storage = getStorage();
 
-  const screenshotBytes = new Uint8Array(await screenshot.arrayBuffer());
-  const screenshotKey = `${project.id}/${issueId}/screenshot.png`;
-  await storage.put(screenshotKey, screenshotBytes, screenshot.type);
-
-  // Auto-crop the highlighted region into a second image (best-effort).
+  let screenshotKey: string | null = null;
   let cropKey: string | null = null;
-  try {
-    const cropBytes = await cropRegion(screenshotBytes, feedback.region);
-    if (cropBytes) {
-      cropKey = `${project.id}/${issueId}/crop.png`;
-      await storage.put(cropKey, cropBytes, "image/png");
+  if (screenshot) {
+    const screenshotBytes = new Uint8Array(await screenshot.arrayBuffer());
+    screenshotKey = `${project.id}/${issueId}/screenshot.png`;
+    await storage.put(screenshotKey, screenshotBytes, screenshot.type);
+
+    // Auto-crop the highlighted region into a second image (best-effort).
+    if (feedback.region) {
+      try {
+        const cropBytes = await cropRegion(screenshotBytes, feedback.region);
+        if (cropBytes) {
+          cropKey = `${project.id}/${issueId}/crop.png`;
+          await storage.put(cropKey, cropBytes, "image/png");
+        }
+      } catch (err) {
+        console.error("[ingest] region crop failed:", err);
+      }
     }
-  } catch (err) {
-    console.error("[ingest] region crop failed:", err);
+  }
+
+  let videoKey: string | null = null;
+  let videoMime: string | null = null;
+  if (video) {
+    const ext = VIDEO_EXT[video.type] ?? "webm";
+    videoKey = `${project.id}/${issueId}/recording.${ext}`;
+    videoMime = video.type;
+    await storage.put(videoKey, new Uint8Array(await video.arrayBuffer()), video.type);
   }
 
   let audioKey: string | null = null;
@@ -124,9 +158,11 @@ ingest.post("/", async (c) => {
     text: feedback.text ?? null,
     screenshotKey,
     cropKey,
+    videoKey,
+    videoMime,
     audioKey,
     audioMime,
-    region: feedback.region,
+    region: feedback.region ?? null,
     metadata: feedback.metadata,
   });
 

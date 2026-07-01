@@ -22,11 +22,16 @@ export const issues = pgTable("issues", {
     .notNull()
     .defaultNow(),
   text: text("text"),
-  screenshotKey: text("screenshot_key").notNull(),
+  // A submission is a screenshot OR a screen recording — so screenshot_key,
+  // crop_key and region are all nullable (recordings have none of them).
+  screenshotKey: text("screenshot_key"),
   // Auto-generated crop of the highlighted region (null if cropping failed).
   cropKey: text("crop_key"),
+  // Screen recording (webm video with mic audio).
+  videoKey: text("video_key"),
+  videoMime: text("video_mime"),
   audioKey: text("audio_key"),
   audioMime: text("audio_mime"),
-  region: jsonb("region").$type<Region>().notNull(),
+  region: jsonb("region").$type<Region>(),
   metadata: jsonb("metadata").$type<CapturedMetadata>().notNull(),
 });

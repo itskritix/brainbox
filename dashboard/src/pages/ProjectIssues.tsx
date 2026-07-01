@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { Video } from "lucide-react";
 import type { Issue, Project } from "@brainbox/shared";
 
 import { api } from "../lib/api";
@@ -36,17 +37,24 @@ export function ProjectIssues() {
                 to={`/issues/${issue.id}`}
                 className="border-sheen flex gap-4 rounded-2xl bg-elevated p-4 hover:bg-interactive-hover"
               >
-                <img
-                  src={issue.screenshot.url}
-                  alt=""
-                  className="h-16 w-24 shrink-0 rounded-lg border border-default object-cover"
-                />
+                {issue.crop?.url ?? issue.screenshot?.url ? (
+                  <img
+                    src={issue.crop?.url ?? issue.screenshot?.url}
+                    alt=""
+                    className="h-16 w-24 shrink-0 rounded-lg border border-default object-cover"
+                  />
+                ) : (
+                  <div className="flex h-16 w-24 shrink-0 items-center justify-center rounded-lg border border-default bg-subtle text-muted">
+                    <Video className="h-5 w-5" />
+                  </div>
+                )}
                 <div className="min-w-0">
                   <p className="truncate text-sm text-emphasis">
                     {issue.text || issue.metadata.url}
                   </p>
                   <p className="mt-1 font-mono text-xs text-muted">
                     {new Date(issue.createdAt).toLocaleString()}
+                    {issue.video ? " · 🎥 recording" : ""}
                     {issue.audio ? " · 🎙 audio" : ""}
                   </p>
                 </div>

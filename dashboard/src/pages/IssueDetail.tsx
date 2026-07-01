@@ -107,10 +107,20 @@ export function IssueDetail() {
 
       <main className="mx-auto grid max-w-6xl gap-8 px-6 py-8 md:grid-cols-[minmax(0,1.6fr)_1fr]">
         <div className="space-y-6">
+          {issue.video?.url && (
+            <figure className="space-y-2">
+              <figcaption className="px-1 text-xs font-medium text-muted">Screen recording</figcaption>
+              <video
+                controls
+                src={issue.video.url}
+                className="w-full rounded-2xl border border-default"
+              />
+            </figure>
+          )}
           {issue.crop?.url && (
             <Shot label="Highlighted area" url={issue.crop.url} onZoom={setZoomUrl} />
           )}
-          {issue.screenshot.url && (
+          {issue.screenshot?.url && (
             <Shot label="Full screenshot" url={issue.screenshot.url} onZoom={setZoomUrl} />
           )}
           {issue.text && (

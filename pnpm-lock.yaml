@@ -298,6 +298,9 @@ importers:
       tailwindcss:
         specifier: ^4.3.0
         version: 4.3.1
+      webm-fix-duration:
+        specifier: ^1.0.1
+        version: 1.0.1
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
@@ -3134,6 +3137,9 @@ packages:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
     engines: {node: '>=12'}
 
+  webm-fix-duration@1.0.1:
+    resolution: {integrity: sha512-KaL2yq5BQ1ngRlWVpwQ0bI8INW3ZMzrbPfz8L50GvZHhReCeG5+zKqzk4BcpK6vEdMRHSxoNHn/ixiDqVdKZTw==}
+
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
@@ -5650,6 +5656,8 @@ snapshots:
   webdriver-bidi-protocol@0.4.2: {}
 
   webidl-conversions@7.0.0: {}
+
+  webm-fix-duration@1.0.1: {}
 
   whatwg-encoding@3.1.1:
     dependencies:

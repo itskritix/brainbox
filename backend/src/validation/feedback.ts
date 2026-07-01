@@ -28,7 +28,8 @@ export const feedbackSchema = z.object({
   projectKey: z.custom<`pk_${string}`>(
     (v) => typeof v === "string" && v.startsWith("pk_"),
   ),
-  region: regionSchema,
+  // Only present for screenshot submissions (recordings have no region).
+  region: regionSchema.optional(),
   text: z.string().max(10_000).optional(),
   metadata: metadataSchema,
 });

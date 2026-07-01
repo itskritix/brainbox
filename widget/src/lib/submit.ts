@@ -3,7 +3,8 @@ import type { FeedbackPayload } from "@brainbox/shared";
 export interface SubmitInput {
   endpoint: string;
   payload: FeedbackPayload;
-  screenshot: Blob;
+  screenshot?: Blob;
+  video?: Blob;
   audio?: Blob;
 }
 
@@ -12,11 +13,17 @@ export async function submitFeedback({
   endpoint,
   payload,
   screenshot,
+  video,
   audio,
 }: SubmitInput): Promise<string> {
   const fd = new FormData();
   fd.append("json", JSON.stringify(payload));
-  fd.append("screenshot", screenshot, "screenshot.png");
+  if (screenshot) fd.append("screenshot", screenshot, "screenshot.png");
+  if (video) {
+    // Name the part by the real container so the server stores the right extension.
+    const ext = video.type.includes("mp4") ? "mp4" : "webm";
+    fd.append("video", video, `recording.${ext}`);
+  }
   if (audio) fd.append("audio", audio, "voice.webm");
 
   const res = await fetch(endpoint, { method: "POST", body: fd, mode: "cors" });

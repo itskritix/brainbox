@@ -46,4 +46,8 @@ describe("feedbackSchema", () => {
   it("rejects a malformed region", () => {
     expect(feedbackSchema.safeParse({ ...valid, region: { x: 0 } }).success).toBe(false);
   });
+
+  it("accepts a payload with no region (screen recording)", () => {
+    expect(feedbackSchema.safeParse({ ...valid, region: undefined }).success).toBe(true);
+  });
 });

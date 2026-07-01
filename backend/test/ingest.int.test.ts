@@ -60,7 +60,7 @@ describe("POST /ingest", () => {
 
     const storage = getStorage();
     expect(storage).toBeInstanceOf(LocalStorage);
-    const bytes = await (storage as LocalStorage).read(row.screenshotKey);
+    const bytes = await (storage as LocalStorage).read(row.screenshotKey ?? "");
     expect([...bytes.slice(0, 4)]).toEqual([0x89, 0x50, 0x4e, 0x47]);
   });
 
