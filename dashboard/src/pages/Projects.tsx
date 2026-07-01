@@ -8,7 +8,7 @@ import { api } from "../lib/api";
 import { API_URL } from "../lib/authConfig";
 
 function Snippet({ projectKey }: { projectKey: string }) {
-  const snippet = `<script src="https://cdn.brainbox.io/widget.js" data-project="${projectKey}" data-endpoint="${API_URL}/ingest"></script>`;
+  const snippet = `<script src="https://app.brainbox.sh/widget.js" data-project="${projectKey}" data-endpoint="${API_URL}/ingest"></script>`;
   return (
     <code className="mt-2 block overflow-x-auto rounded-lg bg-subtle p-3 font-mono text-xs text-muted">
       {snippet}
