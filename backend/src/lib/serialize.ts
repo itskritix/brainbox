@@ -12,6 +12,9 @@ export async function toIssue(row: IssueRow, storage: Storage): Promise<Issue> {
     key: row.screenshotKey,
     url: await storage.presignGet(row.screenshotKey),
   };
+  const crop = row.cropKey
+    ? { key: row.cropKey, url: await storage.presignGet(row.cropKey) }
+    : undefined;
   const audio = row.audioKey
     ? {
         key: row.audioKey,
@@ -25,6 +28,7 @@ export async function toIssue(row: IssueRow, storage: Storage): Promise<Issue> {
     createdAt: row.createdAt.toISOString(),
     text: row.text ?? undefined,
     screenshot,
+    crop,
     audio,
     region: row.region,
     metadata: row.metadata,

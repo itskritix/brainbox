@@ -14,6 +14,36 @@ function Meta({ label, value }: { label: string; value: string }) {
   );
 }
 
+function Shot({ label, url, onZoom }: { label: string; url: string; onZoom: (u: string) => void }) {
+  return (
+    <figure className="space-y-2">
+      <figcaption className="px-1 text-xs font-medium text-muted">{label}</figcaption>
+      <button
+        type="button"
+        onClick={() => onZoom(url)}
+        className="group relative block w-full overflow-hidden rounded-2xl border border-default"
+      >
+        <img
+          src={url}
+          alt={label}
+          className="w-full cursor-zoom-in transition group-hover:opacity-95"
+        />
+        <span className="pointer-events-none absolute right-3 top-3 flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-xs text-white opacity-0 backdrop-blur-sm transition group-hover:opacity-100">
+          <ZoomIn className="h-3.5 w-3.5" /> Click to enlarge
+        </span>
+      </button>
+      <a
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+        className="flex items-center gap-1 px-1 text-xs text-muted hover:text-link"
+      >
+        <ExternalLink className="h-3.5 w-3.5" /> Open original
+      </a>
+    </figure>
+  );
+}
+
 function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -32,7 +62,7 @@ function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
     >
       <img
         src={src}
-        alt="Screenshot, full size"
+        alt="Full size"
         className="max-h-full max-w-full rounded-lg border border-default object-contain shadow-3xl"
         onClick={(e) => e.stopPropagation()}
       />
@@ -51,7 +81,7 @@ export function IssueDetail() {
   const { id } = useParams<{ id: string }>();
   const [issue, setIssue] = useState<Issue | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [zoom, setZoom] = useState(false);
+  const [zoomUrl, setZoomUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -76,37 +106,13 @@ export function IssueDetail() {
       </header>
 
       <main className="mx-auto grid max-w-6xl gap-8 px-6 py-8 md:grid-cols-[minmax(0,1.6fr)_1fr]">
-        <div className="space-y-4">
-          <figure className="space-y-2">
-            <button
-              type="button"
-              onClick={() => setZoom(true)}
-              className="group relative block w-full overflow-hidden rounded-2xl border border-default"
-            >
-              <img
-                src={issue.screenshot.url}
-                alt="Screenshot"
-                className="w-full cursor-zoom-in transition group-hover:opacity-95"
-              />
-              <span className="pointer-events-none absolute right-3 top-3 flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-xs text-white opacity-0 backdrop-blur-sm transition group-hover:opacity-100">
-                <ZoomIn className="h-3.5 w-3.5" /> Click to enlarge
-              </span>
-            </button>
-            <div className="flex items-center gap-4 px-1 text-xs text-muted">
-              <button onClick={() => setZoom(true)} className="flex items-center gap-1 hover:text-emphasis">
-                <ZoomIn className="h-3.5 w-3.5" /> Enlarge
-              </button>
-              <a
-                href={issue.screenshot.url}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-1 hover:text-link"
-              >
-                <ExternalLink className="h-3.5 w-3.5" /> Open original
-              </a>
-            </div>
-          </figure>
-
+        <div className="space-y-6">
+          {issue.crop?.url && (
+            <Shot label="Highlighted area" url={issue.crop.url} onZoom={setZoomUrl} />
+          )}
+          {issue.screenshot.url && (
+            <Shot label="Full screenshot" url={issue.screenshot.url} onZoom={setZoomUrl} />
+          )}
           {issue.text && (
             <p className="rounded-2xl bg-elevated p-4 text-sm text-default">{issue.text}</p>
           )}
@@ -142,9 +148,7 @@ export function IssueDetail() {
         </aside>
       </main>
 
-      {zoom && issue.screenshot.url && (
-        <Lightbox src={issue.screenshot.url} onClose={() => setZoom(false)} />
-      )}
+      {zoomUrl && <Lightbox src={zoomUrl} onClose={() => setZoomUrl(null)} />}
     </div>
   );
 }

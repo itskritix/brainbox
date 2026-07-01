@@ -50,6 +50,7 @@ describe("toIssue", () => {
     createdAt: new Date("2024-01-01T00:00:00Z"),
     text: "hi",
     screenshotKey: "p1/i1/s.png",
+    cropKey: null,
     audioKey: "p1/i1/a.webm",
     audioMime: "audio/webm",
     region,
@@ -71,6 +72,16 @@ describe("toIssue", () => {
   it("omits audio when there is no audioKey", async () => {
     const issue = await toIssue({ ...base, audioKey: null, audioMime: null }, storage);
     expect(issue.audio).toBeUndefined();
+  });
+
+  it("includes the crop with a signed url when cropKey is set", async () => {
+    const issue = await toIssue({ ...base, cropKey: "p1/i1/crop.png" }, storage);
+    expect(issue.crop).toEqual({ key: "p1/i1/crop.png", url: "https://signed/p1/i1/crop.png" });
+  });
+
+  it("omits crop when there is no cropKey", async () => {
+    const issue = await toIssue(base, storage);
+    expect(issue.crop).toBeUndefined();
   });
 
   it("maps null text to undefined", async () => {
