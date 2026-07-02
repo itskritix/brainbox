@@ -47,6 +47,8 @@ function mount() {
 
   const host = document.createElement("div");
   host.id = "brainbox-widget";
+  // keep the widget's own UI out of rrweb session recordings (session.ts blockClass)
+  host.classList.add("rr-block");
   host.style.position = "relative";
   host.style.zIndex = "2147483647";
   document.body.appendChild(host);

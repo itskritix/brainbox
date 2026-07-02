@@ -8,6 +8,7 @@ export interface SessionCapture {
 
 export interface SessionRecording {
   stop: () => Promise<SessionCapture>;
+  micActive: () => boolean;
 }
 
 /** rrweb DOM recording works wherever MutationObserver exists (universal). */
@@ -59,6 +60,7 @@ export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): S
   const timer = setTimeout(fire, maxMs);
 
   return {
+    micActive: () => mic !== null,
     stop: async () => {
       clearTimeout(timer);
       settling = true;

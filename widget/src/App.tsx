@@ -5,6 +5,7 @@ import { captureMetadata } from "./lib/metadata.ts";
 import { cssPath, elementAt } from "./lib/selector.ts";
 import { captureScreenshot } from "./lib/capture.ts";
 import { canSessionRecord, startSessionRecording, type SessionRecording } from "./lib/session.ts";
+import { clearHighlights } from "./lib/annotate.ts";
 import { submitFeedback } from "./lib/submit.ts";
 import { Launcher } from "./components/Launcher.tsx";
 import { Chooser } from "./components/Chooser.tsx";
@@ -46,6 +47,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
     const rec = recRef.current;
     recRef.current = null;
     if (rec) void rec.stop().catch(() => {});
+    clearHighlights();
     setStatus("idle");
     setRegion(null);
     setShot(null);
@@ -90,6 +92,8 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
     const rec = recRef.current;
     if (!rec) return;
     recRef.current = null;
+    // clear before stop() so the removal lands inside the recording
+    clearHighlights();
     try {
       const { session: blob, audio } = await rec.stop();
       if (blob.size > MAX_SESSION_BYTES) {
@@ -160,7 +164,11 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
       )}
       {status === "selecting" && <RegionOverlay onComplete={onRegion} onCancel={reset} />}
       {status === "recording" && (
-        <RecordOverlay position={config.position} onStop={() => void finishRecording()} />
+        <RecordOverlay
+          position={config.position}
+          onStop={() => void finishRecording()}
+          micActive={() => recRef.current?.micActive() ?? false}
+        />
       )}
       {status === "composing" && (shotUrl || session) && (
         <Composer
