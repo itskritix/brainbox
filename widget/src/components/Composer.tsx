@@ -7,6 +7,7 @@ export function Composer({
   screenshotUrl,
   videoUrl,
   sessionReady,
+  voiceCaptured,
   position,
   onCancel,
   onSubmit,
@@ -14,6 +15,7 @@ export function Composer({
   screenshotUrl?: string;
   videoUrl?: string;
   sessionReady?: boolean;
+  voiceCaptured?: boolean;
   position: Position;
   onCancel: () => void;
   onSubmit: (text: string, audio: Blob | null) => void;
@@ -46,7 +48,8 @@ export function Composer({
         />
       ) : sessionReady ? (
         <p className="mb-3 rounded-lg border border-default bg-interactive p-3 text-xs text-default">
-          ✓ Session recorded — it will replay in the dashboard.
+          ✓ Session recorded{voiceCaptured ? " with voice" : ""} — it will replay in the
+          dashboard.
         </p>
       ) : null}
 
@@ -58,8 +61,8 @@ export function Composer({
         className="mb-3 h-20 w-full resize-none rounded-lg border border-default bg-background p-2 text-sm text-default outline-none placeholder:text-placeholder"
       />
 
-      {/* Recordings already carry mic audio; the separate voice note is screenshot-only. */}
-      {!videoUrl && <AudioRecorder onChange={setAudio} />}
+      {/* A recording that already captured voice doesn't need a separate note. */}
+      {!videoUrl && !voiceCaptured && <AudioRecorder onChange={setAudio} />}
 
       <button
         onClick={() => onSubmit(text, audio)}

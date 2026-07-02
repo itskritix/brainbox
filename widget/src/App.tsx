@@ -32,6 +32,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
   const [shot, setShot] = useState<Blob | null>(null);
   const [shotUrl, setShotUrl] = useState("");
   const [session, setSession] = useState<Blob | null>(null);
+  const [recAudio, setRecAudio] = useState<Blob | null>(null);
   const [error, setError] = useState("");
   const [issueId, setIssueId] = useState("");
   const recRef = useRef<SessionRecording | null>(null);
@@ -41,11 +42,15 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
       if (u) URL.revokeObjectURL(u);
       return "";
     });
+    // an abandoned recording must release the mic + DOM observers
+    const rec = recRef.current;
     recRef.current = null;
+    if (rec) void rec.stop().catch(() => {});
     setStatus("idle");
     setRegion(null);
     setShot(null);
     setSession(null);
+    setRecAudio(null);
     setError("");
     setIssueId("");
   }, []);
@@ -86,13 +91,14 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
     if (!rec) return;
     recRef.current = null;
     try {
-      const blob = await rec.stop();
+      const { session: blob, audio } = await rec.stop();
       if (blob.size > MAX_SESSION_BYTES) {
         setError("Recording too large — try a shorter clip");
         setStatus("error");
         return;
       }
       setSession(blob);
+      setRecAudio(audio);
       setStatus("composing");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Recording failed");
@@ -126,7 +132,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
           payload,
           screenshot: shot ?? undefined,
           session: session ?? undefined,
-          audio: audio ?? undefined,
+          audio: audio ?? recAudio ?? undefined,
         });
         setIssueId(id);
         setStatus("done");
@@ -135,7 +141,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
         setStatus("error");
       }
     },
-    [shot, session, region, config],
+    [shot, session, recAudio, region, config],
   );
 
   return (
@@ -160,6 +166,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
         <Composer
           screenshotUrl={shotUrl || undefined}
           sessionReady={!!session}
+          voiceCaptured={!!recAudio}
           position={config.position}
           onCancel={reset}
           onSubmit={onSubmit}
