@@ -1,32 +1,38 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ExternalLink, X, ZoomIn } from "lucide-react";
+import { ExternalLink, Pause, Play, X, ZoomIn } from "lucide-react";
 import type { Issue } from "@brainbox/shared";
-import "rrweb-player/dist/style.css";
+import type { Replayer } from "@rrweb/replay";
+import "@rrweb/replay/dist/style.css";
 
 import { api } from "../lib/api";
 
-// Minimal construct type for the (Svelte) rrweb-player default export.
-type RRWebPlayerCtor = new (opts: {
-  target: HTMLElement;
-  props: {
-    events: unknown[];
-    width?: number;
-    height?: number;
-    autoPlay?: boolean;
-    showController?: boolean;
-  };
-}) => { $destroy?: () => void };
+type ReplayerEvents = ConstructorParameters<typeof Replayer>[0];
 
+function fmtClock(ms: number): string {
+  const s = Math.max(0, Math.floor(ms / 1000));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+}
+
+// rrweb-player's shipped dist is broken (its Player never constructs a Replayer),
+// so we drive @rrweb/replay directly with our own play/seek controls.
 function SessionReplay({ url, vw, vh }: { url: string; vw: number; vh: number }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const replayerRef = useRef<Replayer | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const [time, setTime] = useState(0);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    let destroy: (() => void) | undefined;
     let cancelled = false;
-    const el = ref.current;
+    let cleanup: (() => void) | undefined;
+    const el = frameRef.current;
     if (!el) return;
+
+    // fit the frame to the recorded viewport's aspect ratio
+    const width = el.clientWidth || 640;
+    el.style.height = `${Math.min(560, Math.max(240, Math.round(width * (vh / Math.max(vw, 1)))))}px`;
 
     (async () => {
       try {
@@ -42,18 +48,42 @@ function SessionReplay({ url, vw, vh }: { url: string; vw: number; vh: number })
         }
         const parsed = JSON.parse(text) as { events?: unknown[] };
         const events = parsed.events ?? [];
-        if (cancelled || events.length < 2) {
-          if (events.length < 2) setError("Recording too short to replay");
+        if (cancelled) return;
+        if (events.length < 2) {
+          setError("Recording too short to replay");
           return;
         }
-        const RRWebPlayer = (await import("rrweb-player")).default as unknown as RRWebPlayerCtor;
-        const width = el.clientWidth || 640;
-        const height = Math.max(240, Math.round(width * (vh / Math.max(vw, 1))));
-        const player = new RRWebPlayer({
-          target: el,
-          props: { events, width, height, autoPlay: false, showController: true },
+
+        const { Replayer: ReplayerCtor } = await import("@rrweb/replay");
+        if (cancelled) return;
+        const replayer = new ReplayerCtor(events as ReplayerEvents, {
+          root: el,
+          skipInactive: true,
+          showWarning: false,
         });
-        destroy = () => player.$destroy?.();
+        replayerRef.current = replayer;
+        setTotal(replayer.getMetaData().totalTime);
+        replayer.pause(0); // render the first frame
+
+        const applyScale = () => {
+          const { wrapper, iframe } = replayer;
+          const fw = iframe.offsetWidth || vw;
+          const fh = iframe.offsetHeight || vh;
+          const scale = Math.min(
+            el.clientWidth / Math.max(fw, 1),
+            el.clientHeight / Math.max(fh, 1),
+          );
+          wrapper.style.position = "absolute";
+          wrapper.style.left = "50%";
+          wrapper.style.top = "50%";
+          wrapper.style.transformOrigin = "0 0";
+          wrapper.style.transform = `scale(${scale}) translate(-50%, -50%)`;
+        };
+        applyScale();
+        replayer.on("resize", applyScale);
+        replayer.on("finish", () => setPlaying(false));
+        window.addEventListener("resize", applyScale);
+        cleanup = () => window.removeEventListener("resize", applyScale);
       } catch (e) {
         if (!cancelled) setError(e instanceof Error ? e.message : "Could not load recording");
       }
@@ -61,10 +91,55 @@ function SessionReplay({ url, vw, vh }: { url: string; vw: number; vh: number })
 
     return () => {
       cancelled = true;
-      destroy?.();
-      if (el) el.innerHTML = "";
+      cleanup?.();
+      try {
+        replayerRef.current?.pause();
+      } catch {
+        /* replayer may never have initialized */
+      }
+      replayerRef.current = null;
+      el.innerHTML = "";
+      setPlaying(false);
+      setTime(0);
     };
   }, [url, vw, vh]);
+
+  // progress clock while playing
+  useEffect(() => {
+    if (!playing) return;
+    let raf = 0;
+    const tick = () => {
+      const r = replayerRef.current;
+      if (r) setTime(Math.min(r.getCurrentTime(), r.getMetaData().totalTime));
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [playing]);
+
+  const toggle = useCallback(() => {
+    const r = replayerRef.current;
+    if (!r) return;
+    if (playing) {
+      r.pause();
+      setTime(r.getCurrentTime());
+      setPlaying(false);
+    } else {
+      r.play(time >= total ? 0 : time);
+      setPlaying(true);
+    }
+  }, [playing, time, total]);
+
+  const seek = useCallback(
+    (ms: number) => {
+      const r = replayerRef.current;
+      if (!r) return;
+      setTime(ms);
+      if (playing) r.play(ms);
+      else r.pause(ms);
+    },
+    [playing],
+  );
 
   return (
     <figure className="space-y-2">
@@ -72,7 +147,30 @@ function SessionReplay({ url, vw, vh }: { url: string; vw: number; vh: number })
       {error ? (
         <p className="rounded-lg border border-default bg-elevated p-3 text-xs text-error">{error}</p>
       ) : (
-        <div ref={ref} className="overflow-hidden rounded-2xl border border-default" />
+        <div className="overflow-hidden rounded-2xl border border-default bg-elevated">
+          <div ref={frameRef} className="relative w-full overflow-hidden bg-subtle" />
+          <div className="flex items-center gap-3 border-t border-default px-3 py-2">
+            <button
+              type="button"
+              onClick={toggle}
+              aria-label={playing ? "Pause" : "Play"}
+              className="rounded-full bg-brand p-2 text-on-brand hover:bg-brand-hover"
+            >
+              {playing ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
+            </button>
+            <input
+              type="range"
+              min={0}
+              max={Math.max(total, 1)}
+              value={Math.min(time, total)}
+              onChange={(e) => seek(Number(e.target.value))}
+              className="w-full"
+            />
+            <span className="shrink-0 font-mono text-xs text-muted">
+              {fmtClock(time)} / {fmtClock(total)}
+            </span>
+          </div>
+        </div>
       )}
     </figure>
   );

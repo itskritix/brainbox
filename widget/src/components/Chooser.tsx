@@ -44,7 +44,7 @@ export function Chooser({
           <Video className="h-5 w-5 shrink-0 text-emphasis" />
           <span>
             <span className="block text-sm font-medium text-emphasis">Record</span>
-            <span className="block text-xs text-muted">Capture your actions · no permission needed</span>
+            <span className="block text-xs text-muted">Capture your actions · voice optional</span>
           </span>
         </button>
       )}

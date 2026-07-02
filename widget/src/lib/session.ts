@@ -1,7 +1,13 @@
 import { record } from "rrweb";
+import { startRecording, type Recorder } from "./audio.ts";
+
+export interface SessionCapture {
+  session: Blob;
+  audio: Blob | null;
+}
 
 export interface SessionRecording {
-  stop: () => Promise<Blob>;
+  stop: () => Promise<SessionCapture>;
 }
 
 /** rrweb DOM recording works wherever MutationObserver exists (universal). */
@@ -9,9 +15,11 @@ export function canSessionRecord(): boolean {
   return typeof MutationObserver === "function";
 }
 
-/** Record the host app's DOM as an rrweb session — NO permission prompt, captures
- *  only this page. Private by default: input values are masked before anything
- *  leaves the browser; customers can add `.rr-block` / `.rr-mask` / `.rr-ignore`.
+/** Record the host app's DOM as an rrweb session — captures only this page.
+ *  Private by default: input values are masked before anything leaves the
+ *  browser; customers can add `.rr-block` / `.rr-mask` / `.rr-ignore`.
+ *  Voice narration via the mic is best-effort: the user may deny the prompt
+ *  (or dismiss it) and the DOM recording carries on without audio.
  *  `onAutoStop` fires at the max-duration cap so the caller finalizes via stop(). */
 export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): SessionRecording {
   const events: unknown[] = [];
@@ -30,6 +38,18 @@ export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): S
     collectFonts: false,
   });
 
+  let mic: Recorder | null = null;
+  let stopped = false;
+  const micReady = startRecording()
+    .then((r) => {
+      // permission granted after Stop was already pressed — release the mic
+      if (stopped) void r.stop();
+      else mic = r;
+    })
+    .catch(() => {
+      /* denied or no mic — session recording continues without voice */
+    });
+
   let settling = false;
   const fire = () => {
     if (settling) return;
@@ -42,8 +62,12 @@ export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): S
     stop: async () => {
       clearTimeout(timer);
       settling = true;
+      stopped = true;
       stopFn?.();
-      return gzipJson(JSON.stringify({ v: 1, events }));
+      // don't block the upload on a permission dialog the user never answered
+      await Promise.race([micReady, new Promise((r) => setTimeout(r, 150))]);
+      const audio = mic ? await mic.stop() : null;
+      return { session: await gzipJson(JSON.stringify({ v: 1, events })), audio };
     },
   };
 }
