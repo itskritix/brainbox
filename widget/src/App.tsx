@@ -3,7 +3,7 @@ import type { FeedbackPayload, ProjectKey, Region } from "@brainbox/shared";
 import type { WidgetConfig } from "./lib/config.ts";
 import { captureMetadata } from "./lib/metadata.ts";
 import { cssPath, elementAt } from "./lib/selector.ts";
-import { captureScreenshot } from "./lib/capture.ts";
+import { captureScreenshot, captureViewport } from "./lib/capture.ts";
 import { canSessionRecord, startSessionRecording, type SessionRecording } from "./lib/session.ts";
 import { clearHighlights } from "./lib/annotate.ts";
 import { submitFeedback } from "./lib/submit.ts";
@@ -103,12 +103,21 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
       }
       setSession(blob);
       setRecAudio(audio);
+      // last-frame thumbnail: shown in the composer and uploaded as the issue's
+      // screenshot so the dashboard list gets a real preview. Best-effort.
+      try {
+        const thumb = await captureViewport(hostEl);
+        setShot(thumb);
+        setShotUrl(URL.createObjectURL(thumb));
+      } catch {
+        /* composer falls back to the text note */
+      }
       setStatus("composing");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Recording failed");
       setStatus("error");
     }
-  }, []);
+  }, [hostEl]);
 
   // rrweb DOM recording — starts instantly, no permission prompt, captures only the app.
   const startRecord = useCallback(() => {

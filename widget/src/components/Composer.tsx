@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Send, X } from "lucide-react";
+import { Play, Send, X } from "lucide-react";
 import { AudioRecorder } from "./AudioRecorder.tsx";
 import { posClass, type Position } from "../lib/position.ts";
 
@@ -40,6 +40,22 @@ export function Composer({
           src={videoUrl}
           className="mb-3 max-h-48 w-full rounded-lg border border-default"
         />
+      ) : sessionReady && screenshotUrl ? (
+        <div className="relative mb-3 overflow-hidden rounded-lg border border-default">
+          <img
+            src={screenshotUrl}
+            alt="Recording preview"
+            className="max-h-40 w-full object-cover object-top"
+          />
+          <span className="absolute inset-0 flex items-center justify-center">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm">
+              <Play className="h-4 w-4 text-white" />
+            </span>
+          </span>
+          <span className="absolute bottom-1.5 left-1.5 rounded-full bg-black/60 px-2 py-0.5 text-[10px] text-white backdrop-blur-sm">
+            Recording{voiceCaptured ? " · voice" : ""} — replays in the dashboard
+          </span>
+        </div>
       ) : screenshotUrl ? (
         <img
           src={screenshotUrl}
