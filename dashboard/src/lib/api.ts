@@ -24,6 +24,8 @@ export const api = {
   createProject: (body: { name: string; allowedOrigins?: string[] }) =>
     req<Project>("/api/projects", { method: "POST", body: JSON.stringify(body) }),
   getProject: (id: string) => req<Project>(`/api/projects/${id}`),
+  updateProject: (id: string, body: { name?: string; allowedOrigins?: string[] }) =>
+    req<Project>(`/api/projects/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
   listIssues: (id: string) => req<Issue[]>(`/api/projects/${id}/issues`),
   getIssue: (id: string) => req<Issue>(`/api/issues/${id}`),
 };
