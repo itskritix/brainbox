@@ -53,7 +53,7 @@ describe("POST /ingest", () => {
     const body = (await res.json()) as { id: string };
     expect(body.id).toBeTruthy();
 
-    const [row] = await db.select().from(issues).where(eq(issues.id, body.id));
+    const row = (await db.select().from(issues).where(eq(issues.id, body.id)))[0]!;
     expect(row.projectId).toBe(project.id);
     expect(row.text).toBe("broken");
     expect(row.region).toEqual({ x: 1, y: 2, width: 3, height: 4 });

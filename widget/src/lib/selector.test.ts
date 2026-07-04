@@ -14,7 +14,7 @@ describe("cssPath", () => {
 
   it("disambiguates same-tag siblings with :nth-of-type", () => {
     document.body.innerHTML = `<ul><li>a</li><li>b</li></ul>`;
-    const second = document.querySelectorAll("li")[1];
+    const second = document.querySelectorAll("li")[1]!;
     expect(cssPath(second)).toContain("li:nth-of-type(2)");
   });
 

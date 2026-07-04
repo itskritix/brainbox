@@ -9,6 +9,7 @@
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
+    "verify": "pnpm -r lint && pnpm -r typecheck && pnpm -r test && pnpm -r build",
     "dev:marketing": "pnpm -F brainbox-landing dev"
   },
   "pnpm": {

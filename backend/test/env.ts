@@ -11,7 +11,7 @@ function fromEnvTest(): Record<string, string> {
     const out: Record<string, string> = {};
     for (const line of raw.split("\n")) {
       const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*?)\s*$/);
-      if (m) out[m[1]] = m[2].replace(/^["']|["']$/g, "");
+      if (m) out[m[1]!] = m[2]!.replace(/^["']|["']$/g, "");
     }
     return out;
   } catch {

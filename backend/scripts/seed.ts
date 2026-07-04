@@ -18,6 +18,7 @@ async function seed() {
       .values({ email: EMAIL, name: "Seed User" })
       .returning();
   }
+  if (!user) throw new Error("Failed to create seed user");
 
   let [project] = await db
     .select()
@@ -35,6 +36,7 @@ async function seed() {
       })
       .returning();
   }
+  if (!project) throw new Error("Failed to create seed project");
 
   console.log(
     `Seeded: project key=${project.key} id=${project.id} owner=${user.id}`,
