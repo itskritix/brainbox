@@ -7,7 +7,9 @@ import "./index.css";
 import "./lib/authConfig";
 import { router } from "./App";
 
-createRoot(document.getElementById("root")!).render(
+const root = document.getElementById("root");
+if (!root) throw new Error("Root element #root not found");
+createRoot(root).render(
   <StrictMode>
     <SessionProvider>
       <RouterProvider router={router} />

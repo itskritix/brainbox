@@ -12,7 +12,7 @@ const COOKIE_NAME = "authjs.session-token";
 export async function authCookie(userId: string): Promise<string> {
   const token = await encode({
     salt: COOKIE_NAME,
-    secret: testEnv.AUTH_SECRET,
+    secret: testEnv.AUTH_SECRET!,
     token: { sub: userId, name: "Test User", email: "test@local" },
   });
   return `${COOKIE_NAME}=${token}`;
@@ -22,7 +22,7 @@ export async function makeUser(
   email = `u-${Math.random().toString(36).slice(2)}@test.local`,
 ) {
   const [u] = await db.insert(users).values({ email, name: "Test" }).returning();
-  return u;
+  return u!;
 }
 
 export async function makeProject(ownerId: string, allowedOrigins: string[] = []) {
@@ -30,7 +30,7 @@ export async function makeProject(ownerId: string, allowedOrigins: string[] = []
     .insert(projects)
     .values({ ownerId, name: "Test Project", key: generateProjectKey(), allowedOrigins })
     .returning();
-  return p;
+  return p!;
 }
 
 export async function makeIssue(
@@ -56,5 +56,5 @@ export async function makeIssue(
       ...over,
     })
     .returning();
-  return i;
+  return i!;
 }

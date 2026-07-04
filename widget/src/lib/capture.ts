@@ -32,7 +32,8 @@ async function viewportCanvas(hostEl: HTMLElement): Promise<HTMLCanvasElement> {
 /** Screenshot the current viewport with the selected region outlined. */
 export async function captureScreenshot(region: Region, hostEl: HTMLElement): Promise<Blob> {
   const out = await viewportCanvas(hostEl);
-  const ctx = out.getContext("2d")!;
+  const ctx = out.getContext("2d");
+  if (!ctx) throw new Error("Canvas 2D context unavailable");
   ctx.strokeStyle = HIGHLIGHT;
   ctx.lineWidth = 3;
   ctx.strokeRect(region.x, region.y, region.width, region.height);

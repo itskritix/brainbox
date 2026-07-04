@@ -14,19 +14,20 @@ export function cssPath(el: Element | null): string | undefined {
   let node: Element | null = el;
 
   while (node && node.nodeType === 1 && parts.length < 5) {
-    let sel = node.nodeName.toLowerCase();
-    if (node.id) {
-      const id = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(node.id) : node.id;
+    const current: Element = node;
+    let sel = current.nodeName.toLowerCase();
+    if (current.id) {
+      const id = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(current.id) : current.id;
       parts.unshift(`${sel}#${id}`);
       break;
     }
-    const parent: HTMLElement | null = node.parentElement;
+    const parent: HTMLElement | null = current.parentElement;
     if (parent) {
       const siblings = Array.from(parent.children).filter(
-        (c) => c.nodeName === node!.nodeName,
+        (c) => c.nodeName === current.nodeName,
       );
       if (siblings.length > 1) {
-        sel += `:nth-of-type(${siblings.indexOf(node) + 1})`;
+        sel += `:nth-of-type(${siblings.indexOf(current) + 1})`;
       }
     }
     parts.unshift(sel);

@@ -59,6 +59,7 @@ export const projectsRoute = new Hono<AppEnv>()
         allowedOrigins: parsed.data.allowedOrigins ?? [],
       })
       .returning();
+    if (!row) return c.json({ error: "Failed to create project" }, 500);
     return c.json(toProject(row), 201);
   })
   .patch("/:id", async (c) => {
@@ -85,6 +86,7 @@ export const projectsRoute = new Hono<AppEnv>()
       })
       .where(eq(projects.id, existing.id))
       .returning();
+    if (!row) return c.json({ error: "Not found" }, 404);
     return c.json(toProject(row));
   })
   .get("/:id", async (c) => {

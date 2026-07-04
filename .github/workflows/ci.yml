@@ -45,10 +45,5 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm -r lint
-
-      - run: pnpm -r typecheck
-
-      - run: pnpm -r test
-
-      - run: pnpm -r build
+      # Same gate agents must pass locally: lint → typecheck → test → build.
+      - run: pnpm verify
