@@ -1,21 +1,29 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
+import { signOut, useSession } from "@hono/auth-js/react";
+import { ChevronRight, FolderPlus } from "lucide-react";
 import type { Project } from "@brainbox/shared";
 
+import { EmptyState } from "../components/EmptyState";
+import { Wordmark } from "../components/Wordmark";
 import { Button } from "../components/ui/button";
-import { Shell } from "../components/Shell";
+import { Input } from "../components/ui/input";
+import { Skeleton } from "../components/ui/skeleton";
 import { api } from "../lib/api";
 import { timeAgo } from "../lib/utils";
 
 export function Projects() {
+  const { data: session } = useSession();
   const [projects, setProjects] = useState<Project[] | null>(null);
   const [name, setName] = useState("");
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    api.listProjects().then(setProjects).catch((e: Error) => setError(e.message));
+    api
+      .listProjects()
+      .then(setProjects)
+      .catch((e: Error) => setError(e.message));
   }, []);
 
   async function create(e: React.FormEvent) {
@@ -35,54 +43,85 @@ export function Projects() {
   }
 
   return (
-    <Shell>
-      <h1 className="text-xl font-semibold tracking-tight text-emphasis">Projects</h1>
-      <p className="mt-1 text-sm text-muted">One project per site or app that runs the widget.</p>
-
-      <form onSubmit={create} className="mt-6 flex flex-col gap-2 sm:flex-row">
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="New project name"
-          className="flex-1 rounded-xl border border-interactive bg-interactive px-3 py-2 text-sm text-emphasis placeholder:text-placeholder outline-none focus-visible:ring-[3px] focus-visible:ring-focus"
-        />
-        <Button type="submit" disabled={creating || !name.trim()}>
-          {creating ? "Creating…" : "Create project"}
-        </Button>
-      </form>
-      {error && <p className="mt-3 text-sm text-error">{error}</p>}
-
-      <ul className="mt-8 space-y-3 pb-4">
-        {projects?.map((p) => (
-          <li key={p.id}>
-            <Link
-              to={`/projects/${p.id}`}
-              className="border-sheen flex items-center gap-4 rounded-2xl bg-elevated p-4 transition hover:bg-interactive-hover sm:p-5"
-            >
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-base font-medium text-emphasis">{p.name}</p>
-                <p className="mt-0.5 font-mono text-xs text-muted">
-                  created {timeAgo(p.createdAt)}
-                </p>
-              </div>
-              <span className="shrink-0 rounded-full border border-default px-3 py-1 text-xs text-default">
-                {p.issueCount ?? 0} {p.issueCount === 1 ? "report" : "reports"}
+    <div className="min-h-dvh bg-background">
+      <header className="border-b border-default">
+        <div className="mx-auto flex h-14 max-w-2xl items-center justify-between px-4 sm:px-6">
+          <Wordmark />
+          <div className="flex items-center gap-3">
+            {session?.user?.email && (
+              <span className="hidden font-mono text-xs text-muted sm:block">
+                {session.user.email}
               </span>
-              <ChevronRight className="h-4 w-4 shrink-0 text-muted" />
-            </Link>
-          </li>
-        ))}
-        {projects?.length === 0 && !error && (
-          <li className="border-sheen rounded-2xl bg-elevated p-10 text-center">
-            <p className="text-sm text-default">No projects yet.</p>
-            <p className="mt-1 text-sm text-muted">
-              Create one above, then grab the install snippet from its settings — feedback
-              lands on the project page.
-            </p>
-          </li>
-        )}
-        {projects === null && !error && <li className="text-sm text-muted">Loading…</li>}
-      </ul>
-    </Shell>
+            )}
+            <Button variant="ghost" size="sm" onClick={() => signOut()}>
+              Sign out
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
+        <h1 className="text-lg font-semibold tracking-tight text-emphasis">Projects</h1>
+        <p className="mt-1 text-sm text-muted">One per site or app that runs the widget.</p>
+
+        <form onSubmit={create} className="mt-6 flex flex-col gap-2 sm:flex-row">
+          <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Project name"
+          />
+          <Button type="submit" disabled={creating || !name.trim()}>
+            {creating ? "Creating…" : "Create project"}
+          </Button>
+        </form>
+        {error && <p className="mt-3 text-sm text-error">{error}</p>}
+
+        <div className="mt-8 pb-4">
+          {projects === null && !error && (
+            <div className="overflow-hidden rounded-xl border border-default">
+              {Array.from({ length: 3 }, (_, i) => (
+                <div key={i} className="border-b border-subtle px-4 py-4 last:border-0">
+                  <Skeleton className="h-4 w-1/3" />
+                  <Skeleton className="mt-2 h-3 w-1/4" />
+                </div>
+              ))}
+            </div>
+          )}
+
+          {projects && projects.length > 0 && (
+            <ul className="overflow-hidden rounded-xl border border-default">
+              {projects.map((p) => (
+                <li key={p.id} className="border-b border-subtle last:border-0">
+                  <Link
+                    to={`/projects/${p.id}`}
+                    className="flex items-center gap-4 px-4 py-3.5 transition hover:bg-interactive-hover"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium text-emphasis">{p.name}</p>
+                      <p className="mt-0.5 truncate font-mono text-[11px] text-muted">
+                        {p.key} · created {timeAgo(p.createdAt)}
+                      </p>
+                    </div>
+                    <span className="shrink-0 font-mono text-xs text-muted">
+                      {p.issueCount ?? 0} {p.issueCount === 1 ? "report" : "reports"}
+                    </span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-muted" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {projects?.length === 0 && !error && (
+            <EmptyState icon={<FolderPlus />} title="Create your first project" className="py-12">
+              <p className="mt-1 max-w-xs text-sm text-muted">
+                Name it after your app. You'll get an install snippet, and reports land in its
+                inbox.
+              </p>
+            </EmptyState>
+          )}
+        </div>
+      </main>
+    </div>
   );
 }
