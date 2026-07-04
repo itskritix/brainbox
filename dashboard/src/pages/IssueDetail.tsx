@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ExternalLink, Pause, Play, X, ZoomIn } from "lucide-react";
+import { ExternalLink, Pause, Play, Volume2, VolumeX, X, ZoomIn } from "lucide-react";
 import type { Issue } from "@brainbox/shared";
 import type { Replayer } from "@rrweb/replay";
 import "@rrweb/replay/dist/style.css";
 
 import { Shell } from "../components/Shell";
 import { api } from "../lib/api";
+import { parseSessionPayload } from "../lib/session";
 import { timeAgo } from "../lib/utils";
 
 type ReplayerEvents = ConstructorParameters<typeof Replayer>[0];
@@ -16,13 +17,47 @@ function fmtClock(ms: number): string {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 }
 
+// The mic starts `offsetMs` into the session (permission-prompt lag), so the
+// voice track's zero sits at replay time `offsetMs`. Called every frame while
+// playing: starts/stops the audio at its window edges and corrects drift.
+function syncVoice(a: HTMLAudioElement | null, replayMs: number, offsetMs: number): void {
+  if (!a) return;
+  const at = (replayMs - offsetMs) / 1000;
+  const dur = Number.isFinite(a.duration) ? a.duration : Infinity;
+  if (at >= 0 && at < dur) {
+    if (a.paused) {
+      a.currentTime = at;
+      void a.play().catch(() => {
+        /* autoplay blocked — replay continues silently */
+      });
+    } else if (Math.abs(a.currentTime - at) > 0.4) {
+      a.currentTime = at;
+    }
+  } else if (!a.paused) {
+    a.pause();
+  }
+}
+
 // rrweb-player's shipped dist is broken (its Player never constructs a Replayer),
 // so we drive @rrweb/replay directly with our own play/seek controls.
-function SessionReplay({ url, vw, vh }: { url: string; vw: number; vh: number }) {
+function SessionReplay({
+  url,
+  audioUrl,
+  vw,
+  vh,
+}: {
+  url: string;
+  audioUrl?: string;
+  vw: number;
+  vh: number;
+}) {
   const frameRef = useRef<HTMLDivElement>(null);
   const replayerRef = useRef<Replayer | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioOffsetRef = useRef(0);
   const [error, setError] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
+  const [muted, setMuted] = useState(false);
   const [time, setTime] = useState(0);
   const [total, setTotal] = useState(0);
 
@@ -48,8 +83,8 @@ function SessionReplay({ url, vw, vh }: { url: string; vw: number; vh: number })
         } else {
           text = new TextDecoder().decode(buf);
         }
-        const parsed = JSON.parse(text) as { events?: unknown[] };
-        const events = parsed.events ?? [];
+        const { events, audioOffsetMs } = parseSessionPayload(text);
+        audioOffsetRef.current = audioOffsetMs;
         if (cancelled) return;
         if (events.length < 2) {
           setError("Recording too short to replay");
@@ -60,7 +95,8 @@ function SessionReplay({ url, vw, vh }: { url: string; vw: number; vh: number })
         if (cancelled) return;
         const replayer = new ReplayerCtor(events as ReplayerEvents, {
           root: el,
-          skipInactive: true,
+          // fast-forwarding idle stretches would run ahead of the voice track
+          skipInactive: !audioUrl,
           showWarning: false,
         });
         replayerRef.current = replayer;
@@ -104,19 +140,27 @@ function SessionReplay({ url, vw, vh }: { url: string; vw: number; vh: number })
       setPlaying(false);
       setTime(0);
     };
-  }, [url, vw, vh]);
+  }, [url, audioUrl, vw, vh]);
 
-  // progress clock while playing
+  // progress clock while playing; keeps the voice track glued to the replay
   useEffect(() => {
     if (!playing) return;
+    const voice = audioRef.current;
     let raf = 0;
     const tick = () => {
       const r = replayerRef.current;
-      if (r) setTime(Math.min(r.getCurrentTime(), r.getMetaData().totalTime));
+      if (r) {
+        const t = Math.min(r.getCurrentTime(), r.getMetaData().totalTime);
+        setTime(t);
+        syncVoice(voice, t, audioOffsetRef.current);
+      }
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      voice?.pause();
+    };
   }, [playing]);
 
   const toggle = useCallback(() => {
@@ -171,6 +215,25 @@ function SessionReplay({ url, vw, vh }: { url: string; vw: number; vh: number })
             <span className="shrink-0 font-mono text-xs text-muted">
               {fmtClock(time)} / {fmtClock(total)}
             </span>
+            {audioUrl && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const next = !muted;
+                    setMuted(next);
+                    if (audioRef.current) audioRef.current.muted = next;
+                  }}
+                  aria-label={muted ? "Unmute voice" : "Mute voice"}
+                  className="shrink-0 rounded-full p-1.5 text-muted transition hover:text-emphasis"
+                >
+                  {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                </button>
+                <audio ref={audioRef} src={audioUrl} preload="auto" muted={muted}>
+                  <track kind="captions" />
+                </audio>
+              </>
+            )}
           </div>
         </div>
       )}
@@ -289,7 +352,12 @@ export function IssueDetail() {
       <div className="grid gap-8 md:grid-cols-[minmax(0,1.6fr)_1fr]">
         <div className="space-y-6">
           {issue.session?.url && (
-            <SessionReplay url={issue.session.url} vw={m.viewport.width} vh={m.viewport.height} />
+            <SessionReplay
+              url={issue.session.url}
+              audioUrl={issue.audio?.url}
+              vw={m.viewport.width}
+              vh={m.viewport.height}
+            />
           )}
           {issue.video?.url && (
             <figure className="space-y-2">
@@ -314,10 +382,13 @@ export function IssueDetail() {
           {issue.text && (
             <p className="rounded-2xl bg-elevated p-4 text-sm text-default">{issue.text}</p>
           )}
-          {issue.audio && (
-            <audio controls src={issue.audio.url} className="w-full">
-              <track kind="captions" />
-            </audio>
+          {issue.audio && !issue.session && (
+            <figure className="space-y-2">
+              <figcaption className="px-1 text-xs font-medium text-muted">Voice note</figcaption>
+              <audio controls src={issue.audio.url} className="w-full">
+                <track kind="captions" />
+              </audio>
+            </figure>
           )}
         </div>
 

@@ -24,6 +24,7 @@ export function canSessionRecord(): boolean {
  *  `onAutoStop` fires at the max-duration cap so the caller finalizes via stop(). */
 export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): SessionRecording {
   const events: unknown[] = [];
+  const startedAt = Date.now();
 
   const stopFn = record({
     emit(event) {
@@ -40,12 +41,16 @@ export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): S
   });
 
   let mic: Recorder | null = null;
+  let micStartedAt: number | null = null;
   let stopped = false;
   const micReady = startRecording()
     .then((r) => {
       // permission granted after Stop was already pressed — release the mic
       if (stopped) void r.stop();
-      else mic = r;
+      else {
+        mic = r;
+        micStartedAt = Date.now();
+      }
     })
     .catch(() => {
       /* denied or no mic — session recording continues without voice */
@@ -69,9 +74,22 @@ export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): S
       // don't block the upload on a permission dialog the user never answered
       await Promise.race([micReady, new Promise((r) => setTimeout(r, 150))]);
       const audio = mic ? await mic.stop() : null;
-      return { session: await gzipJson(JSON.stringify({ v: 1, events })), audio };
+      const offset = audio ? micOffsetMs(startedAt, micStartedAt) : null;
+      const payload =
+        offset === null ? { v: 1, events } : { v: 1, events, audioOffsetMs: offset };
+      return { session: await gzipJson(JSON.stringify(payload)), audio };
     },
   };
+}
+
+/** How far into the session the mic actually started (the permission prompt
+ *  delays it) — stored in the log so the dashboard can sync voice to replay. */
+export function micOffsetMs(
+  sessionStartedAt: number,
+  micStartedAt: number | null,
+): number | null {
+  if (micStartedAt === null) return null;
+  return Math.max(0, micStartedAt - sessionStartedAt);
 }
 
 /** Gzip the event log so the upload stays small (rrweb JSON compresses ~10x). */
