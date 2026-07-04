@@ -76,7 +76,7 @@ export function DomainsEditor({
             e.preventDefault();
             add();
           }}
-          className="flex items-center gap-1.5"
+          className="flex min-w-0 flex-1 items-center gap-1.5 sm:flex-none"
         >
           <input
             value={input}
@@ -86,7 +86,7 @@ export function DomainsEditor({
             }}
             placeholder="myapp.com"
             disabled={saving}
-            className="w-36 rounded-full border border-interactive bg-interactive px-3 py-1 font-mono text-xs text-emphasis placeholder:text-placeholder outline-none focus-visible:ring-[3px] focus-visible:ring-focus"
+            className="min-w-0 flex-1 rounded-full border border-interactive bg-interactive px-3 py-1 font-mono text-xs text-emphasis placeholder:text-placeholder outline-none focus-visible:ring-[3px] focus-visible:ring-focus sm:w-40 sm:flex-none"
           />
           <button
             type="submit"

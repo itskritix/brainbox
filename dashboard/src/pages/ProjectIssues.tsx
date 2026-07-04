@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Mic, Play, Video } from "lucide-react";
 import type { Issue, Project } from "@brainbox/shared";
 
+import { ProjectTabs } from "../components/ProjectTabs";
 import { Shell } from "../components/Shell";
 import { api } from "../lib/api";
 import { timeAgo } from "../lib/utils";
@@ -36,6 +37,7 @@ export function ProjectIssues() {
       <p className="mt-1 text-sm text-muted">
         {issues ? `${issues.length} ${issues.length === 1 ? "report" : "reports"}` : "Loading…"}
       </p>
+      {id && <ProjectTabs projectId={id} />}
 
       {error && <p className="mt-6 text-sm text-error">{error}</p>}
 
