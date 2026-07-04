@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { count, desc, eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { z } from "zod";
 
@@ -8,10 +8,25 @@ import { toIssue, toProject } from "../lib/serialize.ts";
 import { getStorage } from "../storage/index.ts";
 import type { AppEnv } from "../types.ts";
 
+// An origin as browsers send it: scheme + host (+ optional port), no path.
+const origin = z
+  .string()
+  .max(300)
+  .regex(/^https?:\/\/[a-z0-9.-]+(:\d+)?$/i, "must be an origin like https://app.example.com");
+
 const createSchema = z.object({
   name: z.string().min(1).max(100),
-  allowedOrigins: z.array(z.string()).optional(),
+  allowedOrigins: z.array(origin).max(20).optional(),
 });
+
+const updateSchema = z
+  .object({
+    name: z.string().min(1).max(100).optional(),
+    allowedOrigins: z.array(origin).max(20).optional(),
+  })
+  .refine((b) => b.name !== undefined || b.allowedOrigins !== undefined, {
+    message: "nothing to update",
+  });
 
 export const projectsRoute = new Hono<AppEnv>()
   .get("/", async (c) => {
@@ -19,11 +34,13 @@ export const projectsRoute = new Hono<AppEnv>()
     if (!uid) return c.json({ error: "Unauthorized" }, 401);
     const db = c.get("db");
     const rows = await db
-      .select()
+      .select({ project: projects, issueCount: count(issues.id) })
       .from(projects)
+      .leftJoin(issues, eq(issues.projectId, projects.id))
       .where(eq(projects.ownerId, uid))
+      .groupBy(projects.id)
       .orderBy(desc(projects.createdAt));
-    return c.json(rows.map(toProject));
+    return c.json(rows.map((r) => ({ ...toProject(r.project), issueCount: r.issueCount })));
   })
   .post("/", async (c) => {
     const uid = c.get("authUser").token?.sub;
@@ -43,6 +60,32 @@ export const projectsRoute = new Hono<AppEnv>()
       })
       .returning();
     return c.json(toProject(row), 201);
+  })
+  .patch("/:id", async (c) => {
+    const uid = c.get("authUser").token?.sub;
+    if (!uid) return c.json({ error: "Unauthorized" }, 401);
+    const parsed = updateSchema.safeParse(await c.req.json().catch(() => null));
+    if (!parsed.success) {
+      return c.json({ error: "Invalid body", issues: parsed.error.issues }, 400);
+    }
+    const db = c.get("db");
+    const [existing] = await db
+      .select()
+      .from(projects)
+      .where(eq(projects.id, c.req.param("id")))
+      .limit(1);
+    if (!existing || existing.ownerId !== uid) return c.json({ error: "Not found" }, 404);
+    const [row] = await db
+      .update(projects)
+      .set({
+        ...(parsed.data.name !== undefined && { name: parsed.data.name }),
+        ...(parsed.data.allowedOrigins !== undefined && {
+          allowedOrigins: parsed.data.allowedOrigins,
+        }),
+      })
+      .where(eq(projects.id, existing.id))
+      .returning();
+    return c.json(toProject(row));
   })
   .get("/:id", async (c) => {
     const uid = c.get("authUser").token?.sub;

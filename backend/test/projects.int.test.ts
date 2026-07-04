@@ -61,3 +61,66 @@ describe("/api/projects", () => {
     expect(rows.map((r) => r.text)).toEqual(["newer", "older"]);
   });
 });
+
+describe("PATCH /api/projects/:id", () => {
+  it("updates allowed origins for the owner", async () => {
+    const me = await makeUser();
+    const p = await makeProject(me.id);
+    const res = await app.request(`/api/projects/${p.id}`, {
+      method: "PATCH",
+      headers: { cookie: await authCookie(me.id), "content-type": "application/json" },
+      body: JSON.stringify({ allowedOrigins: ["https://app.example.com", "http://localhost:3000"] }),
+    });
+    expect(res.status).toBe(200);
+    const updated = (await res.json()) as { allowedOrigins: string[] };
+    expect(updated.allowedOrigins).toEqual(["https://app.example.com", "http://localhost:3000"]);
+  });
+
+  it("rejects values that are not origins", async () => {
+    const me = await makeUser();
+    const p = await makeProject(me.id);
+    const res = await app.request(`/api/projects/${p.id}`, {
+      method: "PATCH",
+      headers: { cookie: await authCookie(me.id), "content-type": "application/json" },
+      body: JSON.stringify({ allowedOrigins: ["https://app.example.com/path"] }),
+    });
+    expect(res.status).toBe(400);
+  });
+
+  it("404s another user's project", async () => {
+    const me = await makeUser();
+    const other = await makeUser();
+    const p = await makeProject(other.id);
+    const res = await app.request(`/api/projects/${p.id}`, {
+      method: "PATCH",
+      headers: { cookie: await authCookie(me.id), "content-type": "application/json" },
+      body: JSON.stringify({ name: "hijack" }),
+    });
+    expect(res.status).toBe(404);
+  });
+
+  it("rejects an empty patch", async () => {
+    const me = await makeUser();
+    const p = await makeProject(me.id);
+    const res = await app.request(`/api/projects/${p.id}`, {
+      method: "PATCH",
+      headers: { cookie: await authCookie(me.id), "content-type": "application/json" },
+      body: JSON.stringify({}),
+    });
+    expect(res.status).toBe(400);
+  });
+});
+
+describe("GET /api/projects issue counts", () => {
+  it("includes issueCount per project", async () => {
+    const me = await makeUser();
+    const p = await makeProject(me.id);
+    await makeIssue(p.id);
+    await makeIssue(p.id);
+    const res = await app.request("/api/projects", {
+      headers: { cookie: await authCookie(me.id) },
+    });
+    const rows = (await res.json()) as { id: string; issueCount: number }[];
+    expect(rows.find((r) => r.id === p.id)?.issueCount).toBe(2);
+  });
+});

@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ExternalLink, Pause, Play, X, ZoomIn } from "lucide-react";
 import type { Issue } from "@brainbox/shared";
 import type { Replayer } from "@rrweb/replay";
 import "@rrweb/replay/dist/style.css";
 
+import { Shell } from "../components/Shell";
 import { api } from "../lib/api";
+import { timeAgo } from "../lib/utils";
 
 type ReplayerEvents = ConstructorParameters<typeof Replayer>[0];
 
@@ -260,23 +262,31 @@ export function IssueDetail() {
   }, [id]);
 
   if (error) {
-    return <div className="min-h-dvh bg-background p-6 text-sm text-error">{error}</div>;
+    return (
+      <Shell crumbs={[{ label: "Projects", to: "/" }, { label: "Feedback" }]}>
+        <p className="text-sm text-error">{error}</p>
+      </Shell>
+    );
   }
   if (!issue) {
-    return <div className="min-h-dvh bg-background p-6 text-sm text-muted">Loading…</div>;
+    return (
+      <Shell crumbs={[{ label: "Projects", to: "/" }, { label: "Feedback" }]}>
+        <p className="text-sm text-muted">Loading…</p>
+      </Shell>
+    );
   }
 
   const m = issue.metadata;
   return (
-    <div className="min-h-dvh bg-background">
-      <header className="border-b border-default px-6 py-4">
-        <Link to={`/projects/${issue.projectId}`} className="text-xs text-muted hover:text-link">
-          ← Issues
-        </Link>
-        <h1 className="mt-1 text-lg font-semibold text-emphasis">Feedback</h1>
-      </header>
-
-      <main className="mx-auto grid max-w-6xl gap-8 px-6 py-8 md:grid-cols-[minmax(0,1.6fr)_1fr]">
+    <Shell
+      wide
+      crumbs={[
+        { label: "Projects", to: "/" },
+        { label: "Feedback", to: `/projects/${issue.projectId}` },
+        { label: timeAgo(issue.createdAt) },
+      ]}
+    >
+      <div className="grid gap-8 md:grid-cols-[minmax(0,1.6fr)_1fr]">
         <div className="space-y-6">
           {issue.session?.url && (
             <SessionReplay url={issue.session.url} vw={m.viewport.width} vh={m.viewport.height} />
@@ -334,9 +344,9 @@ export function IssueDetail() {
             </div>
           )}
         </aside>
-      </main>
+      </div>
 
       {zoomUrl && <Lightbox src={zoomUrl} onClose={() => setZoomUrl(null)} />}
-    </div>
+    </Shell>
   );
 }

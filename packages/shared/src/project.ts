@@ -12,4 +12,5 @@ export interface Project {
   key: ProjectKey;
   allowedOrigins: string[];
   createdAt: string; // ISO 8601
+  issueCount?: number; // present on the list endpoint
 }
