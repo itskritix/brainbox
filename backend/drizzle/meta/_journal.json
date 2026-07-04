@@ -29,6 +29,13 @@
       "when": 1782894668125,
       "tag": "0003_worthless_karnak",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1783184689359,
+      "tag": "0004_marvelous_squadron_supreme",
+      "breakpoints": true
     }
   ]
 }

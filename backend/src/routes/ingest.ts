@@ -6,6 +6,7 @@ import { db } from "../db/client.ts";
 import { issues, projects } from "../db/schema/index.ts";
 import { env } from "../env.ts";
 import { cropRegion } from "../lib/crop.ts";
+import { transcribeAudio, transcriptionEnabled } from "../lib/transcription.ts";
 import { getStorage } from "../storage/index.ts";
 import { feedbackSchema } from "../validation/feedback.ts";
 
@@ -155,16 +156,16 @@ ingest.post("/", async (c) => {
 
   let audioKey: string | null = null;
   let audioMime: string | null = null;
+  let audioBytes: Uint8Array | null = null;
   if (audio) {
     const ext = AUDIO_EXT[audio.type] ?? "bin";
     audioKey = `${project.id}/${issueId}/audio.${ext}`;
     audioMime = audio.type;
-    await storage.put(
-      audioKey,
-      new Uint8Array(await audio.arrayBuffer()),
-      audio.type,
-    );
+    audioBytes = new Uint8Array(await audio.arrayBuffer());
+    await storage.put(audioKey, audioBytes, audio.type);
   }
+
+  const willTranscribe = audioBytes !== null && transcriptionEnabled();
 
   await db.insert(issues).values({
     id: issueId,
@@ -177,9 +178,34 @@ ingest.post("/", async (c) => {
     sessionKey,
     audioKey,
     audioMime,
+    audioTranscriptStatus: willTranscribe ? "pending" : null,
     region: feedback.region ?? null,
     metadata: feedback.metadata,
   });
 
+  // Fire-and-forget: transcription must never delay or fail the submission.
+  if (audioBytes && willTranscribe) {
+    void transcribeAndStore(issueId, audioBytes);
+  }
+
   return c.json({ id: issueId }, 201);
 });
+
+async function transcribeAndStore(issueId: string, audio: Uint8Array): Promise<void> {
+  try {
+    const text = await transcribeAudio(audio);
+    await db
+      .update(issues)
+      .set({ audioTranscript: text, audioTranscriptStatus: "done" })
+      .where(eq(issues.id, issueId));
+  } catch (err) {
+    console.error(`[ingest] transcription failed for issue ${issueId}:`, err);
+    await db
+      .update(issues)
+      .set({ audioTranscriptStatus: "failed" })
+      .where(eq(issues.id, issueId))
+      .catch((dbErr: unknown) => {
+        console.error(`[ingest] failed to mark transcription failed for ${issueId}:`, dbErr);
+      });
+  }
+}

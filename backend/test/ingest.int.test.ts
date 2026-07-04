@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { app } from "../src/app.ts";
 import { db } from "../src/db/client.ts";
@@ -7,6 +7,15 @@ import { issues } from "../src/db/schema/index.ts";
 import { getStorage } from "../src/storage/index.ts";
 import { LocalStorage } from "../src/storage/local.ts";
 import { makeProject, makeUser } from "./helpers.ts";
+
+const { transcribeAudioMock, transcriptionEnabledMock } = vi.hoisted(() => ({
+  transcribeAudioMock: vi.fn<(audio: Uint8Array) => Promise<string>>(),
+  transcriptionEnabledMock: vi.fn(() => false),
+}));
+vi.mock("../src/lib/transcription.ts", () => ({
+  transcribeAudio: transcribeAudioMock,
+  transcriptionEnabled: transcriptionEnabledMock,
+}));
 
 const PNG = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 1, 2, 3]);
 
@@ -92,5 +101,86 @@ describe("POST /ingest", () => {
     const fd = new FormData();
     fd.append("screenshot", pngFile());
     expect((await post(fd)).status).toBe(400);
+  });
+});
+
+describe("POST /ingest — voice note transcription", () => {
+  beforeEach(() => {
+    transcribeAudioMock.mockReset();
+    transcriptionEnabledMock.mockReset();
+    transcriptionEnabledMock.mockReturnValue(false);
+  });
+
+  function audioForm(projectKey: string) {
+    const fd = form(payload(projectKey));
+    fd.append("audio", new File([new Uint8Array([9, 8, 7])], "a.webm", { type: "audio/webm" }));
+    return fd;
+  }
+
+  async function issueRow(id: string) {
+    return (await db.select().from(issues).where(eq(issues.id, id)))[0]!;
+  }
+
+  it("leaves transcript status null when transcription is disabled", async () => {
+    const user = await makeUser();
+    const project = await makeProject(user.id);
+
+    const res = await post(audioForm(project.key));
+    expect(res.status).toBe(201);
+    const { id } = (await res.json()) as { id: string };
+
+    const row = await issueRow(id);
+    expect(row.audioKey).toContain("audio.webm");
+    expect(row.audioTranscriptStatus).toBeNull();
+    expect(transcribeAudioMock).not.toHaveBeenCalled();
+  });
+
+  it("transcribes the audio in the background and stores the text", async () => {
+    transcriptionEnabledMock.mockReturnValue(true);
+    transcribeAudioMock.mockResolvedValue("the checkout page crashes");
+    const user = await makeUser();
+    const project = await makeProject(user.id);
+
+    const res = await post(audioForm(project.key));
+    expect(res.status).toBe(201);
+    const { id } = (await res.json()) as { id: string };
+
+    await vi.waitFor(async () => {
+      const row = await issueRow(id);
+      expect(row.audioTranscriptStatus).toBe("done");
+      expect(row.audioTranscript).toBe("the checkout page crashes");
+    });
+    expect(transcribeAudioMock).toHaveBeenCalledWith(new Uint8Array([9, 8, 7]));
+  });
+
+  it("marks the transcription failed when the provider errors", async () => {
+    transcriptionEnabledMock.mockReturnValue(true);
+    transcribeAudioMock.mockRejectedValue(new Error("provider down"));
+    const user = await makeUser();
+    const project = await makeProject(user.id);
+
+    const res = await post(audioForm(project.key));
+    expect(res.status).toBe(201);
+    const { id } = (await res.json()) as { id: string };
+
+    await vi.waitFor(async () => {
+      const row = await issueRow(id);
+      expect(row.audioTranscriptStatus).toBe("failed");
+      expect(row.audioTranscript).toBeNull();
+    });
+  });
+
+  it("does not transcribe issues without audio even when enabled", async () => {
+    transcriptionEnabledMock.mockReturnValue(true);
+    const user = await makeUser();
+    const project = await makeProject(user.id);
+
+    const res = await post(form(payload(project.key)));
+    expect(res.status).toBe(201);
+    const { id } = (await res.json()) as { id: string };
+
+    const row = await issueRow(id);
+    expect(row.audioTranscriptStatus).toBeNull();
+    expect(transcribeAudioMock).not.toHaveBeenCalled();
   });
 });

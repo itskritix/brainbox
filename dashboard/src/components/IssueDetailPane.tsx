@@ -185,6 +185,22 @@ export function IssueDetailPane({ issueId, projectId }: { issueId: string; proje
               </audio>
             </Figure>
           )}
+          {/* status is only set when transcription ran; "done" implies text */}
+          {issue.audio?.transcriptStatus && (
+            <Figure label="Voice transcript">
+              {issue.audio.transcript ? (
+                <p className="rounded-xl border border-default bg-elevated p-4 text-sm leading-relaxed text-default">
+                  {issue.audio.transcript}
+                </p>
+              ) : (
+                <p className="px-1 text-xs text-muted">
+                  {issue.audio.transcriptStatus === "pending"
+                    ? "Transcribing…"
+                    : "Transcription failed."}
+                </p>
+              )}
+            </Figure>
+          )}
         </div>
 
         <aside className="min-w-0">
