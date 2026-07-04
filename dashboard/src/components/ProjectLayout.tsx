@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import { signOut, useSession } from "@hono/auth-js/react";
-import { Inbox, LogOut, Settings } from "lucide-react";
+import { LayoutGrid, LogOut, Settings } from "lucide-react";
 import type { Project } from "@brainbox/shared";
 
 import { api } from "../lib/api";
@@ -131,8 +131,8 @@ export function ProjectLayout() {
           <NavItem
             to={base}
             active={!isSettings}
-            icon={<Inbox />}
-            label="Inbox"
+            icon={<LayoutGrid />}
+            label="Reports"
             count={project.issueCount}
           />
           <NavItem to={`${base}/settings`} active={isSettings} icon={<Settings />} label="Settings" />
@@ -159,7 +159,7 @@ export function ProjectLayout() {
               <ProjectSwitcher current={project} projects={projects} />
             </div>
             <nav className="flex shrink-0 gap-1">
-              <MobileTab to={base} active={!isSettings} label="Inbox" />
+              <MobileTab to={base} active={!isSettings} label="Reports" />
               <MobileTab to={`${base}/settings`} active={isSettings} label="Settings" />
             </nav>
             <button

@@ -80,9 +80,9 @@ export function IssueDetailPane({ issueId, projectId }: { issueId: string; proje
   const back = (
     <Link
       to={`/projects/${projectId}`}
-      className="mb-3 flex w-fit items-center gap-1 text-xs text-muted transition hover:text-emphasis lg:hidden"
+      className="mb-3 flex w-fit items-center gap-1 text-xs text-muted transition hover:text-emphasis"
     >
-      <ArrowLeft className="h-3.5 w-3.5" /> Inbox
+      <ArrowLeft className="h-3.5 w-3.5" /> Reports
     </Link>
   );
 
@@ -108,8 +108,8 @@ export function IssueDetailPane({ issueId, projectId }: { issueId: string; proje
 
   const m = issue.metadata;
   return (
-    <article>
-      <header className="border-b border-default px-4 py-4 sm:px-6">
+    <article className="mx-auto w-full max-w-6xl">
+      <header className="px-4 pt-6 sm:px-6">
         {back}
         <h2 className="line-clamp-2 text-base font-medium tracking-tight text-emphasis">
           {issueTitle(issue)}
@@ -129,7 +129,7 @@ export function IssueDetailPane({ issueId, projectId }: { issueId: string; proje
         </div>
       </header>
 
-      <div className="grid gap-8 p-4 sm:p-6 xl:grid-cols-[minmax(0,1.65fr)_minmax(240px,1fr)]">
+      <div className="mt-6 grid gap-8 border-t border-default p-4 pt-6 sm:p-6 lg:grid-cols-[minmax(0,1.75fr)_minmax(260px,1fr)]">
         <div className="min-w-0 space-y-6">
           {issue.session?.url && (
             <Figure label="Session replay" aside={issue.audio ? "with voice" : undefined}>
