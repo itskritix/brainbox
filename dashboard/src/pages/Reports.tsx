@@ -36,6 +36,17 @@ function ReportCard({ issue, to }: { issue: Issue; to: string }) {
             loading="lazy"
             className="h-full w-full object-cover object-top transition duration-300 group-hover:scale-[1.02]"
           />
+        ) : issue.video?.url ? (
+          // no stored poster — let the browser paint the first video frame
+          <video
+            src={`${issue.video.url}#t=0.1`}
+            preload="metadata"
+            muted
+            playsInline
+            tabIndex={-1}
+            aria-hidden
+            className="pointer-events-none h-full w-full object-cover object-top transition duration-300 group-hover:scale-[1.02]"
+          />
         ) : (
           <span className="grid h-full w-full place-items-center text-muted">
             <Video className="h-6 w-6" />
