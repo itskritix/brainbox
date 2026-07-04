@@ -1,11 +1,12 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
+import { ProjectLayout } from "./components/ProjectLayout";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import { IssueDetail } from "./pages/IssueDetail";
+import { Inbox } from "./pages/Inbox";
+import { LegacyIssue } from "./pages/LegacyIssue";
 import { Login } from "./pages/Login";
-import { ProjectIssues } from "./pages/ProjectIssues";
-import { ProjectSettings } from "./pages/ProjectSettings";
 import { Projects } from "./pages/Projects";
+import { Settings } from "./pages/Settings";
 
 export const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
@@ -13,9 +14,17 @@ export const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       { path: "/", element: <Projects /> },
-      { path: "/projects/:id", element: <ProjectIssues /> },
-      { path: "/projects/:id/settings", element: <ProjectSettings /> },
-      { path: "/issues/:id", element: <IssueDetail /> },
+      {
+        path: "/projects/:projectId",
+        element: <ProjectLayout />,
+        children: [
+          { index: true, element: <Inbox /> },
+          { path: "issues/:issueId", element: <Inbox /> },
+          { path: "settings", element: <Settings /> },
+        ],
+      },
+      // old deep links from before the inbox routes
+      { path: "/issues/:id", element: <LegacyIssue /> },
     ],
   },
   { path: "*", element: <Navigate to="/" replace /> },

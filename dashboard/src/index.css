@@ -15,7 +15,7 @@
 
 @theme inline {
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: "Commit Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono: "JetBrains Mono", "Commit Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* radii — lg/xl/2xl/3xl match Tailwind defaults (Resend's scale); add 4xl */
   --radius-4xl: 2rem;
@@ -121,4 +121,50 @@
 }
 .animate-marquee {
   animation: marquee-x var(--marquee-dur, 40s) linear infinite;
+}
+
+/* viewfinder corners — the widget's region-highlight motif, reused as the
+   dashboard's signature frame (empty states, captured media, the login mark) */
+.capture-corners {
+  --corner: 12px;
+  --corner-w: 1px;
+  --corner-c: var(--gray-a8);
+  background-image:
+    linear-gradient(var(--corner-c), var(--corner-c)),
+    linear-gradient(var(--corner-c), var(--corner-c)),
+    linear-gradient(var(--corner-c), var(--corner-c)),
+    linear-gradient(var(--corner-c), var(--corner-c)),
+    linear-gradient(var(--corner-c), var(--corner-c)),
+    linear-gradient(var(--corner-c), var(--corner-c)),
+    linear-gradient(var(--corner-c), var(--corner-c)),
+    linear-gradient(var(--corner-c), var(--corner-c));
+  background-repeat: no-repeat;
+  background-position:
+    0 0, 0 0,
+    100% 0, 100% 0,
+    0 100%, 0 100%,
+    100% 100%, 100% 100%;
+  background-size:
+    var(--corner) var(--corner-w), var(--corner-w) var(--corner),
+    var(--corner) var(--corner-w), var(--corner-w) var(--corner),
+    var(--corner) var(--corner-w), var(--corner-w) var(--corner),
+    var(--corner) var(--corner-w), var(--corner-w) var(--corner);
+}
+
+@keyframes capture-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.animate-breathe {
+  animation: capture-breathe 3.2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-breathe {
+    animation: none;
+  }
 }
