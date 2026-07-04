@@ -5,9 +5,6 @@ instructions, not documentation — assume you already know what a monorepo, an
 `src/` folder, and TypeScript are. This file loads every session, so every line
 has to earn its place.
 
-Claude reads `CLAUDE.md`, Codex reads `AGENTS.md`; `CLAUDE.md` is a symlink to
-this file. One source of truth for both.
-
 ## What this repo is
 
 Brainbox is an embeddable in-app feedback widget plus the SaaS around it. The
@@ -36,19 +33,16 @@ pass before a change is finished. Do not report a task complete on a red
 `verify`. While iterating, scope to one package — e.g. `pnpm -F @brainbox/backend
 test` — but the full `verify` is the gate.
 
-## Types and lint are strict on purpose
+## Two strict-mode facts the linter won't tell you up front
 
-This codebase is written mostly by agents, so the compiler and linter are the
-first reviewer. Don't defeat them:
+`pnpm verify` enforces the mechanical rules (no `any`, no source `!`, etc.), so
+this doesn't restate them — it just calls out two things you can't infer and that
+change how you write:
 
 - `noUncheckedIndexedAccess` is on: any array/index access is `T | undefined`.
-  Handle the undefined case; don't assume the element is there.
-- `any` is banned by lint. If a type is hard, model it — reach for `unknown` and
-  narrow, never `any`.
-- Non-null assertions (`!`) are banned in source. They're allowed only in test
-  files, where you control the fixture. In source, guard and return early.
-- Prefer early returns over deep nesting. Write code that reads without jumping
-  to other files — explicit over clever.
+  Handle the undefined case instead of asserting past it.
+- Non-null `!` is banned in source but allowed in test files (you own the
+  fixture there). In source, guard and return early.
 
 ## Tests come with the change
 
