@@ -40,7 +40,7 @@ export async function captureScreenshot(region: Region, hostEl: HTMLElement): Pr
   return await toBlob(out);
 }
 
-/** Plain viewport shot — used as the thumbnail/last-frame of a session recording. */
+/** Plain viewport shot - used as the thumbnail/last-frame of a session recording. */
 export async function captureViewport(hostEl: HTMLElement): Promise<Blob> {
   return toBlob(await viewportCanvas(hostEl));
 }

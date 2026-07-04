@@ -4,7 +4,7 @@ import { Globe, Plus, X } from "lucide-react";
 import { api } from "../lib/api";
 import { normalizeOrigin } from "../lib/utils";
 
-/** Strip the scheme for display — the chip reads "app.example.com", the
+/** Strip the scheme for display - the chip reads "app.example.com", the
  *  stored value stays a full origin ("https://app.example.com"). */
 function display(origin: string): string {
   return origin.replace(/^https:\/\//, "");

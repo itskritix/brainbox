@@ -26,7 +26,7 @@ app.use("*", dbMiddleware);
 app.route("/health", health);
 // Auth.js endpoints: /api/auth/signin, /callback/google, /session, ...
 app.use("/api/auth/*", authHandler());
-// Public widget ingest — auth is project key + origin allowlist, not a session.
+// Public widget ingest - auth is project key + origin allowlist, not a session.
 app.route("/ingest", ingest);
 
 // Everything else under /api requires a valid session.

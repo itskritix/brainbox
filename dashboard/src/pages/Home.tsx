@@ -59,7 +59,7 @@ function Onboarding() {
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Project name — e.g. Nidana"
+            placeholder="Project name - e.g. Nidana"
             autoFocus
           />
           <Input
@@ -81,7 +81,7 @@ function Onboarding() {
   );
 }
 
-/** `/` — forwards to the last-used project; shows onboarding when there are none. */
+/** `/` - forwards to the last-used project; shows onboarding when there are none. */
 export function Home() {
   const navigate = useNavigate();
   const { data: session } = useSession();

@@ -1,5 +1,5 @@
 /* ============================================================
-   PRIMITIVES — Radix Colors (the raw scales)
+   PRIMITIVES - Radix Colors (the raw scales)
    Light scales live under :root, dark scales under .dark, so
    the theme flips automatically. Colored families are exposed
    alpha-backed (Resend convention: `bg-red-3` === var(--red-a3)).
@@ -35,7 +35,7 @@
 @import "@radix-ui/colors/black-alpha.css";
 
 @theme inline {
-  /* gray — solid */
+  /* gray - solid */
   --color-gray-1: var(--gray-1);
   --color-gray-2: var(--gray-2);
   --color-gray-3: var(--gray-3);
@@ -48,7 +48,7 @@
   --color-gray-10: var(--gray-10);
   --color-gray-11: var(--gray-11);
   --color-gray-12: var(--gray-12);
-  /* gray — alpha */
+  /* gray - alpha */
   --color-gray-a1: var(--gray-a1);
   --color-gray-a2: var(--gray-a2);
   --color-gray-a3: var(--gray-a3);
@@ -62,7 +62,7 @@
   --color-gray-a11: var(--gray-a11);
   --color-gray-a12: var(--gray-a12);
 
-  /* colored families — alpha-backed (bare step resolves to the alpha var) */
+  /* colored families - alpha-backed (bare step resolves to the alpha var) */
   --color-red-1: var(--red-a1);
   --color-red-2: var(--red-a2);
   --color-red-3: var(--red-a3);
@@ -116,7 +116,7 @@
   --color-yellow-11: var(--amber-a11);
   --color-yellow-12: var(--amber-a12);
 
-  /* black alpha — used by brand hover/ring in light mode */
+  /* black alpha - used by brand hover/ring in light mode */
   --color-black-a1: var(--black-a1);
   --color-black-a2: var(--black-a2);
   --color-black-a3: var(--black-a3);

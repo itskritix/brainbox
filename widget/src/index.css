@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ============================================================
-   BRAINBOX WIDGET — shadow-scoped design tokens
+   BRAINBOX WIDGET - shadow-scoped design tokens
    Same two-layer system as marketing/dashboard, but this CSS is
    injected into the widget's Shadow DOM. `:root` is rewritten to
    `:host` at inject time (embed.ts) because `:root` never matches

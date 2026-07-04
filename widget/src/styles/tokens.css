@@ -1,8 +1,8 @@
 /* ============================================================
-   SEMANTIC TOKENS — intent over value (Resend design system)
+   SEMANTIC TOKENS - intent over value (Resend design system)
    Components should reach for these first. Each token is a
    custom utility so `text-default` (gray-11) and `border-default`
-   (gray-3) can differ — impossible with a single --color-* key.
+   (gray-3) can differ - impossible with a single --color-* key.
 
    Most tokens reference Radix steps that already flip with the
    theme, so they need no dark override. Only theme-ASYMMETRIC

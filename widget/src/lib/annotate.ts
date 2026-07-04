@@ -7,7 +7,7 @@ const LIFE_MS = 3000;
 type Live = { el: HTMLElement; timers: ReturnType<typeof setTimeout>[] };
 const live = new Set<Live>();
 
-/** Draw a fading highlight box on the host page itself (NOT the shadow DOM) —
+/** Draw a fading highlight box on the host page itself (NOT the shadow DOM) -
  *  rrweb records it as ordinary mutations, so it replays in the dashboard
  *  with no replay-side support. Viewport-anchored, like what the recorder saw. */
 export function showHighlight(r: Region): void {

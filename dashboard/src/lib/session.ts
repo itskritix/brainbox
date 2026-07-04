@@ -4,7 +4,7 @@ export interface SessionPayload {
 }
 
 /** Parse the widget's session log (`{ v, events, audioOffsetMs? }`).
- *  Older logs have no offset — treat those as voice starting at 0. */
+ *  Older logs have no offset - treat those as voice starting at 0. */
 export function parseSessionPayload(text: string): SessionPayload {
   const parsed: unknown = JSON.parse(text);
   const obj =

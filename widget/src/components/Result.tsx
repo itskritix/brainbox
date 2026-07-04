@@ -17,7 +17,7 @@ export function Result({
   position: Position;
   onClose?: () => void;
 }) {
-  // success is a confirmation, not a decision — dismiss itself. Errors stay.
+  // success is a confirmation, not a decision - dismiss itself. Errors stay.
   useEffect(() => {
     if (kind !== "success" || !onClose) return;
     const t = setTimeout(onClose, SUCCESS_DISMISS_MS);

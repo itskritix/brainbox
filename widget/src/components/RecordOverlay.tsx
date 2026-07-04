@@ -22,7 +22,7 @@ export function RecordOverlay({
   const [secs, setSecs] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
   const [micOn, setMicOn] = useState(false);
-  // App passes an inline arrow — keep it out of the interval's deps via a ref.
+  // App passes an inline arrow - keep it out of the interval's deps via a ref.
   const micRef = useRef(micActive);
   useEffect(() => {
     micRef.current = micActive;
@@ -65,13 +65,13 @@ export function RecordOverlay({
       </span>
       <button
         onClick={() => setHighlighting(true)}
-        title="Highlight an area — viewers see it in the replay"
+        title="Highlight an area - viewers see it in the replay"
         className="flex items-center gap-1 rounded-full border border-default px-3 py-1 text-xs text-default hover:bg-interactive-hover hover:text-emphasis"
       >
         <Highlighter className="h-3 w-3" /> Highlight
       </button>
       <span
-        title={micOn ? "Voice is being captured" : "Mic off — voice not captured"}
+        title={micOn ? "Voice is being captured" : "Mic off - voice not captured"}
         className={micOn ? "text-emphasis" : "text-muted"}
       >
         {micOn ? <Mic className="h-3.5 w-3.5" /> : <MicOff className="h-3.5 w-3.5" />}

@@ -26,7 +26,7 @@ export interface Issue {
    *  replayed in the dashboard. No permission prompt, records only the app. */
   session?: StoredFile;
   audio?: StoredFile & { mime: string };
-  /** The highlighted area — only for screenshot submissions. */
+  /** The highlighted area - only for screenshot submissions. */
   region?: Region;
   metadata: CapturedMetadata;
 }

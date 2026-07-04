@@ -6,7 +6,7 @@ import { getStorage } from "../storage/index.ts";
 import { LocalStorage } from "../storage/local.ts";
 import type { AppEnv } from "../types.ts";
 
-// Serves locally-stored screenshot/audio bytes (LocalStorage driver only — under
+// Serves locally-stored screenshot/audio bytes (LocalStorage driver only - under
 // R2 the presigned URL points straight at R2). Cookie-gated + ownership-checked.
 const MIME: Record<string, string> = {
   png: "image/png",

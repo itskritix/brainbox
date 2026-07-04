@@ -19,7 +19,7 @@ function syncVoice(a: HTMLAudioElement | null, replayMs: number, offsetMs: numbe
     if (a.paused) {
       a.currentTime = at;
       void a.play().catch(() => {
-        /* autoplay blocked — replay continues silently */
+        /* autoplay blocked - replay continues silently */
       });
     } else if (Math.abs(a.currentTime - at) > 0.4) {
       a.currentTime = at;
