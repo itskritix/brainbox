@@ -44,11 +44,9 @@ function Onboarding() {
   return (
     <div className="flex flex-1 items-center justify-center px-6 py-16">
       <div className="w-full max-w-sm">
-        <div className="capture-corners mx-auto grid h-12 w-12 place-items-center">
-          <span className="grid h-6 w-6 place-items-center rounded-md bg-emphasis">
-            <span className="h-2 w-2 rounded-full bg-background" />
-          </span>
-        </div>
+        <span className="mx-auto grid h-10 w-10 place-items-center rounded-xl bg-emphasis">
+          <span className="h-2.5 w-2.5 rounded-full bg-background" />
+        </span>
         <h1 className="mt-6 text-center text-xl font-semibold tracking-tight text-emphasis">
           Create your project
         </h1>

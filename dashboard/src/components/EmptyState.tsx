@@ -21,8 +21,8 @@ export function EmptyState({
     <div className={cn("flex flex-col items-center text-center", className)}>
       <div
         className={cn(
-          "capture-corners grid h-12 w-12 place-items-center text-muted [&_svg]:size-5",
-          breathe && "animate-breathe",
+          "grid h-12 w-12 place-items-center rounded-xl border border-default bg-elevated text-muted [&_svg]:size-5",
+          breathe && "animate-pulse",
         )}
       >
         {icon}

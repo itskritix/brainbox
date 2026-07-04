@@ -155,9 +155,7 @@ export function IssueDetailPane({ issueId, projectId }: { issueId: string; proje
                   : undefined
               }
             >
-              <div className="capture-corners p-1.5">
-                <Shot label="Highlighted region" url={issue.crop.url} onZoom={setZoomUrl} />
-              </div>
+              <Shot label="Highlighted region" url={issue.crop.url} onZoom={setZoomUrl} />
             </Figure>
           )}
           {issue.screenshot?.url && (
