@@ -97,7 +97,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
     try {
       const { session: blob, audio } = await rec.stop();
       if (blob.size > MAX_SESSION_BYTES) {
-        setError("Recording too large — try a shorter clip");
+        setError("Recording too large - try a shorter clip");
         setStatus("error");
         return;
       }
@@ -119,7 +119,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
     }
   }, [hostEl]);
 
-  // rrweb DOM recording — starts instantly, no permission prompt, captures only the app.
+  // rrweb DOM recording - starts instantly, no permission prompt, captures only the app.
   const startRecord = useCallback(() => {
     try {
       recRef.current = startSessionRecording(() => void finishRecording());

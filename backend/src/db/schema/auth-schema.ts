@@ -8,7 +8,7 @@ import {
 import type { AdapterAccountType } from "@auth/core/adapters";
 
 // NOTE ON NAMING:
-//   `users`    IS our domain Account — the customer's login.
+//   `users`    IS our domain Account - the customer's login.
 //   `accounts` here = OAuth provider links (Google), NOT our domain Account.
 // These four tables match the shape @auth/drizzle-adapter expects.
 

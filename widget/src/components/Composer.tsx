@@ -53,7 +53,7 @@ export function Composer({
             </span>
           </span>
           <span className="absolute bottom-1.5 left-1.5 rounded-full bg-black/60 px-2 py-0.5 text-[10px] text-white backdrop-blur-sm">
-            Recording{voiceCaptured ? " · voice" : ""} — replays in the dashboard
+            Recording{voiceCaptured ? " · voice" : ""} - replays in the dashboard
           </span>
         </div>
       ) : screenshotUrl ? (
@@ -64,7 +64,7 @@ export function Composer({
         />
       ) : sessionReady ? (
         <p className="mb-3 rounded-lg border border-default bg-interactive p-3 text-xs text-default">
-          ✓ Session recorded{voiceCaptured ? " with voice" : ""} — it will replay in the
+          ✓ Session recorded{voiceCaptured ? " with voice" : ""} - it will replay in the
           dashboard.
         </p>
       ) : null}

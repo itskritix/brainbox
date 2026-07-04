@@ -6,7 +6,7 @@ import { formatClock, issueTitle, pageLabel } from "./issue";
 function meta(overrides: Partial<CapturedMetadata> = {}): CapturedMetadata {
   return {
     url: "https://app.example.com/billing",
-    title: "Billing — Example",
+    title: "Billing - Example",
     viewport: { width: 1280, height: 720 },
     devicePixelRatio: 2,
     userAgent: "test",
@@ -29,7 +29,7 @@ describe("issueTitle", () => {
   });
 
   it("falls back to the page title when the URL is empty", () => {
-    expect(issueTitle({ metadata: meta({ url: "" }) })).toBe("Billing — Example");
+    expect(issueTitle({ metadata: meta({ url: "" }) })).toBe("Billing - Example");
   });
 });
 

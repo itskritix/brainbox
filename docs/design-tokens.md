@@ -7,7 +7,7 @@ for the rationale.
 
 ## Adopting in a new surface (widget, dashboard, …)
 
-Each repo keeps its **own copy** — there is no shared package. To set up:
+Each repo keeps its **own copy** - there is no shared package. To set up:
 
 1. `pnpm add @radix-ui/colors`
 2. Copy `marketing/src/styles/primitives.css` and `marketing/src/styles/tokens.css`.
@@ -49,8 +49,8 @@ alpha), and alpha-backed `red-*`, `green-*`, `blue-*`, `yellow-*` (amber), plus
 
 **Gotchas:**
 - Semantic `@utility` tokens do **not** take opacity modifiers. `bg-brand/90`
-  won't work — use the explicit state token (`bg-brand-hover`) or a primitive
+  won't work - use the explicit state token (`bg-brand-hover`) or a primitive
   with opacity (`text-gray-11/70`).
 - Don't use Tailwind's default palettes (`slate`, `zinc`, `neutral`, `emerald`,
-  `sky`, `indigo`, `rose`, `amber`, …) — map by intent to a semantic token or a
+  `sky`, `indigo`, `rose`, `amber`, …) - map by intent to a semantic token or a
   primitive instead.

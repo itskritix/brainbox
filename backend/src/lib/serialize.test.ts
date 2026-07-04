@@ -17,7 +17,7 @@ const metadata: CapturedMetadata = {
   consoleErrors: [],
 };
 
-// Storage stub — toIssue should only call presignGet.
+// Storage stub - toIssue should only call presignGet.
 const storage: Storage = {
   put: async () => {},
   presignGet: async (key) => `https://signed/${key}`,

@@ -37,7 +37,7 @@ function ReportCard({ issue, to }: { issue: Issue; to: string }) {
             className="h-full w-full object-cover object-top transition duration-300 group-hover:scale-[1.02]"
           />
         ) : issue.video?.url ? (
-          // no stored poster — let the browser paint the first video frame
+          // no stored poster - let the browser paint the first video frame
           <video
             src={`${issue.video.url}#t=0.1`}
             preload="metadata"

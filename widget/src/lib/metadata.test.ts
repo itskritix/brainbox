@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { captureMetadata, installCapture, setIdentity } from "./metadata.ts";
 
 describe("metadata", () => {
-  // Patch console.error once, before any test — so each test is order-independent
+  // Patch console.error once, before any test - so each test is order-independent
   // and works when run in isolation (e.g. under a Vitest name filter).
   beforeAll(() => installCapture());
 

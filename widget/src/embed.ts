@@ -6,7 +6,7 @@ import { readConfig } from "./lib/config.ts";
 import { installCapture, setIdentity } from "./lib/metadata.ts";
 import css from "./index.css?inline";
 
-// Captured at eval time — for a classic <script src> this is the embedding tag.
+// Captured at eval time - for a classic <script src> this is the embedding tag.
 // Module scripts (dev harness) leave it null, so we fall back to a query below.
 const currentScript = document.currentScript as HTMLScriptElement | null;
 
@@ -56,7 +56,7 @@ function mount() {
   const shadow = host.attachShadow({ mode: "open" });
 
   const style = document.createElement("style");
-  // `:root` never matches inside a shadow tree — retarget the token vars to :host.
+  // `:root` never matches inside a shadow tree - retarget the token vars to :host.
   style.textContent = css.replaceAll(":root", ":host");
   shadow.appendChild(style);
 

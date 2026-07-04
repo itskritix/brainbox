@@ -43,5 +43,5 @@ elsewhere"; a BaaS does not.
 - R2 is the one external dependency, chosen because it is S3-compatible and
   swappable, not a lock-in.
 - Ingest proxies file bytes through the API to R2 (not presigned direct upload)
-  for v0 — files are small and volume is low; revisit presigned uploads if
+  for v0 - files are small and volume is low; revisit presigned uploads if
   upload volume grows.
