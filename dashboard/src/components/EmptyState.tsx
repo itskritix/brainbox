@@ -12,7 +12,7 @@ export function EmptyState({
 }: {
   icon: ReactNode;
   title: string;
-  /** Slow pulse on the frame — reserved for "waiting for data" states. */
+  /** Slow pulse on the frame - reserved for "waiting for data" states. */
   breathe?: boolean;
   children?: ReactNode;
   className?: string;

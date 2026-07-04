@@ -6,7 +6,7 @@ function required(name: string): string {
 
 function optional(name: string, fallback: string): string {
   const value = process.env[name];
-  if (!value) console.warn(`[env] ${name} not set — using fallback`);
+  if (!value) console.warn(`[env] ${name} not set - using fallback`);
   return value ?? fallback;
 }
 
@@ -22,7 +22,7 @@ export const env = {
   DASHBOARD_ORIGIN: process.env.DASHBOARD_ORIGIN ?? "http://localhost:5173",
   PORT: Number(process.env.PORT ?? 8787),
 
-  // Public base URL of this API — used to build local file URLs (STORAGE_DRIVER=local).
+  // Public base URL of this API - used to build local file URLs (STORAGE_DRIVER=local).
   PUBLIC_API_URL: process.env.PUBLIC_API_URL ?? "http://localhost:8787",
 
   // Object storage. "local" writes to backend/.storage/ (dev); "r2" uses
@@ -45,6 +45,6 @@ export const env = {
   MAX_SCREENSHOT_BYTES: Number(process.env.MAX_SCREENSHOT_BYTES ?? 5 * 1024 * 1024),
   MAX_AUDIO_BYTES: Number(process.env.MAX_AUDIO_BYTES ?? 10 * 1024 * 1024),
   MAX_VIDEO_BYTES: Number(process.env.MAX_VIDEO_BYTES ?? 50 * 1024 * 1024),
-  // Session replay (gzipped rrweb events) — 15MB.
+  // Session replay (gzipped rrweb events) - 15MB.
   MAX_SESSION_BYTES: Number(process.env.MAX_SESSION_BYTES ?? 15 * 1024 * 1024),
 } as const;

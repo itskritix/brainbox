@@ -7,7 +7,7 @@ import type { Region } from "./region.ts";
  *  intentionally NOT in this type.
  *
  *  A submission is either a **screenshot** (with a highlighted `region`) or a
- *  **screen recording** (a video, no region) — so `region` is optional. */
+ *  **screen recording** (a video, no region) - so `region` is optional. */
 export interface FeedbackPayload {
   projectKey: ProjectKey;
   region?: Region;

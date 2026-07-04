@@ -17,7 +17,7 @@ DB_URL="$(grep -E '^DATABASE_URL=' "$APP_DIR/.env" | cut -d= -f2-)"
 pg_dump "$DB_URL" -Fc -f "$BACKUP_DIR/db-$STAMP.dump"
 
 # Local uploaded files (screenshots / crops / sessions). The bundled prod build
-# resolves its storage dir to the repo root, dev/tests to backend/ — cover both.
+# resolves its storage dir to the repo root, dev/tests to backend/ - cover both.
 STORAGE_DIRS=()
 [ -d "/home/ubuntu/brainbox/.storage" ] && STORAGE_DIRS+=(-C /home/ubuntu/brainbox .storage)
 [ -d "$APP_DIR/.storage" ] && STORAGE_DIRS+=(-C "$APP_DIR" .storage)

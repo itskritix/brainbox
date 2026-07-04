@@ -16,7 +16,7 @@ export function canSessionRecord(): boolean {
   return typeof MutationObserver === "function";
 }
 
-/** Record the host app's DOM as an rrweb session — captures only this page.
+/** Record the host app's DOM as an rrweb session - captures only this page.
  *  Private by default: input values are masked before anything leaves the
  *  browser; customers can add `.rr-block` / `.rr-mask` / `.rr-ignore`.
  *  Voice narration via the mic is best-effort: the user may deny the prompt
@@ -45,7 +45,7 @@ export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): S
   let stopped = false;
   const micReady = startRecording()
     .then((r) => {
-      // permission granted after Stop was already pressed — release the mic
+      // permission granted after Stop was already pressed - release the mic
       if (stopped) void r.stop();
       else {
         mic = r;
@@ -53,7 +53,7 @@ export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): S
       }
     })
     .catch(() => {
-      /* denied or no mic — session recording continues without voice */
+      /* denied or no mic - session recording continues without voice */
     });
 
   let settling = false;
@@ -83,7 +83,7 @@ export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): S
 }
 
 /** How far into the session the mic actually started (the permission prompt
- *  delays it) — stored in the log so the dashboard can sync voice to replay. */
+ *  delays it) - stored in the log so the dashboard can sync voice to replay. */
 export function micOffsetMs(
   sessionStartedAt: number,
   micStartedAt: number | null,

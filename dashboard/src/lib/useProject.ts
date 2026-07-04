@@ -1,6 +1,9 @@
 import { useOutletContext } from "react-router-dom";
 import type { Project } from "@brainbox/shared";
 
+/** localStorage key remembering the project `/` forwards to. */
+export const LAST_PROJECT_KEY = "brainbox:lastProject";
+
 /** Context provided by ProjectLayout to every project-scoped page. */
 export interface ProjectOutletContext {
   project: Project;

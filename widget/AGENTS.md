@@ -1,4 +1,4 @@
-# widget — AGENTS.md
+# widget - AGENTS.md
 
 The embeddable capture UI (`@brainbox/widget`). React, built as an IIFE
 script-tag bundle that runs inside the customer's page. Root rules in `/AGENTS.md`
@@ -16,7 +16,7 @@ It runs inside a **host app you don't control**, so isolation is the whole game:
   submit) is defined in `CONTEXT.md`.
 - Keep DOM/browser logic in `src/lib/*` as small pure functions with a colocated
   `*.test.ts`. That's why `selector`, `position`, `metadata`, `config`, `submit`
-  are unit-testable without a browser — follow that pattern for new logic.
+  are unit-testable without a browser - follow that pattern for new logic.
 
 ## Tests
 

@@ -35,7 +35,7 @@ export interface Issue {
     transcript?: string;
     transcriptStatus?: TranscriptStatus;
   };
-  /** The highlighted area — only for screenshot submissions. */
+  /** The highlighted area - only for screenshot submissions. */
   region?: Region;
   metadata: CapturedMetadata;
 }

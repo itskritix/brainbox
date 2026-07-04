@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { cn } from "../lib/utils";
 
-/** Section label — mono, uppercase, tracked. The dashboard's structural voice. */
+/** Section label - mono, uppercase, tracked. The dashboard's structural voice. */
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <span

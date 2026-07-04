@@ -15,7 +15,7 @@ export class LocalStorage implements Storage {
     await writeFile(full, body);
   }
 
-  // No real signing locally — point at the cookie-gated file route, which
+  // No real signing locally - point at the cookie-gated file route, which
   // re-checks ownership before streaming the bytes (see routes/files.ts).
   async presignGet(key: string): Promise<string> {
     return `${env.PUBLIC_API_URL}/api/files/${key}`;

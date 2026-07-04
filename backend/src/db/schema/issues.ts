@@ -3,7 +3,7 @@ import type { CapturedMetadata, Region, TranscriptStatus } from "@brainbox/share
 
 import { projects } from "./projects.ts";
 
-// jsonb columns are typed straight from the @brainbox/shared contract — this is
+// jsonb columns are typed straight from the @brainbox/shared contract - this is
 // the first cross-package consumer of the shared types.
 //
 // DB ↔ shared `Issue` seam (handled at the API boundary in step 5, not here):
@@ -22,7 +22,7 @@ export const issues = pgTable("issues", {
     .notNull()
     .defaultNow(),
   text: text("text"),
-  // A submission is a screenshot OR a screen recording — so screenshot_key,
+  // A submission is a screenshot OR a screen recording - so screenshot_key,
   // crop_key and region are all nullable (recordings have none of them).
   screenshotKey: text("screenshot_key"),
   // Auto-generated crop of the highlighted region (null if cropping failed).

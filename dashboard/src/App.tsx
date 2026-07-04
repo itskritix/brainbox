@@ -2,10 +2,11 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { ProjectLayout } from "./components/ProjectLayout";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import { Inbox } from "./pages/Inbox";
+import { Home } from "./pages/Home";
 import { LegacyIssue } from "./pages/LegacyIssue";
 import { Login } from "./pages/Login";
-import { Projects } from "./pages/Projects";
+import { Report } from "./pages/Report";
+import { Reports } from "./pages/Reports";
 import { Settings } from "./pages/Settings";
 
 export const router = createBrowserRouter([
@@ -13,13 +14,13 @@ export const router = createBrowserRouter([
   {
     element: <ProtectedRoute />,
     children: [
-      { path: "/", element: <Projects /> },
+      { path: "/", element: <Home /> },
       {
         path: "/projects/:projectId",
         element: <ProjectLayout />,
         children: [
-          { index: true, element: <Inbox /> },
-          { path: "issues/:issueId", element: <Inbox /> },
+          { index: true, element: <Reports /> },
+          { path: "issues/:issueId", element: <Report /> },
           { path: "settings", element: <Settings /> },
         ],
       },

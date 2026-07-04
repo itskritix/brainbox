@@ -11,7 +11,7 @@ import {
 import { env } from "../env.ts";
 
 // Passed to initAuthConfig(); it invokes this per request (the Context arg is
-// unused — all config comes from `env`, since `c.env` is empty on Node).
+// unused - all config comes from `env`, since `c.env` is empty on Node).
 export function getAuthConfig() {
   return {
     secret: env.AUTH_SECRET,
