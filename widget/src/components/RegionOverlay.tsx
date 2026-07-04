@@ -16,9 +16,13 @@ function rectFrom(a: Pt, b: Pt): Region {
 export function RegionOverlay({
   onComplete,
   onCancel,
+  caption = "Drag to highlight the problem area · Esc to cancel",
+  dim = 0.35,
 }: {
   onComplete: (r: Region) => void;
   onCancel: () => void;
+  caption?: string;
+  dim?: number;
 }) {
   const [box, setBox] = useState<Region | null>(null);
   const start = useRef<Pt | null>(null);
@@ -34,7 +38,7 @@ export function RegionOverlay({
   return (
     <div
       className="fixed inset-0 z-[2147483647] cursor-crosshair select-none"
-      style={{ background: "rgba(0,0,0,0.35)" }}
+      style={{ background: `rgba(0,0,0,${dim})` }}
       onMouseDown={(e) => {
         const p = { x: e.clientX, y: e.clientY };
         start.current = p;
@@ -52,7 +56,7 @@ export function RegionOverlay({
       }}
     >
       <div className="pointer-events-none absolute left-1/2 top-4 -translate-x-1/2 rounded-full bg-elevated px-3 py-1 text-xs text-default">
-        Drag to highlight the problem area · Esc to cancel
+        {caption}
       </div>
       {box && (
         <div

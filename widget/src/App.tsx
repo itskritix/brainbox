@@ -3,8 +3,9 @@ import type { FeedbackPayload, ProjectKey, Region } from "@brainbox/shared";
 import type { WidgetConfig } from "./lib/config.ts";
 import { captureMetadata } from "./lib/metadata.ts";
 import { cssPath, elementAt } from "./lib/selector.ts";
-import { captureScreenshot } from "./lib/capture.ts";
+import { captureScreenshot, captureViewport } from "./lib/capture.ts";
 import { canSessionRecord, startSessionRecording, type SessionRecording } from "./lib/session.ts";
+import { clearHighlights } from "./lib/annotate.ts";
 import { submitFeedback } from "./lib/submit.ts";
 import { Launcher } from "./components/Launcher.tsx";
 import { Chooser } from "./components/Chooser.tsx";
@@ -46,6 +47,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
     const rec = recRef.current;
     recRef.current = null;
     if (rec) void rec.stop().catch(() => {});
+    clearHighlights();
     setStatus("idle");
     setRegion(null);
     setShot(null);
@@ -90,6 +92,8 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
     const rec = recRef.current;
     if (!rec) return;
     recRef.current = null;
+    // clear before stop() so the removal lands inside the recording
+    clearHighlights();
     try {
       const { session: blob, audio } = await rec.stop();
       if (blob.size > MAX_SESSION_BYTES) {
@@ -99,12 +103,21 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
       }
       setSession(blob);
       setRecAudio(audio);
+      // last-frame thumbnail: shown in the composer and uploaded as the issue's
+      // screenshot so the dashboard list gets a real preview. Best-effort.
+      try {
+        const thumb = await captureViewport(hostEl);
+        setShot(thumb);
+        setShotUrl(URL.createObjectURL(thumb));
+      } catch {
+        /* composer falls back to the text note */
+      }
       setStatus("composing");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Recording failed");
       setStatus("error");
     }
-  }, []);
+  }, [hostEl]);
 
   // rrweb DOM recording — starts instantly, no permission prompt, captures only the app.
   const startRecord = useCallback(() => {
@@ -160,7 +173,11 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
       )}
       {status === "selecting" && <RegionOverlay onComplete={onRegion} onCancel={reset} />}
       {status === "recording" && (
-        <RecordOverlay position={config.position} onStop={() => void finishRecording()} />
+        <RecordOverlay
+          position={config.position}
+          onStop={() => void finishRecording()}
+          micActive={() => recRef.current?.micActive() ?? false}
+        />
       )}
       {status === "composing" && (shotUrl || session) && (
         <Composer

@@ -295,7 +295,11 @@ export function IssueDetail() {
             <Shot label="Highlighted area" url={issue.crop.url} onZoom={setZoomUrl} />
           )}
           {issue.screenshot?.url && (
-            <Shot label="Full screenshot" url={issue.screenshot.url} onZoom={setZoomUrl} />
+            <Shot
+              label={issue.session ? "Last frame" : "Full screenshot"}
+              url={issue.screenshot.url}
+              onZoom={setZoomUrl}
+            />
           )}
           {issue.text && (
             <p className="rounded-2xl bg-elevated p-4 text-sm text-default">{issue.text}</p>

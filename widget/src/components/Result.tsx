@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { Check, Loader2, X } from "lucide-react";
 import { posClass, type Position } from "../lib/position.ts";
+
+const SUCCESS_DISMISS_MS = 3000;
 
 export function Result({
   kind,
@@ -14,6 +17,12 @@ export function Result({
   position: Position;
   onClose?: () => void;
 }) {
+  // success is a confirmation, not a decision — dismiss itself. Errors stay.
+  useEffect(() => {
+    if (kind !== "success" || !onClose) return;
+    const t = setTimeout(onClose, SUCCESS_DISMISS_MS);
+    return () => clearTimeout(t);
+  }, [kind, onClose]);
   return (
     <div
       className={`fixed ${posClass(position)} z-[2147483647] w-72 rounded-2xl border border-default bg-elevated p-4 shadow-3xl`}
