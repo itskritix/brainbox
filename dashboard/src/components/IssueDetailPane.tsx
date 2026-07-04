@@ -132,8 +132,13 @@ export function IssueDetailPane({ issueId, projectId }: { issueId: string; proje
       <div className="grid gap-8 p-4 sm:p-6 xl:grid-cols-[minmax(0,1.65fr)_minmax(240px,1fr)]">
         <div className="min-w-0 space-y-6">
           {issue.session?.url && (
-            <Figure label="Session replay">
-              <SessionReplay url={issue.session.url} vw={m.viewport.width} vh={m.viewport.height} />
+            <Figure label="Session replay" aside={issue.audio ? "with voice" : undefined}>
+              <SessionReplay
+                url={issue.session.url}
+                audioUrl={issue.audio?.url}
+                vw={m.viewport.width}
+                vh={m.viewport.height}
+              />
             </Figure>
           )}
           {issue.video?.url && (
@@ -172,7 +177,8 @@ export function IssueDetailPane({ issueId, projectId }: { issueId: string; proje
               </p>
             </Figure>
           )}
-          {issue.audio && (
+          {/* with a session, the voice plays inside the replay instead */}
+          {issue.audio && !issue.session && (
             <Figure label="Voice note">
               <audio controls src={issue.audio.url} className="w-full">
                 <track kind="captions" />
