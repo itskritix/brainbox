@@ -1,5 +1,5 @@
 import { jsonb, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import type { CapturedMetadata, Region } from "@brainbox/shared";
+import type { CapturedMetadata, Region, TranscriptStatus } from "@brainbox/shared";
 
 import { projects } from "./projects.ts";
 
@@ -34,6 +34,10 @@ export const issues = pgTable("issues", {
   sessionKey: text("session_key"),
   audioKey: text("audio_key"),
   audioMime: text("audio_mime"),
+  // Speech-to-text of the voice note. Status is null when the issue has no
+  // audio or transcription was disabled at ingest time.
+  audioTranscript: text("audio_transcript"),
+  audioTranscriptStatus: text("audio_transcript_status").$type<TranscriptStatus>(),
   region: jsonb("region").$type<Region>(),
   metadata: jsonb("metadata").$type<CapturedMetadata>().notNull(),
 });

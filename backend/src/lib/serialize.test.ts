@@ -56,6 +56,8 @@ describe("toIssue", () => {
     sessionKey: null,
     audioKey: "p1/i1/a.webm",
     audioMime: "audio/webm",
+    audioTranscript: null,
+    audioTranscriptStatus: null,
     region,
     metadata,
   };
@@ -75,6 +77,21 @@ describe("toIssue", () => {
   it("omits audio when there is no audioKey", async () => {
     const issue = await toIssue({ ...base, audioKey: null, audioMime: null }, storage);
     expect(issue.audio).toBeUndefined();
+  });
+
+  it("maps a finished transcript onto audio", async () => {
+    const issue = await toIssue(
+      { ...base, audioTranscript: "the save button is broken", audioTranscriptStatus: "done" },
+      storage,
+    );
+    expect(issue.audio?.transcript).toBe("the save button is broken");
+    expect(issue.audio?.transcriptStatus).toBe("done");
+  });
+
+  it("maps a pending transcription with no transcript text", async () => {
+    const issue = await toIssue({ ...base, audioTranscriptStatus: "pending" }, storage);
+    expect(issue.audio?.transcript).toBeUndefined();
+    expect(issue.audio?.transcriptStatus).toBe("pending");
   });
 
   it("includes the crop with a signed url when cropKey is set", async () => {

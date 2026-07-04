@@ -8,6 +8,10 @@ export interface StoredFile {
   url?: string;
 }
 
+/** Lifecycle of the voice-note transcription. Absent when transcription is
+ *  disabled or the issue has no audio. */
+export type TranscriptStatus = "pending" | "done" | "failed";
+
 /** A feedback submission as stored by the backend and rendered by the dashboard.
  *  `createdAt` is an ISO 8601 string for serialization safety across the wire. */
 export interface Issue {
@@ -25,7 +29,12 @@ export interface Issue {
   /** Present for session-replay submissions: a gzipped rrweb event log,
    *  replayed in the dashboard. No permission prompt, records only the app. */
   session?: StoredFile;
-  audio?: StoredFile & { mime: string };
+  audio?: StoredFile & {
+    mime: string;
+    /** Speech-to-text of the voice note; present once transcription is done. */
+    transcript?: string;
+    transcriptStatus?: TranscriptStatus;
+  };
   /** The highlighted area - only for screenshot submissions. */
   region?: Region;
   metadata: CapturedMetadata;

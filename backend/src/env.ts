@@ -33,6 +33,14 @@ export const env = {
   R2_SECRET_ACCESS_KEY: process.env.R2_SECRET_ACCESS_KEY ?? "",
   R2_BUCKET: process.env.R2_BUCKET ?? "",
 
+  // Voice-note transcription (Vercel AI SDK). Unset provider = transcription
+  // off. TRANSCRIPTION_MODEL overrides the provider's default model; only the
+  // selected provider's API key is needed.
+  TRANSCRIPTION_PROVIDER: process.env.TRANSCRIPTION_PROVIDER ?? "",
+  TRANSCRIPTION_MODEL: process.env.TRANSCRIPTION_MODEL ?? "",
+  GROQ_API_KEY: process.env.GROQ_API_KEY ?? "",
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY ?? "",
+
   // Upload caps (bytes): screenshot 5MB, audio 10MB, screen recording 50MB.
   MAX_SCREENSHOT_BYTES: Number(process.env.MAX_SCREENSHOT_BYTES ?? 5 * 1024 * 1024),
   MAX_AUDIO_BYTES: Number(process.env.MAX_AUDIO_BYTES ?? 10 * 1024 * 1024),

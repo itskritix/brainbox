@@ -16,6 +16,8 @@
     "db:seed": "tsx --env-file=.env scripts/seed.ts"
   },
   "dependencies": {
+    "@ai-sdk/groq": "^4.0.5",
+    "@ai-sdk/openai": "^4.0.7",
     "@auth/core": "0.41.2",
     "@auth/drizzle-adapter": "^1.11.2",
     "@aws-sdk/client-s3": "^3.1075.0",
@@ -23,6 +25,7 @@
     "@brainbox/shared": "workspace:*",
     "@hono/auth-js": "^1.1.1",
     "@hono/node-server": "^2.0.6",
+    "ai": "^7.0.15",
     "drizzle-orm": "^0.45.2",
     "hono": "^4.12.27",
     "postgres": "^3.4.9",

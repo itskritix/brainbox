@@ -29,6 +29,8 @@ export async function toIssue(row: IssueRow, storage: Storage): Promise<Issue> {
         key: row.audioKey,
         url: await storage.presignGet(row.audioKey),
         mime: row.audioMime ?? "application/octet-stream",
+        transcript: row.audioTranscript ?? undefined,
+        transcriptStatus: row.audioTranscriptStatus ?? undefined,
       }
     : undefined;
   return {
