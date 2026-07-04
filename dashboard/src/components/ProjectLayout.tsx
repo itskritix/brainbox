@@ -5,7 +5,7 @@ import { LayoutGrid, LogOut, Settings } from "lucide-react";
 import type { Project } from "@brainbox/shared";
 
 import { api } from "../lib/api";
-import type { ProjectOutletContext } from "../lib/useProject";
+import { LAST_PROJECT_KEY, type ProjectOutletContext } from "../lib/useProject";
 import { cn } from "../lib/utils";
 import { ProjectSwitcher } from "./ProjectSwitcher";
 import { Spinner } from "./ui/spinner";
@@ -75,6 +75,11 @@ export function ProjectLayout() {
       .catch((e: Error) => setError(e.message));
   }, []);
 
+  // `/` forwards here next session
+  useEffect(() => {
+    if (projectId) localStorage.setItem(LAST_PROJECT_KEY, projectId);
+  }, [projectId]);
+
   if (error) {
     return (
       <div className="grid min-h-dvh place-items-center bg-background px-6">
@@ -102,12 +107,15 @@ export function ProjectLayout() {
         <div className="text-center">
           <p className="text-sm text-default">This project doesn't exist or isn't yours.</p>
           <Link to="/" className="mt-2 inline-block text-sm text-link hover:underline">
-            Back to projects
+            Go to your projects
           </Link>
         </div>
       </div>
     );
   }
+
+  const onCreated = (next: Project) =>
+    setProjects((prev) => (prev ? [next, ...prev] : [next]));
 
   const base = `/projects/${project.id}`;
   const isSettings = location.pathname.endsWith("/settings");
@@ -125,7 +133,7 @@ export function ProjectLayout() {
           <Wordmark />
         </div>
         <div className="px-3">
-          <ProjectSwitcher current={project} projects={projects} />
+          <ProjectSwitcher current={project} projects={projects} onCreated={onCreated} />
         </div>
         <nav className="mt-4 flex flex-col gap-0.5 px-3">
           <NavItem
@@ -156,7 +164,7 @@ export function ProjectLayout() {
         <header className="sticky top-0 z-10 border-b border-default bg-background/90 backdrop-blur lg:hidden">
           <div className="flex items-center gap-2 px-4 py-2.5">
             <div className="min-w-0 flex-1">
-              <ProjectSwitcher current={project} projects={projects} />
+              <ProjectSwitcher current={project} projects={projects} onCreated={onCreated} />
             </div>
             <nav className="flex shrink-0 gap-1">
               <MobileTab to={base} active={!isSettings} label="Reports" />
