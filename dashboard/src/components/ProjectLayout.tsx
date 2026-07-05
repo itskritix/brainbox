@@ -148,8 +148,16 @@ export function ProjectLayout() {
           <NavItem to={`${base}/settings`} active={isSettings} icon={<Settings />} label="Settings" />
         </nav>
         <div className="mt-auto flex items-center gap-2 border-t border-default px-4 py-3">
-          <span className="min-w-0 flex-1 truncate font-mono text-xs text-muted">
-            {session?.user?.email ?? ""}
+          {session?.user?.image && (
+            <img
+              src={session.user.image}
+              alt=""
+              referrerPolicy="no-referrer"
+              className="size-6 shrink-0 rounded-full"
+            />
+          )}
+          <span className="min-w-0 flex-1 truncate text-xs text-muted">
+            {session?.user?.name ?? session?.user?.email ?? ""}
           </span>
           <button
             type="button"

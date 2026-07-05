@@ -106,9 +106,19 @@ export function Home() {
         <div className="mx-auto flex h-14 w-full max-w-2xl items-center justify-between px-4 sm:px-6">
           <Wordmark />
           <div className="flex items-center gap-3">
-            {session?.user?.email && (
-              <span className="hidden font-mono text-xs text-muted sm:block">
-                {session.user.email}
+            {session?.user && (
+              <span className="hidden items-center gap-2 sm:flex">
+                {session.user.image && (
+                  <img
+                    src={session.user.image}
+                    alt=""
+                    referrerPolicy="no-referrer"
+                    className="size-6 rounded-full"
+                  />
+                )}
+                <span className="text-xs text-muted">
+                  {session.user.name ?? session.user.email}
+                </span>
               </span>
             )}
             <Button variant="ghost" size="sm" onClick={() => signOut()}>

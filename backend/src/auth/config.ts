@@ -10,6 +10,20 @@ import {
 } from "../db/schema/index.ts";
 import { env } from "../env.ts";
 
+// Extra fields captured from the Google profile and persisted on `users`.
+declare module "@auth/core/types" {
+  interface User {
+    firstName?: string | null;
+    lastName?: string | null;
+  }
+}
+declare module "@auth/core/adapters" {
+  interface AdapterUser {
+    firstName?: string | null;
+    lastName?: string | null;
+  }
+}
+
 // Passed to initAuthConfig(); it invokes this per request (the Context arg is
 // unused - all config comes from `env`, since `c.env` is empty on Node).
 export function getAuthConfig() {
@@ -23,7 +37,20 @@ export function getAuthConfig() {
       verificationTokensTable: verificationTokens,
     }),
     providers: [
-      Google({ clientId: env.GOOGLE_ID, clientSecret: env.GOOGLE_SECRET }),
+      Google({
+        clientId: env.GOOGLE_ID,
+        clientSecret: env.GOOGLE_SECRET,
+        profile(profile) {
+          return {
+            id: profile.sub,
+            name: profile.name,
+            firstName: profile.given_name ?? null,
+            lastName: profile.family_name ?? null,
+            email: profile.email,
+            image: profile.picture,
+          };
+        },
+      }),
     ],
     session: { strategy: "jwt" as const },
   };
