@@ -60,6 +60,39 @@ describe("submitFeedback", () => {
     expect(body?.get("audio")).toBeInstanceOf(File);
   });
 
+  it("dispatches brainbox:submitted with the issue id on success", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response(JSON.stringify({ id: "abc" }), { status: 201 })),
+    );
+    const handler = vi.fn();
+    window.addEventListener("brainbox:submitted", handler);
+    try {
+      await submitFeedback({ endpoint: "e", payload, screenshot: png() });
+    } finally {
+      window.removeEventListener("brainbox:submitted", handler);
+    }
+
+    expect(handler).toHaveBeenCalledTimes(1);
+    const event = handler.mock.calls[0]![0] as CustomEvent<{ id: string }>;
+    expect(event.detail.id).toBe("abc");
+  });
+
+  it("does not dispatch brainbox:submitted on failure", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => new Response("nope", { status: 500 })));
+    const handler = vi.fn();
+    window.addEventListener("brainbox:submitted", handler);
+    try {
+      await expect(
+        submitFeedback({ endpoint: "e", payload, screenshot: png() }),
+      ).rejects.toThrow();
+    } finally {
+      window.removeEventListener("brainbox:submitted", handler);
+    }
+
+    expect(handler).not.toHaveBeenCalled();
+  });
+
   it("throws the server error message on a non-2xx JSON response", async () => {
     vi.stubGlobal(
       "fetch",

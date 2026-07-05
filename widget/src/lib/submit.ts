@@ -38,6 +38,8 @@ export async function submitFeedback({
   }
   const data: { id?: string } = await res.json();
   if (!data.id) throw new Error("Malformed response");
+  // Let the host page react to a completed submission (mirrors brainbox:open/close).
+  window.dispatchEvent(new CustomEvent("brainbox:submitted", { detail: { id: data.id } }));
   return data.id;
 }
 
