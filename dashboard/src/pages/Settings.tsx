@@ -1,8 +1,15 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import type { Project } from "@brainbox/shared";
+
 import { CopyButton } from "../components/CopyButton";
 import { DomainsEditor } from "../components/DomainsEditor";
 import { Eyebrow } from "../components/Eyebrow";
 import { InstallSnippet } from "../components/InstallSnippet";
-import { useProject } from "../lib/useProject";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { api } from "../lib/api";
+import { LAST_PROJECT_KEY, useProject } from "../lib/useProject";
 
 function Section({
   label,
@@ -22,8 +29,99 @@ function Section({
   );
 }
 
+function DangerZone({
+  project,
+  projects,
+  onDeleted,
+}: {
+  project: Project;
+  projects: Project[];
+  onDeleted: (id: string) => void;
+}) {
+  const navigate = useNavigate();
+  const [confirming, setConfirming] = useState(false);
+  const [name, setName] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function destroy(e: React.FormEvent) {
+    e.preventDefault();
+    if (name !== project.name) return;
+    setBusy(true);
+    setError(null);
+    try {
+      await api.deleteProject(project.id);
+      localStorage.removeItem(LAST_PROJECT_KEY);
+      const next = projects.find((p) => p.id !== project.id);
+      onDeleted(project.id);
+      navigate(next ? `/projects/${next.id}` : "/", { replace: true });
+    } catch (err) {
+      setError((err as Error).message);
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="rounded-xl border border-default bg-elevated px-4 py-3.5">
+      {confirming ? (
+        <form onSubmit={destroy} className="space-y-3">
+          <p className="text-sm text-default">
+            Type <span className="font-medium text-emphasis">{project.name}</span> to confirm.
+            All of its reports go with it.
+          </p>
+          <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder={project.name}
+            autoFocus
+            disabled={busy}
+          />
+          <div className="flex items-center gap-2">
+            <Button
+              type="submit"
+              variant="outline"
+              size="sm"
+              disabled={busy || name !== project.name}
+              className="text-error hover:text-error"
+            >
+              {busy ? "Deleting…" : "Delete this project"}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              disabled={busy}
+              onClick={() => {
+                setConfirming(false);
+                setName("");
+                setError(null);
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+          {error && <p className="text-xs text-error">{error}</p>}
+        </form>
+      ) : (
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm text-default">Delete this project and all its reports.</p>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="text-error hover:text-error"
+            onClick={() => setConfirming(true)}
+          >
+            Delete project
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function Settings() {
-  const { project, setProject } = useProject();
+  const { project, projects, setProject, removeProject } = useProject();
 
   return (
     <div className="min-h-0 flex-1 lg:overflow-y-auto">
@@ -58,6 +156,10 @@ export function Settings() {
                 onChange={(allowedOrigins) => setProject({ ...project, allowedOrigins })}
               />
             </div>
+          </Section>
+
+          <Section label="Danger zone" hint="This can't be undone.">
+            <DangerZone project={project} projects={projects} onDeleted={removeProject} />
           </Section>
         </div>
       </div>

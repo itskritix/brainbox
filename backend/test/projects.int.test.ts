@@ -111,6 +111,42 @@ describe("PATCH /api/projects/:id", () => {
   });
 });
 
+describe("DELETE /api/projects/:id", () => {
+  it("deletes the owner's project and cascades its issues", async () => {
+    const me = await makeUser();
+    const p = await makeProject(me.id);
+    const issue = await makeIssue(p.id);
+    const cookie = await authCookie(me.id);
+
+    const res = await app.request(`/api/projects/${p.id}`, {
+      method: "DELETE",
+      headers: { cookie },
+    });
+    expect(res.status).toBe(200);
+
+    expect((await app.request(`/api/projects/${p.id}`, { headers: { cookie } })).status).toBe(404);
+    expect((await app.request(`/api/issues/${issue.id}`, { headers: { cookie } })).status).toBe(404);
+  });
+
+  it("404s another user's project (no existence leak)", async () => {
+    const me = await makeUser();
+    const other = await makeUser();
+    const theirs = await makeProject(other.id);
+
+    const res = await app.request(`/api/projects/${theirs.id}`, {
+      method: "DELETE",
+      headers: { cookie: await authCookie(me.id) },
+    });
+    expect(res.status).toBe(404);
+
+    // still there for its owner
+    const check = await app.request(`/api/projects/${theirs.id}`, {
+      headers: { cookie: await authCookie(other.id) },
+    });
+    expect(check.status).toBe(200);
+  });
+});
+
 describe("GET /api/projects issue counts", () => {
   it("includes issueCount per project", async () => {
     const me = await makeUser();

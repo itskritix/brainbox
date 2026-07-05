@@ -101,6 +101,21 @@ export const projectsRoute = new Hono<AppEnv>()
     if (!row || row.ownerId !== uid) return c.json({ error: "Not found" }, 404);
     return c.json(toProject(row));
   })
+  .delete("/:id", async (c) => {
+    const uid = c.get("authUser").token?.sub;
+    if (!uid) return c.json({ error: "Unauthorized" }, 401);
+    const db = c.get("db");
+    const [existing] = await db
+      .select()
+      .from(projects)
+      .where(eq(projects.id, c.req.param("id")))
+      .limit(1);
+    if (!existing || existing.ownerId !== uid) return c.json({ error: "Not found" }, 404);
+    // Issues go with it via the FK cascade; stored media is orphaned for now
+    // (the Storage interface has no delete yet).
+    await db.delete(projects).where(eq(projects.id, existing.id));
+    return c.json({ ok: true });
+  })
   .get("/:id/issues", async (c) => {
     const uid = c.get("authUser").token?.sub;
     if (!uid) return c.json({ error: "Unauthorized" }, 401);
