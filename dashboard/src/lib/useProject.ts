@@ -10,6 +10,8 @@ export interface ProjectOutletContext {
   projects: Project[];
   /** Patch the project in the layout's cache after a mutation. */
   setProject: (next: Project) => void;
+  /** Drop a project from the layout's cache after deleting it. */
+  removeProject: (id: string) => void;
 }
 
 export function useProject(): ProjectOutletContext {

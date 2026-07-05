@@ -124,6 +124,8 @@ export function ProjectLayout() {
     projects,
     setProject: (next) =>
       setProjects((prev) => prev?.map((p) => (p.id === next.id ? next : p)) ?? prev),
+    removeProject: (id) =>
+      setProjects((prev) => prev?.filter((p) => p.id !== id) ?? prev),
   };
 
   return (

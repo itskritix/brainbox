@@ -26,6 +26,7 @@ export const api = {
   getProject: (id: string) => req<Project>(`/api/projects/${id}`),
   updateProject: (id: string, body: { name?: string; allowedOrigins?: string[] }) =>
     req<Project>(`/api/projects/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
+  deleteProject: (id: string) => req<{ ok: boolean }>(`/api/projects/${id}`, { method: "DELETE" }),
   listIssues: (id: string) => req<Issue[]>(`/api/projects/${id}/issues`),
   getIssue: (id: string) => req<Issue>(`/api/issues/${id}`),
 };

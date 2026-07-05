@@ -10,6 +10,8 @@ import css from "./index.css?inline";
 // Module scripts (dev harness) leave it null, so we fall back to a query below.
 const currentScript = document.currentScript as HTMLScriptElement | null;
 
+// Window events for host pages: "brainbox:open" / "brainbox:close" (fired by the
+// api below) and "brainbox:submitted" ({ detail: { id } }) after a successful submit.
 const api = {
   identify(identity: Identity) {
     setIdentity(identity);
