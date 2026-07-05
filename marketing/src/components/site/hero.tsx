@@ -1,5 +1,4 @@
 import { WaitlistForm } from "./waitlist-form"
-import { HeroTicket } from "./hero-ticket"
 
 export function Hero() {
   return (
@@ -22,9 +21,9 @@ export function Hero() {
         </h1>
 
         <p className="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-default">
-          Brainbox is a tiny widget for your app. A user taps, points at what broke, and talks
-          &mdash; a ready-to-work ticket lands in Linear, GitHub, or Slack. The hours you spend
-          decoding &ldquo;it&rsquo;s broken&rdquo; messages go back into building.
+          Brainbox is a tiny widget for your app. A user taps, points at what broke, and talks.
+          A ready-to-work ticket lands in Linear, GitHub, or Slack. The hours you spend decoding
+          &ldquo;it&rsquo;s broken&rdquo; messages go back into building.
         </p>
 
         <div className="mt-9 flex flex-col items-center gap-3">
@@ -34,14 +33,6 @@ export function Hero() {
           </span>
         </div>
 
-        {/* product visual: raw user complaint → the ticket Brainbox writes */}
-        <HeroTicket />
-
-        <p className="mx-auto mt-8 max-w-lg text-pretty text-[15px] leading-relaxed text-gray-11/80">
-          Other tools just forward the message. Brainbox{" "}
-          <span className="text-emphasis">writes the ticket</span> &mdash; title, repro,
-          labels and screenshot &mdash; so you never triage a raw note again.
-        </p>
       </div>
     </section>
   )
