@@ -16,14 +16,15 @@ export function Hero() {
         </span>
 
         <h1 className="text-gradient mx-auto max-w-4xl text-balance text-[2.6rem] font-semibold leading-[1.06] tracking-[-0.03em] sm:text-6xl md:text-[5.2rem] md:leading-[0.98]">
-          Users talk.
+          Stop triaging feedback.
           <br />
-          Brainbox writes the ticket.
+          Start shipping fixes.
         </h1>
 
         <p className="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-default">
-          Your users tap once. You get a clear, contextual issue: what broke, what they said, and
-          the feature they want, straight in Linear, GitHub, or Slack.
+          Brainbox is a tiny widget for your app. A user taps, points at what broke, and talks
+          &mdash; a ready-to-work ticket lands in Linear, GitHub, or Slack. The hours you spend
+          decoding &ldquo;it&rsquo;s broken&rdquo; messages go back into building.
         </p>
 
         <div className="mt-9 flex flex-col items-center gap-3">
