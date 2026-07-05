@@ -42,6 +42,9 @@ export function loadWidget(config: WidgetConfig): void {
   script.dataset.project = config.project;
   script.dataset.endpoint = config.endpoint;
   script.dataset.position = "bottom-right";
+  // The landing page is dark; pin the theme so the demo tracks the page,
+  // not the widget's default or the visitor's OS preference.
+  script.dataset.theme = "dark";
   document.body.appendChild(script);
 }
 

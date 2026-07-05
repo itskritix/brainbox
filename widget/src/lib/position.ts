@@ -1,4 +1,6 @@
-export type Position = "bottom-right" | "bottom-left" | "top-right" | "top-left";
+import type { WidgetPosition } from "@brainbox/shared";
+
+export type Position = WidgetPosition;
 
 /** Tailwind anchor classes for a fixed element pinned to a viewport corner. */
 export function posClass(p: Position): string {

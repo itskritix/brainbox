@@ -29,6 +29,9 @@ The product has three distinct surfaces - keep them separate:
     (default).
   - **Manual trigger** - the customer's own element, wired via
     `window.Brainbox.open()` or a `[data-brainbox-trigger]` attribute.
+- **Theme** - the widget's color scheme, set via `data-theme` on the snippet:
+  `light`, `dark` (default), or `auto` (follows the end-user's
+  `prefers-color-scheme`, live).
 - **Project key** - a project's public identifier passed to the widget
   (`data-project`), scoping captured feedback to that project.
 

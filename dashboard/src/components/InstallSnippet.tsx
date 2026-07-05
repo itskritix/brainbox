@@ -1,10 +1,16 @@
 import { API_URL } from "../lib/authConfig";
-import { snippetFor } from "../lib/snippet";
+import { snippetFor, type SnippetOptions } from "../lib/snippet";
 import { CopyButton } from "./CopyButton";
 
 /** The install tag, presented as a small code editor pane with a copy action. */
-export function InstallSnippet({ projectKey }: { projectKey: string }) {
-  const snippet = snippetFor(projectKey, `${API_URL}/ingest`);
+export function InstallSnippet({
+  projectKey,
+  options,
+}: {
+  projectKey: string;
+  options?: SnippetOptions;
+}) {
+  const snippet = snippetFor(projectKey, `${API_URL}/ingest`, options);
   return (
     <div className="overflow-hidden rounded-xl border border-default bg-subtle">
       <div className="flex items-center justify-between border-b border-default px-3 py-2">

@@ -4,6 +4,8 @@ import type { Identity } from "@brainbox/shared";
 import { App } from "./App.tsx";
 import { readConfig } from "./lib/config.ts";
 import { installCapture, setIdentity } from "./lib/metadata.ts";
+import { watchTheme } from "./lib/theme.ts";
+import { installTriggerDelegation } from "./lib/trigger.ts";
 import css from "./index.css?inline";
 
 // Captured at eval time - for a classic <script src> this is the embedding tag.
@@ -63,14 +65,20 @@ function mount() {
   shadow.appendChild(style);
 
   const container = document.createElement("div");
-  container.className = "dark";
+  container.className = "bb-root";
   shadow.appendChild(container);
 
-  // "mount" mode: the host renders feedback through their own trigger.
-  if (config.mode === "mount" && config.mount) {
-    const target = document.querySelector(config.mount);
-    target?.addEventListener("click", () => api.open());
-  }
+  // classList.toggle (not className=) so bb-root survives live "auto" flips.
+  watchTheme(
+    config.theme,
+    window.matchMedia?.("(prefers-color-scheme: dark)") ?? null,
+    (resolved) => container.classList.toggle("dark", resolved === "dark"),
+  );
+
+  // Always wired, regardless of trigger mode - "manual" only hides our FAB.
+  // A trigger click before React mounts is dropped, same sub-frame race as a
+  // too-early Brainbox.open(); accepted.
+  installTriggerDelegation(document, () => api.open());
 
   createRoot(container).render(createElement(App, { config, hostEl: host }));
 }

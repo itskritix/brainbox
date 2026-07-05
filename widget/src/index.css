@@ -9,24 +9,26 @@
    Same two-layer system as marketing/dashboard, but this CSS is
    injected into the widget's Shadow DOM. `:root` is rewritten to
    `:host` at inject time (embed.ts) because `:root` never matches
-   inside a shadow tree. The app is rendered inside a `.dark`
-   wrapper, so the `.dark` overrides apply.
+   inside a shadow tree. The app is rendered inside a `.bb-root`
+   wrapper that carries the base typography; embed.ts toggles the
+   `dark` class on it per the resolved data-theme.
    ============================================================ */
 
 @theme inline {
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --shadow-button: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 1px 2px rgba(0, 0, 0, 0.6);
-  --shadow-3xl: 0 16px 48px -12px rgba(0, 0, 0, 0.6);
+  --shadow-button: var(--shadow-button-value);
+  --shadow-3xl: var(--shadow-3xl-value);
 }
 
 @layer base {
-  :host {
-    color-scheme: dark;
-  }
-  .dark {
+  .bb-root {
     color: var(--text-emphasis);
+    color-scheme: light;
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     letter-spacing: -0.011em;
+  }
+  .dark {
+    color-scheme: dark;
   }
 }

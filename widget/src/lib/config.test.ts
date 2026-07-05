@@ -15,24 +15,39 @@ describe("readConfig", () => {
     expect(cfg).toMatchObject({
       projectKey: "pk_abc",
       endpoint: "http://x/ingest",
-      mode: "float",
+      trigger: "floating",
+      theme: "dark",
       position: "bottom-right",
     });
   });
 
-  it("honors mode, mount, and position", () => {
+  it("honors trigger, theme, and position", () => {
     const cfg = readConfig(
       script({
         "data-project": "pk_a",
         "data-endpoint": "e",
-        "data-mode": "mount",
-        "data-mount": "#trigger",
+        "data-trigger": "manual",
+        "data-theme": "auto",
         "data-position": "top-left",
       }),
     );
-    expect(cfg?.mode).toBe("mount");
-    expect(cfg?.mount).toBe("#trigger");
+    expect(cfg?.trigger).toBe("manual");
+    expect(cfg?.theme).toBe("auto");
     expect(cfg?.position).toBe("top-left");
+  });
+
+  it("falls back to floating on an unknown trigger", () => {
+    const cfg = readConfig(
+      script({ "data-project": "pk_a", "data-endpoint": "e", "data-trigger": "popup" }),
+    );
+    expect(cfg?.trigger).toBe("floating");
+  });
+
+  it("falls back to dark on an unknown theme", () => {
+    const cfg = readConfig(
+      script({ "data-project": "pk_a", "data-endpoint": "e", "data-theme": "neon" }),
+    );
+    expect(cfg?.theme).toBe("dark");
   });
 
   it("falls back to bottom-right on an unknown position", () => {

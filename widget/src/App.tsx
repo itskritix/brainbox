@@ -159,7 +159,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
 
   return (
     <>
-      {config.mode === "float" && status === "idle" && (
+      {config.trigger === "floating" && status === "idle" && (
         <Launcher position={config.position} onClick={() => setStatus("choosing")} />
       )}
       {status === "choosing" && (

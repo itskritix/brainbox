@@ -5,7 +5,7 @@ import type { Project } from "@brainbox/shared";
 import { CopyButton } from "../components/CopyButton";
 import { DomainsEditor } from "../components/DomainsEditor";
 import { Eyebrow } from "../components/Eyebrow";
-import { InstallSnippet } from "../components/InstallSnippet";
+import { SnippetConfigurator } from "../components/SnippetConfigurator";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { api } from "../lib/api";
@@ -134,9 +134,9 @@ export function Settings() {
         <div className="mt-8">
           <Section
             label="Install"
-            hint="Paste before </body> on every page you want feedback from."
+            hint="Pick how the widget looks and opens, then paste the snippet before </body> on every page you want feedback from."
           >
-            <InstallSnippet projectKey={project.key} />
+            <SnippetConfigurator projectKey={project.key} />
           </Section>
 
           <Section label="Project key" hint="Identifies this project in the snippet.">

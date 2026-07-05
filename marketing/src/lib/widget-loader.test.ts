@@ -31,6 +31,7 @@ describe("loadWidget", () => {
     expect(script.getAttribute("src")).toBe("/widget.js");
     expect(script.dataset.project).toBe("pk_a");
     expect(script.dataset.endpoint).toBe("http://x/ingest");
+    expect(script.dataset.theme).toBe("dark");
     expect(script.type).toBe("");
   });
 
