@@ -10,8 +10,7 @@
     "typecheck": "tsc -b",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest run",
-    "deploy": "pnpm build && pnpm dlx wrangler pages deploy dist --project-name brainbox-landing"
+    "test": "vitest run"
   },
   "dependencies": {
     "@radix-ui/colors": "^3.0.0",

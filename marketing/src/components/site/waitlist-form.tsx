@@ -10,7 +10,7 @@ export function WaitlistForm({ className }: { className?: string }) {
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (!email.trim()) return
-    // TODO: wire to a Resend audience / Cloudflare Pages Function for real capture.
+    // TODO: wire to a Resend audience / API endpoint for real capture.
     setDone(true)
   }
 
