@@ -29,14 +29,9 @@ export function Nav() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="hidden text-default sm:inline-flex">
-            <a href="#how">Sign in</a>
-          </Button>
-          <Button asChild size="sm">
-            <a href="#pricing">Reserve access</a>
-          </Button>
-        </div>
+        <Button asChild size="sm">
+          <a href="https://app.brainbox.sh">Sign in</a>
+        </Button>
       </div>
     </header>
   )
