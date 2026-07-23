@@ -73,7 +73,7 @@ waitlist.post("/", async (c) => {
   // New signup: send the confirmation (best-effort, tracked). A send failure
   // must never lose the signup or 500 the request.
   const emailer = getEmailer();
-  const tmpl = earlyAccessReservedEmail(email);
+  const tmpl = earlyAccessReservedEmail();
   try {
     await emailer.send({
       to: email,

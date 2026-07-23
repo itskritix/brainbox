@@ -8,20 +8,20 @@ export interface RenderedEmail {
   text: string;
 }
 
-export function earlyAccessReservedEmail(_email: string): RenderedEmail {
+export function earlyAccessReservedEmail(): RenderedEmail {
   const subject = "Your Brainbox early access is reserved";
 
   const text = [
     "You're on the list.",
     "",
-    "Thanks for reserving early access to Brainbox - the tiny in-app widget that",
+    "Thanks for reserving early access to Brainbox, the tiny in-app widget that",
     "turns a user's tap-and-talk into a ready-to-work ticket in Linear, GitHub,",
     "or Slack.",
     "",
     "We're onboarding people in small batches. You'll hear from us the moment",
-    "your spot opens up - no further action needed for now.",
+    "your spot opens up. No further action needed for now.",
     "",
-    "- The Brainbox team",
+    "Ganesh",
   ].join("\n");
 
   const html = `<!doctype html>
@@ -40,16 +40,16 @@ export function earlyAccessReservedEmail(_email: string): RenderedEmail {
             <tr>
               <td style="padding:16px 36px 8px 36px;">
                 <p style="margin:0;font-size:15px;line-height:1.6;color:#c4c4c4;">
-                  Thanks for reserving early access to Brainbox &mdash; the tiny in-app widget that turns a user&rsquo;s tap-and-talk into a ready-to-work ticket in Linear, GitHub, or Slack.
+                  Thanks for reserving early access to Brainbox, the tiny in-app widget that turns a user&rsquo;s tap-and-talk into a ready-to-work ticket in Linear, GitHub, or Slack.
                 </p>
                 <p style="margin:16px 0 0 0;font-size:15px;line-height:1.6;color:#c4c4c4;">
-                  We&rsquo;re onboarding people in small batches. You&rsquo;ll hear from us the moment your spot opens up &mdash; no further action needed for now.
+                  We&rsquo;re onboarding people in small batches. You&rsquo;ll hear from us the moment your spot opens up. No further action needed for now.
                 </p>
               </td>
             </tr>
             <tr>
               <td style="padding:28px 36px 36px 36px;">
-                <p style="margin:0;font-size:14px;line-height:1.6;color:#8f8f8f;">&mdash; The Brainbox team</p>
+                <p style="margin:0;font-size:14px;line-height:1.6;color:#8f8f8f;">Ganesh</p>
               </td>
             </tr>
           </table>
