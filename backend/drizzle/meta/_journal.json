@@ -43,6 +43,13 @@
       "when": 1783243777424,
       "tag": "0005_stormy_puck",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1784789319915,
+      "tag": "0006_faulty_leo",
+      "breakpoints": true
     }
   ]
 }

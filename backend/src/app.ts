@@ -11,6 +11,7 @@ import { ingest } from "./routes/ingest.ts";
 import { issuesRoute } from "./routes/issues.ts";
 import { me } from "./routes/me.ts";
 import { projectsRoute } from "./routes/projects.ts";
+import { waitlist } from "./routes/waitlist.ts";
 import type { AppEnv } from "./types.ts";
 
 export const app = new Hono<AppEnv>();
@@ -28,6 +29,8 @@ app.route("/health", health);
 app.use("/api/auth/*", authHandler());
 // Public widget ingest - auth is project key + origin allowlist, not a session.
 app.route("/ingest", ingest);
+// Public marketing waitlist capture - CORS-scoped to the marketing origins.
+app.route("/waitlist", waitlist);
 
 // Everything else under /api requires a valid session.
 app.use("/api/*", verifyAuth());

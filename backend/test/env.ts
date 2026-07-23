@@ -29,4 +29,6 @@ export const testEnv: Record<string, string> = {
   PUBLIC_API_URL: file.PUBLIC_API_URL ?? "http://localhost:8787",
   GOOGLE_ID: "test",
   GOOGLE_SECRET: "test",
+  // Log emails instead of sending them - tests never hit the network.
+  EMAIL_DRIVER: "console",
 };
