@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react"
-import { ArrowRight, Check, Loader2 } from "lucide-react"
+import { Check, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { reserveAccess } from "@/lib/waitlist"
 import { cn } from "@/lib/utils"
@@ -54,7 +54,7 @@ export function WaitlistForm({ className }: { className?: string }) {
           placeholder="you@company.com"
           aria-label="Email address"
           aria-invalid={error ? true : undefined}
-          className="h-11 w-full min-w-0 flex-1 rounded-xl border border-default bg-white/[0.03] px-4 text-sm text-emphasis outline-none transition-colors placeholder:text-default focus:border-white/25 disabled:opacity-60"
+          className="h-11 w-full min-w-0 appearance-none rounded-xl border border-default bg-white/[0.03] px-4 text-base text-emphasis outline-none transition-colors placeholder:text-default focus:border-white/25 disabled:opacity-60 sm:flex-1 sm:text-sm"
         />
         <Button type="submit" size="lg" disabled={submitting} className="h-11 w-full sm:w-auto">
           {submitting ? (
@@ -63,10 +63,7 @@ export function WaitlistForm({ className }: { className?: string }) {
               <Loader2 className="size-4 animate-spin" />
             </>
           ) : (
-            <>
-              Reserve access
-              <ArrowRight className="size-4" />
-            </>
+            "Reserve access"
           )}
         </Button>
       </form>
