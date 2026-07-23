@@ -33,6 +33,24 @@ export const env = {
   R2_SECRET_ACCESS_KEY: process.env.R2_SECRET_ACCESS_KEY ?? "",
   R2_BUCKET: process.env.R2_BUCKET ?? "",
 
+  // Transactional email. "console" logs the message (dev/test, no network);
+  // "resend" sends via the Resend API. RESEND_API_KEY is only needed for the
+  // resend driver. EMAIL_FROM must be an address on a Resend-verified domain.
+  EMAIL_DRIVER: process.env.EMAIL_DRIVER ?? "console",
+  RESEND_API_KEY: process.env.RESEND_API_KEY ?? "",
+  EMAIL_FROM: process.env.EMAIL_FROM ?? "Brainbox <hello@mail.brainbox.sh>",
+  EMAIL_REPLY_TO: process.env.EMAIL_REPLY_TO ?? "",
+
+  // Origins allowed to POST the public /waitlist endpoint (the marketing site,
+  // cross-origin from this API). Comma-separated; parsed into an allowlist.
+  MARKETING_ORIGINS: (
+    process.env.MARKETING_ORIGIN ??
+    "https://brainbox.sh,https://www.brainbox.sh,http://localhost:5173,http://localhost:4173"
+  )
+    .split(",")
+    .map((o) => o.trim())
+    .filter(Boolean),
+
   // Voice-note transcription (Vercel AI SDK). Unset provider = transcription
   // off. TRANSCRIPTION_MODEL overrides the provider's default model; only the
   // selected provider's API key is needed.

@@ -1,20 +1,29 @@
 import { useState, type FormEvent } from "react"
-import { ArrowRight, Check } from "lucide-react"
+import { ArrowRight, Check, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { reserveAccess } from "@/lib/waitlist"
 import { cn } from "@/lib/utils"
 
 export function WaitlistForm({ className }: { className?: string }) {
   const [email, setEmail] = useState("")
-  const [done, setDone] = useState(false)
+  const [status, setStatus] = useState<"idle" | "submitting" | "done">("idle")
+  const [error, setError] = useState<string | null>(null)
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (!email.trim()) return
-    // TODO: wire to a Resend audience / API endpoint for real capture.
-    setDone(true)
+    if (!email.trim() || status === "submitting") return
+    setStatus("submitting")
+    setError(null)
+    const result = await reserveAccess(email)
+    if (result.ok) {
+      setStatus("done")
+    } else {
+      setError(result.error)
+      setStatus("idle")
+    }
   }
 
-  if (done) {
+  if (status === "done") {
     return (
       <div
         className={cn(
@@ -23,32 +32,49 @@ export function WaitlistForm({ className }: { className?: string }) {
         )}
       >
         <Check className="size-4" />
-        You&rsquo;re on the list. We&rsquo;ll be in touch soon.
+        You&rsquo;re on the list. Check your inbox to confirm your spot.
       </div>
     )
   }
 
+  const submitting = status === "submitting"
+
   return (
-    <form
-      onSubmit={onSubmit}
-      className={cn(
-        "flex w-full max-w-md flex-col items-stretch gap-2 sm:flex-row sm:items-center",
-        className,
+    <div className={cn("flex w-full max-w-md flex-col gap-2", className)}>
+      <form
+        onSubmit={onSubmit}
+        className="flex w-full flex-col items-stretch gap-2 sm:flex-row sm:items-center"
+      >
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={submitting}
+          placeholder="you@company.com"
+          aria-label="Email address"
+          aria-invalid={error ? true : undefined}
+          className="h-11 w-full min-w-0 flex-1 rounded-xl border border-default bg-white/[0.03] px-4 text-sm text-emphasis outline-none transition-colors placeholder:text-default focus:border-white/25 disabled:opacity-60"
+        />
+        <Button type="submit" size="lg" disabled={submitting} className="h-11 w-full sm:w-auto">
+          {submitting ? (
+            <>
+              Reserving
+              <Loader2 className="size-4 animate-spin" />
+            </>
+          ) : (
+            <>
+              Reserve access
+              <ArrowRight className="size-4" />
+            </>
+          )}
+        </Button>
+      </form>
+      {error && (
+        <p role="alert" aria-live="polite" className="px-1 text-sm text-red-400">
+          {error}
+        </p>
       )}
-    >
-      <input
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="you@company.com"
-        aria-label="Email address"
-        className="h-11 w-full min-w-0 flex-1 rounded-xl border border-default bg-white/[0.03] px-4 text-sm text-emphasis outline-none transition-colors placeholder:text-default focus:border-white/25"
-      />
-      <Button type="submit" size="lg" className="h-11 w-full sm:w-auto">
-        Reserve access
-        <ArrowRight className="size-4" />
-      </Button>
-    </form>
+    </div>
   )
 }
