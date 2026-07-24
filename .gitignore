@@ -17,6 +17,7 @@ dist-ssr
 .wrangler
 .dev.vars
 .env
+.env.test
 .storage
 
 # Editor directories and files

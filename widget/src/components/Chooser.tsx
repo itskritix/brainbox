@@ -48,6 +48,15 @@ export function Chooser({
           </span>
         </button>
       )}
+
+      <a
+        href="https://www.brainbox.sh?ref=widget"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-3 block text-center text-xs text-muted hover:text-emphasis"
+      >
+        Powered by <span className="font-medium">Brainbox</span>
+      </a>
     </div>
   );
 }
