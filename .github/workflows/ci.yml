@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -6,13 +6,14 @@ on:
   pull_request:
     branches: [main]
 
-# Cancel superseded runs on the same ref.
+# Serialize runs per ref. PR runs cancel superseded builds for fast feedback;
+# main runs never cancel (protects an in-flight production deploy).
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: cicd-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
-  ci:
+  verify:
     runs-on: ubuntu-latest
 
     # Postgres for the backend integration tests. Matches the suite's default
@@ -35,15 +36,57 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
       - uses: pnpm/action-setup@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
-
       - run: pnpm install --frozen-lockfile
-
       # Same gate agents must pass locally: lint → typecheck → test → build.
       - run: pnpm verify
+
+  # --- CD: only on push to main, after verify. Fully automatic. ---
+
+  deploy-box:
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # Never let two production deploys overlap.
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    steps:
+      - name: Load the dedicated CI SSH key into the agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+      - name: Deploy backend + dashboard + widget (runs scripts/deploy.sh on the box)
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+        run: |
+          ssh -o StrictHostKeyChecking=accept-new "${EC2_USER}@${EC2_HOST}" \
+            "cd /home/ubuntu/brainbox && git fetch origin --quiet && git show ${GITHUB_SHA}:scripts/deploy.sh | bash -s -- ${GITHUB_SHA}"
+
+  deploy-marketing:
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # Set VERCEL_TOKEN to activate; until then Vercel's git integration keeps
+    # deploying marketing and this job no-ops (see the guard below).
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy marketing to Vercel production
+        if: ${{ env.VERCEL_TOKEN != '' }}
+        run: |
+          npm i -g vercel@latest
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          vercel build --prod --token="$VERCEL_TOKEN"
+          vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+      - name: Skipped (no VERCEL_TOKEN)
+        if: ${{ env.VERCEL_TOKEN == '' }}
+        run: echo "VERCEL_TOKEN not set — marketing is deployed by Vercel's git integration. Add the secret to move it into this pipeline."
