@@ -1,7 +1,56 @@
 import { describe, expect, it } from "vitest";
 import type { CapturedMetadata } from "@brainbox/shared";
 
-import { formatClock, issueTitle, matchesIssue, newestFirst, pageLabel, pagePath } from "./issue";
+import type { Issue } from "@brainbox/shared";
+
+import {
+  formatClock,
+  issueTitle,
+  matchesIssue,
+  newestFirst,
+  pageLabel,
+  pagePath,
+  visibleReports,
+} from "./issue";
+
+describe("visibleReports", () => {
+  const issue = (overrides: Partial<Issue> & { id: string; projectId: string }): Issue => ({
+    createdAt: "2026-07-24T10:00:00.000Z",
+    metadata: meta(),
+    ...overrides,
+  });
+  const issues = [
+    issue({ id: "1", projectId: "p1", text: "save button dead", session: { key: "s" } }),
+    issue({ id: "2", projectId: "p2", video: { key: "v", mime: "video/webm" } }),
+    issue({ id: "3", projectId: "p2", metadata: meta({ consoleErrors: ["boom"] }) }),
+  ];
+  const ids = (result: Issue[]) => result.map((i) => i.id);
+
+  it("passes everything through with the default filter and no query", () => {
+    expect(ids(visibleReports(issues, { filter: "all", query: "" }))).toEqual(["1", "2", "3"]);
+  });
+
+  it("filters by what each report carries", () => {
+    expect(ids(visibleReports(issues, { filter: "replay", query: "" }))).toEqual(["1"]);
+    expect(ids(visibleReports(issues, { filter: "video", query: "" }))).toEqual(["2"]);
+    expect(ids(visibleReports(issues, { filter: "errors", query: "" }))).toEqual(["3"]);
+  });
+
+  it("drops unticked projects in the all view", () => {
+    expect(
+      ids(visibleReports(issues, { filter: "all", query: "", hiddenProjects: new Set(["p2"]) })),
+    ).toEqual(["1"]);
+  });
+
+  it("composes the project untick with type filter and search", () => {
+    expect(
+      ids(visibleReports(issues, { filter: "all", query: "save", hiddenProjects: new Set() })),
+    ).toEqual(["1"]);
+    expect(
+      ids(visibleReports(issues, { filter: "replay", query: "", hiddenProjects: new Set(["p1"]) })),
+    ).toEqual([]);
+  });
+});
 
 describe("newestFirst", () => {
   it("sorts by createdAt descending without mutating the input", () => {

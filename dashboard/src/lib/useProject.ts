@@ -22,3 +22,12 @@ export interface ProjectOutletContext {
 export function useProject(): ProjectOutletContext {
   return useOutletContext<ProjectOutletContext>();
 }
+
+/** Where `/` forwards: the remembered all-view (only meaningful with several
+ *  projects), else the remembered project, else the first. Null when there are
+ *  no projects (onboarding stays on screen). */
+export function homeTarget(projects: Project[], last: string | null): string | null {
+  if (last === ALL_PROJECTS && projects.length > 1) return `/projects/${ALL_PROJECTS}`;
+  const target = projects.find((p) => p.id === last) ?? projects[0];
+  return target ? `/projects/${target.id}` : null;
+}

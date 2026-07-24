@@ -13,18 +13,17 @@ import {
 } from "../components/ui/dropdown-menu";
 import { Skeleton } from "../components/ui/skeleton";
 import { api } from "../lib/api";
-import { issueTitle, matchesIssue, newestFirst, pagePath } from "../lib/issue";
+import {
+  issueTitle,
+  newestFirst,
+  pagePath,
+  REPORT_FILTERS,
+  type ReportFilterKey,
+  visibleReports,
+} from "../lib/issue";
 import { ALL_PROJECTS, useProject } from "../lib/useProject";
 import { cn, isToday, timeAgo } from "../lib/utils";
 
-const FILTERS = [
-  { key: "all", label: "All", match: () => true },
-  { key: "replay", label: "Replays", match: (i: Issue) => Boolean(i.session) },
-  { key: "video", label: "Recordings", match: (i: Issue) => Boolean(i.video) },
-  { key: "errors", label: "With errors", match: (i: Issue) => i.metadata.consoleErrors.length > 0 },
-] as const;
-
-type FilterKey = (typeof FILTERS)[number]["key"];
 
 /** Evidence readout: what the report captured, as a mono chip. */
 function Chip({ error, children }: { error?: boolean; children: React.ReactNode }) {
@@ -158,7 +157,7 @@ function ReportList({
 
 export function Reports() {
   const { project, projects } = useProject();
-  const [filter, setFilter] = useState<FilterKey>("all");
+  const [filter, setFilter] = useState<ReportFilterKey>("all");
   const [query, setQuery] = useState("");
   // all-projects view: ids unticked in the Projects dropdown
   const [hiddenProjects, setHiddenProjects] = useState<ReadonlySet<string>>(new Set());
@@ -242,11 +241,12 @@ export function Reports() {
 
   // all view: apply the project tick/untick before anything else, so the
   // filter pills and counts reflect what's actually on screen
-  const scoped = project
-    ? issues
-    : (issues?.filter((i) => !hiddenProjects.has(i.projectId)) ?? null);
-  const active = FILTERS.find((f) => f.key === filter) ?? FILTERS[0];
-  const visible = scoped?.filter(active.match).filter((i) => matchesIssue(i, query)) ?? null;
+  const hidden = project ? undefined : hiddenProjects;
+  const scoped = issues?.filter((i) => !hidden?.has(i.projectId)) ?? null;
+  const active = REPORT_FILTERS.find((f) => f.key === filter) ?? REPORT_FILTERS[0];
+  const visible = issues
+    ? visibleReports(issues, { filter, query, hiddenProjects: hidden })
+    : null;
   const today = visible?.filter((i) => isToday(i.createdAt)) ?? [];
   const earlier = visible?.filter((i) => !isToday(i.createdAt)) ?? [];
   // group headers only when they separate something
@@ -306,7 +306,7 @@ export function Reports() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
-              {FILTERS.map((f) => {
+              {REPORT_FILTERS.map((f) => {
                 const count = (scoped ?? []).filter(f.match).length;
                 if (f.key !== "all" && count === 0) return null;
                 return (
