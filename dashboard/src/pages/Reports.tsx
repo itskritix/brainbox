@@ -276,6 +276,29 @@ export function Reports() {
           )}
           {issues && issues.length > 0 && (
             <div className="ml-auto flex flex-wrap items-center gap-1">
+              {REPORT_FILTERS.map((f) => {
+                // presence keyed to everything fetched (stable while ticking
+                // projects); only the count reflects the ticked subset
+                if (f.key !== "all" && issues.filter(f.match).length === 0) return null;
+                const count = (scoped ?? []).filter(f.match).length;
+                return (
+                  <button
+                    key={f.key}
+                    type="button"
+                    onClick={() => setFilter(f.key)}
+                    className={cn(
+                      "rounded-full px-3 py-1 text-xs transition",
+                      filter === f.key
+                        ? "bg-interactive text-emphasis"
+                        : "text-muted hover:bg-interactive-hover hover:text-emphasis",
+                    )}
+                  >
+                    {f.label} <span className="font-mono">{count}</span>
+                  </button>
+                );
+              })}
+              {/* last in the right-aligned row: its right edge stays put while
+                  pill widths change, so the open menu doesn't jump around */}
               {!project && (
                 <DropdownMenu>
                   <DropdownMenuTrigger className="rounded-full px-3 py-1 text-xs text-muted transition hover:bg-interactive-hover hover:text-emphasis data-[state=open]:bg-interactive data-[state=open]:text-emphasis">
@@ -306,25 +329,6 @@ export function Reports() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
-              {REPORT_FILTERS.map((f) => {
-                const count = (scoped ?? []).filter(f.match).length;
-                if (f.key !== "all" && count === 0) return null;
-                return (
-                  <button
-                    key={f.key}
-                    type="button"
-                    onClick={() => setFilter(f.key)}
-                    className={cn(
-                      "rounded-full px-3 py-1 text-xs transition",
-                      filter === f.key
-                        ? "bg-interactive text-emphasis"
-                        : "text-muted hover:bg-interactive-hover hover:text-emphasis",
-                    )}
-                  >
-                    {f.label} <span className="font-mono">{count}</span>
-                  </button>
-                );
-              })}
             </div>
           )}
         </div>
