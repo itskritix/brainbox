@@ -32,3 +32,4 @@ dist-ssr
 *.sw?
 dashboard/public/widget.js
 marketing/public/widget.js
+.vercel/
