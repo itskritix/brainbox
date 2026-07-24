@@ -9,6 +9,12 @@ export function issueTitle(issue: Pick<Issue, "text" | "metadata">): string {
   return issue.metadata.title || pageLabel(issue.metadata.url) || "Untitled report";
 }
 
+/** Newest first by createdAt (ISO strings compare lexically). Needed when
+ *  merging per-project lists in the all-projects view. */
+export function newestFirst<T extends Pick<Issue, "createdAt">>(issues: T[]): T[] {
+  return [...issues].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+
 /** Case-insensitive search across everything a row shows: the title/note,
  *  the page, and the reporter. An empty query matches everything. */
 export function matchesIssue(issue: Pick<Issue, "text" | "metadata">, query: string): boolean {

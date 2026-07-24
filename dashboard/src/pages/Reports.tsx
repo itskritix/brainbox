@@ -5,10 +5,16 @@ import type { Issue } from "@brainbox/shared";
 
 import { EmptyState } from "../components/EmptyState";
 import { InstallSnippet } from "../components/InstallSnippet";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu";
 import { Skeleton } from "../components/ui/skeleton";
 import { api } from "../lib/api";
-import { issueTitle, matchesIssue, pagePath } from "../lib/issue";
-import { useProject } from "../lib/useProject";
+import { issueTitle, matchesIssue, newestFirst, pagePath } from "../lib/issue";
+import { ALL_PROJECTS, useProject } from "../lib/useProject";
 import { cn, isToday, timeAgo } from "../lib/utils";
 
 const FILTERS = [
@@ -44,14 +50,20 @@ function GroupLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function ReportRow({ issue, to }: { issue: Issue; to: string }) {
+function ReportRow({ issue, projectLabel }: { issue: Issue; projectLabel?: string }) {
+  const to = `/projects/${issue.projectId}/issues/${issue.id}`;
   const errorCount = issue.metadata.consoleErrors.length;
   // The project pins the domain, so the meta line shows only the path - and
-  // not even that when issueTitle already fell back to the page itself.
+  // not even that when issueTitle already fell back to the page itself. In the
+  // all view the project name leads the meta line instead.
   const titleIsPage = !issue.text?.trim() && !issue.metadata.title;
   const path = titleIsPage ? "" : pagePath(issue.metadata.url);
   const reporter = issue.metadata.identity?.email;
-  const meta = [...(path ? [path] : []), ...(reporter ? [reporter] : [])];
+  const meta = [
+    ...(projectLabel ? [projectLabel] : []),
+    ...(path ? [path] : []),
+    ...(reporter ? [reporter] : []),
+  ];
   const thumb = issue.crop?.url ?? issue.screenshot?.url;
   return (
     <Link
@@ -125,12 +137,19 @@ function ReportRow({ issue, to }: { issue: Issue; to: string }) {
   );
 }
 
-function ReportList({ issues, projectId }: { issues: Issue[]; projectId: string }) {
+function ReportList({
+  issues,
+  projectNames,
+}: {
+  issues: Issue[];
+  /** Present in the all-projects view: id → name for the row meta line. */
+  projectNames?: Map<string, string>;
+}) {
   return (
     <ul className="overflow-hidden rounded-xl border border-default bg-elevated">
       {issues.map((issue) => (
         <li key={issue.id} className="border-t border-default first:border-t-0">
-          <ReportRow issue={issue} to={`/projects/${projectId}/issues/${issue.id}`} />
+          <ReportRow issue={issue} projectLabel={projectNames?.get(issue.projectId)} />
         </li>
       ))}
     </ul>
@@ -138,34 +157,41 @@ function ReportList({ issues, projectId }: { issues: Issue[]; projectId: string 
 }
 
 export function Reports() {
-  const { project } = useProject();
+  const { project, projects } = useProject();
   const [filter, setFilter] = useState<FilterKey>("all");
   const [query, setQuery] = useState("");
-  // keyed by project so switching projects reads as loading, not stale data
+  // all-projects view: ids unticked in the Projects dropdown
+  const [hiddenProjects, setHiddenProjects] = useState<ReadonlySet<string>>(new Set());
+  // keyed by scope so switching projects reads as loading, not stale data
   const [result, setResult] = useState<{
-    projectId: string;
+    scope: string;
     issues?: Issue[];
     error?: string;
   } | null>(null);
 
+  const scope = project?.id ?? ALL_PROJECTS;
+
   useEffect(() => {
     let cancelled = false;
-    api
-      .listIssues(project.id)
+    const load = project
+      ? api.listIssues(project.id)
+      : Promise.all(projects.map((p) => api.listIssues(p.id))).then((lists) => lists.flat());
+    load
       .then((issues) => {
-        if (!cancelled) setResult({ projectId: project.id, issues });
+        if (!cancelled) setResult({ scope, issues: newestFirst(issues) });
       })
       .catch((e: Error) => {
-        if (!cancelled) setResult({ projectId: project.id, error: e.message });
+        if (!cancelled) setResult({ scope, error: e.message });
       });
     return () => {
       cancelled = true;
     };
-  }, [project.id]);
+  }, [project, projects, scope]);
 
-  const current = result?.projectId === project.id ? result : null;
+  const current = result?.scope === scope ? result : null;
   const issues = current?.issues ?? null;
   const error = current?.error ?? null;
+  const projectNames = project ? undefined : new Map(projects.map((p) => [p.id, p.name]));
 
   if (error) {
     return (
@@ -175,8 +201,21 @@ export function Reports() {
     );
   }
 
+  // All view with nothing anywhere: no snippet (it's per-project).
+  if (!project && issues && issues.length === 0) {
+    return (
+      <div className="flex flex-1 items-center justify-center p-6 py-16">
+        <EmptyState icon={<Camera />} title="No reports yet" breathe>
+          <p className="mt-1 text-sm text-muted">
+            Reports from all your projects land here as end-users send them.
+          </p>
+        </EmptyState>
+      </div>
+    );
+  }
+
   // First-run: the snippet lives where the first report will land.
-  if (issues && issues.length === 0) {
+  if (project && issues && issues.length === 0) {
     return (
       <div className="flex flex-1 items-center justify-center p-6 py-16">
         <div className="w-full max-w-lg">
@@ -201,8 +240,13 @@ export function Reports() {
     );
   }
 
+  // all view: apply the project tick/untick before anything else, so the
+  // filter pills and counts reflect what's actually on screen
+  const scoped = project
+    ? issues
+    : (issues?.filter((i) => !hiddenProjects.has(i.projectId)) ?? null);
   const active = FILTERS.find((f) => f.key === filter) ?? FILTERS[0];
-  const visible = issues?.filter(active.match).filter((i) => matchesIssue(i, query)) ?? null;
+  const visible = scoped?.filter(active.match).filter((i) => matchesIssue(i, query)) ?? null;
   const today = visible?.filter((i) => isToday(i.createdAt)) ?? [];
   const earlier = visible?.filter((i) => !isToday(i.createdAt)) ?? [];
   // group headers only when they separate something
@@ -215,7 +259,7 @@ export function Reports() {
           <div className="flex items-baseline gap-3">
             <h1 className="text-lg font-semibold tracking-tight text-emphasis">Reports</h1>
             <span className="font-mono text-xs text-muted">
-              {issues ? issues.length : "…"}
+              {scoped ? scoped.length : "…"}
             </span>
           </div>
           {issues && issues.length > 0 && (
@@ -231,9 +275,39 @@ export function Reports() {
             </label>
           )}
           {issues && issues.length > 0 && (
-            <div className="ml-auto flex flex-wrap gap-1">
+            <div className="ml-auto flex flex-wrap items-center gap-1">
+              {!project && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="rounded-full px-3 py-1 text-xs text-muted transition hover:bg-interactive-hover hover:text-emphasis data-[state=open]:bg-interactive data-[state=open]:text-emphasis">
+                    Projects{" "}
+                    <span className="font-mono">
+                      {projects.length - hiddenProjects.size}/{projects.length}
+                    </span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    {projects.map((p) => (
+                      <DropdownMenuCheckboxItem
+                        key={p.id}
+                        checked={!hiddenProjects.has(p.id)}
+                        onCheckedChange={(checked) =>
+                          setHiddenProjects((prev) => {
+                            const next = new Set(prev);
+                            if (checked === true) next.delete(p.id);
+                            else next.add(p.id);
+                            return next;
+                          })
+                        }
+                        // keep the menu open while ticking several projects
+                        onSelect={(e) => e.preventDefault()}
+                      >
+                        {p.name}
+                      </DropdownMenuCheckboxItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
               {FILTERS.map((f) => {
-                const count = issues.filter(f.match).length;
+                const count = (scoped ?? []).filter(f.match).length;
                 if (f.key !== "all" && count === 0) return null;
                 return (
                   <button
@@ -272,21 +346,23 @@ export function Reports() {
             </ul>
           )}
           {visible && visible.length > 0 && !grouped && (
-            <ReportList issues={visible} projectId={project.id} />
+            <ReportList issues={visible} projectNames={projectNames} />
           )}
           {visible && grouped && (
             <>
               <GroupLabel>Today</GroupLabel>
-              <ReportList issues={today} projectId={project.id} />
+              <ReportList issues={today} projectNames={projectNames} />
               <GroupLabel>Earlier</GroupLabel>
-              <ReportList issues={earlier} projectId={project.id} />
+              <ReportList issues={earlier} projectNames={projectNames} />
             </>
           )}
           {visible && visible.length === 0 && (
             <p className="pb-4 pt-10 text-center text-sm text-muted">
-              {query.trim()
-                ? `No reports match "${query.trim()}".`
-                : `No ${active.label.toLowerCase()} in this project yet.`}
+              {!project && scoped && scoped.length === 0 && hiddenProjects.size > 0
+                ? "No projects ticked - pick some in the Projects filter."
+                : query.trim()
+                  ? `No reports match "${query.trim()}".`
+                  : `No ${active.label.toLowerCase()} ${project ? "in this project" : "across your projects"} yet.`}
             </p>
           )}
         </div>

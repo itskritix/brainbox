@@ -1,7 +1,20 @@
 import { describe, expect, it } from "vitest";
 import type { CapturedMetadata } from "@brainbox/shared";
 
-import { formatClock, issueTitle, matchesIssue, pageLabel, pagePath } from "./issue";
+import { formatClock, issueTitle, matchesIssue, newestFirst, pageLabel, pagePath } from "./issue";
+
+describe("newestFirst", () => {
+  it("sorts by createdAt descending without mutating the input", () => {
+    const input = [
+      { createdAt: "2026-07-01T10:00:00.000Z" },
+      { createdAt: "2026-07-24T10:00:00.000Z" },
+      { createdAt: "2026-07-05T10:00:00.000Z" },
+    ];
+    const sorted = newestFirst(input);
+    expect(sorted.map((i) => i.createdAt.slice(8, 10))).toEqual(["24", "05", "01"]);
+    expect(input[0]?.createdAt).toBe("2026-07-01T10:00:00.000Z");
+  });
+});
 
 function meta(overrides: Partial<CapturedMetadata> = {}): CapturedMetadata {
   return {

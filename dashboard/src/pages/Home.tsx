@@ -8,7 +8,7 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Spinner } from "../components/ui/spinner";
 import { api } from "../lib/api";
-import { LAST_PROJECT_KEY } from "../lib/useProject";
+import { ALL_PROJECTS, LAST_PROJECT_KEY } from "../lib/useProject";
 import { normalizeOrigin } from "../lib/utils";
 
 /** First-run screen: name the project, optionally lock it to a domain. */
@@ -96,6 +96,10 @@ export function Home() {
   useEffect(() => {
     if (!projects || projects.length === 0) return;
     const last = localStorage.getItem(LAST_PROJECT_KEY);
+    if (last === ALL_PROJECTS && projects.length > 1) {
+      navigate("/projects/all", { replace: true });
+      return;
+    }
     const target = projects.find((p) => p.id === last) ?? projects[0];
     if (target) navigate(`/projects/${target.id}`, { replace: true });
   }, [projects, navigate]);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import type { Project } from "@brainbox/shared";
 
 import { CopyButton } from "../components/CopyButton";
@@ -122,6 +122,9 @@ function DangerZone({
 
 export function Settings() {
   const { project, projects, setProject, removeProject } = useProject();
+
+  // Settings are per-project; there's nothing to configure in the all view.
+  if (!project) return <Navigate to="/projects/all" replace />;
 
   return (
     <div className="min-h-0 flex-1 lg:overflow-y-auto">

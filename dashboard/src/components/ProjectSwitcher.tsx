@@ -11,7 +11,8 @@ export function ProjectSwitcher({
   projects,
   onCreated,
 }: {
-  current: Project;
+  /** null = the all-projects view. */
+  current: Project | null;
   projects: Project[];
   onCreated: (project: Project) => void;
 }) {
@@ -72,30 +73,52 @@ export function ProjectSwitcher({
         onClick={() => (open ? close() : setOpen(true))}
         className="flex w-full min-w-0 items-center gap-2 rounded-lg border border-interactive bg-interactive px-2.5 py-2 text-left text-sm text-emphasis outline-none transition hover:bg-interactive-hover focus-visible:ring-[3px] focus-visible:ring-focus"
       >
-        <span className="min-w-0 flex-1 truncate font-medium">{current.name}</span>
+        <span className="min-w-0 flex-1 truncate font-medium">
+          {current?.name ?? "All projects"}
+        </span>
         <ChevronsUpDown className="h-3.5 w-3.5 shrink-0 text-muted" />
       </button>
 
       {open && (
         <div className="absolute left-0 right-0 top-full z-20 mt-1 min-w-48 overflow-hidden rounded-xl border border-default bg-elevated shadow-3xl">
           <ul role="listbox" className="max-h-64 overflow-y-auto py-1">
+            {projects.length > 1 && (
+              <li className="border-b border-default pb-1 mb-1">
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={current === null}
+                  onClick={() => {
+                    close();
+                    if (current !== null) navigate("/projects/all");
+                  }}
+                  className={cn(
+                    "flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm transition hover:bg-interactive-hover",
+                    current === null ? "text-emphasis" : "text-default",
+                  )}
+                >
+                  <span className="min-w-0 flex-1 truncate">All projects</span>
+                  {current === null && <Check className="h-3.5 w-3.5 shrink-0 text-muted" />}
+                </button>
+              </li>
+            )}
             {projects.map((p) => (
               <li key={p.id}>
                 <button
                   type="button"
                   role="option"
-                  aria-selected={p.id === current.id}
+                  aria-selected={p.id === current?.id}
                   onClick={() => {
                     close();
-                    if (p.id !== current.id) navigate(`/projects/${p.id}`);
+                    if (p.id !== current?.id) navigate(`/projects/${p.id}`);
                   }}
                   className={cn(
                     "flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm transition hover:bg-interactive-hover",
-                    p.id === current.id ? "text-emphasis" : "text-default",
+                    p.id === current?.id ? "text-emphasis" : "text-default",
                   )}
                 >
                   <span className="min-w-0 flex-1 truncate">{p.name}</span>
-                  {p.id === current.id && <Check className="h-3.5 w-3.5 shrink-0 text-muted" />}
+                  {p.id === current?.id && <Check className="h-3.5 w-3.5 shrink-0 text-muted" />}
                 </button>
               </li>
             ))}

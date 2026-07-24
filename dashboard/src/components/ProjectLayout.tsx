@@ -5,7 +5,7 @@ import { LayoutGrid, LogOut, Settings } from "lucide-react";
 import type { Project } from "@brainbox/shared";
 
 import { api } from "../lib/api";
-import { LAST_PROJECT_KEY, type ProjectOutletContext } from "../lib/useProject";
+import { ALL_PROJECTS, LAST_PROJECT_KEY, type ProjectOutletContext } from "../lib/useProject";
 import { cn } from "../lib/utils";
 import { ProjectSwitcher } from "./ProjectSwitcher";
 import { Spinner } from "./ui/spinner";
@@ -100,8 +100,9 @@ export function ProjectLayout() {
     );
   }
 
-  const project = projects.find((p) => p.id === projectId);
-  if (!project) {
+  const isAll = projectId === ALL_PROJECTS;
+  const project = isAll ? null : projects.find((p) => p.id === projectId);
+  if (!isAll && !project) {
     return (
       <div className="grid min-h-dvh place-items-center bg-background px-6">
         <div className="text-center">
@@ -117,10 +118,13 @@ export function ProjectLayout() {
   const onCreated = (next: Project) =>
     setProjects((prev) => (prev ? [next, ...prev] : [next]));
 
-  const base = `/projects/${project.id}`;
+  const base = `/projects/${project?.id ?? ALL_PROJECTS}`;
   const isSettings = location.pathname.endsWith("/settings");
+  const reportCount = project
+    ? project.issueCount
+    : projects.reduce((n, p) => n + (p.issueCount ?? 0), 0);
   const context: ProjectOutletContext = {
-    project,
+    project: project ?? null,
     projects,
     setProject: (next) =>
       setProjects((prev) => prev?.map((p) => (p.id === next.id ? next : p)) ?? prev),
@@ -135,7 +139,7 @@ export function ProjectLayout() {
           <Wordmark />
         </div>
         <div className="px-3">
-          <ProjectSwitcher current={project} projects={projects} onCreated={onCreated} />
+          <ProjectSwitcher current={project ?? null} projects={projects} onCreated={onCreated} />
         </div>
         <nav className="mt-4 flex flex-col gap-0.5 px-3">
           <NavItem
@@ -143,9 +147,11 @@ export function ProjectLayout() {
             active={!isSettings}
             icon={<LayoutGrid />}
             label="Reports"
-            count={project.issueCount}
+            count={reportCount}
           />
-          <NavItem to={`${base}/settings`} active={isSettings} icon={<Settings />} label="Settings" />
+          {project && (
+            <NavItem to={`${base}/settings`} active={isSettings} icon={<Settings />} label="Settings" />
+          )}
         </nav>
         <div className="mt-auto border-t border-default p-2">
           <UserMenu />
@@ -156,11 +162,13 @@ export function ProjectLayout() {
         <header className="sticky top-0 z-10 border-b border-default bg-background/90 backdrop-blur lg:hidden">
           <div className="flex items-center gap-2 px-4 py-2.5">
             <div className="min-w-0 flex-1">
-              <ProjectSwitcher current={project} projects={projects} onCreated={onCreated} />
+              <ProjectSwitcher current={project ?? null} projects={projects} onCreated={onCreated} />
             </div>
             <nav className="flex shrink-0 gap-1">
               <MobileTab to={base} active={!isSettings} label="Reports" />
-              <MobileTab to={`${base}/settings`} active={isSettings} label="Settings" />
+              {project && (
+                <MobileTab to={`${base}/settings`} active={isSettings} label="Settings" />
+              )}
             </nav>
             <button
               type="button"
