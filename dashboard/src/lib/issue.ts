@@ -1,11 +1,12 @@
 import type { Issue } from "@brainbox/shared";
 
-/** One-line label for a report: the end-user's note if they wrote one,
- *  else the page it came from. */
+/** One-line label for a report: the end-user's note if they wrote one, else
+ *  the page's document title. The bare host+path is a last resort - inside a
+ *  project the domain is constant context, not a title. */
 export function issueTitle(issue: Pick<Issue, "text" | "metadata">): string {
   const text = issue.text?.trim();
   if (text) return text;
-  return pageLabel(issue.metadata.url) || issue.metadata.title || "Untitled report";
+  return issue.metadata.title || pageLabel(issue.metadata.url) || "Untitled report";
 }
 
 /** Case-insensitive search across everything a row shows: the title/note,
@@ -30,6 +31,18 @@ export function pageLabel(url: string): string {
     return `${u.host}${u.pathname === "/" ? "" : u.pathname}`;
   } catch {
     return url;
+  }
+}
+
+/** Just the path ("/settings") - the part that varies inside one project,
+ *  where the domain is constant context. Empty for the root page or an
+ *  unparseable URL. */
+export function pagePath(url: string): string {
+  try {
+    const u = new URL(url);
+    return u.pathname === "/" ? "" : u.pathname;
+  } catch {
+    return "";
   }
 }
 

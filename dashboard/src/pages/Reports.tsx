@@ -7,7 +7,7 @@ import { EmptyState } from "../components/EmptyState";
 import { InstallSnippet } from "../components/InstallSnippet";
 import { Skeleton } from "../components/ui/skeleton";
 import { api } from "../lib/api";
-import { issueTitle, matchesIssue, pageLabel } from "../lib/issue";
+import { issueTitle, matchesIssue, pagePath } from "../lib/issue";
 import { useProject } from "../lib/useProject";
 import { cn, isToday, timeAgo } from "../lib/utils";
 
@@ -46,11 +46,12 @@ function GroupLabel({ children }: { children: React.ReactNode }) {
 
 function ReportRow({ issue, to }: { issue: Issue; to: string }) {
   const errorCount = issue.metadata.consoleErrors.length;
-  // issueTitle already falls back to the page when there's no note - only
-  // repeat the page (and reporter) on the meta line when they add information.
-  const hasNote = Boolean(issue.text?.trim());
+  // The project pins the domain, so the meta line shows only the path - and
+  // not even that when issueTitle already fell back to the page itself.
+  const titleIsPage = !issue.text?.trim() && !issue.metadata.title;
+  const path = titleIsPage ? "" : pagePath(issue.metadata.url);
   const reporter = issue.metadata.identity?.email;
-  const meta = [...(hasNote ? [pageLabel(issue.metadata.url)] : []), ...(reporter ? [reporter] : [])];
+  const meta = [...(path ? [path] : []), ...(reporter ? [reporter] : [])];
   const thumb = issue.crop?.url ?? issue.screenshot?.url;
   return (
     <Link

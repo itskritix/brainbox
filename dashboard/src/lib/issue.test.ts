@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { CapturedMetadata } from "@brainbox/shared";
 
-import { formatClock, issueTitle, matchesIssue, pageLabel } from "./issue";
+import { formatClock, issueTitle, matchesIssue, pageLabel, pagePath } from "./issue";
 
 function meta(overrides: Partial<CapturedMetadata> = {}): CapturedMetadata {
   return {
@@ -24,12 +24,30 @@ describe("issueTitle", () => {
     );
   });
 
-  it("falls back to the page label when there is no note", () => {
-    expect(issueTitle({ metadata: meta() })).toBe("app.example.com/billing");
+  it("falls back to the document title when there is no note", () => {
+    expect(issueTitle({ metadata: meta() })).toBe("Billing - Example");
   });
 
-  it("falls back to the page title when the URL is empty", () => {
-    expect(issueTitle({ metadata: meta({ url: "" }) })).toBe("Billing - Example");
+  it("falls back to the page label when the document title is empty", () => {
+    expect(issueTitle({ metadata: meta({ title: "" }) })).toBe("app.example.com/billing");
+  });
+
+  it('renders "Untitled report" when nothing is available', () => {
+    expect(issueTitle({ metadata: meta({ title: "", url: "" }) })).toBe("Untitled report");
+  });
+});
+
+describe("pagePath", () => {
+  it("returns just the path", () => {
+    expect(pagePath("https://app.example.com/settings?tab=team")).toBe("/settings");
+  });
+
+  it("is empty for the root page", () => {
+    expect(pagePath("https://app.example.com/")).toBe("");
+  });
+
+  it("is empty when unparseable", () => {
+    expect(pagePath("not a url")).toBe("");
   });
 });
 
