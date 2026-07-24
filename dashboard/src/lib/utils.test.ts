@@ -77,8 +77,17 @@ describe("timeAgo", () => {
     expect(timeAgo(isoAgo(2 * 24 * 60 * 60))).toBe("2d ago");
   });
 
-  it("falls back to a locale date past a week", () => {
+  it('falls back to "Jul 5"-style past a week, adding the year when it differs', () => {
     const iso = isoAgo(10 * 24 * 60 * 60);
-    expect(timeAgo(iso)).toBe(new Date(iso).toLocaleDateString());
+    const sameYear = new Date(iso).getFullYear() === new Date().getFullYear();
+    expect(timeAgo(iso)).toBe(
+      new Date(iso).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        ...(sameYear ? {} : { year: "numeric" }),
+      }),
+    );
+    const old = isoAgo(3 * 365 * 24 * 60 * 60);
+    expect(timeAgo(old)).toMatch(/^[A-Z][a-z]{2} \d{1,2}, \d{4}$/);
   });
 });

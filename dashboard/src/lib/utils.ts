@@ -5,7 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-/** "2m ago" / "3h ago" / "5d ago" - falls back to a date for older items. */
+/** "2m ago" / "3h ago" / "5d ago" - falls back to "Jul 5" (with the year once
+ *  it differs) for older items, so the column never mixes date styles. */
 export function timeAgo(iso: string): string {
   const s = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
   if (s < 60) return "just now";
@@ -15,7 +16,12 @@ export function timeAgo(iso: string): string {
   if (h < 24) return `${h}h ago`;
   const d = Math.floor(h / 24);
   if (d < 7) return `${d}d ago`;
-  return new Date(iso).toLocaleDateString();
+  const date = new Date(iso);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    ...(date.getFullYear() === new Date().getFullYear() ? {} : { year: "numeric" }),
+  });
 }
 
 /** Same local calendar day as `now` - the "Today" group boundary, so a report

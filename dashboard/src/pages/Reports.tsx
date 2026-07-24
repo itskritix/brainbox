@@ -38,15 +38,13 @@ function Chip({ error, children }: { error?: boolean; children: React.ReactNode 
 
 function GroupLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mb-2 mt-6 flex items-center gap-2.5 px-0.5 font-mono text-[11px] uppercase tracking-[0.08em] text-muted first:mt-0">
+    <div className="mb-2 mt-6 px-0.5 font-mono text-[11px] uppercase tracking-[0.08em] text-muted first:mt-0">
       {children}
-      <span aria-hidden className="flex-1 border-t border-default" />
     </div>
   );
 }
 
 function ReportRow({ issue, to }: { issue: Issue; to: string }) {
-  const thumb = issue.crop?.url ?? issue.screenshot?.url;
   const errorCount = issue.metadata.consoleErrors.length;
   // issueTitle already falls back to the page when there's no note - only
   // repeat the page (and reporter) on the meta line when they add information.
@@ -54,34 +52,7 @@ function ReportRow({ issue, to }: { issue: Issue; to: string }) {
   const reporter = issue.metadata.identity?.email;
   const meta = [...(hasNote ? [pageLabel(issue.metadata.url)] : []), ...(reporter ? [reporter] : [])];
   return (
-    <Link to={to} className="group flex items-center gap-3 px-3 py-2 transition hover:bg-interactive-hover">
-      <span className="relative h-10 w-16 shrink-0 overflow-hidden rounded-md border border-default bg-subtle">
-        {thumb ? (
-          <img src={thumb} alt="" loading="lazy" className="h-full w-full object-cover object-top" />
-        ) : issue.video?.url ? (
-          // no stored poster - let the browser paint the first video frame
-          <video
-            src={`${issue.video.url}#t=0.1`}
-            preload="metadata"
-            muted
-            playsInline
-            tabIndex={-1}
-            aria-hidden
-            className="pointer-events-none h-full w-full object-cover object-top"
-          />
-        ) : (
-          <span className="grid h-full w-full place-items-center text-muted">
-            <Video className="h-4 w-4" />
-          </span>
-        )}
-        {(issue.session ?? issue.video) && (
-          <span className="absolute inset-0 grid place-items-center">
-            <span className="grid size-5 place-items-center rounded-full bg-black-a9 text-white transition group-hover:scale-105">
-              <Play className="h-2.5 w-2.5" />
-            </span>
-          </span>
-        )}
-      </span>
+    <Link to={to} className="flex items-center gap-3 px-4 py-2.5 transition hover:bg-interactive-hover">
       <span className="flex min-w-0 flex-1 items-baseline gap-2">
         <span className="truncate text-sm text-emphasis">{issueTitle(issue)}</span>
         {meta.length > 0 && (
@@ -207,7 +178,7 @@ export function Reports() {
 
   return (
     <div className="min-h-0 flex-1 lg:overflow-y-auto">
-      <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
+      <div className="mx-auto w-full max-w-4xl px-4 py-6 sm:px-6 sm:py-8">
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-baseline gap-3">
             <h1 className="text-lg font-semibold tracking-tight text-emphasis">Reports</h1>
@@ -257,8 +228,7 @@ export function Reports() {
             <ul className="overflow-hidden rounded-xl border border-default bg-elevated">
               {Array.from({ length: 6 }, (_, i) => (
                 <li key={i} className="border-t border-default first:border-t-0">
-                  <div className="flex items-center gap-3 px-3 py-2">
-                    <Skeleton className="h-10 w-16 rounded-md" />
+                  <div className="flex items-center gap-3 px-4 py-2.5">
                     <div className="flex-1">
                       <Skeleton className="h-4 w-1/2" />
                     </div>
