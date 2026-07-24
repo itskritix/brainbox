@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { CapturedMetadata } from "@brainbox/shared";
 
-import { formatClock, issueTitle, pageLabel } from "./issue";
+import { formatClock, issueTitle, matchesIssue, pageLabel } from "./issue";
 
 function meta(overrides: Partial<CapturedMetadata> = {}): CapturedMetadata {
   return {
@@ -46,6 +46,38 @@ describe("pageLabel", () => {
 
   it("returns the input when unparseable", () => {
     expect(pageLabel("not a url")).toBe("not a url");
+  });
+});
+
+describe("matchesIssue", () => {
+  const issue = {
+    text: "The save button is dead",
+    metadata: meta({ identity: { email: "dole777@gmail.com" } }),
+  };
+
+  it("matches the note case-insensitively", () => {
+    expect(matchesIssue(issue, "SAVE button")).toBe(true);
+  });
+
+  it("matches the page label", () => {
+    expect(matchesIssue(issue, "example.com/billing")).toBe(true);
+  });
+
+  it("matches the reporter email", () => {
+    expect(matchesIssue(issue, "dole777")).toBe(true);
+  });
+
+  it("matches everything on an empty or whitespace query", () => {
+    expect(matchesIssue(issue, "")).toBe(true);
+    expect(matchesIssue(issue, "   ")).toBe(true);
+  });
+
+  it("rejects a query found nowhere", () => {
+    expect(matchesIssue(issue, "checkout")).toBe(false);
+  });
+
+  it("survives a missing identity", () => {
+    expect(matchesIssue({ metadata: meta() }, "billing")).toBe(true);
   });
 });
 

@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Camera, Mic, Play, Video } from "lucide-react";
+import { Camera, Mic, Play, Search, Video } from "lucide-react";
 import type { Issue } from "@brainbox/shared";
 
 import { EmptyState } from "../components/EmptyState";
 import { InstallSnippet } from "../components/InstallSnippet";
 import { Skeleton } from "../components/ui/skeleton";
 import { api } from "../lib/api";
-import { issueTitle } from "../lib/issue";
+import { issueTitle, matchesIssue, pageLabel } from "../lib/issue";
 import { useProject } from "../lib/useProject";
-import { cn, timeAgo } from "../lib/utils";
+import { cn, isToday, timeAgo } from "../lib/utils";
 
 const FILTERS = [
   { key: "all", label: "All", match: () => true },
@@ -20,22 +20,44 @@ const FILTERS = [
 
 type FilterKey = (typeof FILTERS)[number]["key"];
 
-function ReportCard({ issue, to }: { issue: Issue; to: string }) {
+/** Evidence readout: what the report captured, as a mono chip. */
+function Chip({ error, children }: { error?: boolean; children: React.ReactNode }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex shrink-0 items-center gap-1.5 rounded-md border px-1.5 py-1 font-mono text-[11px] leading-none",
+        error
+          ? "border-error-subtle bg-error text-error"
+          : "border-interactive bg-interactive text-default",
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
+function GroupLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mb-2 mt-6 flex items-center gap-2.5 px-0.5 font-mono text-[11px] uppercase tracking-[0.08em] text-muted first:mt-0">
+      {children}
+      <span aria-hidden className="flex-1 border-t border-default" />
+    </div>
+  );
+}
+
+function ReportRow({ issue, to }: { issue: Issue; to: string }) {
   const thumb = issue.crop?.url ?? issue.screenshot?.url;
   const errorCount = issue.metadata.consoleErrors.length;
+  // issueTitle already falls back to the page when there's no note - only
+  // repeat the page (and reporter) on the meta line when they add information.
+  const hasNote = Boolean(issue.text?.trim());
+  const reporter = issue.metadata.identity?.email;
+  const meta = [...(hasNote ? [pageLabel(issue.metadata.url)] : []), ...(reporter ? [reporter] : [])];
   return (
-    <Link
-      to={to}
-      className="group overflow-hidden rounded-xl border border-default bg-elevated transition hover:border-interactive hover:bg-interactive-hover"
-    >
-      <div className="relative aspect-[16/10] overflow-hidden border-b border-default bg-subtle">
+    <Link to={to} className="group flex items-center gap-3 px-3 py-2 transition hover:bg-interactive-hover">
+      <span className="relative h-10 w-16 shrink-0 overflow-hidden rounded-md border border-default bg-subtle">
         {thumb ? (
-          <img
-            src={thumb}
-            alt=""
-            loading="lazy"
-            className="h-full w-full object-cover object-top transition duration-300 group-hover:scale-[1.02]"
-          />
+          <img src={thumb} alt="" loading="lazy" className="h-full w-full object-cover object-top" />
         ) : issue.video?.url ? (
           // no stored poster - let the browser paint the first video frame
           <video
@@ -45,42 +67,77 @@ function ReportCard({ issue, to }: { issue: Issue; to: string }) {
             playsInline
             tabIndex={-1}
             aria-hidden
-            className="pointer-events-none h-full w-full object-cover object-top transition duration-300 group-hover:scale-[1.02]"
+            className="pointer-events-none h-full w-full object-cover object-top"
           />
         ) : (
           <span className="grid h-full w-full place-items-center text-muted">
-            <Video className="h-6 w-6" />
+            <Video className="h-4 w-4" />
           </span>
         )}
         {(issue.session ?? issue.video) && (
           <span className="absolute inset-0 grid place-items-center">
-            <span className="grid h-10 w-10 place-items-center rounded-full bg-black-a9 text-white backdrop-blur-sm transition group-hover:scale-105">
-              <Play className="h-4 w-4" />
+            <span className="grid size-5 place-items-center rounded-full bg-black-a9 text-white transition group-hover:scale-105">
+              <Play className="h-2.5 w-2.5" />
             </span>
           </span>
         )}
-        {errorCount > 0 && (
-          <span className="absolute right-2 top-2 rounded-full border border-error-subtle bg-error px-2 py-0.5 font-mono text-[11px] text-error backdrop-blur-sm">
-            {errorCount} {errorCount === 1 ? "error" : "errors"}
+      </span>
+      <span className="flex min-w-0 flex-1 items-baseline gap-2">
+        <span className="truncate text-sm text-emphasis">{issueTitle(issue)}</span>
+        {meta.length > 0 && (
+          <span className="hidden min-w-0 truncate text-xs text-muted sm:block">
+            {meta.join(" · ")}
           </span>
         )}
-      </div>
-      <div className="p-3">
-        <p className="truncate text-sm text-emphasis">{issueTitle(issue)}</p>
-        <div className="mt-1.5 flex items-center gap-2.5 font-mono text-[11px] text-muted">
-          <span>{timeAgo(issue.createdAt)}</span>
-          {issue.session && <Play className="h-3 w-3" aria-label="Session replay" />}
-          {issue.video && <Video className="h-3 w-3" aria-label="Screen recording" />}
-          {issue.audio && <Mic className="h-3 w-3" aria-label="Voice note" />}
-        </div>
-      </div>
+      </span>
+      <span className="hidden shrink-0 items-center gap-1.5 sm:flex">
+        {issue.session && (
+          <Chip>
+            <Play className="h-2.5 w-2.5" aria-hidden />
+            replay
+          </Chip>
+        )}
+        {issue.video && (
+          <Chip>
+            <Video className="h-2.5 w-2.5" aria-hidden />
+            rec
+          </Chip>
+        )}
+        {issue.audio && (
+          <Chip>
+            <Mic className="h-2.5 w-2.5" aria-hidden />
+            voice
+          </Chip>
+        )}
+      </span>
+      {errorCount > 0 && (
+        <Chip error>
+          {errorCount} {errorCount === 1 ? "error" : "errors"}
+        </Chip>
+      )}
+      <span className="w-14 shrink-0 text-right font-mono text-[11px] text-muted">
+        {timeAgo(issue.createdAt)}
+      </span>
     </Link>
+  );
+}
+
+function ReportList({ issues, projectId }: { issues: Issue[]; projectId: string }) {
+  return (
+    <ul className="overflow-hidden rounded-xl border border-default bg-elevated">
+      {issues.map((issue) => (
+        <li key={issue.id} className="border-t border-default first:border-t-0">
+          <ReportRow issue={issue} to={`/projects/${projectId}/issues/${issue.id}`} />
+        </li>
+      ))}
+    </ul>
   );
 }
 
 export function Reports() {
   const { project } = useProject();
   const [filter, setFilter] = useState<FilterKey>("all");
+  const [query, setQuery] = useState("");
   // keyed by project so switching projects reads as loading, not stale data
   const [result, setResult] = useState<{
     projectId: string;
@@ -142,12 +199,16 @@ export function Reports() {
   }
 
   const active = FILTERS.find((f) => f.key === filter) ?? FILTERS[0];
-  const visible = issues?.filter(active.match) ?? null;
+  const visible = issues?.filter(active.match).filter((i) => matchesIssue(i, query)) ?? null;
+  const today = visible?.filter((i) => isToday(i.createdAt)) ?? [];
+  const earlier = visible?.filter((i) => !isToday(i.createdAt)) ?? [];
+  // group headers only when they separate something
+  const grouped = today.length > 0 && earlier.length > 0;
 
   return (
     <div className="min-h-0 flex-1 lg:overflow-y-auto">
       <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-baseline gap-3">
             <h1 className="text-lg font-semibold tracking-tight text-emphasis">Reports</h1>
             <span className="font-mono text-xs text-muted">
@@ -155,7 +216,19 @@ export function Reports() {
             </span>
           </div>
           {issues && issues.length > 0 && (
-            <div className="flex flex-wrap gap-1">
+            <label className="flex min-w-40 flex-1 items-center gap-2 rounded-lg border border-interactive bg-interactive px-2.5 py-1.5 text-muted transition focus-within:ring-[3px] focus-within:ring-focus sm:max-w-xs">
+              <Search className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search title, reporter, or page…"
+                aria-label="Search reports"
+                className="w-full min-w-0 bg-transparent text-sm text-emphasis outline-none placeholder:text-placeholder"
+              />
+            </label>
+          )}
+          {issues && issues.length > 0 && (
+            <div className="ml-auto flex flex-wrap gap-1">
               {FILTERS.map((f) => {
                 const count = issues.filter(f.match).length;
                 if (f.key !== "all" && count === 0) return null;
@@ -179,31 +252,41 @@ export function Reports() {
           )}
         </div>
 
-        <div className="mt-6 grid gap-4 pb-6 sm:grid-cols-2 xl:grid-cols-3">
-          {visible
-            ? visible.map((issue) => (
-                <ReportCard
-                  key={issue.id}
-                  issue={issue}
-                  to={`/projects/${project.id}/issues/${issue.id}`}
-                />
-              ))
-            : Array.from({ length: 6 }, (_, i) => (
-                <div key={i} className="overflow-hidden rounded-xl border border-default">
-                  <Skeleton className="aspect-[16/10] rounded-none" />
-                  <div className="p-3">
-                    <Skeleton className="h-4 w-3/4" />
-                    <Skeleton className="mt-2 h-3 w-1/3" />
+        <div className="mt-6 pb-6">
+          {!visible && (
+            <ul className="overflow-hidden rounded-xl border border-default bg-elevated">
+              {Array.from({ length: 6 }, (_, i) => (
+                <li key={i} className="border-t border-default first:border-t-0">
+                  <div className="flex items-center gap-3 px-3 py-2">
+                    <Skeleton className="h-10 w-16 rounded-md" />
+                    <div className="flex-1">
+                      <Skeleton className="h-4 w-1/2" />
+                    </div>
+                    <Skeleton className="h-3 w-12" />
                   </div>
-                </div>
+                </li>
               ))}
+            </ul>
+          )}
+          {visible && visible.length > 0 && !grouped && (
+            <ReportList issues={visible} projectId={project.id} />
+          )}
+          {visible && grouped && (
+            <>
+              <GroupLabel>Today</GroupLabel>
+              <ReportList issues={today} projectId={project.id} />
+              <GroupLabel>Earlier</GroupLabel>
+              <ReportList issues={earlier} projectId={project.id} />
+            </>
+          )}
+          {visible && visible.length === 0 && (
+            <p className="pb-4 pt-10 text-center text-sm text-muted">
+              {query.trim()
+                ? `No reports match "${query.trim()}".`
+                : `No ${active.label.toLowerCase()} in this project yet.`}
+            </p>
+          )}
         </div>
-
-        {visible && visible.length === 0 && (
-          <p className="pb-10 text-center text-sm text-muted">
-            No {active.label.toLowerCase()} in this project yet.
-          </p>
-        )}
       </div>
     </div>
   );

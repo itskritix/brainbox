@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
-import { signOut, useSession } from "@hono/auth-js/react";
+import { signOut } from "@hono/auth-js/react";
 import { LayoutGrid, LogOut, Settings } from "lucide-react";
 import type { Project } from "@brainbox/shared";
 
@@ -9,6 +9,7 @@ import { LAST_PROJECT_KEY, type ProjectOutletContext } from "../lib/useProject";
 import { cn } from "../lib/utils";
 import { ProjectSwitcher } from "./ProjectSwitcher";
 import { Spinner } from "./ui/spinner";
+import { UserMenu } from "./UserMenu";
 import { Wordmark } from "./Wordmark";
 
 function NavItem({
@@ -64,7 +65,6 @@ function MobileTab({ to, active, label }: { to: string; active: boolean; label: 
 export function ProjectLayout() {
   const { projectId } = useParams<{ projectId: string }>();
   const location = useLocation();
-  const { data: session } = useSession();
   const [projects, setProjects] = useState<Project[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -147,26 +147,8 @@ export function ProjectLayout() {
           />
           <NavItem to={`${base}/settings`} active={isSettings} icon={<Settings />} label="Settings" />
         </nav>
-        <div className="mt-auto flex items-center gap-2 border-t border-default px-4 py-3">
-          {session?.user?.image && (
-            <img
-              src={session.user.image}
-              alt=""
-              referrerPolicy="no-referrer"
-              className="size-6 shrink-0 rounded-full"
-            />
-          )}
-          <span className="min-w-0 flex-1 truncate text-xs text-muted">
-            {session?.user?.name ?? session?.user?.email ?? ""}
-          </span>
-          <button
-            type="button"
-            onClick={() => signOut()}
-            aria-label="Sign out"
-            className="rounded-md p-1.5 text-muted transition hover:bg-interactive-hover hover:text-emphasis"
-          >
-            <LogOut className="h-3.5 w-3.5" />
-          </button>
+        <div className="mt-auto border-t border-default p-2">
+          <UserMenu />
         </div>
       </aside>
 
