@@ -170,6 +170,47 @@ describe("POST /ingest — voice note transcription", () => {
     });
   });
 
+  it("transcribes a screen recording's audio track and stores it on video", async () => {
+    transcriptionEnabledMock.mockReturnValue(true);
+    transcribeAudioMock.mockResolvedValue("so I click save and nothing happens");
+    const user = await makeUser();
+    const project = await makeProject(user.id);
+
+    const fd = form(payload(project.key), null);
+    fd.append("video", new File([new Uint8Array([1, 2, 3])], "r.webm", { type: "video/webm" }));
+    const res = await post(fd);
+    expect(res.status).toBe(201);
+    const { id } = (await res.json()) as { id: string };
+
+    await vi.waitFor(async () => {
+      const row = await issueRow(id);
+      expect(row.videoTranscriptStatus).toBe("done");
+      expect(row.videoTranscript).toBe("so I click save and nothing happens");
+    });
+    expect(transcribeAudioMock).toHaveBeenCalledWith(new Uint8Array([1, 2, 3]));
+    const row = await issueRow(id);
+    expect(row.audioTranscriptStatus).toBeNull();
+  });
+
+  it("marks a failed recording transcription on the video fields", async () => {
+    transcriptionEnabledMock.mockReturnValue(true);
+    transcribeAudioMock.mockRejectedValue(new Error("provider down"));
+    const user = await makeUser();
+    const project = await makeProject(user.id);
+
+    const fd = form(payload(project.key), null);
+    fd.append("video", new File([new Uint8Array([1, 2, 3])], "r.webm", { type: "video/webm" }));
+    const res = await post(fd);
+    expect(res.status).toBe(201);
+    const { id } = (await res.json()) as { id: string };
+
+    await vi.waitFor(async () => {
+      const row = await issueRow(id);
+      expect(row.videoTranscriptStatus).toBe("failed");
+      expect(row.videoTranscript).toBeNull();
+    });
+  });
+
   it("does not transcribe issues without audio even when enabled", async () => {
     transcriptionEnabledMock.mockReturnValue(true);
     const user = await makeUser();

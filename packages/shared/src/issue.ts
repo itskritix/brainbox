@@ -25,7 +25,12 @@ export interface Issue {
    *  screenshot server-side. Absent on recordings, older issues, or if cropping failed. */
   crop?: StoredFile;
   /** Present for screen-recording submissions (a webm video with mic audio). */
-  video?: StoredFile & { mime: string };
+  video?: StoredFile & {
+    mime: string;
+    /** Speech-to-text of the recording's mic audio; present once done. */
+    transcript?: string;
+    transcriptStatus?: TranscriptStatus;
+  };
   /** Present for session-replay submissions: a gzipped rrweb event log,
    *  replayed in the dashboard. No permission prompt, records only the app. */
   session?: StoredFile;

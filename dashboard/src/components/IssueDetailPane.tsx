@@ -5,6 +5,7 @@ import type { Issue } from "@brainbox/shared";
 
 import { api } from "../lib/api";
 import { issueTitle, pageLabel } from "../lib/issue";
+import { CopyButton } from "./CopyButton";
 import { Eyebrow } from "./Eyebrow";
 import { Lightbox } from "./Lightbox";
 import { SessionReplay } from "./SessionReplay";
@@ -77,6 +78,24 @@ export function IssueDetailPane({ issueId, projectId }: { issueId: string; proje
     };
   }, [issueId]);
 
+  // transcription runs in the background after ingest - poll while pending so
+  // the transcript appears without a manual refresh
+  useEffect(() => {
+    const pending =
+      issue?.audio?.transcriptStatus === "pending" ||
+      issue?.video?.transcriptStatus === "pending";
+    if (!pending) return;
+    const t = setTimeout(() => {
+      api
+        .getIssue(issueId)
+        .then(setIssue)
+        .catch(() => {
+          /* keep showing the stale issue; the next poll retries */
+        });
+    }, 3000);
+    return () => clearTimeout(t);
+  }, [issue, issueId]);
+
   const back = (
     <Link
       to={`/projects/${projectId}`}
@@ -107,6 +126,12 @@ export function IssueDetailPane({ issueId, projectId }: { issueId: string; proje
   }
 
   const m = issue.metadata;
+  // one transcript panel beside the media: a report has voice OR a recording
+  const transcript = issue.audio?.transcriptStatus
+    ? { label: "Voice transcript", text: issue.audio.transcript, status: issue.audio.transcriptStatus }
+    : issue.video?.transcriptStatus
+      ? { label: "Recording transcript", text: issue.video.transcript, status: issue.video.transcriptStatus }
+      : null;
   return (
     <article className="mx-auto w-full max-w-6xl">
       <header className="px-4 pt-6 sm:px-6">
@@ -183,25 +208,28 @@ export function IssueDetailPane({ issueId, projectId }: { issueId: string; proje
               </audio>
             </Figure>
           )}
-          {/* status is only set when transcription ran; "done" implies text */}
-          {issue.audio?.transcriptStatus && (
-            <Figure label="Voice transcript">
-              {issue.audio.transcript ? (
-                <p className="rounded-xl border border-default bg-elevated p-4 text-sm leading-relaxed text-default">
-                  {issue.audio.transcript}
-                </p>
-              ) : (
-                <p className="px-1 text-xs text-muted">
-                  {issue.audio.transcriptStatus === "pending"
-                    ? "Transcribing…"
-                    : "Transcription failed."}
-                </p>
-              )}
-            </Figure>
-          )}
         </div>
 
         <aside className="min-w-0">
+          {/* status is only set when transcription ran; "done" implies text */}
+          {transcript && (
+            <div className="mb-6">
+              <div className="flex items-center justify-between px-1 pb-2">
+                <Eyebrow>{transcript.label}</Eyebrow>
+                {transcript.text && <CopyButton text={transcript.text} />}
+              </div>
+              {transcript.text ? (
+                <p className="max-h-80 overflow-y-auto whitespace-pre-wrap rounded-xl border border-default bg-elevated p-4 text-sm leading-relaxed text-default">
+                  {transcript.text}
+                </p>
+              ) : (
+                <p className="px-1 text-xs text-muted">
+                  {transcript.status === "pending" ? "Transcribing…" : "Transcription failed."}
+                </p>
+              )}
+            </div>
+          )}
+
           <Eyebrow className="block px-1 pb-1">Environment</Eyebrow>
           <Meta label="URL" value={m.url} />
           <Meta label="Title" value={m.title} />

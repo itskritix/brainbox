@@ -30,6 +30,10 @@ export const issues = pgTable("issues", {
   // Screen recording (webm video with mic audio).
   videoKey: text("video_key"),
   videoMime: text("video_mime"),
+  // Speech-to-text of the recording's mic audio; null when there's no video
+  // or transcription was disabled at ingest time.
+  videoTranscript: text("video_transcript"),
+  videoTranscriptStatus: text("video_transcript_status").$type<TranscriptStatus>(),
   // Session replay: gzipped rrweb event log (prompt-free DOM recording).
   sessionKey: text("session_key"),
   audioKey: text("audio_key"),

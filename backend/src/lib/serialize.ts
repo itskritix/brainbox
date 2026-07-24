@@ -19,6 +19,8 @@ export async function toIssue(row: IssueRow, storage: Storage): Promise<Issue> {
         key: row.videoKey,
         url: await storage.presignGet(row.videoKey),
         mime: row.videoMime ?? "video/webm",
+        transcript: row.videoTranscript ?? undefined,
+        transcriptStatus: row.videoTranscriptStatus ?? undefined,
       }
     : undefined;
   const session = row.sessionKey
