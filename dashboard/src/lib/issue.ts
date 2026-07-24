@@ -8,6 +8,21 @@ export function issueTitle(issue: Pick<Issue, "text" | "metadata">): string {
   return pageLabel(issue.metadata.url) || issue.metadata.title || "Untitled report";
 }
 
+/** Case-insensitive search across everything a row shows: the title/note,
+ *  the page, and the reporter. An empty query matches everything. */
+export function matchesIssue(issue: Pick<Issue, "text" | "metadata">, query: string): boolean {
+  const q = query.trim().toLowerCase();
+  if (!q) return true;
+  const haystack = [
+    issueTitle(issue),
+    pageLabel(issue.metadata.url),
+    issue.metadata.identity?.email ?? "",
+  ]
+    .join("\n")
+    .toLowerCase();
+  return haystack.includes(q);
+}
+
 /** "app.example.com/settings" from a full URL; returns the input if unparseable. */
 export function pageLabel(url: string): string {
   try {

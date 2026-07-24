@@ -1,5 +1,39 @@
 import { describe, expect, it } from "vitest";
-import { normalizeOrigin, timeAgo } from "./utils.ts";
+import { isToday, normalizeOrigin, timeAgo, userInitial } from "./utils.ts";
+
+describe("isToday", () => {
+  const noon = new Date("2026-07-24T12:00:00");
+
+  it("is true for the same local calendar day", () => {
+    expect(isToday(new Date("2026-07-24T00:30:00").toISOString(), noon)).toBe(true);
+    expect(isToday(new Date("2026-07-24T23:00:00").toISOString(), noon)).toBe(true);
+  });
+
+  it("is false for yesterday even when less than 24h ago", () => {
+    expect(isToday(new Date("2026-07-23T23:00:00").toISOString(), noon)).toBe(false);
+  });
+
+  it("is false across month and year boundaries", () => {
+    expect(isToday(new Date("2026-06-24T12:00:00").toISOString(), noon)).toBe(false);
+    expect(isToday(new Date("2025-07-24T12:00:00").toISOString(), noon)).toBe(false);
+  });
+});
+
+describe("userInitial", () => {
+  it("uses the first letter of the name, uppercased", () => {
+    expect(userInitial("ganesh", "ganesh@nidana.io")).toBe("G");
+  });
+
+  it("falls back to the email when the name is missing or blank", () => {
+    expect(userInitial(null, "ganesh@nidana.io")).toBe("G");
+    expect(userInitial("   ", "alice@example.com")).toBe("A");
+  });
+
+  it('renders "?" when neither is present', () => {
+    expect(userInitial(null, undefined)).toBe("?");
+    expect(userInitial("", "")).toBe("?");
+  });
+});
 
 describe("normalizeOrigin", () => {
   it("adds https and lowercases a bare domain", () => {
