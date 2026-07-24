@@ -57,7 +57,9 @@ export function UserMenu() {
         </span>
         <EllipsisVertical className="h-4 w-4 shrink-0 text-muted" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent side="right" align="end" sideOffset={8}>
+      {/* footer has 8px padding, so 16px from the trigger = 8px of visible
+          air between the sidebar border and the menu */}
+      <DropdownMenuContent side="right" align="end" sideOffset={16}>
         <DropdownMenuLabel className="flex items-center gap-2.5">
           <Avatar image={user?.image} initial={initial} className="size-8" />
           <span className="min-w-0 flex-1">

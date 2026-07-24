@@ -48,7 +48,7 @@ function DropdownMenuItem({
     <DropdownMenuPrimitive.Item
       data-slot="dropdown-menu-item"
       className={cn(
-        "flex cursor-default select-none items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-default outline-none transition",
+        "flex cursor-default select-none items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm text-default outline-none transition",
         "focus:bg-interactive-hover focus:text-emphasis data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         "[&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted",
         className
@@ -65,7 +65,7 @@ function DropdownMenuLabel({
   return (
     <DropdownMenuPrimitive.Label
       data-slot="dropdown-menu-label"
-      className={cn("px-2.5 py-2 text-sm text-emphasis", className)}
+      className={cn("px-2.5 py-1.5 text-sm text-emphasis", className)}
       {...props}
     />
   )
