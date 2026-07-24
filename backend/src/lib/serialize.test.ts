@@ -53,6 +53,8 @@ describe("toIssue", () => {
     cropKey: null,
     videoKey: null,
     videoMime: null,
+    videoTranscript: null,
+    videoTranscriptStatus: null,
     sessionKey: null,
     audioKey: "p1/i1/a.webm",
     audioMime: "audio/webm",
@@ -92,6 +94,21 @@ describe("toIssue", () => {
     const issue = await toIssue({ ...base, audioTranscriptStatus: "pending" }, storage);
     expect(issue.audio?.transcript).toBeUndefined();
     expect(issue.audio?.transcriptStatus).toBe("pending");
+  });
+
+  it("maps a finished transcript onto video", async () => {
+    const issue = await toIssue(
+      {
+        ...base,
+        videoKey: "p1/i1/rec.webm",
+        videoMime: "video/webm",
+        videoTranscript: "so I click save and nothing happens",
+        videoTranscriptStatus: "done",
+      },
+      storage,
+    );
+    expect(issue.video?.transcript).toBe("so I click save and nothing happens");
+    expect(issue.video?.transcriptStatus).toBe("done");
   });
 
   it("includes the crop with a signed url when cropKey is set", async () => {

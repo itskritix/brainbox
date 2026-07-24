@@ -140,11 +140,13 @@ ingest.post("/", async (c) => {
 
   let videoKey: string | null = null;
   let videoMime: string | null = null;
+  let videoBytes: Uint8Array | null = null;
   if (video) {
     const ext = VIDEO_EXT[video.type] ?? "webm";
     videoKey = `${project.id}/${issueId}/recording.${ext}`;
     videoMime = video.type;
-    await storage.put(videoKey, new Uint8Array(await video.arrayBuffer()), video.type);
+    videoBytes = new Uint8Array(await video.arrayBuffer());
+    await storage.put(videoKey, videoBytes, video.type);
   }
 
   let sessionKey: string | null = null;
@@ -165,7 +167,9 @@ ingest.post("/", async (c) => {
     await storage.put(audioKey, audioBytes, audio.type);
   }
 
-  const willTranscribe = audioBytes !== null && transcriptionEnabled();
+  const willTranscribeAudio = audioBytes !== null && transcriptionEnabled();
+  // The video's mic audio track; whisper takes the webm/mp4 container as-is.
+  const willTranscribeVideo = videoBytes !== null && transcriptionEnabled();
 
   await db.insert(issues).values({
     id: issueId,
@@ -178,31 +182,47 @@ ingest.post("/", async (c) => {
     sessionKey,
     audioKey,
     audioMime,
-    audioTranscriptStatus: willTranscribe ? "pending" : null,
+    audioTranscriptStatus: willTranscribeAudio ? "pending" : null,
+    videoTranscriptStatus: willTranscribeVideo ? "pending" : null,
     region: feedback.region ?? null,
     metadata: feedback.metadata,
   });
 
   // Fire-and-forget: transcription must never delay or fail the submission.
-  if (audioBytes && willTranscribe) {
-    void transcribeAndStore(issueId, audioBytes);
+  if (audioBytes && willTranscribeAudio) {
+    void transcribeAndStore(issueId, audioBytes, "audio");
+  }
+  if (videoBytes && willTranscribeVideo) {
+    void transcribeAndStore(issueId, videoBytes, "video");
   }
 
   return c.json({ id: issueId }, 201);
 });
 
-async function transcribeAndStore(issueId: string, audio: Uint8Array): Promise<void> {
+async function transcribeAndStore(
+  issueId: string,
+  media: Uint8Array,
+  kind: "audio" | "video",
+): Promise<void> {
   try {
-    const text = await transcribeAudio(audio);
+    const text = await transcribeAudio(media);
     await db
       .update(issues)
-      .set({ audioTranscript: text, audioTranscriptStatus: "done" })
+      .set(
+        kind === "audio"
+          ? { audioTranscript: text, audioTranscriptStatus: "done" }
+          : { videoTranscript: text, videoTranscriptStatus: "done" },
+      )
       .where(eq(issues.id, issueId));
   } catch (err) {
-    console.error(`[ingest] transcription failed for issue ${issueId}:`, err);
+    console.error(`[ingest] ${kind} transcription failed for issue ${issueId}:`, err);
     await db
       .update(issues)
-      .set({ audioTranscriptStatus: "failed" })
+      .set(
+        kind === "audio"
+          ? { audioTranscriptStatus: "failed" }
+          : { videoTranscriptStatus: "failed" },
+      )
       .where(eq(issues.id, issueId))
       .catch((dbErr: unknown) => {
         console.error(`[ingest] failed to mark transcription failed for ${issueId}:`, dbErr);

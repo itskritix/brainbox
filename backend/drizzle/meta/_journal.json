@@ -50,6 +50,13 @@
       "when": 1784789319915,
       "tag": "0006_faulty_leo",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1784905160908,
+      "tag": "0007_blue_dreaming_celestial",
+      "breakpoints": true
     }
   ]
 }

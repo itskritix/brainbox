@@ -31,6 +31,8 @@ export function transcriptionEnabled(): boolean {
   return env.TRANSCRIPTION_PROVIDER !== "";
 }
 
+/** Speech-to-text. Also takes video containers (webm/mp4) - whisper
+ *  transcribes the audio track. */
 export async function transcribeAudio(audio: Uint8Array): Promise<string> {
   const factory = PROVIDERS[env.TRANSCRIPTION_PROVIDER];
   if (!factory) {
