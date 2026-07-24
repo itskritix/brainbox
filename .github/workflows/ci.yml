@@ -68,25 +68,5 @@ jobs:
           ssh -o StrictHostKeyChecking=accept-new "${EC2_USER}@${EC2_HOST}" \
             "cd /home/ubuntu/brainbox && git fetch origin --quiet && git show ${GITHUB_SHA}:scripts/deploy.sh | bash -s -- ${GITHUB_SHA}"
 
-  deploy-marketing:
-    needs: verify
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    # Set VERCEL_TOKEN to activate; until then Vercel's git integration keeps
-    # deploying marketing and this job no-ops (see the guard below).
-    env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy marketing to Vercel production
-        if: ${{ env.VERCEL_TOKEN != '' }}
-        run: |
-          npm i -g vercel@latest
-          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
-          vercel build --prod --token="$VERCEL_TOKEN"
-          vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
-      - name: Skipped (no VERCEL_TOKEN)
-        if: ${{ env.VERCEL_TOKEN == '' }}
-        run: echo "VERCEL_TOKEN not set — marketing is deployed by Vercel's git integration. Add the secret to move it into this pipeline."
+  # Marketing (brainbox-landing) is deployed by Vercel's own git integration on
+  # push to main — no job here on purpose.
