@@ -1,6 +1,9 @@
-// Copies the built widget IIFE into public/ so the landing page serves it
-// same-origin at /widget.js. If you rebuild the widget mid-session, re-run
-// this script (or restart `pnpm dev`) - Vite serves public/ straight from disk.
+// Dev only (`pnpm dev`) - production loads https://app.brainbox.sh/widget.js,
+// the same tag customers paste, so the build no longer needs a bundled copy.
+// This puts a locally built widget at /widget.js so you can iterate on it by
+// setting VITE_DEMO_WIDGET_SRC=/widget.js. If you rebuild the widget
+// mid-session, re-run this (or restart `pnpm dev`) - Vite serves public/ from
+// disk.
 import { execSync } from "node:child_process"
 import { copyFileSync, existsSync } from "node:fs"
 import { fileURLToPath } from "node:url"

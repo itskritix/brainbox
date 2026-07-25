@@ -6,7 +6,7 @@
   "packageManager": "pnpm@10.28.2",
   "scripts": {
     "dev": "node scripts/copy-widget.mjs && vite",
-    "build": "node scripts/copy-widget.mjs && tsc -b && vite build",
+    "build": "tsc -b && vite build",
     "typecheck": "tsc -b",
     "lint": "eslint .",
     "preview": "vite preview",

@@ -12,23 +12,29 @@ describe("resolveWidgetConfig", () => {
     expect(config.endpoint).toBe("https://app.brainbox.sh/ingest");
   });
 
+  it("defaults to the same widget URL customers are given, not a bundled copy", () => {
+    expect(resolveWidgetConfig({}).src).toBe("https://app.brainbox.sh/widget.js");
+  });
+
   it("lets env values override the defaults", () => {
     const config = resolveWidgetConfig({
       VITE_DEMO_PROJECT_KEY: "pk_test_local",
       VITE_DEMO_ENDPOINT: "http://localhost:8787/ingest",
+      VITE_DEMO_WIDGET_SRC: "/widget.js",
     });
     expect(config.project).toBe("pk_test_local");
     expect(config.endpoint).toBe("http://localhost:8787/ingest");
+    expect(config.src).toBe("/widget.js");
   });
 });
 
 describe("loadWidget", () => {
-  const config = { project: "pk_a", endpoint: "http://x/ingest" };
+  const config = { project: "pk_a", endpoint: "http://x/ingest", src: "https://cdn.test/widget.js" };
 
   it("injects a classic script tag with the widget config", () => {
     loadWidget(config);
     const script = document.querySelector<HTMLScriptElement>("script[data-brainbox-demo]")!;
-    expect(script.getAttribute("src")).toBe("/widget.js");
+    expect(script.getAttribute("src")).toBe("https://cdn.test/widget.js");
     expect(script.dataset.project).toBe("pk_a");
     expect(script.dataset.endpoint).toBe("http://x/ingest");
     expect(script.type).toBe("");
