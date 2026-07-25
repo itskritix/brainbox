@@ -59,8 +59,10 @@ export function bandsChanged(
   return next.some((v, i) => Math.abs(v - (prev[i] ?? 0)) > threshold);
 }
 
-/** Bars never fully collapse - a flat line reads as "broken", not "quiet". */
-const FLOOR = 12;
+/** Bars never fully collapse - a flat line reads as "broken", not "quiet". Kept
+ *  low so speech peaks have room to stand out; a high floor flattens the whole
+ *  row into equal-looking pills. */
+const FLOOR = 5;
 
 /** A 0..1 level as a bar height percentage. */
 export function barHeight(level: number): number {
@@ -68,13 +70,18 @@ export function barHeight(level: number): number {
   return FLOOR + clamped * (100 - FLOOR);
 }
 
-/** One overall 0..1 level from a band set - recorded per tick to redraw the clip
- *  as a static envelope during playback. */
-export function meanLevel(bands: readonly number[]): number {
-  if (bands.length === 0) return 0;
-  let sum = 0;
-  for (const b of bands) sum += b;
-  return sum / bands.length;
+/**
+ * One overall 0..1 level from a band set - recorded per tick to redraw the clip
+ * as a static envelope during playback.
+ *
+ * Peak, not mean: averaging across bands cancels out syllables (loud vowels sit
+ * in a couple of bands while the rest stay quiet), which flattens the saved
+ * envelope into a near-constant block. The peak keeps that punch.
+ */
+export function peakLevel(bands: readonly number[]): number {
+  let max = 0;
+  for (const b of bands) if (b > max) max = b;
+  return max;
 }
 
 /** Average a whole clip's recorded levels into `count` buckets - the envelope

@@ -33,3 +33,6 @@ dist-ssr
 dashboard/public/widget.js
 marketing/public/widget.js
 .vercel/
+
+# Local widget UI screenshots (scripts/shoot.mjs)
+widget/.shots/

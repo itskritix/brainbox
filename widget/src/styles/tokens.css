@@ -10,7 +10,17 @@
    under .dark.
    ============================================================ */
 
-:root {
+/* Declared on BOTH scopes on purpose. embed.ts rewrites `:root` to `:host`, and
+   most tokens below are indirections (`--bg-elevated: var(--gray-2)`). A custom
+   property is resolved on the element that declares it and inherits as that
+   resolved value - so declared only on :host they'd bake in the LIGHT Radix
+   scale, and redefining --gray-N on the inner `.dark` wrapper could never
+   retroactively change them. Only tokens whose .dark override is a literal
+   (--bg-background, --bg-brand) would flip, which is what left the widget with a
+   light panel, dark text, and an unreadable black input box. Listing `.dark`
+   here makes every token re-resolve there against the dark scale. */
+:root,
+.dark {
   /* surfaces */
   --bg-background: #fdfdfd;
   --bg-canvas: var(--gray-1);
