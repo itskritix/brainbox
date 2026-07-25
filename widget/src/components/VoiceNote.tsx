@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Mic, Pause, Play, Square, Trash2 } from "lucide-react";
 import { startRecording, type Recorder } from "../lib/audio.ts";
-import { downsample, meanLevel } from "../lib/multiband.ts";
+import { downsample, peakLevel } from "../lib/multiband.ts";
 import { useMultibandVolume } from "../lib/use-multiband.ts";
 import { fmtDuration } from "../lib/time.ts";
 import { BarRow } from "./BarVisualizer.tsx";
 
-/** Bars in the meter. */
-const BARS = 24;
+/** Bars in the meter. More, thinner bars read as a waveform; a couple of dozen
+ *  fat ones read as a row of pills. */
+const BARS = 32;
 /** Hard cap so a forgotten recording can't grow unbounded. */
 const MAX_SECS = 120;
 
@@ -90,7 +91,7 @@ export function VoiceNote({ onChange }: { onChange: (b: Blob | null) => void }) 
   // doesn't trigger a second render per frame on top of the meter's own.
   useEffect(() => {
     if (phase !== "recording") return;
-    envelopeRef.current.push(meanLevel(bands));
+    envelopeRef.current.push(peakLevel(bands));
   }, [bands, phase]);
 
   // Elapsed clock, plus the runaway-recording cap.
@@ -151,7 +152,7 @@ export function VoiceNote({ onChange }: { onChange: (b: Blob | null) => void }) 
       {phase === "idle" ? (
         <span className="min-w-0 flex-1 text-left">
           <span className="block text-sm text-emphasis">Tap to talk</span>
-          <span className="block text-xs text-muted">
+          <span className="block text-xs text-default">
             {err || "Faster than typing - we transcribe it for you"}
           </span>
         </span>

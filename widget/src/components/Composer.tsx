@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ImageOff, Loader2, Play, Send, X } from "lucide-react";
+import { ImageOff, Loader2, Pencil, Play, Send, X } from "lucide-react";
 import { VoiceNote } from "./VoiceNote.tsx";
 import { posClass, type Position } from "../lib/position.ts";
 
@@ -30,6 +30,7 @@ export function Composer({
   // The record flow already captures voice, so the composer only offers a mic
   // when there isn't one attached already.
   const voiceDone = !!videoUrl || !!voiceCaptured;
+  const [typing, setTyping] = useState(voiceDone);
 
   const canSend = !captureFailed || !!text.trim() || !!audio || voiceDone || !!sessionReady;
 
@@ -89,23 +90,33 @@ export function Composer({
         </p>
       ) : null}
 
-      {/* One input surface: type in it, or talk into the mic docked at its foot.
-          Neither is hidden behind a toggle - whichever the user reaches for is
-          already on screen. */}
+      {/* Voice leads and is the only thing on screen by default - an empty
+          textarea sitting above it made the panel look inert and buried the mic.
+          Typing is one click away for whoever wants it. */}
       <div className="overflow-hidden rounded-xl border border-default bg-background focus-within:border-interactive">
-        <textarea
-          value={text}
-          maxLength={10000}
-          onChange={(e) => setText(e.target.value)}
-          placeholder={voiceDone ? "Anything to add?" : "Describe what went wrong"}
-          className="h-20 w-full resize-none bg-transparent p-3 text-sm text-default outline-none placeholder:text-placeholder"
-        />
-        {!voiceDone && (
-          <div className="border-t border-subtle">
-            <VoiceNote onChange={setAudio} />
+        {!voiceDone && <VoiceNote onChange={setAudio} />}
+        {typing && (
+          <div className={voiceDone ? "" : "border-t border-subtle"}>
+            <textarea
+              value={text}
+              maxLength={10000}
+              autoFocus
+              onChange={(e) => setText(e.target.value)}
+              placeholder={voiceDone ? "Anything to add?" : "Describe what went wrong"}
+              className="h-20 w-full resize-none bg-transparent p-3 text-sm text-default outline-none placeholder:text-placeholder"
+            />
           </div>
         )}
       </div>
+
+      {!typing && (
+        <button
+          onClick={() => setTyping(true)}
+          className="mt-2 flex items-center gap-1.5 text-xs text-default hover:text-emphasis"
+        >
+          <Pencil className="h-3 w-3" /> Prefer to type?
+        </button>
+      )}
 
       <button
         onClick={() => onSubmit(text, audio)}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { bandLevels, bandsChanged, downsample, meanLevel, normalizeDb } from "./multiband.ts";
+import { bandLevels, bandsChanged, downsample, normalizeDb, peakLevel } from "./multiband.ts";
 
 describe("normalizeDb", () => {
   it("reports silence at or below the floor", () => {
@@ -83,14 +83,21 @@ describe("bandsChanged", () => {
   });
 });
 
-describe("meanLevel", () => {
-  it("averages the bands", () => {
-    expect(meanLevel([0, 1])).toBe(0.5);
-    expect(meanLevel([0.2, 0.2, 0.2])).toBeCloseTo(0.2);
+describe("peakLevel", () => {
+  it("takes the loudest band, not the average", () => {
+    expect(peakLevel([0, 1])).toBe(1);
+    expect(peakLevel([0.1, 0.9, 0.1, 0.1])).toBe(0.9);
   });
 
-  it("is zero for no bands", () => {
-    expect(meanLevel([])).toBe(0);
+  it("keeps syllable punch a mean would cancel out", () => {
+    // One loud vowel band among quiet ones must still read as loud.
+    const syllable = [0.05, 0.05, 0.8, 0.05, 0.05];
+    expect(peakLevel(syllable)).toBe(0.8);
+  });
+
+  it("is zero for no bands and for silence", () => {
+    expect(peakLevel([])).toBe(0);
+    expect(peakLevel([0, 0, 0])).toBe(0);
   });
 });
 

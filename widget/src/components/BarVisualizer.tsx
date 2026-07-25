@@ -12,7 +12,10 @@ export const BarRow = memo(function BarRow({
   dimFrom?: number;
 }) {
   return (
-    <span className="flex h-9 flex-1 items-center gap-[2px]" aria-hidden="true">
+    <span
+      className="flex h-8 flex-1 items-center justify-center gap-[2px] overflow-hidden"
+      aria-hidden="true"
+    >
       {levels.map((level, i) => (
         <Bar key={i} height={barHeight(level)} dim={dimFrom !== undefined && i >= dimFrom} />
       ))}
@@ -24,8 +27,10 @@ export const BarRow = memo(function BarRow({
 const Bar = memo(function Bar({ height, dim }: { height: number; dim: boolean }) {
   return (
     <span
-      className="w-full min-w-[2px] rounded-full transition-[height,opacity] duration-100"
-      style={{ height: `${height}%`, background: "var(--text-emphasis)", opacity: dim ? 0.2 : 1 }}
+      // Fixed 2px and barely rounded. Stretched-to-fill bars end up wide enough
+      // that `rounded-full` turns every quiet sample into a dot.
+      className="w-[2px] shrink-0 rounded-[1px] transition-[height,opacity] duration-75"
+      style={{ height: `${height}%`, background: "var(--text-emphasis)", opacity: dim ? 0.25 : 1 }}
     />
   );
 });
