@@ -68,5 +68,40 @@ jobs:
           ssh -o StrictHostKeyChecking=accept-new "${EC2_USER}@${EC2_HOST}" \
             "cd /home/ubuntu/brainbox && git fetch origin --quiet && git show ${GITHUB_SHA}:scripts/deploy.sh | bash -s -- ${GITHUB_SHA}"
 
-  # Marketing (brainbox-landing) is deployed by Vercel's own git integration on
-  # push to main — no job here on purpose.
+  # Marketing (brainbox-marketing) deploys through the Vercel CLI rather than
+  # Vercel's git integration. The integration attributes each deployment to the
+  # *commit author* and blocks anyone who isn't a project member — and our merge
+  # commits are authored by GitHub's noreply address, not the account that owns
+  # the Vercel project, so every push to main failed with "Git author itskritix
+  # must have access to the project". A token deploy authenticates as the token
+  # owner instead, so there is no per-author check to fail.
+  #
+  # Turn OFF the Vercel git integration for this project once the secrets are in
+  # place, or every push deploys twice.
+  deploy-marketing:
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-marketing
+      cancel-in-progress: false
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      # Harmless to merge before the secrets exist: without a token the job
+      # reports what's missing and exits clean rather than failing main.
+      - name: Skip (VERCEL_TOKEN not set)
+        if: ${{ env.VERCEL_TOKEN == '' }}
+        run: |
+          echo "::notice::VERCEL_TOKEN not set — skipping marketing deploy."
+          echo "Add VERCEL_TOKEN, VERCEL_ORG_ID and VERCEL_PROJECT_ID to repo secrets to enable it."
+      - name: Deploy marketing to Vercel production
+        if: ${{ env.VERCEL_TOKEN != '' }}
+        run: |
+          npm i -g vercel@latest
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          vercel build --prod --token="$VERCEL_TOKEN"
+          vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
