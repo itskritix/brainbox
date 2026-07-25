@@ -1,5 +1,8 @@
 export interface Recorder {
   stop: () => Promise<Blob>;
+  /** The live mic stream, for the level meter. Analysed by
+   *  `useMultibandVolume` rather than re-opening the mic a second time. */
+  stream: MediaStream;
 }
 
 const MIME = "audio/webm";
@@ -16,6 +19,7 @@ export async function startRecording(): Promise<Recorder> {
   rec.start();
 
   return {
+    stream,
     stop: () =>
       new Promise<Blob>((resolve) => {
         rec.onstop = () => {

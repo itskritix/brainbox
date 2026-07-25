@@ -3,6 +3,14 @@ import type { Region } from "@brainbox/shared";
 
 const HIGHLIGHT = "#ff4d4f";
 
+/** Never rendered, so never worth cloning or serialising - big inline <script>
+ *  blobs and unmounted <template> markup are pure capture cost. <style> stays:
+ *  the clone still needs its rules. */
+const INVISIBLE = new Set(["SCRIPT", "NOSCRIPT", "TEMPLATE"]);
+
+/** A stalled asset must not hold the report hostage - well under the 30s default. */
+const ASSET_TIMEOUT_MS = 6000;
+
 /** Render the current viewport to a canvas. The whole shadow host is hidden
  *  during capture so widget chrome never appears in the shot (ADR 0001). */
 async function viewportCanvas(hostEl: HTMLElement): Promise<HTMLCanvasElement> {
@@ -10,7 +18,17 @@ async function viewportCanvas(hostEl: HTMLElement): Promise<HTMLCanvasElement> {
   hostEl.style.visibility = "hidden";
   let full: HTMLCanvasElement;
   try {
-    full = await domToCanvas(document.documentElement, { scale: 1 });
+    full = await domToCanvas(document.documentElement, {
+      scale: 1,
+      timeout: ASSET_TIMEOUT_MS,
+      filter: (el) => !(el instanceof Element && INVISIBLE.has(el.tagName)),
+      // Every @font-face in the host's CSS is fetched and inlined; on a
+      // font-heavy page that dominates capture time. One modern format is
+      // enough - a host serving only legacy formats falls back to system fonts
+      // in the shot, which is an acceptable trade for a bug screenshot.
+      font: { preferredFormat: "woff2" },
+      features: { copyScrollbar: false },
+    });
   } finally {
     hostEl.style.visibility = prev;
   }

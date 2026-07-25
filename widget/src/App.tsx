@@ -20,7 +20,6 @@ type Status =
   | "idle"
   | "choosing"
   | "selecting"
-  | "capturing"
   | "recording"
   | "composing"
   | "submitting"
@@ -34,9 +33,14 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
   const [shotUrl, setShotUrl] = useState("");
   const [session, setSession] = useState<Blob | null>(null);
   const [recAudio, setRecAudio] = useState<Blob | null>(null);
+  const [shotPending, setShotPending] = useState(false);
+  const [shotFailed, setShotFailed] = useState(false);
   const [error, setError] = useState("");
   const [issueId, setIssueId] = useState("");
   const recRef = useRef<SessionRecording | null>(null);
+  /** In-flight screenshot. The composer opens before this settles, so submit
+   *  awaits it here rather than blocking the UI on it. */
+  const shotRef = useRef<Promise<Blob> | null>(null);
 
   const reset = useCallback(() => {
     setShotUrl((u) => {
@@ -48,11 +52,14 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
     recRef.current = null;
     if (rec) void rec.stop().catch(() => {});
     clearHighlights();
+    shotRef.current = null;
     setStatus("idle");
     setRegion(null);
     setShot(null);
     setSession(null);
     setRecAudio(null);
+    setShotPending(false);
+    setShotFailed(false);
     setError("");
     setIssueId("");
   }, []);
@@ -69,21 +76,32 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
   }, [reset]);
 
   const onRegion = useCallback(
-    async (rect: Region) => {
-      setStatus("capturing");
+    (rect: Region) => {
       const cx = rect.x + rect.width / 2;
       const cy = rect.y + rect.height / 2;
       const full: Region = { ...rect, selector: cssPath(elementAt(cx, cy, hostEl)) };
       setRegion(full);
-      try {
-        const blob = await captureScreenshot(full, hostEl);
-        setShot(blob);
-        setShotUrl(URL.createObjectURL(blob));
-        setStatus("composing");
-      } catch (e) {
-        setError(e instanceof Error ? e.message : "Screenshot failed");
-        setStatus("error");
-      }
+
+      // Open the composer straight away and rasterise in the background.
+      // Rendering a big page can take seconds, and the user's next move is to
+      // start talking - there's no reason to make them wait on a thumbnail.
+      setShotPending(true);
+      setShotFailed(false);
+      setStatus("composing");
+
+      const pending = captureScreenshot(full, hostEl);
+      shotRef.current = pending;
+      pending
+        .then((blob) => {
+          setShot(blob);
+          setShotUrl(URL.createObjectURL(blob));
+        })
+        .catch(() => {
+          // A failed screenshot must not sink the report - the text and voice
+          // note are still worth filing.
+          setShotFailed(true);
+        })
+        .finally(() => setShotPending(false));
     },
     [hostEl],
   );
@@ -131,8 +149,16 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
 
   const onSubmit = useCallback(
     async (text: string, audio: Blob | null) => {
-      if (!shot && !session) return;
       setStatus("submitting");
+      // The capture ran while the user was talking; if they hit Send first, wait
+      // for it now rather than dropping it.
+      const pending = shotRef.current;
+      const screenshot = shot ?? (pending ? await pending.catch(() => null) : null);
+      if (!screenshot && !session && !text.trim() && !audio) {
+        setError("Nothing to send - record a note or add a description");
+        setStatus("error");
+        return;
+      }
       const payload: FeedbackPayload = {
         projectKey: config.projectKey as ProjectKey,
         region: region ?? undefined,
@@ -143,7 +169,7 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
         const id = await submitFeedback({
           endpoint: config.endpoint,
           payload,
-          screenshot: shot ?? undefined,
+          screenshot: screenshot ?? undefined,
           session: session ?? undefined,
           audio: audio ?? recAudio ?? undefined,
         });
@@ -179,11 +205,13 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
           micActive={() => recRef.current?.micActive() ?? false}
         />
       )}
-      {status === "composing" && (shotUrl || session) && (
+      {status === "composing" && (
         <Composer
           screenshotUrl={shotUrl || undefined}
           sessionReady={!!session}
           voiceCaptured={!!recAudio}
+          capturePending={shotPending}
+          captureFailed={shotFailed}
           position={config.position}
           onCancel={reset}
           onSubmit={onSubmit}

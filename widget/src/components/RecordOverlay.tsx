@@ -2,13 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Highlighter, Mic, MicOff, Square } from "lucide-react";
 import { showHighlight } from "../lib/annotate.ts";
 import { posClass, type Position } from "../lib/position.ts";
+import { fmtDuration } from "../lib/time.ts";
 import { RegionOverlay } from "./RegionOverlay.tsx";
-
-function fmt(total: number): string {
-  const m = Math.floor(total / 60);
-  const s = total % 60;
-  return `${m}:${s.toString().padStart(2, "0")}`;
-}
 
 export function RecordOverlay({
   position,
@@ -61,7 +56,7 @@ export function RecordOverlay({
           className="h-2.5 w-2.5 animate-pulse rounded-full"
           style={{ background: "#ef4444" }}
         />
-        <span className="font-mono">{fmt(secs)}</span>
+        <span className="font-mono">{fmtDuration(secs)}</span>
       </span>
       <button
         onClick={() => setHighlighting(true)}
