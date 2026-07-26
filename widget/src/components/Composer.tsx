@@ -67,7 +67,7 @@ export function Composer({
           <img
             src={screenshotUrl}
             alt="Recording preview"
-            className="max-h-40 w-full object-cover object-top"
+            className="max-h-44 w-full bg-canvas object-contain"
           />
           <span className="absolute inset-0 flex items-center justify-center">
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm">
@@ -82,7 +82,7 @@ export function Composer({
         <img
           src={screenshotUrl}
           alt="Captured screenshot"
-          className="mb-3 max-h-40 w-full rounded-lg border border-default object-cover object-top"
+          className="mb-3 max-h-44 w-full rounded-lg border border-default bg-canvas object-contain"
         />
       ) : sessionReady ? (
         <p className="mb-3 rounded-lg border border-default bg-interactive p-3 text-xs text-default">
