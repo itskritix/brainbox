@@ -11,6 +11,58 @@ const INVISIBLE = new Set(["SCRIPT", "NOSCRIPT", "TEMPLATE"]);
 /** A stalled asset must not hold the report hostage - well under the 30s default. */
 const ASSET_TIMEOUT_MS = 6000;
 
+/** Positions that lay a box out against an ancestor rather than its parent, so a
+ *  descendant can paint far outside the subtree it lives in. */
+const ESCAPES = new Set(["absolute", "fixed", "sticky"]);
+
+/**
+ * A `filter` that drops everything outside the viewport.
+ *
+ * We rasterise the whole document and then crop to the viewport, so on a long
+ * page most of that work is discarded - a page 4x the viewport pays 4x for one
+ * screenshot, and the cost is CPU-bound cloning and per-node style resolution,
+ * not pixels. Off-screen elements cannot affect a viewport crop, so skipping
+ * them in the clone is free.
+ *
+ * The exception is escaping descendants: an absolutely positioned child is laid
+ * out against an ancestor, so pruning a parent by its own box could drop a child
+ * that was actually on screen. Ancestors of any escaping element are kept whole
+ * and everything else is judged on its own box.
+ */
+function viewportFilter(): (node: Node) => boolean {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  const keepWhole = new Set<Element>();
+  for (const el of Array.from(document.querySelectorAll("*"))) {
+    if (!ESCAPES.has(getComputedStyle(el).position)) continue;
+    for (let p = el.parentElement; p; p = p.parentElement) {
+      if (keepWhole.has(p)) break;
+      keepWhole.add(p);
+    }
+  }
+
+  return (node) => {
+    if (!(node instanceof Element)) return true;
+    if (INVISIBLE.has(node.tagName)) return false;
+    if (keepWhole.has(node)) return true;
+    return keepForViewport(node.getBoundingClientRect(), vw, vh);
+  };
+}
+
+/** Whether a box can still affect a viewport-sized crop. Split out from the DOM
+ *  walk so the edge cases are unit-testable. */
+export function keepForViewport(
+  r: { top: number; bottom: number; left: number; right: number; width: number; height: number },
+  vw: number,
+  vh: number,
+): boolean {
+  // A zero-size box says nothing useful - keep it and judge its children on
+  // their own boxes.
+  if (r.width === 0 && r.height === 0) return true;
+  return r.bottom > 0 && r.top < vh && r.right > 0 && r.left < vw;
+}
+
 /** Render the current viewport to a canvas. The whole shadow host is hidden
  *  during capture so widget chrome never appears in the shot (ADR 0001). */
 async function viewportCanvas(hostEl: HTMLElement): Promise<HTMLCanvasElement> {
@@ -21,7 +73,7 @@ async function viewportCanvas(hostEl: HTMLElement): Promise<HTMLCanvasElement> {
     full = await domToCanvas(document.documentElement, {
       scale: 1,
       timeout: ASSET_TIMEOUT_MS,
-      filter: (el) => !(el instanceof Element && INVISIBLE.has(el.tagName)),
+      filter: viewportFilter(),
       // Every @font-face in the host's CSS is fetched and inlined; on a
       // font-heavy page that dominates capture time. One modern format is
       // enough - a host serving only legacy formats falls back to system fonts
