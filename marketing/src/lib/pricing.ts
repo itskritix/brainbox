@@ -59,8 +59,16 @@ export const BUSINESS: Plan = {
 
 export const PLANS: readonly Plan[] = [PRO, BUSINESS];
 
-/** Charged per ticket once a plan's monthly allowance is used up. */
-export const OVERAGE_CENTS_PER_TICKET = 3;
+/**
+ * Charged per ticket once a plan's monthly allowance is used up.
+ *
+ * Set so that outgrowing Pro pushes you toward Business rather than parking on
+ * overage forever: at 5c, Pro-plus-overage passes Business's $149 at 3,000
+ * tickets, comfortably inside Pro's band. At 3c the crossover was 4,333 - past
+ * that, Business was only the cheaper option in the last sliver before its own
+ * 5,000 cap, so almost nobody would ever have had a reason to upgrade.
+ */
+export const OVERAGE_CENTS_PER_TICKET = 5;
 
 /**
  * What the annual plan works out to per month. Annual is billed as one payment,

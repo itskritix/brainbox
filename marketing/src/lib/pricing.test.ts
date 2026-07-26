@@ -81,6 +81,30 @@ describe("per-plan savings are genuinely per-plan", () => {
   });
 });
 
+describe("overage leaves a real reason to upgrade", () => {
+  // Pro + overage must overtake Business's flat price while still inside Pro's
+  // usable range. Price the overage too cheaply and a growing customer just
+  // parks on Pro forever and Business never sells.
+  const crossover =
+    PRO.ticketsPerMonth +
+    (BUSINESS.monthlyCents - PRO.monthlyCents) / OVERAGE_CENTS_PER_TICKET;
+
+  it("Pro plus overage costs more than Business at 3,000 tickets", () => {
+    expect(crossover).toBe(3_000);
+  });
+
+  it("crosses over well before Business's own cap", () => {
+    expect(crossover).toBeLessThan(BUSINESS.ticketsPerMonth);
+  });
+
+  it("still charges far above cost to serve", () => {
+    // Transcription + storage land near $0.001/ticket, so any sane overage
+    // clears it by an order of magnitude - this only catches a fat finger.
+    expect(OVERAGE_CENTS_PER_TICKET).toBeGreaterThan(0);
+    expect(OVERAGE_CENTS_PER_TICKET).toBeLessThan(100);
+  });
+});
+
 describe("annualMonthsFree", () => {
   it("is 5 months on Pro", () => {
     expect(annualMonthsFree(PRO)).toBe(5);
@@ -115,7 +139,7 @@ describe("formatUsd", () => {
   });
 
   it("keeps two decimals on sub-dollar amounts", () => {
-    expect(formatUsd(OVERAGE_CENTS_PER_TICKET)).toBe("$0.03");
+    expect(formatUsd(OVERAGE_CENTS_PER_TICKET)).toBe("$0.05");
   });
 
   it("keeps two decimals on part-dollar amounts", () => {
