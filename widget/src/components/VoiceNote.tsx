@@ -151,9 +151,14 @@ export function VoiceNote({ onChange }: { onChange: (b: Blob | null) => void }) 
 
       {phase === "idle" ? (
         <span className="min-w-0 flex-1 text-left">
-          <span className="block text-sm text-emphasis">Tap to talk</span>
+          {/* Verb + object, and no gesture verb: "Tap" is wrong on desktop and
+              the mic icon already carries the interaction. The subtitle models
+              the answer rather than instructing - people freeze on an open
+              prompt and undershoot. Mirrors the textarea's "Describe what went
+              wrong" so both inputs ask for the same thing. */}
+          <span className="block text-sm text-emphasis">Say what went wrong</span>
           <span className="block text-xs text-default">
-            {err || "Faster than typing - we transcribe it for you"}
+            {err || "Talk it through - we'll transcribe it for you"}
           </span>
         </span>
       ) : (
