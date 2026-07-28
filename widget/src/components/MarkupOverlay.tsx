@@ -319,7 +319,7 @@ export function MarkupOverlay({
           </span>
         ) : (
           <span className="rounded-full bg-elevated px-3 py-1 text-xs text-muted">
-            Mark up what&apos;s wrong, then hit Done to describe it
+            Mark up what&apos;s wrong - or just hit Next to describe it
           </span>
         )}
       </div>
@@ -329,7 +329,6 @@ export function MarkupOverlay({
         color={color}
         canUndo={past.length > 0}
         canDelete={!!selected}
-        markCount={marks.length}
         onTool={(t) => {
           commitTyping();
           setTool(t);

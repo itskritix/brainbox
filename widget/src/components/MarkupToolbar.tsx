@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
+  ArrowRight,
   ArrowUpRight,
-  Check,
   MousePointer2,
   Pencil,
   Square,
@@ -27,7 +27,6 @@ export function MarkupToolbar({
   color,
   canUndo,
   canDelete,
-  markCount,
   onTool,
   onColor,
   onUndo,
@@ -39,7 +38,6 @@ export function MarkupToolbar({
   color: string;
   canUndo: boolean;
   canDelete: boolean;
-  markCount: number;
   onTool: (t: Tool) => void;
   onColor: (c: string) => void;
   onUndo: () => void;
@@ -66,6 +64,15 @@ export function MarkupToolbar({
     // centring rule that can silently no-op isn't worth the risk.
     <div className="pointer-events-none absolute inset-x-0 bottom-6 flex justify-center">
       <div className="pointer-events-auto flex items-center gap-1 rounded-2xl border border-default bg-elevated p-1.5 shadow-3xl">
+        {/* Leaving is a corner action, not something competing with the tools -
+            so it's an icon on the far left, opposite the one button that moves
+            the flow forward. */}
+        <IconButton label="Cancel (Esc)" onClick={onCancel}>
+          <X className="h-4 w-4" />
+        </IconButton>
+
+        <Divider />
+
         {TOOLS.map(({ tool: t, label, key, Icon }) => (
           <button
             key={t}
@@ -139,21 +146,17 @@ export function MarkupToolbar({
 
         <Divider />
 
-        <button
-          type="button"
-          onClick={onCancel}
-          title="Cancel (Esc)"
-          className="flex h-9 items-center gap-1.5 rounded-xl px-3 text-sm text-default hover:bg-interactive-hover hover:text-emphasis"
-        >
-          <X className="h-4 w-4" /> Cancel
-        </button>
+        {/* One stable label. It always does the same thing - move on to the
+            voice step with the screenshot attached - so it shouldn't rename
+            itself, and least of all to "Skip": Cancel is already the way out,
+            so a second escape hatch wearing the primary button's colour just
+            competed with it. Marking up being optional is the hint's job. */}
         <button
           type="button"
           onClick={onDone}
           className="flex h-9 items-center gap-1.5 rounded-xl bg-brand px-4 text-sm font-medium text-on-brand shadow-button hover:bg-brand-hover"
         >
-          <Check className="h-4 w-4" />
-          {markCount > 0 ? "Done" : "Skip"}
+          Next <ArrowRight className="h-4 w-4" />
         </button>
       </div>
     </div>
