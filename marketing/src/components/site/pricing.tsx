@@ -12,6 +12,7 @@ import {
   formatUsd,
   type BillingPeriod,
 } from "@/lib/pricing"
+import { WAITLIST_INPUT_ID } from "./final-cta"
 import { SectionHead } from "./section-head"
 
 const PERIODS: { value: BillingPeriod; label: string }[] = [
@@ -131,7 +132,21 @@ export function Pricing() {
               variant={plan.featured ? "default" : "secondary"}
               className="mt-6 w-full"
             >
-              <a href="#top">Reserve early access</a>
+              <a
+                href={`#${WAITLIST_INPUT_ID}`}
+                onClick={(e) => {
+                  // A bare fragment jump scrolls but does not focus, which
+                  // reads as a dead click. Do both, and land the field in the
+                  // middle of the viewport rather than jammed under the nav.
+                  const input = document.getElementById(WAITLIST_INPUT_ID);
+                  if (!input) return; // fall back to the plain anchor jump
+                  e.preventDefault();
+                  input.scrollIntoView({ behavior: "smooth", block: "center" });
+                  input.focus({ preventScroll: true });
+                }}
+              >
+                Reserve early access
+              </a>
             </Button>
 
             <div className="my-7 h-px bg-gray-a3" />

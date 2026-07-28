@@ -4,7 +4,15 @@ import { Button } from "@/components/ui/button"
 import { reserveAccess } from "@/lib/waitlist"
 import { cn } from "@/lib/utils"
 
-export function WaitlistForm({ className }: { className?: string }) {
+/** `inputId` lets another section send the visitor here and focus the field -
+ *  the pricing CTAs do this, and a scroll with no focus reads as a dead click. */
+export function WaitlistForm({
+  className,
+  inputId,
+}: {
+  className?: string
+  inputId?: string
+}) {
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState<"idle" | "submitting" | "done">("idle")
   const [error, setError] = useState<string | null>(null)
@@ -46,6 +54,7 @@ export function WaitlistForm({ className }: { className?: string }) {
         className="flex w-full flex-col items-stretch gap-2 sm:flex-row sm:items-center"
       >
         <input
+          id={inputId}
           type="email"
           required
           value={email}
