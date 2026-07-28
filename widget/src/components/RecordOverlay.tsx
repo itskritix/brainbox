@@ -152,13 +152,45 @@ export function RecordOverlay({
           launcher, which sits in the customer's page; this doesn't. */}
       <div className="pointer-events-none fixed inset-x-0 bottom-6 z-[2147483647] flex justify-center">
         <div className="pointer-events-auto flex items-center gap-1 rounded-full border border-default bg-elevated px-3 py-2 shadow-3xl">
-        <span className="mr-1 flex items-center gap-2 text-sm text-emphasis">
+        {/* Capture status in one group: the dot, the clock and whether voice is
+            going in all answer the same question - "what is being recorded right
+            now?" - so they shouldn't be at opposite ends of the bar. Voice is a
+            control too, but it's read far more often than it's clicked. */}
+        <span className="ml-1 flex items-center gap-2 text-sm text-emphasis">
           <span
             className="h-2.5 w-2.5 animate-pulse rounded-full"
             style={{ background: "#ef4444" }}
           />
           <span className="font-mono">{fmtDuration(secs)}</span>
         </span>
+
+        {/* Voice is on by default, so this has to *say* so rather than being an
+            icon the user has to interpret. Someone narrating a bug report needs
+            to know they're being heard, and someone who didn't realise needs an
+            obvious way out - a silent mic glyph gave them neither. */}
+        <button
+          type="button"
+          onClick={() => setMuted((m) => !m)}
+          disabled={!micOn}
+          title={
+            !micOn
+              ? "No mic - the recording has no voice"
+              : muted
+                ? "Voice off - click to record narration again"
+                : "Voice on - click to mute"
+          }
+          aria-pressed={!muted && micOn}
+          className={`flex h-8 items-center gap-1.5 rounded-full px-2.5 text-xs transition-colors disabled:opacity-40 ${
+            micOn && !muted
+              ? "bg-interactive text-emphasis"
+              : "text-muted hover:bg-interactive-hover hover:text-emphasis"
+          }`}
+        >
+          {micOn && !muted ? <Mic className="h-3.5 w-3.5" /> : <MicOff className="h-3.5 w-3.5" />}
+          {micOn && !muted ? "Voice on" : "Voice off"}
+        </button>
+
+        <span className="mx-1 h-5 w-px bg-subtle" />
 
         {/* Hands-off is a tool like any other, and it's the default: the user is
             recording their app, not drawing on it, most of the time. */}
@@ -209,31 +241,6 @@ export function RecordOverlay({
 
         <span className="mx-1 h-5 w-px bg-subtle" />
 
-        {/* Voice is on by default, so this has to *say* so rather than being an
-            icon the user has to interpret. Someone narrating a bug report needs
-            to know they're being heard, and someone who didn't realise needs an
-            obvious way out - a silent mic glyph gave them neither. */}
-        <button
-          type="button"
-          onClick={() => setMuted((m) => !m)}
-          disabled={!micOn}
-          title={
-            !micOn
-              ? "No mic - the recording has no voice"
-              : muted
-                ? "Voice off - click to record narration again"
-                : "Voice on - click to mute"
-          }
-          aria-pressed={!muted && micOn}
-          className={`flex h-8 items-center gap-1.5 rounded-full px-2.5 text-xs transition-colors disabled:opacity-40 ${
-            micOn && !muted
-              ? "bg-interactive text-emphasis"
-              : "text-muted hover:bg-interactive-hover hover:text-emphasis"
-          }`}
-        >
-          {micOn && !muted ? <Mic className="h-3.5 w-3.5" /> : <MicOff className="h-3.5 w-3.5" />}
-          {micOn && !muted ? "Voice on" : "Voice off"}
-        </button>
         <button
           onClick={onStop}
           className="ml-1 flex items-center gap-1.5 rounded-full bg-brand px-3 py-1 text-xs font-medium text-on-brand hover:bg-brand-hover"
