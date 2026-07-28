@@ -1,6 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Mic, MicOff, MousePointer2, Pencil, Square, Type } from "lucide-react";
-import { showMark } from "../lib/annotate.ts";
+import {
+  ArrowUpRight,
+  Mic,
+  MicOff,
+  MousePointer2,
+  Pencil,
+  Square,
+  Trash2,
+  Type,
+  Undo2,
+} from "lucide-react";
+import { clearHighlights, showMark, undoLastMark } from "../lib/annotate.ts";
 import { DEFAULT_COLOR, nextColor, type Mark, type Tool } from "../lib/marks.ts";
 import { isDragTool, nextMarkId, useDrawing } from "../lib/use-drawing.ts";
 import { fmtDuration } from "../lib/time.ts";
@@ -32,6 +42,8 @@ export function RecordOverlay({
   const [typing, setTyping] = useState<{ x: number; y: number; value: string } | null>(null);
   const [micOn, setMicOn] = useState(false);
   const [muted, setMuted] = useState(false);
+  /** Marks left on the page. They persist now, so the user needs a way back. */
+  const [onPage, setOnPage] = useState(0);
   // App passes an inline arrow - keep it out of the interval's deps via a ref.
   const micRef = useRef(micActive);
   useEffect(() => {
@@ -50,9 +62,23 @@ export function RecordOverlay({
 
   useEffect(() => onMuteChange(muted), [muted, onMuteChange]);
 
-  // A finished mark goes straight to the host page, where rrweb records it and
-  // it fades. Nothing accumulates here - the replay is the only place it lives.
-  const commit = useCallback((m: Mark) => showMark(m), []);
+  // A finished mark goes straight to the host page, where rrweb records it as
+  // ordinary mutations. It stays there until the user takes it away, so the
+  // count below is only here to know whether undo/clear have anything to do.
+  const commit = useCallback((m: Mark) => {
+    showMark(m);
+    setOnPage((n) => n + 1);
+  }, []);
+
+  const undo = useCallback(() => {
+    if (undoLastMark()) setOnPage((n) => Math.max(0, n - 1));
+  }, []);
+
+  const clearAll = useCallback(() => {
+    clearHighlights();
+    setOnPage(0);
+  }, []);
+
   const { draft, begin, extend, finish } = useDrawing({ color, onCommit: commit });
 
   const commitTyping = useCallback(() => {
@@ -61,6 +87,7 @@ export function RecordOverlay({
     setTyping(null);
     if (text) {
       showMark({ kind: "text", id: nextMarkId(), color, x: typing.x, y: typing.y, text });
+      setOnPage((n) => n + 1);
     }
   }, [color, typing]);
 
@@ -173,6 +200,13 @@ export function RecordOverlay({
           />
         </button>
 
+        <IconButton label="Undo last mark" disabled={onPage === 0} onClick={undo}>
+          <Undo2 className="h-4 w-4" />
+        </IconButton>
+        <IconButton label="Clear all marks" disabled={onPage === 0} onClick={clearAll}>
+          <Trash2 className="h-4 w-4" />
+        </IconButton>
+
         <span className="mx-1 h-5 w-px bg-subtle" />
 
         {/* Voice is on by default, so this has to *say* so rather than being an
@@ -235,6 +269,31 @@ function ToolButton({
           ? "bg-brand text-on-brand"
           : "text-default hover:bg-interactive-hover hover:text-emphasis"
       }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function IconButton({
+  label,
+  disabled,
+  onClick,
+  children,
+}: {
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      title={label}
+      aria-label={label}
+      disabled={disabled}
+      onClick={onClick}
+      className="flex h-8 w-8 items-center justify-center rounded-full text-default hover:bg-interactive-hover hover:text-emphasis disabled:opacity-30 disabled:hover:bg-transparent"
     >
       {children}
     </button>

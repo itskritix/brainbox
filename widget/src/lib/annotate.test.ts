@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { clearHighlights, showMark } from "./annotate.ts";
+import { clearHighlights, liveMarkCount, showMark, undoLastMark } from "./annotate.ts";
 import type { Mark } from "./marks.ts";
 
 const box: Mark = { kind: "box", id: "b", color: "#ff4d4f", x: 10, y: 20, width: 100, height: 50 };
@@ -22,11 +22,12 @@ describe("annotate", () => {
     expect(document.body.contains(query()[0] ?? null)).toBe(true);
   });
 
-  it("covers the viewport without intercepting the pointer", () => {
+  it("sits in the page flow without intercepting the pointer", () => {
     showMark(box);
     const el = query()[0] as HTMLElement;
     expect(el.getAttribute("aria-hidden")).toBe("true");
-    expect(el.style.position).toBe("fixed");
+    // absolute, not fixed: the mark scrolls with the content it points at
+    expect(el.style.position).toBe("absolute");
     expect(el.style.pointerEvents).toBe("none");
   });
 
@@ -69,27 +70,43 @@ describe("annotate", () => {
     expect(text?.getAttribute("paint-order")).toBe("stroke");
   });
 
-  it("fades after the hold, removes at end of life", () => {
+  it("stays put - a mark outlives the moment it was drawn", () => {
     showMark(box);
-    const el = query()[0] as HTMLElement;
-    expect(el.style.opacity).toBe("1");
-
-    vi.advanceTimersByTime(2500);
-    expect(el.style.opacity).toBe("0");
+    vi.advanceTimersByTime(60_000);
     expect(query()).toHaveLength(1);
-
-    vi.advanceTimersByTime(500);
-    expect(query()).toHaveLength(0);
   });
 
-  it("clearHighlights removes every pending mark and cancels timers", () => {
+  it("anchors to the document so a scroll doesn't leave it pointing at the wrong thing", () => {
+    window.scrollX = 40;
+    window.scrollY = 300;
+    showMark(box);
+    const rect = shape();
+    expect(rect?.getAttribute("x")).toBe("50"); // 10 + 40
+    expect(rect?.getAttribute("y")).toBe("320"); // 20 + 300
+    window.scrollX = 0;
+    window.scrollY = 0;
+  });
+
+  it("undoes the most recent mark only", () => {
     showMark(box);
     showMark({ ...box, x: 200 });
-    expect(query()).toHaveLength(2);
+    expect(undoLastMark()).toBe(true);
+    expect(query()).toHaveLength(1);
+    expect(liveMarkCount()).toBe(1);
+  });
+
+  it("reports undo as a no-op when nothing is on the page", () => {
+    expect(undoLastMark()).toBe(false);
+  });
+
+  it("clearHighlights removes every mark on the page", () => {
+    showMark(box);
+    showMark({ ...box, x: 200 });
+    expect(liveMarkCount()).toBe(2);
 
     clearHighlights();
     expect(query()).toHaveLength(0);
-    expect(vi.getTimerCount()).toBe(0);
+    expect(liveMarkCount()).toBe(0);
   });
 
   it("clearHighlights with nothing active is a no-op", () => {

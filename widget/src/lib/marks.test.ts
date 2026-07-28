@@ -9,6 +9,7 @@ import {
   penCurve,
   penPath,
   shouldKeepPoint,
+  translateMark,
   unionBounds,
   type ArrowMark,
   type BoxMark,
@@ -301,5 +302,30 @@ describe("paintMarks", () => {
     paintMarks(ctx satisfies Canvas2D, [box({ id: "first" }), box({ id: "second", x: 999 })]);
     expect(ctx.strokeRect.mock.calls[0]?.[0]).toBe(10);
     expect(ctx.strokeRect.mock.calls[1]?.[0]).toBe(999);
+  });
+});
+
+describe("translateMark", () => {
+  it("shifts a box", () => {
+    expect(translateMark(box(), 5, 7)).toMatchObject({ x: 15, y: 27, width: 100, height: 50 });
+  });
+
+  it("shifts both ends of an arrow", () => {
+    expect(translateMark(arrow(), 10, -5)).toMatchObject({ x1: 10, y1: -5, x2: 110, y2: -5 });
+  });
+
+  it("shifts every point of a stroke", () => {
+    const moved = translateMark(pen([{ x: 1, y: 2 }, { x: 3, y: 4 }]), 100, 200);
+    expect(moved).toMatchObject({ points: [{ x: 101, y: 202 }, { x: 103, y: 204 }] });
+  });
+
+  it("shifts text without touching its content", () => {
+    expect(translateMark(text(), 0, 40)).toMatchObject({ x: 50, y: 140, text: "broken" });
+  });
+
+  it("leaves the original alone", () => {
+    const original = box();
+    translateMark(original, 99, 99);
+    expect(original.x).toBe(10);
   });
 });

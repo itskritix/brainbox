@@ -136,6 +136,26 @@ export function boundsOf(m: Mark): Box {
   }
 }
 
+/** The same mark shifted by (dx, dy).
+ *
+ *  Marks are drawn in viewport coordinates, which is what the pointer gives us
+ *  and what the screenshot is cropped to. A mark that outlives the moment it
+ *  was drawn - one left on the page during a recording - has to be converted to
+ *  *document* coordinates instead, or the first scroll leaves it pointing at
+ *  whatever slid underneath it. */
+export function translateMark(m: Mark, dx: number, dy: number): Mark {
+  switch (m.kind) {
+    case "box":
+      return { ...m, x: m.x + dx, y: m.y + dy };
+    case "arrow":
+      return { ...m, x1: m.x1 + dx, y1: m.y1 + dy, x2: m.x2 + dx, y2: m.y2 + dy };
+    case "text":
+      return { ...m, x: m.x + dx, y: m.y + dy };
+    case "pen":
+      return { ...m, points: m.points.map((p) => ({ x: p.x + dx, y: p.y + dy })) };
+  }
+}
+
 /** Bounds covering every mark - this is what becomes the issue's `region`, so
  *  the dashboard still gets "where on the page" without a separate select step. */
 export function unionBounds(marks: Mark[]): Box | null {
