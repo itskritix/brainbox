@@ -7,7 +7,6 @@ import {
   PLANS,
   annualMonthsFree,
   annualSavingsPercent,
-  bestAnnualSavingsPercent,
   displayPriceCents,
   formatUsd,
   type BillingPeriod,
@@ -70,11 +69,6 @@ export function Pricing() {
             </button>
           ))}
         </div>
-        {period === "monthly" && (
-          <span className="font-mono text-xs text-default">
-            Switch to annual and save up to {bestAnnualSavingsPercent()}%
-          </span>
-        )}
       </div>
 
       <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
@@ -116,15 +110,20 @@ export function Pricing() {
                 ? `${formatUsd(plan.annualCents)} billed yearly`
                 : "billed monthly"}
             </p>
-            {period === "annual" && (
-              // Each card states its own saving - the two plans discount at
-              // different rates, so a single figure above the grid would lie
-              // about one of them.
-              <p className="mt-3 inline-flex w-fit items-center rounded-full border border-default bg-white/[0.04] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-emphasis">
-                Save {annualSavingsPercent(plan)}% &middot; {annualMonthsFree(plan)} months
-                free
-              </p>
-            )}
+            {/* Shown on both periods. Each card states its OWN saving - the two
+                plans discount at different rates (41% vs 47%), so one figure
+                above the grid would misstate whichever plan it wasn't taken
+                from. On monthly it reads as the nudge to switch. */}
+            <p className="mt-3 inline-flex w-fit items-center rounded-full border border-default bg-white/[0.04] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-emphasis">
+              {period === "annual" ? (
+                <>
+                  Save {annualSavingsPercent(plan)}% &middot; {annualMonthsFree(plan)} months
+                  free
+                </>
+              ) : (
+                <>Save {annualSavingsPercent(plan)}% with annual</>
+              )}
+            </p>
 
             <Button
               asChild

@@ -98,14 +98,6 @@ export function annualMonthsFree(plan: Plan): number {
   return Math.floor(saved / plan.monthlyCents);
 }
 
-/**
- * The best saving on offer across all plans. Only for "save up to X%" copy shown
- * before a plan is picked - once a card is on screen it states its own number.
- */
-export function bestAnnualSavingsPercent(): number {
-  return Math.max(...PLANS.map(annualSavingsPercent));
-}
-
 /** The headline per-month figure for the period the visitor is looking at. */
 export function displayPriceCents(plan: Plan, period: BillingPeriod): number {
   return period === "monthly" ? plan.monthlyCents : monthlyEquivalentCents(plan);
