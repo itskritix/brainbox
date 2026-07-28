@@ -2,6 +2,40 @@ import type { BillingPeriod, BillingState, Issue, PlanId, Project } from "@brain
 
 import { API_URL } from "./authConfig";
 
+/**
+ * Thrown when the request failed because the session is gone or unpaid, and a
+ * redirect is already under way.
+ *
+ * Callers should swallow it rather than render it: the navigation is async, so
+ * every `.catch` in the tree fires first and would paint an error the user sees
+ * flash before the page changes. Use `isAuthRedirect()` to skip those.
+ */
+export class AuthRedirectError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "AuthRedirectError";
+  }
+}
+
+export function isAuthRedirect(err: unknown): boolean {
+  return err instanceof AuthRedirectError;
+}
+
+// A page can have many requests in flight at once - the all-projects view fans
+// out one per project - and a dead session fails all of them. Without this
+// latch each one assigned window.location.href independently, so N failures
+// meant N navigations and N error banners. The first one wins; the rest just
+// throw so their callers unwind.
+let redirecting = false;
+
+function redirectOnce(to: string, message: string): never {
+  if (!redirecting) {
+    redirecting = true;
+    window.location.href = to;
+  }
+  throw new AuthRedirectError(message);
+}
+
 async function req<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_URL}${path}`, {
     credentials: "include",
@@ -9,18 +43,17 @@ async function req<T>(path: string, init?: RequestInit): Promise<T> {
     ...init,
   });
   if (res.status === 401) {
-    window.location.href = "/login";
-    throw new Error("Unauthorized");
+    redirectOnce("/login", "Unauthorized");
   }
   // 402 means signed in but unpaid. Distinct from 401 so the user lands on the
   // plan picker instead of being bounced back through sign-in, which would
   // look like the login failed. /api/billing/* is never gated, so this cannot
   // loop.
   if (res.status === 402) {
-    if (!window.location.pathname.startsWith("/billing")) {
-      window.location.href = "/billing";
+    if (window.location.pathname.startsWith("/billing")) {
+      throw new Error("Subscription required");
     }
-    throw new Error("Subscription required");
+    redirectOnce("/billing", "Subscription required");
   }
   if (!res.ok) {
     const body = (await res.json().catch(() => null)) as { error?: string } | null;

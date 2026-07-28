@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button"
-import { getStartedUrl } from "@/lib/signup"
 
 export function Hero() {
   return (
@@ -29,7 +28,7 @@ export function Hero() {
 
         <div className="mt-9 flex flex-col items-center gap-3">
           <Button asChild size="lg" className="h-12 px-8 text-base">
-            <a href={getStartedUrl()}>Get started</a>
+            <a href="#pricing">Get started</a>
           </Button>
           <span className="font-mono text-xs text-gray-11/80">
             From $29/mo &middot; 60-day money-back guarantee

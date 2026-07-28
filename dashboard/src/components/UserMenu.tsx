@@ -1,6 +1,7 @@
-import { signOut, useSession } from "@hono/auth-js/react";
+import { useSession } from "@hono/auth-js/react";
 import { EllipsisVertical, LogOut } from "lucide-react";
 
+import { logout } from "../lib/logout";
 import { cn, userInitial } from "../lib/utils";
 import {
   DropdownMenu,
@@ -70,7 +71,7 @@ export function UserMenu() {
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={() => signOut()}>
+        <DropdownMenuItem onSelect={() => void logout()}>
           <LogOut />
           Log out
         </DropdownMenuItem>

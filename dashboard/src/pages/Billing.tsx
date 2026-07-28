@@ -24,6 +24,20 @@ function isPeriod(v: string | null): v is BillingPeriod {
   return v === "monthly" || v === "annual";
 }
 
+/**
+ * Marks a marketing deep-link as already acted on.
+ *
+ * Auto-starting checkout has one failure mode that matters: Dodo's cancel_url
+ * brings the browser back, and if that landed on a URL still carrying ?plan=
+ * we would bounce them straight back out to Dodo, trapping them in a loop they
+ * cannot escape with the back button. sessionStorage (not state) because the
+ * return is a full page load, and per plan+period so deliberately picking a
+ * different plan afterwards still works.
+ */
+function autoStartKey(plan: string, period: BillingPeriod): string {
+  return `brainbox:autoCheckout:${plan}:${period}`;
+}
+
 export function Billing() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
@@ -39,6 +53,21 @@ export function Billing() {
   const [starting, setStarting] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // The plan they picked on the marketing page, if this is that arrival and we
+  // have not already acted on it. Decided once at mount rather than in an
+  // effect: it is derived from the URL, which cannot change under us here.
+  const [autoStart] = useState<PlanOption | null>(() => {
+    const plan = PLAN_OPTIONS.find((p) => p.id === requestedPlan);
+    if (!plan) return null;
+    try {
+      return sessionStorage.getItem(autoStartKey(plan.id, period)) ? null : plan;
+    } catch {
+      // Storage disabled: skip the auto-start rather than risk the loop.
+      return null;
+    }
+  });
+  const [autoStartFailed, setAutoStartFailed] = useState(false);
+
   useEffect(() => {
     api
       .getBillingState()
@@ -46,17 +75,65 @@ export function Billing() {
       .catch(() => setState({ subscription: null, exempt: false, hasAccess: false }));
   }, []);
 
-  async function choose(plan: PlanOption) {
+  async function choose(plan: PlanOption, forPeriod: BillingPeriod = period) {
     setStarting(plan.id);
     setError(null);
     try {
-      const { checkoutUrl } = await api.startCheckout(plan.id, period);
+      const { checkoutUrl } = await api.startCheckout(plan.id, forPeriod);
       // Full navigation, not a router push: checkout is Dodo's own page.
       window.location.assign(checkoutUrl);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not start checkout");
       setStarting(null);
     }
+  }
+
+  // They already chose a plan on the marketing page, and (if they were signed
+  // out) just came back through sign-in to get here. Asking them to pick the
+  // same plan a second time is the dead end this flow used to have, so take
+  // them straight to checkout.
+  useEffect(() => {
+    if (!autoStart || !state || state.hasAccess) return;
+
+    const key = autoStartKey(autoStart.id, period);
+    try {
+      // Also re-checked here: StrictMode runs effects twice, and Dodo's
+      // cancel_url brings the browser back - neither may re-fire checkout.
+      if (sessionStorage.getItem(key)) return;
+      sessionStorage.setItem(key, "1");
+    } catch {
+      return;
+    }
+
+    let cancelled = false;
+    api
+      .startCheckout(autoStart.id, period)
+      .then(({ checkoutUrl }) => window.location.assign(checkoutUrl))
+      .catch((e: Error) => {
+        if (cancelled) return;
+        // Fall back to the plan picker with the reason shown, rather than
+        // stranding them on a spinner.
+        setError(e.message);
+        setAutoStartFailed(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [autoStart, state, period]);
+
+  // Checkout is on its way; showing the plan grid underneath would invite a
+  // second click on a plan they already chose.
+  if (autoStart && !autoStartFailed && state && !state.hasAccess) {
+    return (
+      <div className="grid min-h-dvh place-items-center bg-background px-6">
+        <div className="text-center">
+          <Spinner />
+          <p className="mt-4 text-sm text-muted">
+            Taking you to checkout for {autoStart.name}&hellip;
+          </p>
+        </div>
+      </div>
+    );
   }
 
   if (!state) {
