@@ -6,7 +6,6 @@ import {
   PRO,
   annualMonthsFree,
   annualSavingsPercent,
-  bestAnnualSavingsPercent,
   displayPriceCents,
   formatUsd,
   monthlyEquivalentCents,
@@ -67,17 +66,9 @@ describe("per-plan savings are genuinely per-plan", () => {
     expect(annualSavingsPercent(PRO)).not.toBe(annualSavingsPercent(BUSINESS));
   });
 
-  it("bestAnnualSavingsPercent reports the largest, for 'up to' copy", () => {
-    expect(bestAnnualSavingsPercent()).toBe(
-      Math.max(annualSavingsPercent(PRO), annualSavingsPercent(BUSINESS)),
-    );
-    expect(bestAnnualSavingsPercent()).toBe(47);
-  });
-
-  it("never understates a plan's own saving", () => {
-    for (const plan of PLANS) {
-      expect(bestAnnualSavingsPercent()).toBeGreaterThanOrEqual(annualSavingsPercent(plan));
-    }
+  it("pins both rates, since each card advertises its own", () => {
+    expect(annualSavingsPercent(PRO)).toBe(41);
+    expect(annualSavingsPercent(BUSINESS)).toBe(47);
   });
 });
 
