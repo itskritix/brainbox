@@ -48,11 +48,15 @@ export async function billingStateFor(
 
   if (!row) return { subscription: null, exempt, hasAccess: exempt };
 
+  // An allowance resets per BILLING cycle, and an annual plan's cycle is a
+  // year - which is why the annual products carry 12x the monthly threshold on
+  // Dodo. Reporting the monthly figure here would tell an annual subscriber
+  // they had 1,000 tickets when Dodo will not charge them until 12,000.
   const subscription: Subscription = {
     plan: row.plan,
     period: row.period,
     status: row.status,
-    ticketsPerPeriod: TICKETS_PER_MONTH[row.plan],
+    ticketsPerPeriod: TICKETS_PER_MONTH[row.plan] * (row.period === "annual" ? 12 : 1),
     currentPeriodEnd: row.currentPeriodEnd?.toISOString() ?? null,
     hasAccess: grantsAccess(row.status),
   };

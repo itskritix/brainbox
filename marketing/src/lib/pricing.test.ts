@@ -106,12 +106,21 @@ describe("overage leaves a real reason to upgrade", () => {
 });
 
 describe("annualMonthsFree", () => {
-  it("is 5 months on Pro", () => {
-    expect(annualMonthsFree(PRO)).toBe(5);
+  // Floored, never rounded: Pro genuinely saves 4.9 months and Business 5.6.
+  // Advertising 5 and 6 would overstate a money claim on a public page.
+  it("is 4 months on Pro (4.9 floored)", () => {
+    expect(annualMonthsFree(PRO)).toBe(4);
   });
 
-  it("is 6 months on Business", () => {
-    expect(annualMonthsFree(BUSINESS)).toBe(6);
+  it("is 5 months on Business (5.6 floored)", () => {
+    expect(annualMonthsFree(BUSINESS)).toBe(5);
+  });
+
+  it("never claims more free months than the discount actually buys", () => {
+    for (const plan of PLANS) {
+      const exact = (plan.monthlyCents * 12 - plan.annualCents) / plan.monthlyCents;
+      expect(annualMonthsFree(plan)).toBeLessThanOrEqual(exact);
+    }
   });
 
   it("never claims more free months than a year has", () => {

@@ -1,5 +1,5 @@
 import { encode } from "@auth/core/jwt";
-import type { SubscriptionStatus } from "@brainbox/shared";
+import type { BillingPeriod, PlanId, SubscriptionStatus } from "@brainbox/shared";
 
 import { db } from "../src/db/client.ts";
 import { issues, projects, subscriptions, users } from "../src/db/schema/index.ts";
@@ -45,14 +45,15 @@ export async function makeUser(
 export async function subscribeUser(
   userId: string,
   status: SubscriptionStatus = "active",
+  over: { plan?: PlanId; period?: BillingPeriod } = {},
 ) {
   await db.insert(subscriptions).values({
     userId,
     dodoSubscriptionId: `sub_${Math.random().toString(36).slice(2)}`,
     dodoCustomerId: "cus_test",
     dodoProductId: "pdt_test",
-    plan: "pro",
-    period: "monthly",
+    plan: over.plan ?? "pro",
+    period: over.period ?? "monthly",
     status,
   });
 }

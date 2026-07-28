@@ -36,11 +36,27 @@ export function Pricing() {
           aria-label="Billing period"
           className="inline-flex rounded-full border border-default bg-white/[0.03] p-1"
         >
-          {PERIODS.map((p) => (
+          {PERIODS.map((p, i) => (
             <button
               key={p.value}
               role="radio"
               aria-checked={period === p.value}
+              // Roving tabindex: a radio group is ONE tab stop, and arrow keys
+              // move within it. Leaving every option tabbable makes a keyboard
+              // user tab through each one, which is not the expected pattern.
+              tabIndex={period === p.value ? 0 : -1}
+              onKeyDown={(e) => {
+                if (!["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"].includes(e.key)) return;
+                e.preventDefault();
+                const delta = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : -1;
+                const next = PERIODS[(i + delta + PERIODS.length) % PERIODS.length];
+                if (!next) return;
+                setPeriod(next.value);
+                // Selection follows focus, so move focus with it.
+                const group = e.currentTarget.parentElement;
+                const buttons = group?.querySelectorAll<HTMLButtonElement>('[role="radio"]');
+                buttons?.[(i + delta + PERIODS.length) % PERIODS.length]?.focus();
+              }}
               onClick={() => setPeriod(p.value)}
               className={cn(
                 "rounded-full px-5 py-1.5 text-sm font-medium transition-colors",
