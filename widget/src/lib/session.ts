@@ -9,6 +9,12 @@ export interface SessionCapture {
 export interface SessionRecording {
   stop: () => Promise<SessionCapture>;
   micActive: () => boolean;
+  /** Mute/unmute narration mid-recording. Implemented by disabling the audio
+   *  track rather than stopping the recorder: the track keeps producing (now
+   *  silent) frames, so the audio stays the same length as the replay and
+   *  `audioOffsetMs` still lines the two up. Stopping and restarting would
+   *  punch a hole in the timeline. */
+  setMicMuted: (muted: boolean) => void;
 }
 
 /** rrweb DOM recording works wherever MutationObserver exists (universal). */
@@ -43,6 +49,10 @@ export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): S
   let mic: Recorder | null = null;
   let micStartedAt: number | null = null;
   let stopped = false;
+  let muted = false;
+  const applyMute = () => {
+    mic?.stream.getAudioTracks().forEach((t) => (t.enabled = !muted));
+  };
   const micReady = startRecording()
     .then((r) => {
       // permission granted after Stop was already pressed - release the mic
@@ -50,6 +60,8 @@ export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): S
       else {
         mic = r;
         micStartedAt = Date.now();
+        // the user may have muted while the permission prompt was still up
+        applyMute();
       }
     })
     .catch(() => {
@@ -66,6 +78,10 @@ export function startSessionRecording(onAutoStop: () => void, maxMs = 60_000): S
 
   return {
     micActive: () => mic !== null,
+    setMicMuted: (next: boolean) => {
+      muted = next;
+      applyMute();
+    },
     stop: async () => {
       clearTimeout(timer);
       settling = true;

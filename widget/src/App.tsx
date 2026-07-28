@@ -249,9 +249,9 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
       )}
       {status === "recording" && (
         <RecordOverlay
-          position={config.position}
           onStop={() => void finishRecording()}
           micActive={() => recRef.current?.micActive() ?? false}
+          onMuteChange={(muted) => recRef.current?.setMicMuted(muted)}
         />
       )}
       {status === "composing" && (

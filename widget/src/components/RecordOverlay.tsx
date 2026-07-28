@@ -3,7 +3,6 @@ import { ArrowUpRight, Mic, MicOff, MousePointer2, Pencil, Square, Type } from "
 import { showMark } from "../lib/annotate.ts";
 import { DEFAULT_COLOR, nextColor, type Mark, type Tool } from "../lib/marks.ts";
 import { isDragTool, nextMarkId, useDrawing } from "../lib/use-drawing.ts";
-import { posClass, type Position } from "../lib/position.ts";
 import { fmtDuration } from "../lib/time.ts";
 import { MarkShape, MarkTextInput } from "./MarkShape.tsx";
 
@@ -19,19 +18,20 @@ const TOOLS: { tool: Exclude<RecordTool, null | "select">; label: string; Icon: 
 ];
 
 export function RecordOverlay({
-  position,
   onStop,
   micActive,
+  onMuteChange,
 }: {
-  position: Position;
   onStop: () => void;
   micActive: () => boolean;
+  onMuteChange: (muted: boolean) => void;
 }) {
   const [secs, setSecs] = useState(0);
   const [tool, setTool] = useState<RecordTool>(null);
   const [color, setColor] = useState(DEFAULT_COLOR);
   const [typing, setTyping] = useState<{ x: number; y: number; value: string } | null>(null);
   const [micOn, setMicOn] = useState(false);
+  const [muted, setMuted] = useState(false);
   // App passes an inline arrow - keep it out of the interval's deps via a ref.
   const micRef = useRef(micActive);
   useEffect(() => {
@@ -47,6 +47,8 @@ export function RecordOverlay({
     }, 1000);
     return () => clearInterval(t);
   }, []);
+
+  useEffect(() => onMuteChange(muted), [muted, onMuteChange]);
 
   // A finished mark goes straight to the host page, where rrweb records it and
   // it fades. Nothing accumulates here - the replay is the only place it lives.
@@ -117,9 +119,12 @@ export function RecordOverlay({
         </div>
       )}
 
-      <div
-        className={`fixed ${posClass(position)} z-[2147483647] flex items-center gap-1 rounded-full border border-default bg-elevated px-3 py-2 shadow-3xl`}
-      >
+      {/* Bottom-centre, same as the markup toolbar. Both are the same kind of
+          thing - a bar of drawing tools over a full-screen surface - so they
+          belong in the same place. The corner `position` config is for the
+          launcher, which sits in the customer's page; this doesn't. */}
+      <div className="pointer-events-none fixed inset-x-0 bottom-6 z-[2147483647] flex justify-center">
+        <div className="pointer-events-auto flex items-center gap-1 rounded-full border border-default bg-elevated px-3 py-2 shadow-3xl">
         <span className="mr-1 flex items-center gap-2 text-sm text-emphasis">
           <span
             className="h-2.5 w-2.5 animate-pulse rounded-full"
@@ -170,18 +175,38 @@ export function RecordOverlay({
 
         <span className="mx-1 h-5 w-px bg-subtle" />
 
-        <span
-          title={micOn ? "Voice is being captured" : "Mic off - voice not captured"}
-          className={micOn ? "text-emphasis" : "text-muted"}
+        {/* Voice is on by default, so this has to *say* so rather than being an
+            icon the user has to interpret. Someone narrating a bug report needs
+            to know they're being heard, and someone who didn't realise needs an
+            obvious way out - a silent mic glyph gave them neither. */}
+        <button
+          type="button"
+          onClick={() => setMuted((m) => !m)}
+          disabled={!micOn}
+          title={
+            !micOn
+              ? "No mic - the recording has no voice"
+              : muted
+                ? "Voice off - click to record narration again"
+                : "Voice on - click to mute"
+          }
+          aria-pressed={!muted && micOn}
+          className={`flex h-8 items-center gap-1.5 rounded-full px-2.5 text-xs transition-colors disabled:opacity-40 ${
+            micOn && !muted
+              ? "bg-interactive text-emphasis"
+              : "text-muted hover:bg-interactive-hover hover:text-emphasis"
+          }`}
         >
-          {micOn ? <Mic className="h-3.5 w-3.5" /> : <MicOff className="h-3.5 w-3.5" />}
-        </span>
+          {micOn && !muted ? <Mic className="h-3.5 w-3.5" /> : <MicOff className="h-3.5 w-3.5" />}
+          {micOn && !muted ? "Voice on" : "Voice off"}
+        </button>
         <button
           onClick={onStop}
           className="ml-1 flex items-center gap-1.5 rounded-full bg-brand px-3 py-1 text-xs font-medium text-on-brand hover:bg-brand-hover"
         >
           <Square className="h-3 w-3" /> Stop
         </button>
+        </div>
       </div>
     </>
   );
