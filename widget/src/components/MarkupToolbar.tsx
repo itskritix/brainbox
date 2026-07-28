@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  ArrowRight,
   ArrowUpRight,
   MousePointer2,
   Pencil,
@@ -156,7 +155,7 @@ export function MarkupToolbar({
           onClick={onDone}
           className="flex h-9 items-center gap-1.5 rounded-xl bg-brand px-4 text-sm font-medium text-on-brand shadow-button hover:bg-brand-hover"
         >
-          Next <ArrowRight className="h-4 w-4" />
+          Next
         </button>
       </div>
     </div>
