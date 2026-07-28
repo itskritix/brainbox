@@ -42,6 +42,39 @@ describe("GET /api/billing/subscription", () => {
     expect(body.subscription.ticketsPerPeriod).toBe(1_000);
   });
 
+  // An allowance resets per billing cycle, and an annual cycle is a year -
+  // which is why the annual Dodo products carry 12x the free threshold.
+  // Reporting the monthly number would understate it by a factor of twelve.
+  it("reports the annual allowance as 12x the monthly one", async () => {
+    const me = await unpaidUser();
+    await subscribeUser(me.id, "active", { plan: "pro", period: "annual" });
+    const res = await app.request("/api/billing/subscription", {
+      headers: { cookie: await authCookie(me.id) },
+    });
+    const body = (await res.json()) as { subscription: { ticketsPerPeriod: number } };
+    expect(body.subscription.ticketsPerPeriod).toBe(12_000);
+  });
+
+  it("reports Business annual at 60,000", async () => {
+    const me = await unpaidUser();
+    await subscribeUser(me.id, "active", { plan: "business", period: "annual" });
+    const res = await app.request("/api/billing/subscription", {
+      headers: { cookie: await authCookie(me.id) },
+    });
+    const body = (await res.json()) as { subscription: { ticketsPerPeriod: number } };
+    expect(body.subscription.ticketsPerPeriod).toBe(60_000);
+  });
+
+  it("leaves the monthly allowance unmultiplied", async () => {
+    const me = await unpaidUser();
+    await subscribeUser(me.id, "active", { plan: "business", period: "monthly" });
+    const res = await app.request("/api/billing/subscription", {
+      headers: { cookie: await authCookie(me.id) },
+    });
+    const body = (await res.json()) as { subscription: { ticketsPerPeriod: number } };
+    expect(body.subscription.ticketsPerPeriod).toBe(5_000);
+  });
+
   it.each(["cancelled", "on_hold", "pending"] as const)(
     "does not grant access while %s",
     async (status) => {

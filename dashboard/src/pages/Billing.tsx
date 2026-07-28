@@ -99,11 +99,27 @@ export function Billing() {
             aria-label="Billing period"
             className="inline-flex rounded-full border border-default bg-interactive p-1"
           >
-            {PERIODS.map((p) => (
+            {PERIODS.map((p, i) => (
               <button
                 key={p.value}
                 role="radio"
                 aria-checked={period === p.value}
+                // Roving tabindex + arrow keys: a radio group is one tab stop.
+                tabIndex={period === p.value ? 0 : -1}
+                onKeyDown={(e) => {
+                  if (!["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"].includes(e.key)) return;
+                  e.preventDefault();
+                  const delta = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : -1;
+                  const idx = (i + delta + PERIODS.length) % PERIODS.length;
+                  const next = PERIODS[idx];
+                  if (!next) return;
+                  setPeriod(next.value);
+                  const radios =
+                    e.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>(
+                      '[role="radio"]',
+                    );
+                  radios?.[idx]?.focus();
+                }}
                 onClick={() => setPeriod(p.value)}
                 className={cn(
                   "rounded-full px-5 py-1.5 text-sm font-medium transition-colors",

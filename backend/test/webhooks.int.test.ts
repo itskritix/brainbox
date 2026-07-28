@@ -15,11 +15,15 @@ function nextId() {
   return `msg_${Date.now()}_${counter++}`;
 }
 
-/** POST a correctly-signed event, the way Dodo would. */
-function send(body: unknown, opts: { id?: string; signature?: string } = {}) {
+/** POST a correctly-signed event, the way Dodo would. `sentAt` lets a test
+ *  simulate a delayed retry arriving out of order. */
+function send(
+  body: unknown,
+  opts: { id?: string; signature?: string; sentAt?: Date } = {},
+) {
   const payload = JSON.stringify(body);
   const id = opts.id ?? nextId();
-  const timestamp = new Date();
+  const timestamp = opts.sentAt ?? new Date();
   const signature = opts.signature ?? signer.sign(id, timestamp, payload);
 
   return app.request("/webhooks/dodo", {
@@ -170,6 +174,52 @@ describe("POST /webhooks/dodo - subscription lifecycle", () => {
     expect(rows).toHaveLength(1);
     expect(rows[0]?.status).toBe("active");
     expect(rows[0]?.dodoSubscriptionId).toBe("sub_second");
+  });
+});
+
+describe("POST /webhooks/dodo - out-of-order delivery", () => {
+  // Dodo retries on its own schedule, so a cancellation sent before a renewal
+  // can arrive after it. Applying blindly would revoke a paying customer.
+  it("ignores a stale cancellation that arrives after a newer activation", async () => {
+    const me = await makeUser(undefined, { subscribed: false });
+    // Inside the Standard Webhooks replay window (~5 min) - anything older is
+    // rejected at the signature layer before our ordering guard is reached, so
+    // this window is exactly where reordering can actually bite.
+    const old = new Date(Date.now() - 2 * 60_000);
+
+    await send(subscriptionActive(me.id, "sub_race"));
+    const res = await send(
+      {
+        type: "subscription.cancelled",
+        data: { subscription_id: "sub_race", status: "cancelled" },
+      },
+      { sentAt: old },
+    );
+    expect(res.status).toBe(200);
+
+    const [row] = await db
+      .select()
+      .from(subscriptions)
+      .where(eq(subscriptions.userId, me.id));
+    expect(row?.status).toBe("active");
+  });
+
+  it("still applies an event sent after the current state", async () => {
+    const me = await makeUser(undefined, { subscribed: false });
+    await send(subscriptionActive(me.id, "sub_ordered"));
+    await send(
+      {
+        type: "subscription.cancelled",
+        data: { subscription_id: "sub_ordered", status: "cancelled" },
+      },
+      { sentAt: new Date(Date.now() + 60_000) },
+    );
+
+    const [row] = await db
+      .select()
+      .from(subscriptions)
+      .where(eq(subscriptions.userId, me.id));
+    expect(row?.status).toBe("cancelled");
   });
 });
 

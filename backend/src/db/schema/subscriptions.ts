@@ -39,6 +39,12 @@ export const subscriptions = pgTable(
       withTimezone: true,
     }),
 
+    // When the event that produced this row was SENT (Dodo's webhook-timestamp),
+    // as distinct from when we wrote it. Webhook delivery order is not
+    // guaranteed - a retried `cancelled` can arrive after a fresh `active` - so
+    // this is compared before applying an update and older events are dropped.
+    lastEventAt: timestamp("last_event_at", { mode: "date", withTimezone: true }),
+
     createdAt: timestamp("created_at", { mode: "date", withTimezone: true })
       .notNull()
       .defaultNow(),

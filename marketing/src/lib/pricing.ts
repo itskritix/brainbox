@@ -91,7 +91,11 @@ export function annualSavingsPercent(plan: Plan): number {
  */
 export function annualMonthsFree(plan: Plan): number {
   const saved = plan.monthlyCents * 12 - plan.annualCents;
-  return Math.round(saved / plan.monthlyCents);
+  // Floor, not round. This is a public claim about money, so it must never
+  // overstate: Pro saves 4.9 months and Business 5.6, which rounding would
+  // advertise as 5 and 6. Understating is a pleasant surprise; overstating is
+  // a complaint.
+  return Math.floor(saved / plan.monthlyCents);
 }
 
 /**

@@ -22,10 +22,16 @@ export function dodoHost(): string {
   return HOSTS[env.DODO_ENVIRONMENT];
 }
 
-/** True once a key is configured. Lets routes 503 instead of calling with an
- *  empty bearer token and reporting an opaque auth failure. */
+/**
+ * True once billing can actually complete a sale: a key AND every product id.
+ *
+ * Checking only the key would let a half-configured deployment throw from
+ * productIdFor() deep inside the route, which surfaces as a 502 (provider
+ * failure) when the truth is a 503 (our own configuration is incomplete).
+ */
 export function billingConfigured(): boolean {
-  return env.DODO_API_KEY !== "";
+  if (env.DODO_API_KEY === "") return false;
+  return Object.values(PRODUCT_ENV_KEYS).every((key) => env[key] !== "");
 }
 
 /**
@@ -55,15 +61,32 @@ export function planForProductId(
   return null;
 }
 
+// Someone is staring at a spinner on the other end of every one of these, so
+// fail fast rather than holding the request open until the platform's own
+// timeout. Dodo's docs put their per-request ceiling at 30s; we give up sooner.
+const REQUEST_TIMEOUT_MS = 15_000;
+
 async function dodoFetch(path: string, init: RequestInit): Promise<unknown> {
-  const res = await fetch(`${dodoHost()}${path}`, {
-    ...init,
-    headers: {
-      authorization: `Bearer ${env.DODO_API_KEY}`,
-      "content-type": "application/json",
-      ...init.headers,
-    },
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${dodoHost()}${path}`, {
+      ...init,
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+      headers: {
+        authorization: `Bearer ${env.DODO_API_KEY}`,
+        "content-type": "application/json",
+        ...init.headers,
+      },
+    });
+  } catch (err) {
+    if (err instanceof Error && err.name === "TimeoutError") {
+      throw new Error(
+        `Dodo ${init.method ?? "GET"} ${path} timed out after ${REQUEST_TIMEOUT_MS}ms`,
+        { cause: err },
+      );
+    }
+    throw err;
+  }
   const body = await res.text();
   if (!res.ok) {
     // Include the status and body: Dodo returns actionable 422s naming the

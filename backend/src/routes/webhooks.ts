@@ -61,33 +61,44 @@ webhooks.post("/dodo", async (c) => {
   const event = JSON.parse(raw) as { type?: string; data?: SubscriptionPayload };
   const type = event.type ?? "";
   const eventId = headers["webhook-id"];
-
-  // Idempotency: Dodo retries anything that is not 2xx, so the same event can
-  // arrive twice. Claiming the id first turns a duplicate into a conflict we
-  // skip. onConflictDoNothing + rowcount tells us which case we are in.
-  const claimed = await db
-    .insert(webhookEvents)
-    .values({ id: eventId, type })
-    .onConflictDoNothing()
-    .returning({ id: webhookEvents.id });
-  if (claimed.length === 0) {
-    return c.json({ received: true, duplicate: true });
-  }
+  // Dodo sends unix seconds. Used to order events, not to trust their clock.
+  const sentAtSeconds = Number(headers["webhook-timestamp"]);
+  const sentAt = Number.isFinite(sentAtSeconds) ? new Date(sentAtSeconds * 1000) : new Date();
 
   try {
-    await applySubscriptionEvent(type, event.data ?? {});
+    // Claim and apply in ONE transaction. Claiming first is what makes
+    // redelivery a no-op, but if the two were separate a crash between them
+    // would leave the id claimed with nothing written - and Dodo's retry would
+    // then be skipped as a duplicate, losing the subscription silently. In a
+    // transaction, a failure rolls the claim back too, so the retry re-claims.
+    const applied = await db.transaction(async (tx) => {
+      const claimed = await tx
+        .insert(webhookEvents)
+        .values({ id: eventId, type })
+        .onConflictDoNothing()
+        .returning({ id: webhookEvents.id });
+      if (claimed.length === 0) return false;
+
+      await applySubscriptionEvent(tx, type, event.data ?? {}, sentAt);
+      return true;
+    });
+
+    return c.json(applied ? { received: true } : { received: true, duplicate: true });
   } catch (err) {
-    // Surface as 500 so Dodo retries. The event id is already claimed, so
-    // release it or the retry would be skipped as a duplicate.
-    await db.delete(webhookEvents).where(eq(webhookEvents.id, eventId));
+    // 500 so Dodo retries; the transaction has already undone the claim.
     console.error(`[webhooks] failed to apply ${type}:`, err);
     return c.json({ error: "Processing failed" }, 500);
   }
-
-  return c.json({ received: true });
 });
 
-async function applySubscriptionEvent(type: string, data: SubscriptionPayload) {
+type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0];
+
+async function applySubscriptionEvent(
+  db: Tx,
+  type: string,
+  data: SubscriptionPayload,
+  sentAt: Date,
+) {
   if (!type.startsWith("subscription.")) return;
 
   const dodoSubscriptionId = data.subscription_id;
@@ -111,9 +122,19 @@ async function applySubscriptionEvent(type: string, data: SubscriptionPayload) {
     .limit(1);
 
   if (existing) {
+    // Delivery order is not guaranteed and retries can arrive minutes late, so
+    // a stale `cancelled` must not clobber a newer `active`. Compare when the
+    // events were SENT, not when they arrived.
+    if (existing.lastEventAt && existing.lastEventAt > sentAt) {
+      console.warn(
+        `[webhooks] ignoring ${type} sent ${sentAt.toISOString()}, older than the ` +
+          `state from ${existing.lastEventAt.toISOString()}`,
+      );
+      return;
+    }
     await db
       .update(subscriptions)
-      .set({ status, currentPeriodEnd, updatedAt: new Date() })
+      .set({ status, currentPeriodEnd, lastEventAt: sentAt, updatedAt: new Date() })
       .where(eq(subscriptions.dodoSubscriptionId, dodoSubscriptionId));
     return;
   }
@@ -139,6 +160,7 @@ async function applySubscriptionEvent(type: string, data: SubscriptionPayload) {
       period: mapped.period,
       status,
       currentPeriodEnd,
+      lastEventAt: sentAt,
     })
     // An Account re-subscribing after cancelling already has a row; the unique
     // index on user_id would otherwise reject it.
@@ -152,6 +174,7 @@ async function applySubscriptionEvent(type: string, data: SubscriptionPayload) {
         period: mapped.period,
         status,
         currentPeriodEnd,
+        lastEventAt: sentAt,
         updatedAt: new Date(),
       },
     });
