@@ -2,11 +2,13 @@ import { useEffect } from "react"
 import { Nav } from "@/components/site/nav"
 import { Hero } from "@/components/site/hero"
 import { Marquee } from "@/components/site/marquee"
+import { ReportPreview } from "@/components/site/report-preview"
 import { HowItWorks } from "@/components/site/how-it-works"
 import { Integrations } from "@/components/site/integrations"
 import { Pricing } from "@/components/site/pricing"
 import { FinalCta } from "@/components/site/final-cta"
 import { Footer } from "@/components/site/footer"
+import { TryItCue } from "@/components/site/try-it-cue"
 import { loadWidget, resolveWidgetConfig } from "@/lib/widget-loader"
 
 export default function App() {
@@ -21,12 +23,14 @@ export default function App() {
       <main>
         <Hero />
         <Marquee />
+        <ReportPreview />
         <HowItWorks />
         <Integrations />
         <Pricing />
         <FinalCta />
       </main>
       <Footer />
+      <TryItCue />
     </div>
   )
 }

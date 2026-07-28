@@ -27,8 +27,11 @@ export function Hero() {
         </p>
 
         <div className="mt-9 flex flex-col items-center gap-3">
+          {/* The try-it arrow measures this button to find where to start. */}
           <Button asChild size="lg" className="h-12 px-8 text-base">
-            <a href="#pricing">Get started</a>
+            <a href="#pricing" data-hero-cta>
+              Get started
+            </a>
           </Button>
           <span className="font-mono text-xs text-gray-11/80">
             From $29/mo &middot; 60-day money-back guarantee
