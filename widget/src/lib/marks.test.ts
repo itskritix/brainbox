@@ -6,7 +6,9 @@ import {
   isDegenerate,
   normalizeBox,
   paintMarks,
+  penCurve,
   penPath,
+  shouldKeepPoint,
   unionBounds,
   type ArrowMark,
   type BoxMark,
@@ -178,8 +180,53 @@ describe("arrowHead", () => {
 });
 
 describe("penPath", () => {
-  it("moves to the first point and lines to the rest", () => {
-    expect(penPath(pen([{ x: 1, y: 2 }, { x: 3, y: 4 }]))).toBe("M1 2 L3 4");
+  it("is empty for an empty stroke", () => {
+    expect(penPath(pen([]))).toBe("");
+  });
+
+  it("ends exactly on the last sample so the ink stops under the cursor", () => {
+    const pts = [{ x: 0, y: 0 }, { x: 10, y: 10 }, { x: 20, y: 0 }, { x: 30, y: 10 }];
+    expect(penPath(pen(pts)).endsWith("30 10 30 10")).toBe(true);
+  });
+
+  it("smooths with quadratics rather than straight segments", () => {
+    const pts = [{ x: 0, y: 0 }, { x: 10, y: 10 }, { x: 20, y: 0 }];
+    const d = penPath(pen(pts));
+    expect(d.startsWith("M0 0")).toBe(true);
+    expect(d).toContain("Q");
+    expect(d).not.toContain("L");
+  });
+
+  it("passes through the midpoint between control points", () => {
+    // control 10,10 -> curve lands on the midpoint of (10,10) and (20,0)
+    expect(penPath(pen([{ x: 0, y: 0 }, { x: 10, y: 10 }, { x: 20, y: 0 }]))).toContain(
+      "Q10 10 15 5",
+    );
+  });
+});
+
+describe("penCurve", () => {
+  it("is null with no points", () => {
+    expect(penCurve([])).toBeNull();
+  });
+
+  it("starts at the first sample", () => {
+    expect(penCurve([{ x: 4, y: 5 }])?.start).toEqual({ x: 4, y: 5 });
+  });
+});
+
+describe("shouldKeepPoint", () => {
+  it("always keeps the first point", () => {
+    expect(shouldKeepPoint(undefined, { x: 0, y: 0 })).toBe(true);
+  });
+
+  it("drops a sample that barely moved", () => {
+    expect(shouldKeepPoint({ x: 10, y: 10 }, { x: 11, y: 11 })).toBe(false);
+  });
+
+  it("keeps a sample that moved far enough on either axis", () => {
+    expect(shouldKeepPoint({ x: 10, y: 10 }, { x: 13, y: 10 })).toBe(true);
+    expect(shouldKeepPoint({ x: 10, y: 10 }, { x: 10, y: 13 })).toBe(true);
   });
 });
 
@@ -193,6 +240,7 @@ function stubCtx() {
     closePath: vi.fn(),
     moveTo: vi.fn(),
     lineTo: vi.fn(),
+    quadraticCurveTo: vi.fn(),
     stroke: vi.fn(),
     fill: vi.fn(),
     strokeRect: vi.fn(),
@@ -222,11 +270,14 @@ describe("paintMarks", () => {
     expect(ctx.fill).toHaveBeenCalledTimes(1);
   });
 
-  it("draws a stroke through every point", () => {
+  it("bakes a stroke with the same curves the SVG layer drew", () => {
     const ctx = stubCtx();
-    paintMarks(ctx satisfies Canvas2D, [pen([{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }])]);
+    paintMarks(ctx satisfies Canvas2D, [pen([{ x: 1, y: 1 }, { x: 9, y: 9 }, { x: 17, y: 1 }])]);
     expect(ctx.moveTo).toHaveBeenCalledWith(1, 1);
-    expect(ctx.lineTo).toHaveBeenCalledTimes(2);
+    // midpoint of (9,9)->(17,1), then the closing segment onto the last sample
+    expect(ctx.quadraticCurveTo).toHaveBeenCalledWith(9, 9, 13, 5);
+    expect(ctx.quadraticCurveTo).toHaveBeenCalledWith(17, 1, 17, 1);
+    expect(ctx.lineTo).not.toHaveBeenCalled();
   });
 
   it("skips an empty stroke instead of throwing", () => {

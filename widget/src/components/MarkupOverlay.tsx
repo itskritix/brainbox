@@ -1,13 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ImageOff, Loader2 } from "lucide-react";
 import {
   arrowHead,
   boundsOf,
   hitTest,
+  DEFAULT_COLOR,
   isDegenerate,
-  MARK_COLORS,
+  nextColor,
   normalizeBox,
   penPath,
+  shouldKeepPoint,
   STROKE_WIDTH,
   TEXT_HALO,
   TEXT_HALO_WIDTH,
@@ -52,13 +54,32 @@ export function MarkupOverlay({
   onCancel: () => void;
 }) {
   const [tool, setTool] = useState<Tool>("box");
-  const [color, setColor] = useState<string>(MARK_COLORS[0]);
+  const [color, setColor] = useState(DEFAULT_COLOR);
   const [marks, setMarks] = useState<Mark[]>([]);
   const [past, setPast] = useState<Mark[][]>([]);
   const [draft, setDraft] = useState<Mark | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [typing, setTyping] = useState<{ x: number; y: number; value: string } | null>(null);
   const start = useRef<Point | null>(null);
+
+  /** The stroke in progress, mutated on every pointer sample and flushed to
+   *  state once per frame. A fast drag fires far more moves than the display
+   *  refreshes, and re-rendering per sample is what makes a drawing surface
+   *  feel like it's dragging behind the cursor. */
+  const live = useRef<Mark | null>(null);
+  const frame = useRef(0);
+
+  const flush = useCallback(() => {
+    frame.current = 0;
+    setDraft(live.current ? { ...live.current } : null);
+  }, []);
+
+  const schedule = useCallback(() => {
+    if (frame.current) return;
+    frame.current = requestAnimationFrame(flush);
+  }, [flush]);
+
+  useEffect(() => () => cancelAnimationFrame(frame.current), []);
 
   const commit = useCallback((next: Mark[]) => {
     setMarks((prev) => {
@@ -123,6 +144,11 @@ export function MarkupOverlay({
         return;
       }
       if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key.toLowerCase() === "c") {
+        e.preventDefault();
+        setColor(nextColor);
+        return;
+      }
       const next = KEY_TO_TOOL[e.key.toLowerCase()];
       if (next) {
         e.preventDefault();
@@ -162,35 +188,53 @@ export function MarkupOverlay({
     }
     start.current = p;
     setSelected(null);
-    setDraft(
+    live.current =
       tool === "box"
         ? { kind: "box", id: nextId(), color, ...normalizeBox(p, p) }
         : tool === "arrow"
           ? { kind: "arrow", id: nextId(), color, x1: p.x, y1: p.y, x2: p.x, y2: p.y }
-          : { kind: "pen", id: nextId(), color, points: [p] },
-    );
+          : { kind: "pen", id: nextId(), color, points: [p] };
+    schedule();
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
     const from = start.current;
-    if (!from) return;
-    const p = { x: e.clientX, y: e.clientY };
-    setDraft((d) => {
-      if (!d) return d;
-      if (d.kind === "box") return { ...d, ...normalizeBox(from, p) };
-      if (d.kind === "arrow") return { ...d, x2: p.x, y2: p.y };
-      if (d.kind === "pen") return { ...d, points: [...d.points, p] };
-      return d;
-    });
+    const d = live.current;
+    if (!from || !d) return;
+
+    if (d.kind === "pen") {
+      // Coalesced events are the samples the browser took between frames.
+      // Reading them is what separates a smooth stroke from a polygon on a
+      // fast drag - they cost nothing extra, we just have to ask.
+      const samples = e.nativeEvent.getCoalescedEvents?.() ?? [e.nativeEvent];
+      for (const s of samples) {
+        const p = { x: s.clientX, y: s.clientY };
+        if (shouldKeepPoint(d.points[d.points.length - 1], p)) d.points.push(p);
+      }
+    } else {
+      const p = { x: e.clientX, y: e.clientY };
+      if (d.kind === "box") Object.assign(d, normalizeBox(from, p));
+      else if (d.kind === "arrow") Object.assign(d, { x2: p.x, y2: p.y });
+    }
+    schedule();
   };
 
   const onPointerUp = () => {
     start.current = null;
-    setDraft((d) => {
-      if (d && !isDegenerate(d)) commit([...marks, d]);
-      return null;
-    });
+    cancelAnimationFrame(frame.current);
+    frame.current = 0;
+    const d = live.current;
+    live.current = null;
+    setDraft(null);
+    if (d && !isDegenerate(d)) commit([...marks, d]);
   };
+
+  const committed = useMemo(() => marks.map((m) => <MarkShape key={m.id} mark={m} />), [marks]);
+
+  const selectedBounds = useMemo(() => {
+    const m = marks.find((x) => x.id === selected);
+    return m ? boundsOf(m) : null;
+  }, [marks, selected]);
 
   const cursor =
     tool === "select" ? "cursor-default" : tool === "text" ? "cursor-text" : "cursor-crosshair";
@@ -218,27 +262,23 @@ export function MarkupOverlay({
       )}
 
       <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
-        {[...marks, ...(draft ? [draft] : [])].map((m) => (
-          <MarkShape key={m.id} mark={m} />
-        ))}
-        {selected &&
-          (() => {
-            const m = marks.find((x) => x.id === selected);
-            if (!m) return null;
-            const b = boundsOf(m);
-            return (
-              <rect
-                x={b.x - 4}
-                y={b.y - 4}
-                width={b.width + 8}
-                height={b.height + 8}
-                fill="none"
-                stroke="#ffffff"
-                strokeWidth={1}
-                strokeDasharray="4 3"
-              />
-            );
-          })()}
+        {/* Held apart from the draft on purpose: the committed layer keeps the
+            same element identities across a stroke, so React skips it entirely
+            and only the one shape being drawn re-renders per frame. */}
+        {committed}
+        {draft && <MarkShape mark={draft} />}
+        {selectedBounds && (
+          <rect
+            x={selectedBounds.x - 4}
+            y={selectedBounds.y - 4}
+            width={selectedBounds.width + 8}
+            height={selectedBounds.height + 8}
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth={1}
+            strokeDasharray="4 3"
+          />
+        )}
       </svg>
 
       {typing && (
@@ -305,7 +345,7 @@ export function MarkupOverlay({
   );
 }
 
-function MarkShape({ mark }: { mark: Mark }) {
+const MarkShape = memo(function MarkShape({ mark }: { mark: Mark }) {
   switch (mark.kind) {
     case "box":
       return (
@@ -369,4 +409,4 @@ function MarkShape({ mark }: { mark: Mark }) {
         </text>
       );
   }
-}
+});

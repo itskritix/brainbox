@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
   Check,
@@ -46,41 +47,25 @@ export function MarkupToolbar({
   onCancel: () => void;
   onDone: () => void;
 }) {
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const picker = useRef<HTMLDivElement>(null);
+
+  // The swatch row is transient - anything else the user reaches for closes it.
+  useEffect(() => {
+    if (!pickerOpen) return;
+    const close = (e: Event) => {
+      if (!picker.current?.contains(e.target as Node)) setPickerOpen(false);
+    };
+    window.addEventListener("pointerdown", close, true);
+    return () => window.removeEventListener("pointerdown", close, true);
+  }, [pickerOpen]);
+
   return (
-    // Bottom-centre, out of the way of the page header - which is usually the
-    // thing being reported. Stops pointer events reaching the drawing surface
-    // so clicking a tool never also draws a mark.
-    <div
-      className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
-      onPointerDown={(e) => e.stopPropagation()}
-    >
-      <div className="flex items-center gap-1 rounded-xl border border-default bg-elevated px-1.5 py-1 shadow-3xl">
-        <IconButton label="Undo (⌘Z)" disabled={!canUndo} onClick={onUndo}>
-          <Undo2 className="h-4 w-4" />
-        </IconButton>
-        <IconButton label="Delete (⌫)" disabled={!canDelete} onClick={onDelete}>
-          <Trash2 className="h-4 w-4" />
-        </IconButton>
-
-        <span className="mx-1 h-5 w-px bg-subtle" />
-
-        {MARK_COLORS.map((c) => (
-          <button
-            key={c}
-            type="button"
-            title={`Colour ${c}`}
-            aria-label={`Colour ${c}`}
-            aria-pressed={c === color}
-            onClick={() => onColor(c)}
-            className={`h-5 w-5 rounded-full border transition ${
-              c === color ? "border-interactive scale-110" : "border-default"
-            }`}
-            style={{ background: c }}
-          />
-        ))}
-      </div>
-
-      <div className="flex items-center gap-1 rounded-2xl border border-default bg-elevated p-1.5 shadow-3xl">
+    // Centred with flex rather than `left-1/2 -translate-x-1/2`: transforms are
+    // the thing that breaks first inside a shadow root (see `shadowCss`), and a
+    // centring rule that can silently no-op isn't worth the risk.
+    <div className="pointer-events-none absolute inset-x-0 bottom-6 flex justify-center">
+      <div className="pointer-events-auto flex items-center gap-1 rounded-2xl border border-default bg-elevated p-1.5 shadow-3xl">
         {TOOLS.map(({ tool: t, label, key, Icon }) => (
           <button
             key={t}
@@ -89,7 +74,7 @@ export function MarkupToolbar({
             aria-label={label}
             aria-pressed={t === tool}
             onClick={() => onTool(t)}
-            className={`flex h-9 w-9 items-center justify-center rounded-xl transition ${
+            className={`flex h-9 w-9 items-center justify-center rounded-xl transition-colors ${
               t === tool
                 ? "bg-brand text-on-brand"
                 : "text-default hover:bg-interactive-hover hover:text-emphasis"
@@ -99,7 +84,60 @@ export function MarkupToolbar({
           </button>
         ))}
 
-        <span className="mx-1 h-6 w-px bg-subtle" />
+        <Divider />
+
+        {/* One swatch showing the current colour; the palette is a popover, so
+            there's no second bar parked on screen for the whole session. */}
+        <div ref={picker} className="relative">
+          <button
+            type="button"
+            title="Colour (c)"
+            aria-label="Colour"
+            aria-expanded={pickerOpen}
+            onClick={() => setPickerOpen((o) => !o)}
+            className="flex h-9 w-9 items-center justify-center rounded-xl hover:bg-interactive-hover"
+          >
+            <span
+              className="h-5 w-5 rounded-full border border-default"
+              style={{ background: color }}
+            />
+          </button>
+
+          {pickerOpen && (
+            <div className="absolute bottom-11 right-0 flex items-center gap-1 rounded-xl border border-default bg-elevated p-1.5 shadow-3xl">
+              {MARK_COLORS.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  title={c}
+                  aria-label={`Colour ${c}`}
+                  aria-pressed={c === color}
+                  onClick={() => {
+                    onColor(c);
+                    setPickerOpen(false);
+                  }}
+                  className={`flex h-7 w-7 items-center justify-center rounded-lg hover:bg-interactive-hover ${
+                    c === color ? "bg-interactive" : ""
+                  }`}
+                >
+                  <span
+                    className="h-5 w-5 rounded-full border border-default"
+                    style={{ background: c }}
+                  />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <IconButton label="Undo (⌘Z)" disabled={!canUndo} onClick={onUndo}>
+          <Undo2 className="h-4 w-4" />
+        </IconButton>
+        <IconButton label="Delete (⌫)" disabled={!canDelete} onClick={onDelete}>
+          <Trash2 className="h-4 w-4" />
+        </IconButton>
+
+        <Divider />
 
         <button
           type="button"
@@ -122,6 +160,8 @@ export function MarkupToolbar({
   );
 }
 
+const Divider = () => <span className="mx-1 h-6 w-px shrink-0 bg-subtle" />;
+
 function IconButton({
   label,
   disabled,
@@ -140,7 +180,7 @@ function IconButton({
       aria-label={label}
       disabled={disabled}
       onClick={onClick}
-      className="flex h-7 w-7 items-center justify-center rounded-lg text-default hover:bg-interactive-hover hover:text-emphasis disabled:opacity-30 disabled:hover:bg-transparent"
+      className="flex h-9 w-9 items-center justify-center rounded-xl text-default hover:bg-interactive-hover hover:text-emphasis disabled:opacity-30 disabled:hover:bg-transparent"
     >
       {children}
     </button>

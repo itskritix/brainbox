@@ -59,7 +59,21 @@ export interface TextMark extends MarkBase {
 
 export type Mark = BoxMark | ArrowMark | PenMark | TextMark;
 
-export const MARK_COLORS = ["#ff4d4f", "#faad14", "#52c41a", "#1677ff", "#ffffff"] as const;
+export const DEFAULT_COLOR = "#ff4d4f";
+export const MARK_COLORS: readonly string[] = [
+  DEFAULT_COLOR,
+  "#faad14",
+  "#52c41a",
+  "#1677ff",
+  "#ffffff",
+];
+
+/** Next colour in the palette, wrapping - what the `c` shortcut cycles through
+ *  so a colour change never has to cost a trip to the toolbar. */
+export function nextColor(current: string): string {
+  const i = MARK_COLORS.indexOf(current);
+  return MARK_COLORS[(i + 1) % MARK_COLORS.length] ?? DEFAULT_COLOR;
+}
 
 export const STROKE_WIDTH = 3;
 export const TEXT_SIZE = 16;
@@ -187,9 +201,51 @@ export function arrowHead(m: ArrowMark, size = ARROW_HEAD): [Point, Point, Point
   ];
 }
 
+/** A freehand stroke as quadratic curves: each raw point becomes a control
+ *  point and the curve passes through the midpoints between them. Raw pointer
+ *  samples joined by straight lines look visibly faceted on a slow, curved
+ *  stroke; this is the cheapest fix that doesn't move the line off the ink. */
+export interface PenCurve {
+  start: Point;
+  /** `c` is the control point, `to` the on-curve end point. */
+  segments: { c: Point; to: Point }[];
+}
+
+const mid = (a: Point, b: Point): Point => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
+
+export function penCurve(points: Point[]): PenCurve | null {
+  const start = points[0];
+  if (!start) return null;
+
+  const segments: { c: Point; to: Point }[] = [];
+  for (let i = 1; i < points.length - 1; i++) {
+    const c = points[i];
+    const next = points[i + 1];
+    if (!c || !next) continue;
+    segments.push({ c, to: mid(c, next) });
+  }
+
+  // Land exactly on the last sample so the stroke ends under the cursor.
+  const last = points[points.length - 1];
+  if (last && points.length > 1) segments.push({ c: last, to: last });
+
+  return { start, segments };
+}
+
 /** SVG path data for a freehand stroke. */
 export function penPath(m: PenMark): string {
-  return m.points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x} ${p.y}`).join(" ");
+  const curve = penCurve(m.points);
+  if (!curve) return "";
+  const head = `M${curve.start.x} ${curve.start.y}`;
+  return curve.segments.reduce((d, s) => `${d} Q${s.c.x} ${s.c.y} ${s.to.x} ${s.to.y}`, head);
+}
+
+/** Drop samples too close to the previous one to matter. A fast drag can emit
+ *  hundreds of points per stroke; thinning keeps the path (and the payload)
+ *  small with no visible change. */
+export function shouldKeepPoint(prev: Point | undefined, next: Point, min = 2): boolean {
+  if (!prev) return true;
+  return Math.abs(next.x - prev.x) >= min || Math.abs(next.y - prev.y) >= min;
 }
 
 /** The slice of a 2D canvas the bake step touches. Narrow on purpose: it keeps
@@ -202,6 +258,7 @@ export type Canvas2D = Pick<
   | "closePath"
   | "moveTo"
   | "lineTo"
+  | "quadraticCurveTo"
   | "stroke"
   | "fill"
   | "strokeRect"
@@ -247,11 +304,13 @@ export function paintMarks(ctx: Canvas2D, marks: Mark[]): void {
       }
 
       case "pen": {
-        const first = m.points[0];
-        if (!first) break;
+        // Same curve the SVG layer draws, so the bake matches what was on
+        // screen rather than a straighter version of it.
+        const curve = penCurve(m.points);
+        if (!curve) break;
         ctx.beginPath();
-        ctx.moveTo(first.x, first.y);
-        for (const p of m.points.slice(1)) ctx.lineTo(p.x, p.y);
+        ctx.moveTo(curve.start.x, curve.start.y);
+        for (const s of curve.segments) ctx.quadraticCurveTo(s.c.x, s.c.y, s.to.x, s.to.y);
         ctx.stroke();
         break;
       }
