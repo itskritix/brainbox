@@ -98,6 +98,17 @@ export function annualMonthsFree(plan: Plan): number {
   return Math.floor(saved / plan.monthlyCents);
 }
 
+/**
+ * The largest "months free" any plan honestly offers.
+ *
+ * The badge on the period toggle sits above BOTH cards, so it can only be an
+ * "up to" figure - the plans discount at different rates, and quoting Pro's 4
+ * there would undersell Business. Each card still states its own exact number.
+ */
+export function maxAnnualMonthsFree(plans: readonly Plan[] = PLANS): number {
+  return plans.reduce((most, plan) => Math.max(most, annualMonthsFree(plan)), 0);
+}
+
 /** The headline per-month figure for the period the visitor is looking at. */
 export function displayPriceCents(plan: Plan, period: BillingPeriod): number {
   return period === "monthly" ? plan.monthlyCents : monthlyEquivalentCents(plan);

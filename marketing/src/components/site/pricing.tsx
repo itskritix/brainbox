@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Check, ShieldCheck } from "lucide-react"
+import { ArrowRight, Check, ShieldCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import {
@@ -9,6 +9,7 @@ import {
   annualSavingsPercent,
   displayPriceCents,
   formatUsd,
+  maxAnnualMonthsFree,
   type BillingPeriod,
 } from "@/lib/pricing"
 import { checkoutUrl } from "@/lib/signup"
@@ -18,6 +19,8 @@ const PERIODS: { value: BillingPeriod; label: string }[] = [
   { value: "monthly", label: "Monthly" },
   { value: "annual", label: "Annual" },
 ]
+
+const MAX_MONTHS_FREE = maxAnnualMonthsFree()
 
 export function Pricing() {
   const [period, setPeriod] = useState<BillingPeriod>("annual")
@@ -30,44 +33,60 @@ export function Pricing() {
         desc="Unlimited projects, unlimited seats, unlimited pageviews on every plan. You only ever pay for the tickets you actually get."
       />
 
-      <div className="mb-12 flex flex-col items-center gap-3">
-        <div
-          role="radiogroup"
-          aria-label="Billing period"
-          className="inline-flex rounded-full border border-default bg-white/[0.03] p-1"
-        >
-          {PERIODS.map((p, i) => (
-            <button
-              key={p.value}
-              role="radio"
-              aria-checked={period === p.value}
-              // Roving tabindex: a radio group is ONE tab stop, and arrow keys
-              // move within it. Leaving every option tabbable makes a keyboard
-              // user tab through each one, which is not the expected pattern.
-              tabIndex={period === p.value ? 0 : -1}
-              onKeyDown={(e) => {
-                if (!["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"].includes(e.key)) return;
-                e.preventDefault();
-                const delta = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : -1;
-                const next = PERIODS[(i + delta + PERIODS.length) % PERIODS.length];
-                if (!next) return;
-                setPeriod(next.value);
-                // Selection follows focus, so move focus with it.
-                const group = e.currentTarget.parentElement;
-                const buttons = group?.querySelectorAll<HTMLButtonElement>('[role="radio"]');
-                buttons?.[(i + delta + PERIODS.length) % PERIODS.length]?.focus();
-              }}
-              onClick={() => setPeriod(p.value)}
-              className={cn(
-                "rounded-full px-5 py-1.5 text-sm font-medium transition-colors",
-                period === p.value
-                  ? "bg-white text-black"
-                  : "text-default hover:text-emphasis"
-              )}
-            >
-              {p.label}
-            </button>
-          ))}
+      <div className="mb-12 flex justify-center">
+        <div className="relative">
+          <div
+            role="radiogroup"
+            aria-label="Billing period"
+            className="inline-flex rounded-full border border-default bg-white/[0.03] p-1"
+          >
+            {PERIODS.map((p, i) => (
+              <button
+                key={p.value}
+                role="radio"
+                aria-checked={period === p.value}
+                // Roving tabindex: a radio group is ONE tab stop, and arrow keys
+                // move within it. Leaving every option tabbable makes a keyboard
+                // user tab through each one, which is not the expected pattern.
+                tabIndex={period === p.value ? 0 : -1}
+                onKeyDown={(e) => {
+                  if (!["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"].includes(e.key)) return;
+                  e.preventDefault();
+                  const delta = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : -1;
+                  const next = PERIODS[(i + delta + PERIODS.length) % PERIODS.length];
+                  if (!next) return;
+                  setPeriod(next.value);
+                  // Selection follows focus, so move focus with it.
+                  const group = e.currentTarget.parentElement;
+                  const buttons = group?.querySelectorAll<HTMLButtonElement>('[role="radio"]');
+                  buttons?.[(i + delta + PERIODS.length) % PERIODS.length]?.focus();
+                }}
+                onClick={() => setPeriod(p.value)}
+                className={cn(
+                  "rounded-full px-5 py-1.5 text-sm font-medium transition-colors",
+                  period === p.value
+                    ? "bg-white text-black"
+                    : "text-default hover:text-emphasis"
+                )}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Sits on the Annual end of the toggle, always visible - it's the
+              reason to press that side, so hiding it until you already have
+              would be pointless. Quotes the best plan's figure (Business's 5,
+              not Pro's 4) with no "up to" hedge, by product decision. */}
+          {/* Deliberately NOT the mono/uppercase/wide-tracking treatment the
+              cards use: at this size that typography makes the badge wider than
+              the segment it points at, and it stops reading as a tag. Solid
+              --green-9, not the alpha-backed bg-green-9 utility, because it
+              overlaps the white selected segment and alpha green washes out to
+              mint over it. */}
+          <span className="pointer-events-none absolute -top-2.5 -right-3 inline-flex items-center rounded-full bg-[var(--green-9)] px-2 py-0.5 text-[11px] leading-tight font-semibold whitespace-nowrap text-black">
+            {MAX_MONTHS_FREE} months free
+          </span>
         </div>
       </div>
 
@@ -113,17 +132,24 @@ export function Pricing() {
             {/* Shown on both periods. Each card states its OWN saving - the two
                 plans discount at different rates (41% vs 47%), so one figure
                 above the grid would misstate whichever plan it wasn't taken
-                from. On monthly it reads as the nudge to switch. */}
-            <p className="mt-3 inline-flex w-fit items-center rounded-full border border-default bg-white/[0.04] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-emphasis">
-              {period === "annual" ? (
-                <>
-                  Save {annualSavingsPercent(plan)}% &middot; {annualMonthsFree(plan)} months
-                  free
-                </>
-              ) : (
-                <>Save {annualSavingsPercent(plan)}% with annual</>
-              )}
-            </p>
+                from. On monthly it reads as the nudge to switch, so it IS the
+                switch: it was already the most eye-catching thing on the card,
+                and people were clicking it expecting exactly that. */}
+            {period === "annual" ? (
+              <p className="mt-3 inline-flex w-fit items-center rounded-full border border-default bg-white/[0.04] px-3 py-1 font-mono text-[11px] tracking-[0.1em] text-emphasis uppercase">
+                Save {annualSavingsPercent(plan)}% &middot; {annualMonthsFree(plan)} months
+                free
+              </p>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setPeriod("annual")}
+                className="mt-3 inline-flex w-fit cursor-pointer items-center gap-1.5 rounded-full border border-default bg-white/[0.04] px-3 py-1 font-mono text-[11px] tracking-[0.1em] text-emphasis uppercase transition-colors hover:border-interactive hover:bg-white/[0.08]"
+              >
+                Save {annualSavingsPercent(plan)}% with annual
+                <ArrowRight className="size-3" strokeWidth={2.5} />
+              </button>
+            )}
 
             <Button
               asChild
