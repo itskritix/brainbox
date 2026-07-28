@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signOut, useSession } from "@hono/auth-js/react";
+import { useSession } from "@hono/auth-js/react";
 import type { Project } from "@brainbox/shared";
 
 import { Wordmark } from "../components/Wordmark";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Spinner } from "../components/ui/spinner";
-import { api } from "../lib/api";
+import { api, isAuthRedirect } from "../lib/api";
+import { logout } from "../lib/logout";
 import { homeTarget, LAST_PROJECT_KEY } from "../lib/useProject";
 import { normalizeOrigin } from "../lib/utils";
 
@@ -87,10 +88,20 @@ export function Home() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
     api
       .listProjects()
-      .then(setProjects)
-      .catch((e: Error) => setError(e.message));
+      .then((next) => {
+        if (!cancelled) setProjects(next);
+      })
+      .catch((e: Error) => {
+        // A 401/402 is already navigating away; rendering it just flashes a
+        // red banner over a page that is about to be replaced.
+        if (!cancelled && !isAuthRedirect(e)) setError(e.message);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -120,7 +131,7 @@ export function Home() {
                 </span>
               </span>
             )}
-            <Button variant="ghost" size="sm" onClick={() => signOut()}>
+            <Button variant="ghost" size="sm" onClick={() => void logout()}>
               Sign out
             </Button>
           </div>

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
-import { signOut } from "@hono/auth-js/react";
 import { LayoutGrid, LogOut, Settings } from "lucide-react";
 import type { Project } from "@brainbox/shared";
 
-import { api } from "../lib/api";
+import { api, isAuthRedirect } from "../lib/api";
+import { logout } from "../lib/logout";
 import { ALL_PROJECTS, LAST_PROJECT_KEY, type ProjectOutletContext } from "../lib/useProject";
 import { cn } from "../lib/utils";
 import { ProjectSwitcher } from "./ProjectSwitcher";
@@ -69,10 +69,20 @@ export function ProjectLayout() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
     api
       .listProjects()
-      .then(setProjects)
-      .catch((e: Error) => setError(e.message));
+      .then((next) => {
+        if (!cancelled) setProjects(next);
+      })
+      .catch((e: Error) => {
+        // A 401/402 is already navigating away; rendering it just flashes a
+        // red banner over a page that is about to be replaced.
+        if (!cancelled && !isAuthRedirect(e)) setError(e.message);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // `/` forwards here next session
@@ -172,7 +182,7 @@ export function ProjectLayout() {
             </nav>
             <button
               type="button"
-              onClick={() => signOut()}
+              onClick={() => void logout()}
               aria-label="Sign out"
               className="shrink-0 rounded-md p-1.5 text-muted transition hover:bg-interactive-hover hover:text-emphasis"
             >

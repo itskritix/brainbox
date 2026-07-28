@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { dashboardUrl } from "@/lib/signup"
 
 const links = [
   { href: "#how", label: "How it works" },
@@ -30,7 +31,7 @@ export function Nav() {
         </nav>
 
         <Button asChild size="sm">
-          <a href="https://app.brainbox.sh">Sign in</a>
+          <a href={dashboardUrl()}>Sign in</a>
         </Button>
       </div>
     </header>

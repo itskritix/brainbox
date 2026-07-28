@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import { Skeleton } from "../components/ui/skeleton";
-import { api } from "../lib/api";
+import { api, isAuthRedirect } from "../lib/api";
 import {
   issueTitle,
   newestFirst,
@@ -180,7 +180,9 @@ export function Reports() {
         if (!cancelled) setResult({ scope, issues: newestFirst(issues) });
       })
       .catch((e: Error) => {
-        if (!cancelled) setResult({ scope, error: e.message });
+        // A 401/402 is already navigating away; rendering it just flashes a
+        // red banner over a page that is about to be replaced.
+        if (!cancelled && !isAuthRedirect(e)) setResult({ scope, error: e.message });
       });
     return () => {
       cancelled = true;
