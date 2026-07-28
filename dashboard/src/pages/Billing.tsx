@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import type { BillingPeriod, BillingState } from "@brainbox/shared";
 
 import { Button } from "../components/ui/button";
@@ -20,9 +20,21 @@ const PERIODS: { value: BillingPeriod; label: string }[] = [
   { value: "annual", label: "Annual" },
 ];
 
+function isPeriod(v: string | null): v is BillingPeriod {
+  return v === "monthly" || v === "annual";
+}
+
 export function Billing() {
   const navigate = useNavigate();
-  const [period, setPeriod] = useState<BillingPeriod>("annual");
+  const [params] = useSearchParams();
+  // Marketing deep-links here as /billing?plan=pro&period=annual. Honouring the
+  // period means someone who clicked an annual price sees that same price here
+  // rather than the monthly one, which would read as a bait and switch.
+  const [period, setPeriod] = useState<BillingPeriod>(() => {
+    const requested = params.get("period");
+    return isPeriod(requested) ? requested : "annual";
+  });
+  const requestedPlan = params.get("plan");
   const [state, setState] = useState<BillingState | null>(null);
   const [starting, setStarting] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -140,7 +152,10 @@ export function Billing() {
               key={plan.id}
               className={cn(
                 "flex flex-col rounded-2xl border border-default bg-elevated p-6",
-                plan.featured && "border-interactive",
+                // Highlight what they clicked on the marketing page if there
+                // was one, otherwise fall back to the featured plan.
+                (requestedPlan ? plan.id === requestedPlan : plan.featured) &&
+                  "border-interactive",
               )}
             >
               <div className="flex items-center justify-between gap-3">

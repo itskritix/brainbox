@@ -1,4 +1,5 @@
-import { WaitlistForm } from "./waitlist-form"
+import { Button } from "@/components/ui/button"
+import { getStartedUrl } from "@/lib/signup"
 
 export function Hero() {
   return (
@@ -27,9 +28,11 @@ export function Hero() {
         </p>
 
         <div className="mt-9 flex flex-col items-center gap-3">
-          <WaitlistForm />
+          <Button asChild size="lg" className="h-12 px-8 text-base">
+            <a href={getStartedUrl()}>Get started</a>
+          </Button>
           <span className="font-mono text-xs text-gray-11/80">
-            Built for indie hackers &amp; small product teams
+            From $29/mo &middot; 60-day money-back guarantee
           </span>
         </div>
 

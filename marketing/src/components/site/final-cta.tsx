@@ -1,7 +1,5 @@
-import { WaitlistForm } from "./waitlist-form"
-
-/** Shared with the pricing CTAs, which scroll here and focus the field. */
-export const WAITLIST_INPUT_ID = "waitlist-email"
+import { Button } from "@/components/ui/button"
+import { getStartedUrl } from "@/lib/signup"
 
 export function FinalCta() {
   return (
@@ -14,10 +12,13 @@ export function FinalCta() {
           <p className="mx-auto mt-5 max-w-xl text-default">
             They tap once. You get the full story: every bug and feature request, ready to ship.
           </p>
-          <div className="mt-8 flex justify-center">
-            {/* Target of the pricing CTAs - it sits just below them, so landing
-                here is a short scroll down rather than a jump back to the hero. */}
-            <WaitlistForm inputId={WAITLIST_INPUT_ID} />
+          <div className="mt-8 flex flex-col items-center gap-3">
+            <Button asChild size="lg" className="h-12 px-8 text-base">
+              <a href={getStartedUrl()}>Get started</a>
+            </Button>
+            <span className="font-mono text-xs text-gray-11/80">
+              Cancel any time
+            </span>
           </div>
         </div>
       </div>
