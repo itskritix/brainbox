@@ -8,6 +8,7 @@ import {
   annualSavingsPercent,
   displayPriceCents,
   formatUsd,
+  maxAnnualMonthsFree,
   monthlyEquivalentCents,
 } from "./pricing.ts";
 
@@ -119,6 +120,22 @@ describe("annualMonthsFree", () => {
       expect(annualMonthsFree(plan)).toBeLessThan(12);
       expect(annualMonthsFree(plan)).toBeGreaterThan(0);
     }
+  });
+});
+
+describe("maxAnnualMonthsFree", () => {
+  it("takes the most generous plan - Business's 5, not Pro's 4", () => {
+    expect(maxAnnualMonthsFree()).toBe(5);
+  });
+
+  it("never claims less than a card does, or the toggle undersells a plan", () => {
+    for (const plan of PLANS) {
+      expect(maxAnnualMonthsFree()).toBeGreaterThanOrEqual(annualMonthsFree(plan));
+    }
+  });
+
+  it("never claims more than some plan actually offers", () => {
+    expect(PLANS.map(annualMonthsFree)).toContain(maxAnnualMonthsFree());
   });
 });
 
