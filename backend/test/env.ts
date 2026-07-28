@@ -31,4 +31,14 @@ export const testEnv: Record<string, string> = {
   GOOGLE_SECRET: "test",
   // Log emails instead of sending them - tests never hit the network.
   EMAIL_DRIVER: "console",
+
+  // Billing. A fixed webhook secret so tests can sign payloads the route will
+  // actually accept; standardwebhooks wants base64 after the whsec_ prefix.
+  // No DODO_API_KEY: tests must never be able to reach the payments API.
+  DODO_WEBHOOK_SECRET: "whsec_dGVzdC13ZWJob29rLXNlY3JldC1ub3QtZm9yLXByb2Q=",
+  DODO_ENVIRONMENT: "test_mode",
+  DODO_PRODUCT_PRO_MONTHLY: "pdt_test_pro_monthly",
+  DODO_PRODUCT_PRO_ANNUAL: "pdt_test_pro_annual",
+  DODO_PRODUCT_BUSINESS_MONTHLY: "pdt_test_business_monthly",
+  DODO_PRODUCT_BUSINESS_ANNUAL: "pdt_test_business_annual",
 };

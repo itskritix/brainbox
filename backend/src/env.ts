@@ -65,4 +65,31 @@ export const env = {
   MAX_VIDEO_BYTES: Number(process.env.MAX_VIDEO_BYTES ?? 50 * 1024 * 1024),
   // Session replay (gzipped rrweb events) - 15MB.
   MAX_SESSION_BYTES: Number(process.env.MAX_SESSION_BYTES ?? 15 * 1024 * 1024),
+
+  // Dodo Payments. One key + one environment flag rather than separate
+  // test/live key vars: the flag picks the API host, and a key only works
+  // against its own host (a test key 401s on live and vice versa), so a
+  // mismatch fails loudly on the first call instead of silently charging real
+  // cards from a dev box.
+  DODO_API_KEY: process.env.DODO_API_KEY ?? "",
+  DODO_ENVIRONMENT: process.env.DODO_ENVIRONMENT === "live_mode" ? "live_mode" : "test_mode",
+  // Signing secret for the webhook endpoint, from Dashboard > Developer >
+  // Webhooks. Without it the webhook route rejects everything - refusing
+  // unverifiable payment events is the only safe default.
+  DODO_WEBHOOK_SECRET: process.env.DODO_WEBHOOK_SECRET ?? "",
+
+  // Product ids are per-environment (the live catalogue has different ids from
+  // test), so they are configuration, not constants.
+  DODO_PRODUCT_PRO_MONTHLY: process.env.DODO_PRODUCT_PRO_MONTHLY ?? "",
+  DODO_PRODUCT_PRO_ANNUAL: process.env.DODO_PRODUCT_PRO_ANNUAL ?? "",
+  DODO_PRODUCT_BUSINESS_MONTHLY: process.env.DODO_PRODUCT_BUSINESS_MONTHLY ?? "",
+  DODO_PRODUCT_BUSINESS_ANNUAL: process.env.DODO_PRODUCT_BUSINESS_ANNUAL ?? "",
+
+  // Accounts allowed past the paywall without a subscription (ours). Kept in
+  // env rather than the codebase so access can be granted or revoked without a
+  // deploy, and so no personal address is committed.
+  BILLING_EXEMPT_EMAILS: (process.env.BILLING_EXEMPT_EMAILS ?? "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean),
 } as const;
