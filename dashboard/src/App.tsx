@@ -2,6 +2,8 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { ProjectLayout } from "./components/ProjectLayout";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { Billing } from "./pages/Billing";
+import { BillingReturn } from "./pages/BillingReturn";
 import { Home } from "./pages/Home";
 import { LegacyIssue } from "./pages/LegacyIssue";
 import { Login } from "./pages/Login";
@@ -14,6 +16,11 @@ export const router = createBrowserRouter([
   {
     element: <ProtectedRoute />,
     children: [
+      // Signed in but not necessarily paid. These must stay outside anything
+      // that redirects on 402, or the paywall would have no exit.
+      { path: "/billing", element: <Billing /> },
+      { path: "/billing/return", element: <BillingReturn /> },
+
       { path: "/", element: <Home /> },
       {
         path: "/projects/:projectId",
