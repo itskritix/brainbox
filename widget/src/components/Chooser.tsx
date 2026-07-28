@@ -32,7 +32,7 @@ export function Chooser({
         <Camera className="h-5 w-5 shrink-0 text-emphasis" />
         <span>
           <span className="block text-sm font-medium text-emphasis">Screenshot</span>
-          <span className="block text-xs text-muted">Highlight the broken area</span>
+          <span className="block text-xs text-muted">Mark up the page, then talk it through</span>
         </span>
       </button>
 
