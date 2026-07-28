@@ -19,7 +19,9 @@ set -euo pipefail
 # --- config (brainbox-only) ---
 REPO="/home/ubuntu/brainbox"
 WEB="/var/www/brainbox-app"                 # dashboard SPA + widget.js (ubuntu-owned)
+WWW="/var/www/brainbox-www"                 # marketing site (was Vercel)
 PREV_WEB="/home/ubuntu/.brainbox-web-prev"  # static rollback snapshot (ubuntu home)
+PREV_WWW="/home/ubuntu/.brainbox-www-prev"
 SERVICE="brainbox-api.service"
 HEALTH="http://localhost:8790/health"
 # Non-interactive SSH shell doesn't source nvm — put node/pnpm on PATH explicitly.
@@ -37,6 +39,10 @@ publish_static() {
   # existing widget.js from being deleted, then we overwrite it explicitly.
   rsync -a --delete --exclude widget.js dashboard/dist/ "$WEB"/
   cp -f widget/dist/widget.js "$WEB"/widget.js
+  # Marketing, served from this box since we left Vercel. It loads the widget
+  # from app.brainbox.sh, so it needs no widget.js of its own.
+  mkdir -p "$WWW"
+  rsync -a --delete marketing/dist/ "$WWW"/
 }
 
 health_ok() {
@@ -53,6 +59,7 @@ rollback() {
   pnpm install --frozen-lockfile
   build_backend
   [ -d "$PREV_WEB" ] && rsync -a --delete "$PREV_WEB"/ "$WEB"/
+  if [ -d "$PREV_WWW" ]; then rsync -a --delete "$PREV_WWW"/ "$WWW"/; fi
   sudo systemctl restart "$SERVICE"
   if health_ok; then echo "!! rolled back OK"; else echo "!! ROLLBACK ALSO UNHEALTHY — manual attention needed"; fi
   exit 1
@@ -72,9 +79,14 @@ bash backend/scripts/backup.sh
 build_backend
 pnpm -F @brainbox/widget build
 pnpm -F @brainbox/dashboard build
+pnpm -F brainbox-landing build
 
 # --- 5. snapshot current static for rollback, then migrate ---
 rm -rf "$PREV_WEB"; cp -a "$WEB" "$PREV_WEB"
+# `[ -d ] && cp` would abort under `set -e` on the very first deploy, when the
+# marketing webroot does not exist yet. An if-block is the safe form.
+rm -rf "$PREV_WWW"
+if [ -d "$WWW" ]; then cp -a "$WWW" "$PREV_WWW"; fi
 pnpm -F @brainbox/backend db:migrate || rollback
 
 # --- 6. publish static + restart backend ---
@@ -84,5 +96,5 @@ sudo systemctl restart "$SERVICE"
 # --- 7. health-gated; auto-rollback on failure ---
 if ! health_ok; then rollback; fi
 
-rm -rf "$PREV_WEB"
+rm -rf "$PREV_WEB" "$PREV_WWW"
 echo ">> deploy OK: $(git rev-parse --short HEAD) live"
