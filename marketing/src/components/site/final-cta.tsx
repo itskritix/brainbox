@@ -1,5 +1,8 @@
 import { WaitlistForm } from "./waitlist-form"
 
+/** Shared with the pricing CTAs, which scroll here and focus the field. */
+export const WAITLIST_INPUT_ID = "waitlist-email"
+
 export function FinalCta() {
   return (
     <section className="mx-auto max-w-6xl px-6 pb-24 md:pb-32">
@@ -12,7 +15,9 @@ export function FinalCta() {
             They tap once. You get the full story: every bug and feature request, ready to ship.
           </p>
           <div className="mt-8 flex justify-center">
-            <WaitlistForm />
+            {/* Target of the pricing CTAs - it sits just below them, so landing
+                here is a short scroll down rather than a jump back to the hero. */}
+            <WaitlistForm inputId={WAITLIST_INPUT_ID} />
           </div>
         </div>
       </div>
