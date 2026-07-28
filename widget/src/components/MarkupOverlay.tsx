@@ -1,27 +1,17 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ImageOff, Loader2 } from "lucide-react";
 import {
-  arrowHead,
   boundsOf,
   hitTest,
   DEFAULT_COLOR,
   isDegenerate,
   nextColor,
-  normalizeBox,
-  penPath,
-  shouldKeepPoint,
-  STROKE_WIDTH,
-  TEXT_HALO,
-  TEXT_HALO_WIDTH,
-  TEXT_SIZE,
   type Mark,
-  type Point,
   type Tool,
 } from "../lib/marks.ts";
+import { isDragTool, nextMarkId, useDrawing } from "../lib/use-drawing.ts";
+import { MarkShape, MarkTextInput } from "./MarkShape.tsx";
 import { MarkupToolbar } from "./MarkupToolbar.tsx";
-
-let seq = 0;
-const nextId = () => `m${++seq}`;
 
 const KEY_TO_TOOL: Record<string, Tool> = {
   v: "select",
@@ -57,29 +47,8 @@ export function MarkupOverlay({
   const [color, setColor] = useState(DEFAULT_COLOR);
   const [marks, setMarks] = useState<Mark[]>([]);
   const [past, setPast] = useState<Mark[][]>([]);
-  const [draft, setDraft] = useState<Mark | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [typing, setTyping] = useState<{ x: number; y: number; value: string } | null>(null);
-  const start = useRef<Point | null>(null);
-
-  /** The stroke in progress, mutated on every pointer sample and flushed to
-   *  state once per frame. A fast drag fires far more moves than the display
-   *  refreshes, and re-rendering per sample is what makes a drawing surface
-   *  feel like it's dragging behind the cursor. */
-  const live = useRef<Mark | null>(null);
-  const frame = useRef(0);
-
-  const flush = useCallback(() => {
-    frame.current = 0;
-    setDraft(live.current ? { ...live.current } : null);
-  }, []);
-
-  const schedule = useCallback(() => {
-    if (frame.current) return;
-    frame.current = requestAnimationFrame(flush);
-  }, [flush]);
-
-  useEffect(() => () => cancelAnimationFrame(frame.current), []);
 
   const commit = useCallback((next: Mark[]) => {
     setMarks((prev) => {
@@ -108,7 +77,7 @@ export function MarkupOverlay({
     if (!typing) return;
     const mark: Mark = {
       kind: "text",
-      id: nextId(),
+      id: nextMarkId(),
       color,
       x: typing.x,
       y: typing.y,
@@ -159,74 +128,30 @@ export function MarkupOverlay({
     return () => window.removeEventListener("keydown", onKey);
   }, [onCancel, removeSelected, typing, undo]);
 
-  const onPointerDown = (e: React.PointerEvent) => {
-    const p = { x: e.clientX, y: e.clientY };
+  // Committed marks accumulate here (unlike the recording overlay, where they
+  // fade into the replay), so the hook hands each finished shape to the undo
+  // stack rather than straight to the screen.
+  const onDrawn = useCallback((m: Mark) => commit([...marks, m]), [commit, marks]);
+  const { draft, begin, extend, finish } = useDrawing({ color, onCommit: onDrawn });
 
+  const onPointerDown = (e: React.PointerEvent) => {
     // A click anywhere else closes an open text box rather than losing it.
     if (typing) {
       commitTyping();
       return;
     }
-
     if (tool === "select") {
-      setSelected(hitTest(marks, p));
+      setSelected(hitTest(marks, { x: e.clientX, y: e.clientY }));
       return;
     }
-
     if (tool === "text") {
-      setTyping({ x: p.x, y: p.y, value: "" });
+      setTyping({ x: e.clientX, y: e.clientY, value: "" });
       return;
     }
-
-    // Keeps a drag alive if the pointer leaves the window mid-stroke. Not every
-    // pointer can be captured (synthetic events, some pens) and a refusal only
-    // costs us the off-screen tail of a stroke, so it must not break drawing.
-    try {
-      e.currentTarget.setPointerCapture(e.pointerId);
-    } catch {
-      /* draw without capture */
+    if (isDragTool(tool)) {
+      setSelected(null);
+      begin(tool, e);
     }
-    start.current = p;
-    setSelected(null);
-    live.current =
-      tool === "box"
-        ? { kind: "box", id: nextId(), color, ...normalizeBox(p, p) }
-        : tool === "arrow"
-          ? { kind: "arrow", id: nextId(), color, x1: p.x, y1: p.y, x2: p.x, y2: p.y }
-          : { kind: "pen", id: nextId(), color, points: [p] };
-    schedule();
-  };
-
-  const onPointerMove = (e: React.PointerEvent) => {
-    const from = start.current;
-    const d = live.current;
-    if (!from || !d) return;
-
-    if (d.kind === "pen") {
-      // Coalesced events are the samples the browser took between frames.
-      // Reading them is what separates a smooth stroke from a polygon on a
-      // fast drag - they cost nothing extra, we just have to ask.
-      const samples = e.nativeEvent.getCoalescedEvents?.() ?? [e.nativeEvent];
-      for (const s of samples) {
-        const p = { x: s.clientX, y: s.clientY };
-        if (shouldKeepPoint(d.points[d.points.length - 1], p)) d.points.push(p);
-      }
-    } else {
-      const p = { x: e.clientX, y: e.clientY };
-      if (d.kind === "box") Object.assign(d, normalizeBox(from, p));
-      else if (d.kind === "arrow") Object.assign(d, { x2: p.x, y2: p.y });
-    }
-    schedule();
-  };
-
-  const onPointerUp = () => {
-    start.current = null;
-    cancelAnimationFrame(frame.current);
-    frame.current = 0;
-    const d = live.current;
-    live.current = null;
-    setDraft(null);
-    if (d && !isDegenerate(d)) commit([...marks, d]);
   };
 
   const committed = useMemo(() => marks.map((m) => <MarkShape key={m.id} mark={m} />), [marks]);
@@ -243,9 +168,9 @@ export function MarkupOverlay({
     <div
       className={`fixed inset-0 z-[2147483647] touch-none select-none overflow-hidden ${cursor}`}
       onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onPointerCancel={onPointerUp}
+      onPointerMove={extend}
+      onPointerUp={finish}
+      onPointerCancel={finish}
     >
       {frozenUrl ? (
         <img
@@ -282,28 +207,12 @@ export function MarkupOverlay({
       </svg>
 
       {typing && (
-        <input
-          autoFocus
-          value={typing.value}
-          onChange={(e) => setTyping({ ...typing, value: e.target.value })}
-          onPointerDown={(e) => e.stopPropagation()}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              commitTyping();
-            }
-          }}
-          placeholder="Type a note"
-          className="absolute bg-transparent font-bold outline-none placeholder:font-normal placeholder:opacity-60"
-          style={{
-            left: typing.x,
-            top: typing.y - TEXT_SIZE,
-            color,
-            fontSize: TEXT_SIZE,
-            // mirrors the halo the mark gets once baked
-            textShadow: `0 0 3px ${TEXT_HALO}, 0 0 3px ${TEXT_HALO}`,
-            minWidth: 160,
-          }}
+        <MarkTextInput
+          at={typing}
+          color={color}
+          onChange={(value) => setTyping({ ...typing, value })}
+          onCommit={commitTyping}
+          onCancel={() => setTyping(null)}
         />
       )}
 
@@ -343,69 +252,3 @@ export function MarkupOverlay({
     </div>
   );
 }
-
-const MarkShape = memo(function MarkShape({ mark }: { mark: Mark }) {
-  switch (mark.kind) {
-    case "box":
-      return (
-        <rect
-          x={mark.x}
-          y={mark.y}
-          width={mark.width}
-          height={mark.height}
-          fill="none"
-          stroke={mark.color}
-          strokeWidth={STROKE_WIDTH}
-        />
-      );
-
-    case "arrow": {
-      const [tip, left, right] = arrowHead(mark);
-      return (
-        <g>
-          <line
-            x1={mark.x1}
-            y1={mark.y1}
-            x2={mark.x2}
-            y2={mark.y2}
-            stroke={mark.color}
-            strokeWidth={STROKE_WIDTH}
-            strokeLinecap="round"
-          />
-          <polygon
-            points={`${tip.x},${tip.y} ${left.x},${left.y} ${right.x},${right.y}`}
-            fill={mark.color}
-          />
-        </g>
-      );
-    }
-
-    case "pen":
-      return (
-        <path
-          d={penPath(mark)}
-          fill="none"
-          stroke={mark.color}
-          strokeWidth={STROKE_WIDTH}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      );
-
-    case "text":
-      return (
-        <text
-          x={mark.x}
-          y={mark.y}
-          fill={mark.color}
-          stroke={TEXT_HALO}
-          strokeWidth={TEXT_HALO_WIDTH}
-          paintOrder="stroke"
-          fontSize={TEXT_SIZE}
-          fontWeight={700}
-        >
-          {mark.text}
-        </text>
-      );
-  }
-});
