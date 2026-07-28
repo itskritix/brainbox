@@ -55,6 +55,44 @@ export function loadWidget(config: WidgetConfig): void {
   document.body.appendChild(script);
 }
 
+/**
+ * Run `cb` once the widget has installed its API on `window`.
+ *
+ * The script tag is injected async and off a different origin, so anything that
+ * POINTS AT the launcher - the "try it yourself" cue - has to wait for it or it
+ * spends the slow-connection case aiming at a button that isn't there. Polls
+ * rather than listening: the widget publishes `window.Brainbox` and fires no
+ * ready event, and the script's own `load` doesn't guarantee it has mounted.
+ *
+ * Gives up after `timeoutMs` without calling back - if the widget is blocked or
+ * failed to load, the honest thing is to show nothing.
+ */
+export function onWidgetReady(
+  cb: () => void,
+  { intervalMs = 150, timeoutMs = 10_000 } = {}
+): () => void {
+  if (window.Brainbox) {
+    cb();
+    return () => {};
+  }
+  let waited = 0;
+  const timer = setInterval(() => {
+    waited += intervalMs;
+    if (window.Brainbox) {
+      clearInterval(timer);
+      cb();
+    } else if (waited >= timeoutMs) {
+      clearInterval(timer);
+    }
+  }, intervalMs);
+  return () => clearInterval(timer);
+}
+
+/** Open the widget the way its launcher would. No-op until the script lands. */
+export function openWidget(): void {
+  window.Brainbox?.open();
+}
+
 /** Listen for successful widget submissions. Returns the cleanup function. */
 export function onWidgetSubmitted(cb: (id: string) => void): () => void {
   const handler = (event: CustomEvent<{ id?: unknown }>) => {

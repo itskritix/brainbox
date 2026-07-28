@@ -1,8 +1,16 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { loadWidget, onWidgetSubmitted, resolveWidgetConfig } from "./widget-loader.ts";
+import {
+  loadWidget,
+  onWidgetReady,
+  onWidgetSubmitted,
+  openWidget,
+  resolveWidgetConfig,
+} from "./widget-loader.ts";
 
 afterEach(() => {
   document.body.innerHTML = "";
+  delete window.Brainbox;
+  vi.useRealTimers();
 });
 
 describe("resolveWidgetConfig", () => {
@@ -44,6 +52,69 @@ describe("loadWidget", () => {
     loadWidget(config);
     loadWidget(config);
     expect(document.querySelectorAll("script[data-brainbox-demo]")).toHaveLength(1);
+  });
+});
+
+describe("onWidgetReady", () => {
+  it("fires immediately when the widget is already up", () => {
+    window.Brainbox = { open: vi.fn(), close: vi.fn() };
+    const cb = vi.fn();
+    onWidgetReady(cb);
+    expect(cb).toHaveBeenCalledOnce();
+  });
+
+  it("waits for the async script, then fires exactly once", () => {
+    vi.useFakeTimers();
+    const cb = vi.fn();
+    onWidgetReady(cb);
+
+    vi.advanceTimersByTime(600);
+    expect(cb).not.toHaveBeenCalled();
+
+    window.Brainbox = { open: vi.fn(), close: vi.fn() };
+    vi.advanceTimersByTime(150);
+    expect(cb).toHaveBeenCalledOnce();
+
+    // The poll must stop, or a cue that hides itself would be re-shown.
+    vi.advanceTimersByTime(5_000);
+    expect(cb).toHaveBeenCalledOnce();
+  });
+
+  it("gives up rather than waiting forever on a blocked widget", () => {
+    vi.useFakeTimers();
+    const cb = vi.fn();
+    // Interval divides the timeout exactly, so the give-up tick lands at 1000ms.
+    onWidgetReady(cb, { intervalMs: 100, timeoutMs: 1_000 });
+
+    vi.advanceTimersByTime(1_000);
+    window.Brainbox = { open: vi.fn(), close: vi.fn() };
+    vi.advanceTimersByTime(10_000);
+
+    expect(cb).not.toHaveBeenCalled();
+  });
+
+  it("stops polling after cleanup", () => {
+    vi.useFakeTimers();
+    const cb = vi.fn();
+    onWidgetReady(cb)();
+
+    window.Brainbox = { open: vi.fn(), close: vi.fn() };
+    vi.advanceTimersByTime(5_000);
+
+    expect(cb).not.toHaveBeenCalled();
+  });
+});
+
+describe("openWidget", () => {
+  it("opens the widget when it has loaded", () => {
+    const open = vi.fn();
+    window.Brainbox = { open, close: vi.fn() };
+    openWidget();
+    expect(open).toHaveBeenCalledOnce();
+  });
+
+  it("is a no-op before the script lands, rather than throwing at the visitor", () => {
+    expect(() => openWidget()).not.toThrow();
   });
 });
 
