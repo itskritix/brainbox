@@ -55,7 +55,10 @@ export function RegionOverlay({
         else onCancel();
       }}
     >
-      <div className="pointer-events-none absolute left-1/2 top-4 -translate-x-1/2 rounded-full bg-elevated px-3 py-1 text-xs text-default">
+      {/* Bottom-anchored: the top of the page is what the user is usually
+          reporting on, and a bar sitting over it hides the thing they came to
+          highlight. It also puts the hint where the annotation toolbar lives. */}
+      <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-elevated px-3 py-1 text-xs text-default">
         {caption}
       </div>
       {box && (
