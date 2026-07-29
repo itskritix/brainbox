@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { keepForViewport } from "./capture.ts";
+import { keepForViewport, pickScreenshot } from "./capture.ts";
 
 const VW = 1000;
 const VH = 800;
@@ -55,5 +55,39 @@ describe("keepForViewport", () => {
   it("keeps a box overlapping the edge by a single pixel", () => {
     expect(keepForViewport(box(0, -299, 500, 300), VW, VH)).toBe(true);
     expect(keepForViewport(box(0, VH - 1, 500, 300), VW, VH)).toBe(true);
+  });
+});
+
+describe("pickScreenshot", () => {
+  const plain = new Blob(["plain"]);
+  const baked = new Blob(["baked"]);
+
+  it("waits for the bake instead of sending the un-marked shot already in state", async () => {
+    // The regression this exists for: leaving the markup step leaves the plain
+    // capture in state and the baked one still in flight. Sending the settled
+    // blob there throws away every mark the user drew.
+    let resolve: (b: Blob) => void = () => undefined;
+    const pending = new Promise<Blob>((r) => (resolve = r));
+    const picked = pickScreenshot(pending, plain);
+    resolve(baked);
+    expect(await picked).toBe(baked);
+  });
+
+  it("falls back to the settled shot when the promise fails", async () => {
+    expect(await pickScreenshot(Promise.reject(new Error("nope")), plain)).toBe(plain);
+  });
+
+  it("falls back to the settled shot for a flow that never had a promise", async () => {
+    // A recording's last-frame thumbnail lands straight in state.
+    expect(await pickScreenshot(null, plain)).toBe(plain);
+  });
+
+  it("is null when there is no shot at all", async () => {
+    expect(await pickScreenshot(null, null)).toBeNull();
+    expect(await pickScreenshot(Promise.reject(new Error("nope")), null)).toBeNull();
+  });
+
+  it("resolves to the promise's blob even with nothing settled yet", async () => {
+    expect(await pickScreenshot(Promise.resolve(baked), null)).toBe(baked);
   });
 });

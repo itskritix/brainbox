@@ -1,7 +1,5 @@
 import { domToCanvas } from "modern-screenshot";
-import type { Region } from "@brainbox/shared";
-
-const HIGHLIGHT = "#ff4d4f";
+import { paintMarks, type Mark } from "./marks.ts";
 
 /** Never rendered, so never worth cloning or serialising - big inline <script>
  *  blobs and unmounted <template> markup are pure capture cost. <style> stays:
@@ -99,20 +97,59 @@ async function viewportCanvas(hostEl: HTMLElement): Promise<HTMLCanvasElement> {
   return out;
 }
 
-/** Screenshot the current viewport with the selected region outlined. */
-export async function captureScreenshot(region: Region, hostEl: HTMLElement): Promise<Blob> {
-  const out = await viewportCanvas(hostEl);
-  const ctx = out.getContext("2d");
-  if (!ctx) throw new Error("Canvas 2D context unavailable");
-  ctx.strokeStyle = HIGHLIGHT;
-  ctx.lineWidth = 3;
-  ctx.strokeRect(region.x, region.y, region.width, region.height);
-  return await toBlob(out);
-}
-
-/** Plain viewport shot - used as the thumbnail/last-frame of a session recording. */
+/** Plain viewport shot - the frozen page the user marks up, and the
+ *  thumbnail/last-frame of a session recording. */
 export async function captureViewport(hostEl: HTMLElement): Promise<Blob> {
   return toBlob(await viewportCanvas(hostEl));
+}
+
+/**
+ * Flatten the user's markup onto the frozen shot.
+ *
+ * This runs once, on the way out of the markup step, rather than on every
+ * stroke: the marks are vectors until here, so drawing stays instant and
+ * undoable and nothing has to re-rasterise the page. Mark coordinates are
+ * viewport CSS pixels and the shot is a viewport crop at scale 1, so the two
+ * spaces line up with no transform.
+ */
+export async function bakeMarks(shot: Blob, marks: Mark[]): Promise<Blob> {
+  if (marks.length === 0) return shot;
+
+  const bitmap = await createImageBitmap(shot);
+  const out = document.createElement("canvas");
+  out.width = bitmap.width;
+  out.height = bitmap.height;
+
+  const ctx = out.getContext("2d");
+  if (!ctx) {
+    bitmap.close();
+    throw new Error("Canvas 2D context unavailable");
+  }
+  ctx.drawImage(bitmap, 0, 0);
+  bitmap.close();
+
+  paintMarks(ctx, marks);
+  return toBlob(out);
+}
+
+/**
+ * Which screenshot actually gets uploaded.
+ *
+ * Two sources disagree on purpose. `settled` is the last shot that resolved into
+ * state - what the composer is already showing - and `pending` is the freshest
+ * promise for one. Leaving the markup step swaps `pending` for the *baked* shot
+ * while `settled` still holds the plain capture taken before the user drew
+ * anything, so preferring `settled` would quietly upload the version with none
+ * of their markup on it. The promise wins whenever there is one; `settled` is
+ * the fallback for the flows that never had one (a recording's last frame) and
+ * for a capture that failed, where the plain shot is better than nothing.
+ */
+export async function pickScreenshot(
+  pending: Promise<Blob> | null,
+  settled: Blob | null,
+): Promise<Blob | null> {
+  if (!pending) return settled;
+  return (await pending.catch(() => null)) ?? settled;
 }
 
 function toBlob(canvas: HTMLCanvasElement): Promise<Blob> {

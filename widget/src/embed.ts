@@ -4,6 +4,7 @@ import type { Identity } from "@brainbox/shared";
 import { App } from "./App.tsx";
 import { readConfig } from "./lib/config.ts";
 import { installCapture, setIdentity } from "./lib/metadata.ts";
+import { shadowCss } from "./lib/shadow-css.ts";
 import css from "./index.css?inline";
 
 // Captured at eval time - for a classic <script src> this is the embedding tag.
@@ -58,8 +59,7 @@ function mount() {
   const shadow = host.attachShadow({ mode: "open" });
 
   const style = document.createElement("style");
-  // `:root` never matches inside a shadow tree - retarget the token vars to :host.
-  style.textContent = css.replaceAll(":root", ":host");
+  style.textContent = shadowCss(css);
   shadow.appendChild(style);
 
   const container = document.createElement("div");
