@@ -62,7 +62,14 @@ export function MarkupToolbar({
     // the thing that breaks first inside a shadow root (see `shadowCss`), and a
     // centring rule that can silently no-op isn't worth the risk.
     <div className="pointer-events-none absolute inset-x-0 bottom-6 flex justify-center">
-      <div className="pointer-events-auto flex items-center gap-1 rounded-2xl border border-default bg-elevated p-1.5 shadow-3xl">
+      {/* The toolbar sits inside the drawing surface, so without this a press on
+          any button is also a press on the canvas - with Text armed that plants
+          a caret over the toolbar itself. The colour picker's own dismiss
+          listener is capture-phase on `window`, so it still fires. */}
+      <div
+        onPointerDown={(e) => e.stopPropagation()}
+        className="pointer-events-auto flex items-center gap-1 rounded-2xl border border-default bg-elevated p-1.5 shadow-3xl"
+      >
         {/* Leaving is a corner action, not something competing with the tools -
             so it's an icon on the far left, opposite the one button that moves
             the flow forward. */}

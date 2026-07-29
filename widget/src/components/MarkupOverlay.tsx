@@ -50,22 +50,24 @@ export function MarkupOverlay({
   const [selected, setSelected] = useState<string | null>(null);
   const [typing, setTyping] = useState<{ x: number; y: number; value: string } | null>(null);
 
-  const commit = useCallback((next: Mark[]) => {
-    setMarks((prev) => {
-      setPast((p) => [...p, prev]);
-      return next;
-    });
-  }, []);
+  // Both updaters stay pure - React may call one more than once, and pushing
+  // history from inside `setMarks` would then record the same step twice and
+  // cost the user a second press of undo to get back.
+  const commit = useCallback(
+    (next: Mark[]) => {
+      setPast((p) => [...p, marks]);
+      setMarks(next);
+    },
+    [marks],
+  );
 
   const undo = useCallback(() => {
-    setPast((p) => {
-      const prev = p[p.length - 1];
-      if (!prev) return p;
-      setMarks(prev);
-      setSelected(null);
-      return p.slice(0, -1);
-    });
-  }, []);
+    const prev = past[past.length - 1];
+    if (!prev) return;
+    setPast(past.slice(0, -1));
+    setMarks(prev);
+    setSelected(null);
+  }, [past]);
 
   const removeSelected = useCallback(() => {
     if (!selected) return;

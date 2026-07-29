@@ -1,7 +1,7 @@
 # Brainbox - Context & Glossary
 
 Brainbox is an embeddable in-app feedback widget. A customer's end-user reports a
-broken UI area by highlighting it and talking; Brainbox turns that into a
+broken UI area by marking it up and talking; Brainbox turns that into a
 structured ticket routed to the customer's tools.
 
 The product has three distinct surfaces - keep them separate:
@@ -22,8 +22,13 @@ The product has three distinct surfaces - keep them separate:
   snippet, and reads incoming tickets. (Out of scope for the widget build.)
 - **Backend** - receives feedback from every customer's widget, stores it
   per-account, feeds the dashboard, routes to integrations. (Built later.)
-- **Capture flow** - the end-user's 5-step sequence: open → highlight region →
-  screenshot → compose (talk/type) → submit.
+- **Capture flow** - the end-user's sequence: open → mark up the frozen page →
+  compose (talk/type) → submit. Marking up is optional; the screenshot
+  rasterises in the background from the moment that step opens and the marks are
+  baked onto it on the way to the composer.
+- **Mark** - one thing the end-user drew on the page: a box, an arrow, a
+  freehand stroke or a text note. Held as a vector until it is baked into the
+  screenshot, so it stays undoable to the last moment.
 - **Trigger** - whatever opens the widget. Two modes:
   - **Floating trigger** - the bottom-right button the widget renders itself
     (default).
@@ -41,6 +46,6 @@ Account ──< Project ──< Issue
 - **Account** - a customer's login (email/password). Owns many projects.
 - **Project** - one per SaaS the customer owns. Has a unique project key used in
   the widget snippet. Owns many issues.
-- **Issue** - one feedback submission: screenshot, audio, text, region coords,
-  and auto-captured metadata. Filed under the project named by the project key
-  on the widget's POST.
+- **Issue** - one feedback submission: screenshot, audio, text, region coords
+  (the area the end-user's marks cover), and auto-captured metadata. Filed under
+  the project named by the project key on the widget's POST.

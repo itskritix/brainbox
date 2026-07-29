@@ -81,6 +81,11 @@ export const TEXT_SIZE = 16;
  *  detail that separates a real markup tool from a toy one. */
 export const TEXT_HALO = "#000000";
 export const TEXT_HALO_WIDTH = 4;
+/** Named by every renderer rather than inherited. The SVG preview lives inside
+ *  the widget's shadow root, where an unset `font-family` falls through to the
+ *  *host page's* font - so the text the user places would be a different face,
+ *  and a different width, from the one baked into the PNG. */
+export const FONT_STACK = 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif';
 const ARROW_HEAD = 14;
 
 /** A drag shorter than this in both axes is a stray click, not a shape. */
@@ -348,5 +353,3 @@ export function paintMarks(ctx: Canvas2D, marks: Mark[]): void {
 
   ctx.restore();
 }
-
-const FONT_STACK = 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif';

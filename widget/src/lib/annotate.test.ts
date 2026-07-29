@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { clearHighlights, liveMarkCount, showMark, undoLastMark } from "./annotate.ts";
-import type { Mark } from "./marks.ts";
+import { FONT_STACK, type Mark } from "./marks.ts";
 
 const box: Mark = { kind: "box", id: "b", color: "#ff4d4f", x: 10, y: 20, width: 100, height: 50 };
 const query = () => document.querySelectorAll("[data-brainbox-highlight]");
@@ -70,6 +70,11 @@ describe("annotate", () => {
     expect(text?.getAttribute("paint-order")).toBe("stroke");
   });
 
+  it("names the same font the bake uses, so the mark can't be laid out differently", () => {
+    showMark({ kind: "text", id: "t", color: "#fff", x: 5, y: 30, text: "broken" });
+    expect(shape()?.getAttribute("font-family")).toBe(FONT_STACK);
+  });
+
   it("stays put - a mark outlives the moment it was drawn", () => {
     showMark(box);
     vi.advanceTimersByTime(60_000);
@@ -85,6 +90,40 @@ describe("annotate", () => {
     expect(rect?.getAttribute("y")).toBe("320"); // 20 + 300
     window.scrollX = 0;
     window.scrollY = 0;
+  });
+
+  it("cancels out a positioned body, which would otherwise shift every mark", () => {
+    // `position:absolute` resolves against the nearest positioned ancestor, so
+    // `body{position:relative}` on the host page makes the body's padding box
+    // the origin instead of the document's.
+    document.body.style.position = "relative";
+    const rect = vi
+      .spyOn(Element.prototype, "getBoundingClientRect")
+      .mockReturnValue({ left: 8, top: 8 } as DOMRect);
+
+    showMark(box);
+
+    const shifted = shape();
+    expect(shifted?.getAttribute("x")).toBe("2"); // 10 - 8
+    expect(shifted?.getAttribute("y")).toBe("12"); // 20 - 8
+
+    rect.mockRestore();
+    document.body.style.position = "";
+  });
+
+  it("leaves coordinates alone on an ordinary unpositioned body", () => {
+    const rect = vi
+      .spyOn(Element.prototype, "getBoundingClientRect")
+      .mockReturnValue({ left: 8, top: 8 } as DOMRect);
+
+    showMark(box);
+
+    // No positioned ancestor - the containing block is the document, so the
+    // measurement is not consulted at all.
+    expect(shape()?.getAttribute("x")).toBe("10");
+    expect(shape()?.getAttribute("y")).toBe("20");
+
+    rect.mockRestore();
   });
 
   it("undoes the most recent mark only", () => {

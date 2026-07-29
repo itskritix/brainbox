@@ -2,6 +2,7 @@ import { memo } from "react";
 import {
   arrowHead,
   penPath,
+  FONT_STACK,
   STROKE_WIDTH,
   TEXT_HALO,
   TEXT_HALO_WIDTH,
@@ -69,6 +70,7 @@ export const MarkShape = memo(function MarkShape({ mark }: { mark: Mark }) {
           stroke={TEXT_HALO}
           strokeWidth={TEXT_HALO_WIDTH}
           paintOrder="stroke"
+          fontFamily={FONT_STACK}
           fontSize={TEXT_SIZE}
           fontWeight={700}
         >
@@ -115,6 +117,9 @@ export function MarkTextInput({
         left: at.x,
         top: at.y - TEXT_SIZE,
         color,
+        // same stack the mark and the bake use, so the glyphs don't reflow the
+        // moment the input is swapped for the committed text
+        fontFamily: FONT_STACK,
         fontSize: TEXT_SIZE,
         // mirrors the halo the mark gets once rendered
         textShadow: `0 0 3px ${TEXT_HALO}, 0 0 3px ${TEXT_HALO}`,

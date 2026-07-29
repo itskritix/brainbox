@@ -10,7 +10,7 @@ import {
   Type,
   Undo2,
 } from "lucide-react";
-import { clearHighlights, showMark, undoLastMark } from "../lib/annotate.ts";
+import { clearHighlights, liveMarkCount, showMark, undoLastMark } from "../lib/annotate.ts";
 import { DEFAULT_COLOR, nextColor, type Mark, type Tool } from "../lib/marks.ts";
 import { isDragTool, nextMarkId, useDrawing } from "../lib/use-drawing.ts";
 import { fmtDuration } from "../lib/time.ts";
@@ -42,13 +42,19 @@ export function RecordOverlay({
   const [typing, setTyping] = useState<{ x: number; y: number; value: string } | null>(null);
   const [micOn, setMicOn] = useState(false);
   const [muted, setMuted] = useState(false);
-  /** Marks left on the page. They persist now, so the user needs a way back. */
+  /** Marks left on the page. They persist now, so the user needs a way back.
+   *  Mirrors `annotate`'s list rather than counting separately - App clears it
+   *  too, and two tallies of the same thing drift. */
   const [onPage, setOnPage] = useState(0);
-  // App passes an inline arrow - keep it out of the interval's deps via a ref.
+  // App passes inline arrows - keep them out of the effects' deps via refs.
   const micRef = useRef(micActive);
   useEffect(() => {
     micRef.current = micActive;
   }, [micActive]);
+  const muteRef = useRef(onMuteChange);
+  useEffect(() => {
+    muteRef.current = onMuteChange;
+  }, [onMuteChange]);
 
   useEffect(() => {
     setMicOn(micRef.current());
@@ -60,23 +66,26 @@ export function RecordOverlay({
     return () => clearInterval(t);
   }, []);
 
-  useEffect(() => onMuteChange(muted), [muted, onMuteChange]);
+  useEffect(() => {
+    muteRef.current(muted);
+  }, [muted]);
 
   // A finished mark goes straight to the host page, where rrweb records it as
   // ordinary mutations. It stays there until the user takes it away, so the
   // count below is only here to know whether undo/clear have anything to do.
   const commit = useCallback((m: Mark) => {
     showMark(m);
-    setOnPage((n) => n + 1);
+    setOnPage(liveMarkCount());
   }, []);
 
   const undo = useCallback(() => {
-    if (undoLastMark()) setOnPage((n) => Math.max(0, n - 1));
+    undoLastMark();
+    setOnPage(liveMarkCount());
   }, []);
 
   const clearAll = useCallback(() => {
     clearHighlights();
-    setOnPage(0);
+    setOnPage(liveMarkCount());
   }, []);
 
   const { draft, begin, extend, finish } = useDrawing({ color, onCommit: commit });
@@ -87,7 +96,7 @@ export function RecordOverlay({
     setTyping(null);
     if (text) {
       showMark({ kind: "text", id: nextMarkId(), color, x: typing.x, y: typing.y, text });
-      setOnPage((n) => n + 1);
+      setOnPage(liveMarkCount());
     }
   }, [color, typing]);
 

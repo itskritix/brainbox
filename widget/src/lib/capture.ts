@@ -132,6 +132,26 @@ export async function bakeMarks(shot: Blob, marks: Mark[]): Promise<Blob> {
   return toBlob(out);
 }
 
+/**
+ * Which screenshot actually gets uploaded.
+ *
+ * Two sources disagree on purpose. `settled` is the last shot that resolved into
+ * state - what the composer is already showing - and `pending` is the freshest
+ * promise for one. Leaving the markup step swaps `pending` for the *baked* shot
+ * while `settled` still holds the plain capture taken before the user drew
+ * anything, so preferring `settled` would quietly upload the version with none
+ * of their markup on it. The promise wins whenever there is one; `settled` is
+ * the fallback for the flows that never had one (a recording's last frame) and
+ * for a capture that failed, where the plain shot is better than nothing.
+ */
+export async function pickScreenshot(
+  pending: Promise<Blob> | null,
+  settled: Blob | null,
+): Promise<Blob | null> {
+  if (!pending) return settled;
+  return (await pending.catch(() => null)) ?? settled;
+}
+
 function toBlob(canvas: HTMLCanvasElement): Promise<Blob> {
   return new Promise((resolve, reject) => {
     canvas.toBlob(

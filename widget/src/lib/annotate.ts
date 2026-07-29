@@ -2,14 +2,21 @@ import {
   arrowHead,
   penPath,
   translateMark,
+  FONT_STACK,
   STROKE_WIDTH,
   TEXT_HALO,
   TEXT_HALO_WIDTH,
   TEXT_SIZE,
   type Mark,
+  type Point,
 } from "./marks.ts";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
+
+/** `position` values that make an element a containing block for `absolute`
+ *  descendants. Anything else - including jsdom's empty string for an unset
+ *  property - leaves the document as the containing block. */
+const POSITIONED = new Set(["relative", "absolute", "fixed", "sticky"]);
 
 /** Marks currently on the page, oldest first. */
 const live: SVGSVGElement[] = [];
@@ -79,7 +86,7 @@ function shapeFor(m: Mark): SVGElement {
         "paint-order": "stroke",
         "font-size": TEXT_SIZE,
         "font-weight": 700,
-        "font-family": "ui-sans-serif, system-ui, sans-serif",
+        "font-family": FONT_STACK,
       });
       t.textContent = m.text;
       return t;
@@ -115,9 +122,36 @@ export function showMark(m: Mark): void {
     "position:absolute;left:0;top:0;width:0;height:0;overflow:visible;" +
       "pointer-events:none;z-index:2147483646;",
   );
-  svg.appendChild(shapeFor(translateMark(m, window.scrollX, window.scrollY)));
   document.body.appendChild(svg);
+
+  // Measured while the container is still childless, so what comes back is its
+  // own 0x0 box rather than the ink bounds of a shape overflowing it.
+  const origin = originOffset(svg);
+  svg.appendChild(
+    shapeFor(translateMark(m, window.scrollX - origin.x, window.scrollY - origin.y)),
+  );
   live.push(svg);
+}
+
+/**
+ * How far the container's own origin sits from the document origin.
+ *
+ * `position:absolute` resolves against the nearest **positioned** ancestor, not
+ * the document. Usually nothing between the container and the root is
+ * positioned, the containing block is the document, and this is (0, 0) - but a
+ * host page with `body { position: relative }` (common enough to plan for) makes
+ * the body the containing block, and every mark lands offset by wherever the
+ * body's padding box starts. Measuring covers the margin, border and padding
+ * that put it there without having to enumerate them.
+ *
+ * Only the offset is corrected. A transformed `<body>` would also scale or
+ * rotate the marks, which no amount of translation fixes - and which the old
+ * `position:fixed` container got wrong too.
+ */
+function originOffset(container: Element): Point {
+  if (!POSITIONED.has(getComputedStyle(document.body).position)) return { x: 0, y: 0 };
+  const r = container.getBoundingClientRect();
+  return { x: r.left + window.scrollX, y: r.top + window.scrollY };
 }
 
 /** How many marks are currently on the page. */

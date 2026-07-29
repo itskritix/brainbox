@@ -3,7 +3,7 @@ import type { FeedbackPayload, ProjectKey, Region } from "@brainbox/shared";
 import type { WidgetConfig } from "./lib/config.ts";
 import { captureMetadata } from "./lib/metadata.ts";
 import { cssPath, elementAt } from "./lib/selector.ts";
-import { bakeMarks, captureViewport } from "./lib/capture.ts";
+import { bakeMarks, captureViewport, pickScreenshot } from "./lib/capture.ts";
 import { unionBounds, type Mark } from "./lib/marks.ts";
 import { canSessionRecord, startSessionRecording, type SessionRecording } from "./lib/session.ts";
 import { clearHighlights } from "./lib/annotate.ts";
@@ -44,16 +44,13 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
   const shotRef = useRef<Promise<Blob> | null>(null);
   /** Bumped on every reset. A capture started for an abandoned run can still be
    *  seconds from settling - the markup step is long and Esc is right there -
-   *  and without this its `then` would revive a dead run's screenshot and leak
-   *  the object URL that reset just revoked. */
+   *  and without this its `then` would revive a dead run's screenshot and strand
+   *  an object URL for a run nobody is looking at any more. */
   const runRef = useRef(0);
 
   const reset = useCallback(() => {
     runRef.current += 1;
-    setShotUrl((u) => {
-      if (u) URL.revokeObjectURL(u);
-      return "";
-    });
+    setShotUrl("");
     // an abandoned recording must release the mic + DOM observers
     const rec = recRef.current;
     recRef.current = null;
@@ -70,6 +67,15 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
     setError("");
     setIssueId("");
   }, []);
+
+  // The one place object URLs are handed back: whenever `shotUrl` changes - a
+  // bake replacing the plain shot, a reset clearing it - and on unmount. Doing
+  // it inside a `setShotUrl` updater instead would put a side effect in a
+  // function React is free to call more than once.
+  useEffect(() => {
+    if (!shotUrl) return;
+    return () => URL.revokeObjectURL(shotUrl);
+  }, [shotUrl]);
 
   // window.Brainbox.open()/close() drive the widget programmatically.
   useEffect(() => {
@@ -108,7 +114,10 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
         if (runRef.current === run) setShotFailed(true);
       })
       .finally(() => {
-        if (runRef.current === run) setShotPending(false);
+        // Only clears if this is still the shot we intend to send. Leaving the
+        // markup step swaps in the bake, and that one is not ready yet - its
+        // own `finally` below is what ends the pending state then.
+        if (runRef.current === run && shotRef.current === pending) setShotPending(false);
       });
   }, [hostEl]);
 
@@ -130,19 +139,24 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
       // Flatten in the background: the composer is already up and the user's
       // next move is to start talking. If it fails the plain shot is already
       // attached, so the report still goes out - just without the markup.
+      //
+      // Pending until it lands, so the composer says "still working" rather than
+      // showing the pre-markup shot as if it were final - and so a Send during
+      // that window reads as waiting on something rather than as a dead button.
       const run = runRef.current;
+      setShotPending(true);
       const baked = frozen.then((blob) => bakeMarks(blob, marks));
       shotRef.current = baked;
       baked
         .then((blob) => {
           if (runRef.current !== run) return;
           setShot(blob);
-          setShotUrl((prev) => {
-            if (prev) URL.revokeObjectURL(prev);
-            return URL.createObjectURL(blob);
-          });
+          setShotUrl(URL.createObjectURL(blob));
         })
-        .catch(() => {});
+        .catch(() => {})
+        .finally(() => {
+          if (runRef.current === run && shotRef.current === baked) setShotPending(false);
+        });
     },
     [hostEl],
   );
@@ -191,10 +205,10 @@ export function App({ config, hostEl }: { config: WidgetConfig; hostEl: HTMLElem
   const onSubmit = useCallback(
     async (text: string, audio: Blob | null) => {
       setStatus("submitting");
-      // The capture ran while the user was talking; if they hit Send first, wait
-      // for it now rather than dropping it.
-      const pending = shotRef.current;
-      const screenshot = shot ?? (pending ? await pending.catch(() => null) : null);
+      // The capture - and the bake of the user's markup onto it - ran while the
+      // user was talking. If they hit Send first, wait for it rather than
+      // sending the older, un-marked version sitting in state.
+      const screenshot = await pickScreenshot(shotRef.current, shot);
       if (!screenshot && !session && !text.trim() && !audio) {
         setError("Nothing to send - record a note or add a description");
         setStatus("error");
