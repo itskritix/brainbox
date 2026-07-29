@@ -218,7 +218,12 @@ export function MarkupOverlay({
         />
       )}
 
-      <div className="pointer-events-none absolute inset-x-0 top-6 flex justify-center">
+      {/* Stacked just above the toolbar, not at the top of the viewport (#62):
+          the top of the page is the header, nav and hero - very often the exact
+          thing the user opened the widget to report - and a pill sitting over it
+          hides what they came to mark up. `bottom-24` clears the toolbar, whose
+          height is fixed by its `h-9` controls. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-24 flex justify-center">
         {pending ? (
           <span className="flex items-center gap-2 rounded-full bg-elevated px-3 py-1 text-xs text-default">
             <Loader2 className="h-3.5 w-3.5 animate-spin" /> Freezing the page
