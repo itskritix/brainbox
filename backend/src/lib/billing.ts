@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import type { BillingState, PlanId, Subscription, SubscriptionStatus } from "@brainbox/shared";
+import type { BillingState, PlanId, Subscription } from "@brainbox/shared";
 
 import { db } from "../db/client.ts";
 import { subscriptions } from "../db/schema/index.ts";
@@ -15,12 +15,6 @@ export const TICKETS_PER_MONTH: Record<PlanId, number> = {
   pro: 1_000,
   business: 5_000,
 };
-
-/** The only statuses that grant access. Everything else - on_hold after a
- *  failed payment, cancelled, expired, or pending a first charge - does not. */
-function grantsAccess(status: SubscriptionStatus): boolean {
-  return status === "active";
-}
 
 /** Accounts allowed past the paywall without paying (ours). Case-insensitive:
  *  the address from the OAuth profile need not match the env var's casing. */
@@ -58,7 +52,7 @@ export async function billingStateFor(
     status: row.status,
     ticketsPerPeriod: TICKETS_PER_MONTH[row.plan] * (row.period === "annual" ? 12 : 1),
     currentPeriodEnd: row.currentPeriodEnd?.toISOString() ?? null,
-    hasAccess: grantsAccess(row.status),
+    hasAccess: row.status === "active",
   };
 
   return {
