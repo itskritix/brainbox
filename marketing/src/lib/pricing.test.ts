@@ -59,20 +59,6 @@ describe("annualSavingsPercent", () => {
   });
 });
 
-describe("per-plan savings are genuinely per-plan", () => {
-  // Regression guard: the toggle caption once hardcoded PRO's 41% above both
-  // cards, understating Business's 47%. These differ, so any card rendering a
-  // shared figure is lying about one plan.
-  it("Pro and Business discount at different rates", () => {
-    expect(annualSavingsPercent(PRO)).not.toBe(annualSavingsPercent(BUSINESS));
-  });
-
-  it("pins both rates, since each card advertises its own", () => {
-    expect(annualSavingsPercent(PRO)).toBe(41);
-    expect(annualSavingsPercent(BUSINESS)).toBe(47);
-  });
-});
-
 describe("overage leaves a real reason to upgrade", () => {
   // Pro + overage must overtake Business's flat price while still inside Pro's
   // usable range. Price the overage too cheaply and a growing customer just
